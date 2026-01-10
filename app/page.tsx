@@ -1,13 +1,26 @@
 "use client"
 
 import { useState, useMemo } from "react"
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import Link from "next/link"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
+import {
+  Database,
+  Home as HomeIcon,
+  ChevronRight,
+  ChevronDown,
+  RefreshCw,
+  ArrowRight,
+  Layers,
+  Search,
+  GitBranch,
+  BookOpen,
+  BarChart3,
+  Sparkles,
+} from "lucide-react"
 
 import { V1_TABLES, V1_CATEGORIES, getV1Stats, type V1Table } from "@/lib/v1-data"
 import { TABLES_DATA, getTableStats as getV2Stats } from "@/lib/v2-data"
@@ -21,53 +34,7 @@ import {
   type MappingType
 } from "@/lib/table-mappings"
 
-// Icons as simple components
-function DatabaseIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <ellipse cx="12" cy="5" rx="9" ry="3"/>
-      <path d="M3 5V19A9 3 0 0 0 21 19V5"/>
-      <path d="M3 12A9 3 0 0 0 21 12"/>
-    </svg>
-  )
-}
-
-function ArrowRightIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M5 12h14"/>
-      <path d="m12 5 7 7-7 7"/>
-    </svg>
-  )
-}
-
-function RefreshIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
-      <path d="M21 3v5h-5"/>
-      <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/>
-      <path d="M8 16H3v5"/>
-    </svg>
-  )
-}
-
-function ChevronDownIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="m6 9 6 6 6-6"/>
-    </svg>
-  )
-}
-
-function SearchIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="11" cy="11" r="8"/>
-      <path d="m21 21-4.3-4.3"/>
-    </svg>
-  )
-}
+type ViewMode = "mappings" | "v2only" | "stats"
 
 // Mapping type badge component
 function MappingTypeBadge({ type }: { type: MappingType }) {
@@ -81,7 +48,7 @@ function MappingTypeBadge({ type }: { type: MappingType }) {
   )
 }
 
-// V1 Category Card with mappings
+// V1 Category Card with collapsible pattern matching demo-sync
 function V1CategoryCard({
   category,
   tables,
@@ -118,103 +85,105 @@ function V1CategoryCard({
   }
 
   return (
-    <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-      <Card className={`transition-all duration-200 ${
-        isOpen
-          ? "border-2 border-solid border-teal-200 shadow-md"
-          : "border-2 border-dashed border-gray-200 hover:border-teal-200 hover:shadow-sm"
-      }`}>
-        <CollapsibleTrigger asChild>
-          <CardHeader className="cursor-pointer select-none">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <span className="text-2xl">{category.icon}</span>
-                <div>
-                  <CardTitle className="text-lg">{category.label}</CardTitle>
-                  <CardDescription className="text-sm">
-                    {filteredTables.length} V1 tables
-                  </CardDescription>
-                </div>
-              </div>
-              <div className="flex items-center gap-2">
-                {mappingCounts.direct > 0 && (
-                  <Badge className="bg-green-100 text-green-700">{mappingCounts.direct} direct</Badge>
-                )}
-                {mappingCounts.split > 0 && (
-                  <Badge className="bg-purple-100 text-purple-700">{mappingCounts.split} split</Badge>
-                )}
-                {mappingCounts.deprecated > 0 && (
-                  <Badge className="bg-red-100 text-red-700">{mappingCounts.deprecated} deprecated</Badge>
-                )}
-                <ChevronDownIcon className={`h-5 w-5 text-gray-400 transition-transform ${isOpen ? "rotate-180" : ""}`} />
-              </div>
+    <Card className={`transition-all duration-200 ${
+      isOpen
+        ? "border-2 border-solid border-primary/30 shadow-md"
+        : "border-2 border-dashed border-muted hover:border-primary/20 hover:shadow-sm"
+    }`}>
+      <CardHeader
+        className="cursor-pointer select-none pb-4"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-primary/10 rounded-lg">
+              <span className="text-xl">{category.icon}</span>
             </div>
-            {!isOpen && (
-              <p className="text-xs text-muted-foreground mt-2">Click to expand and see V2 mappings →</p>
+            <div>
+              <CardTitle className="text-lg flex items-center gap-2">
+                {category.label}
+                <Badge variant="secondary" className="ml-2">{filteredTables.length} tables</Badge>
+              </CardTitle>
+              <p className="text-xs text-muted-foreground mt-1">
+                {isOpen ? "Click to collapse" : "Click to expand and see V2 mappings →"}
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            {mappingCounts.direct > 0 && (
+              <Badge className="bg-green-100 text-green-700 dark:bg-green-950/30 dark:text-green-400">{mappingCounts.direct} direct</Badge>
             )}
-          </CardHeader>
-        </CollapsibleTrigger>
-        <CollapsibleContent>
-          <CardContent className="pt-0">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="w-[150px]">V1 Table</TableHead>
-                  <TableHead className="w-[100px]">Type</TableHead>
-                  <TableHead>V2 Table(s)</TableHead>
-                  <TableHead>Notes</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {filteredTables.map((table) => {
-                  const mapping = getMapping(table.name)
-                  return (
-                    <TableRow key={table.id}>
-                      <TableCell className="font-mono text-sm font-medium">
-                        <div className="flex items-center gap-2">
-                          {table.name}
+            {mappingCounts.split > 0 && (
+              <Badge className="bg-purple-100 text-purple-700 dark:bg-purple-950/30 dark:text-purple-400">{mappingCounts.split} split</Badge>
+            )}
+            {mappingCounts.deprecated > 0 && (
+              <Badge className="bg-red-100 text-red-700 dark:bg-red-950/30 dark:text-red-400">{mappingCounts.deprecated} deprecated</Badge>
+            )}
+            {isOpen ? <ChevronDown className="h-5 w-5 text-muted-foreground" /> : <ChevronRight className="h-5 w-5 text-muted-foreground" />}
+          </div>
+        </div>
+      </CardHeader>
+
+      {isOpen && (
+        <CardContent className="pt-0">
+          <Table>
+            <TableHeader>
+              <TableRow className="bg-muted/30">
+                <TableHead className="w-[150px] font-medium">V1 Table</TableHead>
+                <TableHead className="w-[100px] font-medium">Type</TableHead>
+                <TableHead className="font-medium">V2 Table(s)</TableHead>
+                <TableHead className="font-medium">Notes</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {filteredTables.map((table) => {
+                const mapping = getMapping(table.name)
+                return (
+                  <TableRow key={table.id} className="hover:bg-muted/20">
+                    <TableCell className="font-mono text-sm font-medium">
+                      <div className="flex items-center gap-2">
+                        {table.name}
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      {mapping && <MappingTypeBadge type={mapping.type} />}
+                    </TableCell>
+                    <TableCell>
+                      {mapping && mapping.v2_tables.length > 0 ? (
+                        <div className="flex flex-wrap gap-1">
+                          {mapping.v2_tables.map((v2Table, i) => (
+                            <Badge
+                              key={i}
+                              variant="outline"
+                              className={`font-mono text-xs ${
+                                v2Table === mapping.primary_v2_table
+                                  ? "border-primary/50 bg-primary/10"
+                                  : ""
+                              }`}
+                            >
+                              {v2Table}
+                            </Badge>
+                          ))}
                         </div>
-                      </TableCell>
-                      <TableCell>
-                        {mapping && <MappingTypeBadge type={mapping.type} />}
-                      </TableCell>
-                      <TableCell>
-                        {mapping && mapping.v2_tables.length > 0 ? (
-                          <div className="flex flex-wrap gap-1">
-                            {mapping.v2_tables.map((v2Table, i) => (
-                              <Badge
-                                key={i}
-                                variant="outline"
-                                className={`font-mono text-xs ${
-                                  v2Table === mapping.primary_v2_table
-                                    ? "border-teal-300 bg-teal-50"
-                                    : ""
-                                }`}
-                              >
-                                {v2Table}
-                              </Badge>
-                            ))}
-                          </div>
-                        ) : (
-                          <span className="text-gray-400 text-sm">—</span>
-                        )}
-                      </TableCell>
-                      <TableCell className="text-sm text-gray-600 max-w-xs">
-                        {mapping?.notes || table.description}
-                      </TableCell>
-                    </TableRow>
-                  )
-                })}
-              </TableBody>
-            </Table>
-          </CardContent>
-        </CollapsibleContent>
-      </Card>
-    </Collapsible>
+                      ) : (
+                        <span className="text-muted-foreground text-sm">—</span>
+                      )}
+                    </TableCell>
+                    <TableCell className="text-sm text-muted-foreground max-w-xs">
+                      {mapping?.notes || table.description}
+                    </TableCell>
+                  </TableRow>
+                )
+              })}
+            </TableBody>
+          </Table>
+        </CardContent>
+      )}
+    </Card>
   )
 }
 
-// V2 Only Tables Card - tables that exist in V2 but have no V1 source
+// V2 Only Tables Card
 function V2OnlyTablesCard({ searchQuery }: { searchQuery: string }) {
   const [isOpen, setIsOpen] = useState(false)
 
@@ -238,76 +207,78 @@ function V2OnlyTablesCard({ searchQuery }: { searchQuery: string }) {
   }
 
   return (
-    <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-      <Card className={`transition-all duration-200 ${
-        isOpen
-          ? "border-2 border-solid border-gray-300 shadow-md"
-          : "border-2 border-dashed border-gray-200 hover:border-gray-300 hover:shadow-sm"
-      }`}>
-        <CollapsibleTrigger asChild>
-          <CardHeader className="cursor-pointer select-none">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <span className="text-2xl">✨</span>
-                <div>
-                  <CardTitle className="text-lg">New in V2 (No V1 Source)</CardTitle>
-                  <CardDescription className="text-sm">
-                    {filteredTables.length} tables exist only in V2
-                  </CardDescription>
+    <Card className={`transition-all duration-200 ${
+      isOpen
+        ? "border-2 border-solid border-primary/30 shadow-md"
+        : "border-2 border-dashed border-muted hover:border-primary/20 hover:shadow-sm"
+    }`}>
+      <CardHeader
+        className="cursor-pointer select-none pb-4"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-emerald-100 dark:bg-emerald-950/30 rounded-lg">
+              <Sparkles className="h-5 w-5 text-emerald-600" />
+            </div>
+            <div>
+              <CardTitle className="text-lg flex items-center gap-2">
+                New in V2 (No V1 Source)
+                <Badge variant="secondary" className="ml-2">{filteredTables.length} tables</Badge>
+              </CardTitle>
+              <p className="text-xs text-muted-foreground mt-1">
+                {isOpen ? "Click to collapse" : "Tables that exist only in the V2 normalized schema →"}
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <Badge className="bg-emerald-100 text-emerald-700 dark:bg-emerald-950/30 dark:text-emerald-400">{filteredTables.length} new</Badge>
+            {isOpen ? <ChevronDown className="h-5 w-5 text-muted-foreground" /> : <ChevronRight className="h-5 w-5 text-muted-foreground" />}
+          </div>
+        </div>
+      </CardHeader>
+
+      {isOpen && (
+        <CardContent className="pt-0">
+          <div className="space-y-4">
+            {Object.entries(groupedTables).slice(0, 10).map(([category, tables]) => (
+              <div key={category}>
+                <h4 className="text-sm font-medium text-foreground mb-2">{category}</h4>
+                <div className="flex flex-wrap gap-2">
+                  {tables.slice(0, 15).map((table) => (
+                    <Badge
+                      key={table.id}
+                      variant="outline"
+                      className="font-mono text-xs"
+                      title={table.description || ""}
+                    >
+                      {table.name}
+                    </Badge>
+                  ))}
+                  {tables.length > 15 && (
+                    <Badge variant="outline" className="text-muted-foreground text-xs">
+                      +{tables.length - 15} more
+                    </Badge>
+                  )}
                 </div>
               </div>
-              <div className="flex items-center gap-2">
-                <Badge className="bg-gray-100 text-gray-700">{filteredTables.length} new</Badge>
-                <ChevronDownIcon className={`h-5 w-5 text-gray-400 transition-transform ${isOpen ? "rotate-180" : ""}`} />
-              </div>
-            </div>
-            {!isOpen && (
-              <p className="text-xs text-muted-foreground mt-2">Click to expand and see V2-only tables →</p>
+            ))}
+            {Object.keys(groupedTables).length > 10 && (
+              <p className="text-sm text-muted-foreground">
+                +{Object.keys(groupedTables).length - 10} more categories...
+              </p>
             )}
-          </CardHeader>
-        </CollapsibleTrigger>
-        <CollapsibleContent>
-          <CardContent className="pt-0">
-            <div className="space-y-4">
-              {Object.entries(groupedTables).slice(0, 10).map(([category, tables]) => (
-                <div key={category}>
-                  <h4 className="text-sm font-medium text-gray-700 mb-2">{category}</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {tables.slice(0, 15).map((table) => (
-                      <Badge
-                        key={table.id}
-                        variant="outline"
-                        className="font-mono text-xs"
-                        title={table.description || ""}
-                      >
-                        {table.name}
-                      </Badge>
-                    ))}
-                    {tables.length > 15 && (
-                      <Badge variant="outline" className="text-gray-400 text-xs">
-                        +{tables.length - 15} more
-                      </Badge>
-                    )}
-                  </div>
-                </div>
-              ))}
-              {Object.keys(groupedTables).length > 10 && (
-                <p className="text-sm text-gray-500">
-                  +{Object.keys(groupedTables).length - 10} more categories...
-                </p>
-              )}
-            </div>
-          </CardContent>
-        </CollapsibleContent>
-      </Card>
-    </Collapsible>
+          </div>
+        </CardContent>
+      )}
+    </Card>
   )
 }
 
 // Main page component
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState("")
-  const [activeTab, setActiveTab] = useState("mapping")
+  const [viewMode, setViewMode] = useState<ViewMode>("mappings")
 
   // Stats
   const v1Stats = getV1Stats()
@@ -325,150 +296,201 @@ export default function Home() {
     return grouped
   }, [])
 
+  const viewModes = [
+    { id: "mappings" as ViewMode, label: "Table Mappings", icon: GitBranch, description: "V1 → V2 table relationships" },
+    { id: "v2only" as ViewMode, label: "V2 Only", icon: Sparkles, description: "New tables in V2 schema" },
+    { id: "stats" as ViewMode, label: "Statistics", icon: BarChart3, description: "Migration overview stats" },
+  ]
+
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white border-b">
-        <div className="max-w-7xl mx-auto px-6 py-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <div className="p-3 rounded-xl bg-gradient-to-br from-orange-500 to-red-600 text-white shadow-lg">
-                <DatabaseIcon className="h-6 w-6" />
-              </div>
-              <div>
-                <h1 className="text-2xl font-bold text-gray-900">V1 → V2 Migration Admin</h1>
-                <p className="text-sm text-gray-500">Comparing AgentDashboards Workspaces</p>
-              </div>
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5">
+      <div className="container mx-auto py-8 px-4 max-w-7xl">
+        {/* Breadcrumb Navigation */}
+        <nav className="flex items-center gap-1 text-sm text-muted-foreground mb-4">
+          <Link href="/" className="flex items-center gap-1 hover:text-foreground transition-colors">
+            <HomeIcon className="h-4 w-4" />
+            <span>Home</span>
+          </Link>
+          <ChevronRight className="h-4 w-4" />
+          <span className="text-foreground">V1 → V2 Migration</span>
+        </nav>
+
+        {/* Page Header */}
+        <div className="mb-8">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="p-2 bg-primary/10 rounded-xl">
+              <Layers className="h-7 w-7 text-primary" />
             </div>
-            <Button variant="outline" className="gap-2">
-              <RefreshIcon className="h-4 w-4" />
-              Refresh
-            </Button>
-          </div>
-        </div>
-      </header>
-
-      {/* Stats Overview */}
-      <div className="max-w-7xl mx-auto px-6 py-6">
-        <div className="grid gap-4 md:grid-cols-6">
-          {/* V1 Stats */}
-          <Card className="border-l-4 border-l-blue-500">
-            <CardContent className="p-4">
-              <div className="text-3xl font-bold text-blue-700">{v1Stats.total}</div>
-              <div className="text-sm text-gray-500">V1 Tables</div>
-            </CardContent>
-          </Card>
-
-          {/* Arrow */}
-          <Card className="border-none shadow-none bg-transparent flex items-center justify-center">
-            <ArrowRightIcon className="h-8 w-8 text-gray-400" />
-          </Card>
-
-          {/* V2 Stats */}
-          <Card className="border-l-4 border-l-teal-500">
-            <CardContent className="p-4">
-              <div className="text-3xl font-bold text-teal-700">{v2Stats.total}</div>
-              <div className="text-sm text-gray-500">V2 Tables</div>
-            </CardContent>
-          </Card>
-
-          {/* Mapped */}
-          <Card className="border-l-4 border-l-green-500">
-            <CardContent className="p-4">
-              <div className="text-3xl font-bold text-green-700">{mappingStats.total - mappingStats.deprecated}</div>
-              <div className="text-sm text-gray-500">V1 Mapped</div>
-            </CardContent>
-          </Card>
-
-          {/* Split */}
-          <Card className="border-l-4 border-l-purple-500">
-            <CardContent className="p-4">
-              <div className="text-3xl font-bold text-purple-700">{mappingStats.split}</div>
-              <div className="text-sm text-gray-500">Split Tables</div>
-            </CardContent>
-          </Card>
-
-          {/* V2 Only */}
-          <Card className="border-l-4 border-l-gray-400">
-            <CardContent className="p-4">
-              <div className="text-3xl font-bold text-gray-600">{v2OnlyCount}</div>
-              <div className="text-sm text-gray-500">V2 Only</div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Migration Type Summary */}
-        <div className="mt-4 flex flex-wrap gap-2">
-          <Badge className="bg-green-100 text-green-700 text-sm px-3 py-1">
-            {mappingStats.direct} Direct (1:1)
-          </Badge>
-          <Badge className="bg-blue-100 text-blue-700 text-sm px-3 py-1">
-            {mappingStats.renamed} Renamed
-          </Badge>
-          <Badge className="bg-purple-100 text-purple-700 text-sm px-3 py-1">
-            {mappingStats.split} Split (1:N)
-          </Badge>
-          <Badge className="bg-amber-100 text-amber-700 text-sm px-3 py-1">
-            {mappingStats.merged} Merged (N:1)
-          </Badge>
-          <Badge className="bg-red-100 text-red-700 text-sm px-3 py-1">
-            {mappingStats.deprecated} Deprecated
-          </Badge>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-6 pb-12">
-        <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <div className="flex items-center justify-between mb-6">
-            <TabsList>
-              <TabsTrigger value="mapping" className="gap-2">
-                <ArrowRightIcon className="h-4 w-4" />
-                Table Mappings
-              </TabsTrigger>
-              <TabsTrigger value="v2only" className="gap-2">
-                ✨ V2 Only
-              </TabsTrigger>
-            </TabsList>
-
-            <div className="relative w-80">
-              <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-              <Input
-                placeholder="Search tables..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10"
-              />
+            <div>
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text">
+                V1 → V2 Migration Admin
+              </h1>
+              <p className="text-muted-foreground mt-1">
+                Comparing AgentDashboards Xano Workspaces
+              </p>
             </div>
           </div>
 
-          <TabsContent value="mapping" className="space-y-4">
-            {V1_CATEGORIES.map((cat) => {
-              const tables = v1TablesByCategory[cat.id] || []
-              if (tables.length === 0) return null
-              return (
-                <V1CategoryCard
-                  key={cat.id}
-                  category={cat}
-                  tables={tables}
-                  searchQuery={searchQuery}
-                />
-              )
-            })}
-          </TabsContent>
+          {/* Dynamic Info Bar */}
+          <div className="flex items-center gap-6 text-sm border rounded-xl px-5 py-4 bg-card/50 backdrop-blur-sm shadow-sm mt-4">
+            <div className="flex items-center gap-2">
+              <Database className="h-4 w-4 text-blue-500" />
+              <span className="text-muted-foreground">V1:</span>
+              <span className="font-semibold text-blue-600">{v1Stats.total} tables</span>
+            </div>
+            <div className="h-5 w-px bg-border" />
+            <div className="flex items-center gap-2">
+              <ArrowRight className="h-4 w-4 text-muted-foreground" />
+            </div>
+            <div className="h-5 w-px bg-border" />
+            <div className="flex items-center gap-2">
+              <Database className="h-4 w-4 text-emerald-500" />
+              <span className="text-muted-foreground">V2:</span>
+              <span className="font-semibold text-emerald-600">{v2Stats.total} tables</span>
+            </div>
+            <div className="h-5 w-px bg-border" />
+            <div className="flex items-center gap-2">
+              <span className="text-muted-foreground">Mapped:</span>
+              <span className="font-semibold text-green-600">{mappingStats.total - mappingStats.deprecated}</span>
+            </div>
+            <div className="h-5 w-px bg-border" />
+            <div className="flex items-center gap-2">
+              <span className="text-muted-foreground">Split:</span>
+              <span className="font-semibold text-purple-600">{mappingStats.split}</span>
+            </div>
+            <div className="ml-auto">
+              <Badge variant="outline" className="bg-primary/5 text-primary border-primary/20">
+                {v2OnlyCount} V2 only
+              </Badge>
+            </div>
+          </div>
+        </div>
 
-          <TabsContent value="v2only" className="space-y-4">
+        {/* View Mode Selector */}
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center gap-2 p-1 bg-muted/50 rounded-xl w-fit">
+            {viewModes.map((mode) => (
+              <button
+                key={mode.id}
+                onClick={() => setViewMode(mode.id)}
+                className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all
+                  ${viewMode === mode.id
+                    ? "bg-background shadow-sm text-foreground"
+                    : "text-muted-foreground hover:text-foreground hover:bg-background/50"
+                  }`}
+              >
+                <mode.icon className="h-4 w-4" />
+                {mode.label}
+              </button>
+            ))}
+          </div>
+
+          <div className="relative w-80">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              placeholder="Search tables..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-10"
+            />
+          </div>
+        </div>
+
+        {/* Content based on view mode */}
+        <div className="space-y-4">
+          {viewMode === "mappings" && (
+            <>
+              {V1_CATEGORIES.map((cat) => {
+                const tables = v1TablesByCategory[cat.id] || []
+                if (tables.length === 0) return null
+                return (
+                  <V1CategoryCard
+                    key={cat.id}
+                    category={cat}
+                    tables={tables}
+                    searchQuery={searchQuery}
+                  />
+                )
+              })}
+            </>
+          )}
+
+          {viewMode === "v2only" && (
             <V2OnlyTablesCard searchQuery={searchQuery} />
-          </TabsContent>
-        </Tabs>
-      </div>
+          )}
 
-      {/* Footer */}
-      <footer className="border-t bg-white py-6">
-        <div className="max-w-7xl mx-auto px-6 text-center text-sm text-gray-500">
-          V1 → V2 Migration Admin - Revealing the complete migration state
+          {viewMode === "stats" && (
+            <>
+              {/* Summary Stats Cards */}
+              <div className="grid grid-cols-4 gap-4 mb-6">
+                <Card className="border-l-4 border-l-blue-500">
+                  <CardContent className="p-4">
+                    <div className="text-3xl font-bold text-blue-700">{v1Stats.total}</div>
+                    <div className="text-sm text-muted-foreground">V1 Tables</div>
+                  </CardContent>
+                </Card>
+                <Card className="border-l-4 border-l-emerald-500">
+                  <CardContent className="p-4">
+                    <div className="text-3xl font-bold text-emerald-700">{v2Stats.total}</div>
+                    <div className="text-sm text-muted-foreground">V2 Tables</div>
+                  </CardContent>
+                </Card>
+                <Card className="border-l-4 border-l-green-500">
+                  <CardContent className="p-4">
+                    <div className="text-3xl font-bold text-green-700">{mappingStats.total - mappingStats.deprecated}</div>
+                    <div className="text-sm text-muted-foreground">V1 → V2 Mapped</div>
+                  </CardContent>
+                </Card>
+                <Card className="border-l-4 border-l-purple-500">
+                  <CardContent className="p-4">
+                    <div className="text-3xl font-bold text-purple-700">{mappingStats.split}</div>
+                    <div className="text-sm text-muted-foreground">Split Tables (1:N)</div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Migration Type Summary */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <BarChart3 className="h-5 w-5" />
+                    Migration Type Breakdown
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex flex-wrap gap-3">
+                    <Badge className="bg-green-100 text-green-700 dark:bg-green-950/30 dark:text-green-400 text-sm px-3 py-1.5">
+                      {mappingStats.direct} Direct (1:1)
+                    </Badge>
+                    <Badge className="bg-blue-100 text-blue-700 dark:bg-blue-950/30 dark:text-blue-400 text-sm px-3 py-1.5">
+                      {mappingStats.renamed} Renamed
+                    </Badge>
+                    <Badge className="bg-purple-100 text-purple-700 dark:bg-purple-950/30 dark:text-purple-400 text-sm px-3 py-1.5">
+                      {mappingStats.split} Split (1:N)
+                    </Badge>
+                    <Badge className="bg-amber-100 text-amber-700 dark:bg-amber-950/30 dark:text-amber-400 text-sm px-3 py-1.5">
+                      {mappingStats.merged} Merged (N:1)
+                    </Badge>
+                    <Badge className="bg-red-100 text-red-700 dark:bg-red-950/30 dark:text-red-400 text-sm px-3 py-1.5">
+                      {mappingStats.deprecated} Deprecated
+                    </Badge>
+                  </div>
+                </CardContent>
+              </Card>
+            </>
+          )}
         </div>
-      </footer>
+
+        {/* Footer */}
+        <div className="mt-12 pt-6 border-t text-center text-sm text-muted-foreground">
+          <p>
+            V1 → V2 Migration Admin • Frontend Reveals Backend
+          </p>
+          <p className="mt-1 text-xs">
+            Comparing {v1Stats.total} V1 tables against {v2Stats.total} V2 normalized tables
+          </p>
+        </div>
+      </div>
     </div>
   )
 }
