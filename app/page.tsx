@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect } from "react"
 import Link from "next/link"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -17,15 +17,19 @@ import {
   Layers,
   Search,
   GitBranch,
-  BookOpen,
   BarChart3,
   Sparkles,
+  Code2,
+  Clock,
+  Loader2,
+  Wifi,
+  WifiOff,
+  Zap,
 } from "lucide-react"
 
 import { V1_TABLES, V1_CATEGORIES, getV1Stats, type V1Table } from "@/lib/v1-data"
 import { TABLES_DATA, getTableStats as getV2Stats } from "@/lib/v2-data"
 import {
-  TABLE_MAPPINGS,
   getMappingStats,
   getMapping,
   getMappedV2Tables,
@@ -33,8 +37,15 @@ import {
   MAPPING_TYPE_LABELS,
   type MappingType
 } from "@/lib/table-mappings"
+import {
+  introspectionApi,
+  type ComparisonSummary,
+  type ApiGroupsResponse,
+  type FunctionsResponse,
+  type TasksResponse,
+} from "@/lib/api"
 
-type ViewMode = "mappings" | "v2only" | "stats"
+type ViewMode = "live" | "mappings" | "v2only" | "stats"
 
 // Mapping type badge component
 function MappingTypeBadge({ type }: { type: MappingType }) {
@@ -45,6 +56,277 @@ function MappingTypeBadge({ type }: { type: MappingType }) {
     <Badge className={`${colors.bg} ${colors.text} ${colors.border} hover:${colors.bg}`}>
       {label}
     </Badge>
+  )
+}
+
+// Live Data Dashboard Card
+function LiveDataCard({
+  summary,
+  apiGroups,
+  functions,
+  tasks,
+  isLoading,
+  onRefresh,
+  lastUpdated,
+}: {
+  summary: ComparisonSummary | null
+  apiGroups: ApiGroupsResponse | null
+  functions: FunctionsResponse | null
+  tasks: TasksResponse | null
+  isLoading: boolean
+  onRefresh: () => void
+  lastUpdated: Date | null
+}) {
+  const [expandedSection, setExpandedSection] = useState<string | null>(null)
+
+  if (isLoading && !summary) {
+    return (
+      <Card className="border-2 border-dashed border-primary/30">
+        <CardContent className="p-8 flex flex-col items-center justify-center gap-4">
+          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+          <p className="text-muted-foreground">Loading live data from Xano Meta API...</p>
+          <p className="text-xs text-muted-foreground">This may take up to 2 minutes for the first load</p>
+        </CardContent>
+      </Card>
+    )
+  }
+
+  if (!summary) {
+    return (
+      <Card className="border-2 border-dashed border-red-300">
+        <CardContent className="p-8 flex flex-col items-center justify-center gap-4">
+          <WifiOff className="h-8 w-8 text-red-500" />
+          <p className="text-muted-foreground">Failed to load live data</p>
+          <Button onClick={onRefresh} variant="outline" size="sm">
+            <RefreshCw className="h-4 w-4 mr-2" />
+            Try Again
+          </Button>
+        </CardContent>
+      </Card>
+    )
+  }
+
+  const sections = [
+    {
+      id: "tables",
+      icon: Database,
+      label: "Tables",
+      v1: summary.summary.tables.v1,
+      v2: summary.summary.tables.v2,
+      color: "blue",
+    },
+    {
+      id: "api_groups",
+      icon: Code2,
+      label: "API Groups",
+      v1: summary.summary.api_groups.v1,
+      v2: summary.summary.api_groups.v2,
+      color: "purple",
+    },
+    {
+      id: "functions",
+      icon: Zap,
+      label: "Functions",
+      v1: summary.summary.functions.v1,
+      v2: summary.summary.functions.v2,
+      color: "amber",
+    },
+    {
+      id: "tasks",
+      icon: Clock,
+      label: "Background Tasks",
+      v1: summary.summary.background_tasks.v1,
+      v2: summary.summary.background_tasks.v2,
+      color: "emerald",
+    },
+  ]
+
+  return (
+    <div className="space-y-4">
+      {/* Live Status Header */}
+      <Card className="border-2 border-solid border-primary/30 bg-gradient-to-r from-primary/5 to-transparent">
+        <CardContent className="p-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-green-100 dark:bg-green-950/30 rounded-lg">
+                <Wifi className="h-5 w-5 text-green-600" />
+              </div>
+              <div>
+                <h3 className="font-semibold text-lg">Live Workspace Comparison</h3>
+                <p className="text-sm text-muted-foreground">
+                  Data fetched from Xano Meta API
+                  {lastUpdated && (
+                    <span className="ml-2 text-xs">
+                      • Updated {lastUpdated.toLocaleTimeString()}
+                    </span>
+                  )}
+                </p>
+              </div>
+            </div>
+            <Button onClick={onRefresh} variant="outline" size="sm" disabled={isLoading}>
+              <RefreshCw className={`h-4 w-4 mr-2 ${isLoading ? "animate-spin" : ""}`} />
+              Refresh
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Summary Grid */}
+      <div className="grid grid-cols-4 gap-4">
+        {sections.map((section) => {
+          const Icon = section.icon
+          const colorClasses = {
+            blue: "border-l-blue-500 text-blue-600",
+            purple: "border-l-purple-500 text-purple-600",
+            amber: "border-l-amber-500 text-amber-600",
+            emerald: "border-l-emerald-500 text-emerald-600",
+          }
+          return (
+            <Card
+              key={section.id}
+              className={`border-l-4 ${colorClasses[section.color as keyof typeof colorClasses]} cursor-pointer hover:shadow-md transition-shadow`}
+              onClick={() => setExpandedSection(expandedSection === section.id ? null : section.id)}
+            >
+              <CardContent className="p-4">
+                <div className="flex items-center gap-2 mb-2">
+                  <Icon className="h-4 w-4" />
+                  <span className="text-sm font-medium">{section.label}</span>
+                </div>
+                <div className="flex items-center gap-4">
+                  <div>
+                    <div className="text-2xl font-bold">{section.v1}</div>
+                    <div className="text-xs text-muted-foreground">V1</div>
+                  </div>
+                  <ArrowRight className="h-4 w-4 text-muted-foreground" />
+                  <div>
+                    <div className="text-2xl font-bold">{section.v2}</div>
+                    <div className="text-xs text-muted-foreground">V2</div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          )
+        })}
+      </div>
+
+      {/* Expanded Section Details */}
+      {expandedSection === "api_groups" && apiGroups && (
+        <Card className="border-2 border-solid border-purple-300/50">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Code2 className="h-5 w-5 text-purple-600" />
+              API Groups Comparison
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-2 gap-6">
+              <div>
+                <h4 className="font-medium mb-3 text-blue-600">V1 API Groups ({apiGroups.v1.total})</h4>
+                <div className="space-y-1 max-h-80 overflow-y-auto">
+                  {apiGroups.v1.groups.map((g) => (
+                    <div key={g.id} className="flex items-center gap-2 text-sm p-2 rounded hover:bg-muted/50">
+                      <Badge variant="outline" className="font-mono text-xs">{g.id}</Badge>
+                      <span>{g.name}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <h4 className="font-medium mb-3 text-emerald-600">V2 API Groups ({apiGroups.v2.total})</h4>
+                <div className="space-y-1 max-h-80 overflow-y-auto">
+                  {apiGroups.v2.groups.map((g) => (
+                    <div key={g.id} className="flex items-center gap-2 text-sm p-2 rounded hover:bg-muted/50">
+                      <Badge variant="outline" className="font-mono text-xs">{g.id}</Badge>
+                      <span>{g.name}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {expandedSection === "functions" && functions && (
+        <Card className="border-2 border-solid border-amber-300/50">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Zap className="h-5 w-5 text-amber-600" />
+              Functions Comparison
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-2 gap-6">
+              <div>
+                <h4 className="font-medium mb-3 text-blue-600">V1 Functions ({functions.v1.total})</h4>
+                <div className="space-y-1 max-h-80 overflow-y-auto">
+                  {functions.v1.functions.slice(0, 50).map((f) => (
+                    <div key={f.id} className="flex items-center gap-2 text-sm p-2 rounded hover:bg-muted/50">
+                      <Badge variant="outline" className="font-mono text-xs">{f.id}</Badge>
+                      <span className="font-mono text-xs">{f.name}</span>
+                    </div>
+                  ))}
+                  {functions.v1.total > 50 && (
+                    <p className="text-xs text-muted-foreground p-2">+{functions.v1.total - 50} more...</p>
+                  )}
+                </div>
+              </div>
+              <div>
+                <h4 className="font-medium mb-3 text-emerald-600">V2 Functions ({functions.v2.total})</h4>
+                <div className="space-y-1 max-h-80 overflow-y-auto">
+                  {functions.v2.functions.slice(0, 50).map((f) => (
+                    <div key={f.id} className="flex items-center gap-2 text-sm p-2 rounded hover:bg-muted/50">
+                      <Badge variant="outline" className="font-mono text-xs">{f.id}</Badge>
+                      <span className="font-mono text-xs">{f.name}</span>
+                    </div>
+                  ))}
+                  {functions.v2.total > 50 && (
+                    <p className="text-xs text-muted-foreground p-2">+{functions.v2.total - 50} more...</p>
+                  )}
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {expandedSection === "tasks" && tasks && (
+        <Card className="border-2 border-solid border-emerald-300/50">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Clock className="h-5 w-5 text-emerald-600" />
+              Background Tasks Comparison
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-2 gap-6">
+              <div>
+                <h4 className="font-medium mb-3 text-blue-600">V1 Tasks ({tasks.v1.total})</h4>
+                <div className="space-y-1 max-h-80 overflow-y-auto">
+                  {tasks.v1.tasks.map((t) => (
+                    <div key={t.id} className="flex items-center gap-2 text-sm p-2 rounded hover:bg-muted/50">
+                      <Badge variant="outline" className="font-mono text-xs">{t.id}</Badge>
+                      <span className="text-xs">{t.name}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <h4 className="font-medium mb-3 text-emerald-600">V2 Tasks ({tasks.v2.total})</h4>
+                <div className="space-y-1 max-h-80 overflow-y-auto">
+                  {tasks.v2.tasks.map((t) => (
+                    <div key={t.id} className="flex items-center gap-2 text-sm p-2 rounded hover:bg-muted/50">
+                      <Badge variant="outline" className="font-mono text-xs">{t.id}</Badge>
+                      <span className="text-xs">{t.name}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+    </div>
   )
 }
 
@@ -278,9 +560,57 @@ function V2OnlyTablesCard({ searchQuery }: { searchQuery: string }) {
 // Main page component
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState("")
-  const [viewMode, setViewMode] = useState<ViewMode>("mappings")
+  const [viewMode, setViewMode] = useState<ViewMode>("live")
 
-  // Stats
+  // Live data state
+  const [liveData, setLiveData] = useState<{
+    summary: ComparisonSummary | null
+    apiGroups: ApiGroupsResponse | null
+    functions: FunctionsResponse | null
+    tasks: TasksResponse | null
+    isLoading: boolean
+    lastUpdated: Date | null
+  }>({
+    summary: null,
+    apiGroups: null,
+    functions: null,
+    tasks: null,
+    isLoading: false,
+    lastUpdated: null,
+  })
+
+  // Fetch live data
+  const fetchLiveData = async () => {
+    setLiveData(prev => ({ ...prev, isLoading: true }))
+    try {
+      const [summary, apiGroups, functions, tasks] = await Promise.all([
+        introspectionApi.getComparisonSummary(),
+        introspectionApi.getApiGroups(),
+        introspectionApi.getFunctions(),
+        introspectionApi.getBackgroundTasks(),
+      ])
+      setLiveData({
+        summary,
+        apiGroups,
+        functions,
+        tasks,
+        isLoading: false,
+        lastUpdated: new Date(),
+      })
+    } catch (error) {
+      console.error("Failed to fetch live data:", error)
+      setLiveData(prev => ({ ...prev, isLoading: false }))
+    }
+  }
+
+  // Fetch on mount when live view is active
+  useEffect(() => {
+    if (viewMode === "live" && !liveData.summary && !liveData.isLoading) {
+      fetchLiveData()
+    }
+  }, [viewMode])
+
+  // Static stats
   const v1Stats = getV1Stats()
   const v2Stats = getV2Stats()
   const mappingStats = getMappingStats()
@@ -297,6 +627,7 @@ export default function Home() {
   }, [])
 
   const viewModes = [
+    { id: "live" as ViewMode, label: "Live Data", icon: Wifi, description: "Real-time from Xano Meta API" },
     { id: "mappings" as ViewMode, label: "Table Mappings", icon: GitBranch, description: "V1 → V2 table relationships" },
     { id: "v2only" as ViewMode, label: "V2 Only", icon: Sparkles, description: "New tables in V2 schema" },
     { id: "stats" as ViewMode, label: "Statistics", icon: BarChart3, description: "Migration overview stats" },
@@ -336,7 +667,9 @@ export default function Home() {
             <div className="flex items-center gap-2">
               <Database className="h-4 w-4 text-blue-500" />
               <span className="text-muted-foreground">V1:</span>
-              <span className="font-semibold text-blue-600">{v1Stats.total} tables</span>
+              <span className="font-semibold text-blue-600">
+                {liveData.summary?.summary.tables.v1 || v1Stats.total} tables
+              </span>
             </div>
             <div className="h-5 w-px bg-border" />
             <div className="flex items-center gap-2">
@@ -346,7 +679,9 @@ export default function Home() {
             <div className="flex items-center gap-2">
               <Database className="h-4 w-4 text-emerald-500" />
               <span className="text-muted-foreground">V2:</span>
-              <span className="font-semibold text-emerald-600">{v2Stats.total} tables</span>
+              <span className="font-semibold text-emerald-600">
+                {liveData.summary?.summary.tables.v2 || v2Stats.total} tables
+              </span>
             </div>
             <div className="h-5 w-px bg-border" />
             <div className="flex items-center gap-2">
@@ -358,7 +693,13 @@ export default function Home() {
               <span className="text-muted-foreground">Split:</span>
               <span className="font-semibold text-purple-600">{mappingStats.split}</span>
             </div>
-            <div className="ml-auto">
+            <div className="ml-auto flex items-center gap-2">
+              {liveData.summary && (
+                <Badge variant="outline" className="bg-green-50 text-green-600 border-green-200">
+                  <Wifi className="h-3 w-3 mr-1" />
+                  Live
+                </Badge>
+              )}
               <Badge variant="outline" className="bg-primary/5 text-primary border-primary/20">
                 {v2OnlyCount} V2 only
               </Badge>
@@ -385,19 +726,33 @@ export default function Home() {
             ))}
           </div>
 
-          <div className="relative w-80">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input
-              placeholder="Search tables..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10"
-            />
-          </div>
+          {viewMode !== "live" && (
+            <div className="relative w-80">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                placeholder="Search tables..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-10"
+              />
+            </div>
+          )}
         </div>
 
         {/* Content based on view mode */}
         <div className="space-y-4">
+          {viewMode === "live" && (
+            <LiveDataCard
+              summary={liveData.summary}
+              apiGroups={liveData.apiGroups}
+              functions={liveData.functions}
+              tasks={liveData.tasks}
+              isLoading={liveData.isLoading}
+              onRefresh={fetchLiveData}
+              lastUpdated={liveData.lastUpdated}
+            />
+          )}
+
           {viewMode === "mappings" && (
             <>
               {V1_CATEGORIES.map((cat) => {
@@ -487,7 +842,7 @@ export default function Home() {
             V1 → V2 Migration Admin • Frontend Reveals Backend
           </p>
           <p className="mt-1 text-xs">
-            Comparing {v1Stats.total} V1 tables against {v2Stats.total} V2 normalized tables
+            Comparing {liveData.summary?.summary.tables.v1 || v1Stats.total} V1 tables against {liveData.summary?.summary.tables.v2 || v2Stats.total} V2 normalized tables
           </p>
         </div>
       </div>
