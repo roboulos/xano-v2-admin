@@ -736,6 +736,7 @@ export default function Home() {
     tasks: TasksResponse | null
     isLoading: boolean
     lastUpdated: Date | null
+    hasAttempted: boolean
   }>({
     summary: null,
     v1Tables: null,
@@ -745,6 +746,7 @@ export default function Home() {
     tasks: null,
     isLoading: false,
     lastUpdated: null,
+    hasAttempted: false,
   })
 
   // Fetch live data including table schemas
@@ -768,19 +770,30 @@ export default function Home() {
         tasks,
         isLoading: false,
         lastUpdated: new Date(),
+        hasAttempted: true,
       })
     } catch (error) {
       console.error("Failed to fetch live data:", error)
-      setLiveData(prev => ({ ...prev, isLoading: false }))
+      setLiveData(prev => ({
+        ...prev,
+        isLoading: false,
+        v1Tables: null,
+        v2Tables: null,
+        summary: null,
+        apiGroups: null,
+        functions: null,
+        tasks: null,
+        hasAttempted: true,
+      }))
     }
   }
 
   // Fetch on mount when live view is active
   useEffect(() => {
-    if (viewMode === "live" && !liveData.summary && !liveData.isLoading) {
+    if (viewMode === "live" && !liveData.hasAttempted && !liveData.isLoading) {
       fetchLiveData()
     }
-  }, [viewMode])
+  }, [viewMode, liveData.hasAttempted, liveData.isLoading])
 
   // Static stats
   const v1Stats = getV1Stats()
@@ -810,10 +823,10 @@ export default function Home() {
       <div className="container mx-auto py-8 px-4 max-w-7xl">
         {/* Breadcrumb Navigation */}
         <nav className="flex items-center gap-1 text-sm text-muted-foreground mb-4">
-          <Link href="/" className="flex items-center gap-1 hover:text-foreground transition-colors">
+          <div className="flex items-center gap-1">
             <HomeIcon className="h-4 w-4" />
-            <span>Home</span>
-          </Link>
+            <span>Admin</span>
+          </div>
           <ChevronRight className="h-4 w-4" />
           <span className="text-foreground">V1 → V2 Migration</span>
         </nav>
@@ -876,35 +889,34 @@ export default function Home() {
         </div>
 
         {/* View Mode Selector */}
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center gap-2 p-1 bg-muted/50 rounded-xl w-fit">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+          <div className="flex flex-wrap items-center gap-2 p-1 bg-muted/50 rounded-xl w-full sm:w-fit">
             {viewModes.map((mode) => (
               <button
                 key={mode.id}
                 onClick={() => setViewMode(mode.id)}
-                className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all
+                className={`flex items-center gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg text-xs sm:text-sm font-medium transition-all
                   ${viewMode === mode.id
                     ? "bg-background shadow-sm text-foreground"
                     : "text-muted-foreground hover:text-foreground hover:bg-background/50"
                   }`}
               >
                 <mode.icon className="h-4 w-4" />
-                {mode.label}
+                <span className="hidden xs:inline">{mode.label}</span>
+                <span className="xs:hidden">{mode.label.split(' ')[0]}</span>
               </button>
             ))}
           </div>
 
-          {viewMode !== "live" && (
-            <div className="relative w-80">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
-                placeholder="Search tables..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10"
-              />
-            </div>
-          )}
+          <div className="relative w-full sm:w-80">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              placeholder="Search tables..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-10"
+            />
+          </div>
         </div>
 
         {/* Content based on view mode */}
@@ -1004,11 +1016,8 @@ export default function Home() {
 
         {/* Footer */}
         <div className="mt-12 pt-6 border-t text-center text-sm text-muted-foreground">
-          <p>
-            V1 → V2 Migration Admin • Schema Transformation Viewer
-          </p>
-          <p className="mt-1 text-xs">
-            {liveData.summary?.summary.tables.v1 || v1Stats.total} V1 tables → {liveData.summary?.summary.tables.v2 || v2Stats.total} V2 normalized tables • {mappingStats.split} 1:N splits
+          <p className="text-xs">
+            v1.0.0 • Built with Next.js
           </p>
         </div>
       </div>
