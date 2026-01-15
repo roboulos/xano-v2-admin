@@ -1,6 +1,7 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback, useRef } from "react"
+import { useSearchParams } from "next/navigation"
 import {
   Play,
   CheckCircle,
@@ -17,12 +18,13 @@ import {
   Server,
   Beaker,
   AlertTriangle,
-  Info,
   Code,
   Copy,
   Check,
   Activity,
   TrendingUp,
+  Inbox,
+  Download,
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -34,6 +36,23 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 import {
   MCP_ENDPOINTS,
   MCP_BASES,
@@ -100,7 +119,16 @@ function formatTimeAgo(date: Date): string {
   return `${diffHours}h ago`
 }
 
+// Format duration helper - standardized time format
+function formatDuration(ms: number): string {
+  if (ms < 1000) return `${ms}ms`
+  return `${(ms / 1000).toFixed(1)}s`
+}
+
 export function MCPRunner() {
+  // URL params for configurable userId
+  const searchParams = useSearchParams()
+
   // Context settings (persisted)
   const [userId, setUserId] = useState<number>(7) // Default to David Keener
   const [showSettings, setShowSettings] = useState(false)
@@ -113,6 +141,18 @@ export function MCPRunner() {
 
   // Copy to clipboard state
   const [copiedUrl, setCopiedUrl] = useState<string | null>(null)
+
+  // Toast state for cleared results
+  const [showClearedToast, setShowClearedToast] = useState(false)
+
+  // Recent Results collapsed state (persisted)
+  const [resultsCollapsed, setResultsCollapsed] = useState(false)
+
+  // Cancellation ref for stopping sequential runs
+  const cancelRef = useRef(false)
+
+  // Track focused group for keyboard shortcuts
+  const [focusedGroup, setFocusedGroup] = useState<string | null>(null)
 
   // Copy URL to clipboard
   const copyToClipboard = async (url: string) => {
@@ -130,19 +170,43 @@ export function MCPRunner() {
     ? Math.round(results.reduce((sum, r) => sum + r.duration, 0) / results.length)
     : 0
 
-  // Load settings from localStorage
+  // Load settings from URL params or localStorage
   useEffect(() => {
+    // URL params take priority
+    const urlUserId = searchParams.get("userId")
+    if (urlUserId) {
+      const parsed = parseInt(urlUserId, 10)
+      if (!isNaN(parsed)) {
+        setUserId(parsed)
+        return
+      }
+    }
+
+    // Fall back to localStorage
     const saved = localStorage.getItem("mcp-runner-settings")
     if (saved) {
       const settings = JSON.parse(saved)
       if (settings.userId) setUserId(settings.userId)
     }
-  }, [])
+
+    // Load results collapsed state
+    const collapsedState = localStorage.getItem("mcp-runner-results-collapsed")
+    if (collapsedState !== null) {
+      setResultsCollapsed(collapsedState === "true")
+    }
+  }, [searchParams])
 
   // Save settings
   const saveSettings = () => {
     localStorage.setItem("mcp-runner-settings", JSON.stringify({ userId }))
     setShowSettings(false)
+  }
+
+  // Toggle results collapsed state with persistence
+  const toggleResultsCollapsed = () => {
+    const newState = !resultsCollapsed
+    setResultsCollapsed(newState)
+    localStorage.setItem("mcp-runner-results-collapsed", String(newState))
   }
 
   // Run an endpoint and normalize response to FP Result pattern
@@ -230,10 +294,77 @@ export function MCPRunner() {
 
   // Run all endpoints in a group (sequentially to avoid overwhelming the server)
   const runAllEndpoints = async (endpoints: MCPEndpoint[]) => {
+    cancelRef.current = false
     for (const endpoint of endpoints) {
+      if (cancelRef.current) break
       await runEndpoint(endpoint)
     }
   }
+
+  // Cancel running tests
+  const cancelRunning = useCallback(() => {
+    cancelRef.current = true
+  }, [])
+
+  // Export results as JSON
+  const exportResults = useCallback(() => {
+    const exportData = {
+      exportedAt: new Date().toISOString(),
+      userId,
+      summary: {
+        total: results.length,
+        passed: passedCount,
+        failed: failedCount,
+        avgDuration,
+      },
+      results: results.map(r => ({
+        endpoint: r.endpoint,
+        taskName: r.taskName,
+        success: r.success,
+        duration: r.duration,
+        timestamp: r.timestamp.toISOString(),
+        responseType: r.responseType,
+        step: r.step,
+        error: r.error,
+        code: r.code,
+        data: r.data,
+      })),
+    }
+
+    const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: "application/json" })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement("a")
+    a.href = url
+    a.download = `mcp-results-${new Date().toISOString().split("T")[0]}.json`
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+    URL.revokeObjectURL(url)
+  }, [results, userId, passedCount, failedCount, avgDuration])
+
+  // Keyboard shortcuts
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Escape: Cancel running tests
+      if (e.key === "Escape" && runningCount > 0) {
+        e.preventDefault()
+        cancelRunning()
+      }
+
+      // Cmd/Ctrl+Enter: Run all in focused group (or first group)
+      if ((e.metaKey || e.ctrlKey) && e.key === "Enter") {
+        e.preventDefault()
+        const targetGroup = focusedGroup || "TASKS"
+        const endpoints = getEndpointsByGroup(targetGroup as "TASKS" | "WORKERS" | "SYSTEM" | "SEEDING")
+        if (endpoints.length > 0 && runningCount === 0) {
+          runAllEndpoints(endpoints)
+        }
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown)
+    return () => window.removeEventListener("keydown", handleKeyDown)
+  }, [focusedGroup, runningCount, cancelRunning])
 
   // Group endpoints by API group
   const groups = ["TASKS", "WORKERS", "SYSTEM", "SEEDING"] as const
@@ -270,7 +401,7 @@ export function MCPRunner() {
             <CardContent className="pt-0 pb-4 border-t">
               <div className="grid gap-4 mt-4">
                 <div className="grid gap-2">
-                  <Label htmlFor="userId">User ID</Label>
+                  <Label htmlFor="userId" className="font-medium">User ID</Label>
                   <Input
                     id="userId"
                     type="number"
@@ -278,9 +409,14 @@ export function MCPRunner() {
                     onChange={(e) => setUserId(parseInt(e.target.value) || 7)}
                     placeholder="7"
                   />
-                  <p className="text-xs text-muted-foreground">
-                    Common IDs: 7 (David Keener), 256 (Katie Grow), 133 (Brad Walton)
-                  </p>
+                  <div className="space-y-1">
+                    <p className="text-xs text-muted-foreground">
+                      Used for endpoints that require user context (e.g., user-specific syncs, data queries).
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      <span className="font-medium">Common IDs:</span> 7 (David Keener), 256 (Katie Grow), 133 (Brad Walton)
+                    </p>
+                  </div>
                 </div>
                 <Button onClick={saveSettings} className="w-fit">
                   Save Settings
@@ -323,13 +459,18 @@ export function MCPRunner() {
             <p className="text-xs text-muted-foreground">tests</p>
           </CardContent>
         </Card>
-        <Card className={`border-2 ${runningCount > 0 ? "bg-blue-50 border-blue-300 animate-pulse" : "bg-slate-50 border-slate-200"}`}>
+        <Card
+          className={`border-2 ${runningCount > 0 ? "bg-blue-50 border-blue-300 animate-pulse" : "bg-slate-50 border-slate-200"}`}
+          role="status"
+          aria-live="polite"
+          aria-label={runningCount > 0 ? `${runningCount} tests running` : "No tests running"}
+        >
           <CardContent className="pt-4 text-center">
             <div className="flex items-center justify-center gap-2 mb-1">
               {runningCount > 0 ? (
-                <Loader2 className="h-4 w-4 text-blue-600 animate-spin" />
+                <Loader2 className="h-4 w-4 text-blue-600 animate-spin" aria-hidden="true" />
               ) : (
-                <Activity className="h-4 w-4 text-slate-400" />
+                <Activity className="h-4 w-4 text-slate-400" aria-hidden="true" />
               )}
               <span className={`font-medium text-sm ${runningCount > 0 ? "text-blue-600" : "text-slate-400"}`}>Running</span>
             </div>
@@ -358,7 +499,7 @@ export function MCPRunner() {
           const groupPassed = groupResults.filter(r => r?.success).length
           const groupTested = groupResults.length
           return (
-            <Card key={group} className={`${groupBgColors[group]} transition-all hover:shadow-md cursor-pointer`}>
+            <Card key={group} className={`${groupBgColors[group]} transition-all`}>
               <CardContent className="pt-3 pb-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
@@ -369,7 +510,19 @@ export function MCPRunner() {
                   </div>
                   <div className="flex items-center gap-2">
                     {groupTested > 0 && (
-                      <Badge variant="outline" className={`text-xs ${groupPassed === groupTested ? "bg-green-100 text-green-700" : "bg-amber-100 text-amber-700"}`}>
+                      <Badge
+                        variant="outline"
+                        className={`text-xs border ${
+                          groupPassed === groupTested
+                            ? "bg-green-100 text-green-800 border-green-400"
+                            : "bg-amber-100 text-amber-800 border-amber-400"
+                        }`}
+                      >
+                        {groupPassed === groupTested ? (
+                          <CheckCircle className="h-3 w-3 mr-1 inline" aria-hidden="true" />
+                        ) : (
+                          <AlertTriangle className="h-3 w-3 mr-1 inline" aria-hidden="true" />
+                        )}
                         {groupPassed}/{groupTested}
                       </Badge>
                     )}
@@ -383,51 +536,140 @@ export function MCPRunner() {
       </div>
 
       {/* Recent Results - FP-Style Display (Sticky) */}
-      {results.length > 0 && (
+      {results.length > 0 ? (
         <Card className="sticky top-4 z-10 shadow-lg border-2 border-slate-300">
           <CardHeader className="py-3 bg-slate-50">
             <div className="flex items-center justify-between">
-              <CardTitle className="text-sm flex items-center gap-2">
-                <Clock className="h-4 w-4" />
-                Recent Results
-                <Badge variant="outline" className={`text-xs ml-2 ${
-                  passedCount === results.length
-                    ? "bg-green-100 text-green-700 border-green-300"
-                    : failedCount > 0
-                      ? "bg-red-100 text-red-700 border-red-300"
-                      : "bg-white"
-                }`}>
-                  {passedCount}/{results.length} passed
-                </Badge>
-              </CardTitle>
+              <button
+                onClick={toggleResultsCollapsed}
+                className="flex items-center gap-2 hover:bg-black/5 rounded px-2 py-1 -ml-2 transition-colors"
+              >
+                {resultsCollapsed ? (
+                  <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                ) : (
+                  <ChevronDown className="h-4 w-4 text-muted-foreground" />
+                )}
+                <CardTitle className="text-sm flex items-center gap-2">
+                  <Clock className="h-4 w-4" aria-hidden="true" />
+                  Recent Results
+                  <Badge
+                    variant="outline"
+                    className={`text-xs ml-2 border ${
+                      passedCount === results.length
+                        ? "bg-green-100 text-green-800 border-green-400"
+                        : failedCount > 0
+                          ? "bg-red-100 text-red-800 border-red-400"
+                          : "bg-white"
+                    }`}
+                    aria-live="polite"
+                  >
+                    {passedCount === results.length ? (
+                      <CheckCircle className="h-3 w-3 mr-1 inline" aria-hidden="true" />
+                    ) : failedCount > 0 ? (
+                      <XCircle className="h-3 w-3 mr-1 inline" aria-hidden="true" />
+                    ) : null}
+                    {passedCount}/{results.length} passed
+                  </Badge>
+                </CardTitle>
+              </button>
               <div className="flex items-center gap-3">
                 {/* Data freshness indicator */}
-                <div className="flex items-center gap-1.5 text-xs text-muted-foreground bg-white px-2 py-1 rounded border">
-                  <RefreshCw className="h-3 w-3" />
-                  <span>Last run: {formatTimeAgo(results[0].timestamp)}</span>
-                </div>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => {
-                    setResults([])
-                    setLastResults(new Map())
-                  }}
-                  className="text-muted-foreground hover:text-red-600"
-                >
-                  Clear All
-                </Button>
+                {!resultsCollapsed && (
+                  <div className="flex items-center gap-1.5 text-xs text-muted-foreground bg-white px-2 py-1 rounded border">
+                    <RefreshCw className="h-3 w-3" />
+                    <span>Last run: {formatTimeAgo(results[0].timestamp)}</span>
+                  </div>
+                )}
+                {/* Export button */}
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={exportResults}
+                        className="text-muted-foreground hover:text-blue-600"
+                        aria-label="Export test results as JSON"
+                      >
+                        <Download className="h-4 w-4 mr-1" />
+                        Export
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Download results as JSON</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="text-muted-foreground hover:text-red-600"
+                      aria-label="Clear all test results"
+                    >
+                      Clear All
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>Clear all results?</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        This will clear all {results.length} test results. This action cannot be undone.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction
+                        onClick={() => {
+                          setResults([])
+                          setLastResults(new Map())
+                          setShowClearedToast(true)
+                          setTimeout(() => setShowClearedToast(false), 2000)
+                        }}
+                        className="bg-destructive text-white hover:bg-destructive/90"
+                      >
+                        Clear All
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
               </div>
             </div>
           </CardHeader>
-          <CardContent className="pt-0 max-h-64 overflow-y-auto">
-            <div className="space-y-2">
-              {results.map((result, idx) => (
-                <ResultCard key={idx} result={result} />
-              ))}
-            </div>
+          {!resultsCollapsed && (
+            <CardContent className="pt-0 max-h-64 overflow-y-auto" role="log" aria-label="Test results">
+              <div className="space-y-2">
+                {results.map((result, idx) => (
+                  <ResultCard key={idx} result={result} />
+                ))}
+              </div>
+            </CardContent>
+          )}
+        </Card>
+      ) : (
+        /* Empty State - No results yet */
+        <Card className="border-2 border-dashed border-slate-200">
+          <CardContent className="py-12 text-center">
+            <Inbox className="h-12 w-12 mx-auto text-slate-300 mb-4" aria-hidden="true" />
+            <h3 className="text-lg font-medium text-slate-600 mb-1">No test results yet</h3>
+            <p className="text-sm text-muted-foreground">
+              Run an endpoint to see results here.
+            </p>
           </CardContent>
         </Card>
+      )}
+
+      {/* Cleared Toast Notification */}
+      {showClearedToast && (
+        <div
+          className="fixed bottom-4 right-4 bg-slate-800 text-white px-4 py-2 rounded-lg shadow-lg flex items-center gap-2 z-50"
+          role="status"
+          aria-live="polite"
+        >
+          <Check className="h-4 w-4 text-green-400" aria-hidden="true" />
+          <span>Results cleared</span>
+        </div>
       )}
 
       {/* Endpoints by Group */}
@@ -460,6 +702,7 @@ export function MCPRunner() {
 // FP-Style Result Card - Shows error chains and step information
 function ResultCard({ result }: { result: RunResult }) {
   const [expanded, setExpanded] = useState(false)
+  const [errorExpanded, setErrorExpanded] = useState(false)
 
   // Response type badge colors
   const responseTypeColors = {
@@ -468,6 +711,14 @@ function ResultCard({ result }: { result: RunResult }) {
     "validation-error": "bg-orange-100 text-orange-700",
     "network-error": "bg-red-100 text-red-700",
   }
+
+  // Truncate error message if too long
+  const ERROR_TRUNCATE_LENGTH = 100
+  const errorMessage = result.error || ""
+  const isErrorLong = errorMessage.length > ERROR_TRUNCATE_LENGTH
+  const displayError = isErrorLong && !errorExpanded
+    ? errorMessage.slice(0, ERROR_TRUNCATE_LENGTH) + "..."
+    : errorMessage
 
   return (
     <Collapsible open={expanded} onOpenChange={setExpanded}>
@@ -497,7 +748,7 @@ function ResultCard({ result }: { result: RunResult }) {
                 {result.responseType}
               </Badge>
               <Badge variant="outline" className="text-xs">
-                {result.duration}ms
+                {formatDuration(result.duration)}
               </Badge>
               {expanded ? (
                 <ChevronDown className="h-4 w-4 text-muted-foreground" />
@@ -508,12 +759,23 @@ function ResultCard({ result }: { result: RunResult }) {
           </div>
         </CollapsibleTrigger>
 
-        {/* Error message preview */}
+        {/* Error message preview with truncation */}
         {!expanded && result.error ? (
           <div className="px-3 pb-2 -mt-1">
             <div className="flex items-center gap-2 text-xs text-red-600">
-              <AlertTriangle className="h-3 w-3" />
-              <span className="truncate">{result.error}</span>
+              <AlertTriangle className="h-3 w-3 shrink-0" />
+              <span className={errorExpanded ? "" : ""}>{displayError}</span>
+              {isErrorLong && (
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    setErrorExpanded(!errorExpanded)
+                  }}
+                  className="text-red-500 hover:text-red-700 underline shrink-0 font-medium"
+                >
+                  {errorExpanded ? "Show less" : "Show more"}
+                </button>
+              )}
             </div>
           </div>
         ) : null}
@@ -633,28 +895,37 @@ function EndpointGroup({
                   : `Run all ${endpoints.length} endpoints in this group`
                 }
               </span>
-              <Button
-                size="sm"
-                variant="outline"
-                onClick={(e) => {
-                  e.stopPropagation()
-                  onRunAll(endpoints)
-                }}
-                disabled={isAnyRunning}
-                className="shrink-0"
-              >
-                {isAnyRunning ? (
-                  <>
-                    <Loader2 className="h-4 w-4 animate-spin mr-1" />
-                    Running {runningCount}/{endpoints.length}
-                  </>
-                ) : (
-                  <>
-                    <Play className="h-4 w-4 mr-1" />
-                    Run All ({endpoints.length})
-                  </>
-                )}
-              </Button>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        onRunAll(endpoints)
+                      }}
+                      disabled={isAnyRunning}
+                      className="shrink-0"
+                    >
+                      {isAnyRunning ? (
+                        <>
+                          <Loader2 className="h-4 w-4 animate-spin mr-1" />
+                          Running {runningCount}/{endpoints.length}
+                        </>
+                      ) : (
+                        <>
+                          <Play className="h-4 w-4 mr-1" />
+                          Run All ({endpoints.length})
+                        </>
+                      )}
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Runs all endpoints in this group sequentially</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             </div>
             <div className="space-y-2">
               {endpoints.map(endpoint => {
@@ -711,7 +982,7 @@ function EndpointGroup({
                             ) : (
                               <XCircle className="h-3 w-3" />
                             )}
-                            <span>{lastResult.duration}ms</span>
+                            <span>{formatDuration(lastResult.duration)}</span>
                           </span>
                         )}
                       </div>
@@ -720,23 +991,35 @@ function EndpointGroup({
                           {endpoint.method} {endpoint.endpoint}
                         </code>
                         {/* Copy URL button */}
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="h-5 w-5 p-0 opacity-50 hover:opacity-100"
-                          onClick={(e) => {
-                            e.stopPropagation()
-                            const baseUrl = MCP_BASES[endpoint.apiGroup]
-                            onCopyUrl(`${baseUrl}${endpoint.endpoint}`)
-                          }}
-                          title="Copy URL"
-                        >
-                          {copiedUrl?.endsWith(endpoint.endpoint) ? (
-                            <Check className="h-3 w-3 text-green-600" />
-                          ) : (
-                            <Copy className="h-3 w-3" />
-                          )}
-                        </Button>
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="h-6 px-1.5 opacity-70 hover:opacity-100 hover:bg-slate-100 transition-all"
+                                onClick={(e) => {
+                                  e.stopPropagation()
+                                  const baseUrl = MCP_BASES[endpoint.apiGroup]
+                                  onCopyUrl(`${baseUrl}${endpoint.endpoint}`)
+                                }}
+                                aria-label="Copy endpoint URL"
+                              >
+                                {copiedUrl?.endsWith(endpoint.endpoint) ? (
+                                  <>
+                                    <Check className="h-3 w-3 text-green-600" />
+                                    <span className="ml-1 text-xs text-green-600">Copied</span>
+                                  </>
+                                ) : (
+                                  <Copy className="h-3 w-3" />
+                                )}
+                              </Button>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>Copy endpoint URL</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
                       </div>
                       <p className="text-xs text-muted-foreground mt-0.5">
                         {endpoint.description}
