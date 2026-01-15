@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect, useCallback } from "react"
-import { Zap, Layers, GitBranch, Database, Clock, CheckCircle, XCircle, ListTree, LayoutGrid, List, Network, TableIcon, Sparkles, Play } from "lucide-react"
+import { Zap, Layers, GitBranch, Database, Clock, CheckCircle, XCircle, ListTree, LayoutGrid, List, Network, TableIcon, Sparkles, Play, Cog } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 
 // Task Control Components
@@ -19,6 +19,9 @@ import { MCPRunner } from "@/components/tasks/mcp-runner"
 // Legacy tabs (kept for optional access)
 import { DataFlowDiagram } from "@/components/data-flow/data-flow-diagram"
 
+// Machine Diagram - The unified visualization
+import { MachineDiagram } from "@/components/machine/machine-diagram"
+
 // Hooks
 import { useActivityLog } from "@/hooks/use-activity-log"
 import { useTaskRunner } from "@/hooks/use-task-runner"
@@ -27,7 +30,7 @@ import { useTaskRunner } from "@/hooks/use-task-runner"
 import type { BackgroundTask } from "@/lib/types-v2"
 import { BACKGROUND_TASKS, getTaskStats } from "@/lib/api-v2"
 
-type ViewMode = "tasks" | "dataflow" | "legacy"
+type ViewMode = "machine" | "tasks" | "dataflow" | "legacy"
 type TaskViewMode = "runner" | "master" | "all" | "list" | "hierarchy" | "domain" | "triggers"
 
 export default function Home() {
@@ -66,6 +69,7 @@ export default function Home() {
   }, [])
 
   const viewModes = [
+    { id: "machine" as ViewMode, label: "The Machine", icon: Cog },
     { id: "tasks" as ViewMode, label: "Task Control", icon: Zap },
     { id: "dataflow" as ViewMode, label: "Data Flow", icon: GitBranch },
     { id: "legacy" as ViewMode, label: "Legacy View", icon: Layers },
@@ -142,6 +146,8 @@ export default function Home() {
         </div>
 
         {/* Main Content */}
+        {viewMode === "machine" && <MachineDiagram />}
+
         {viewMode === "tasks" && (
           <>
             {/* Task View Mode Toggle */}
