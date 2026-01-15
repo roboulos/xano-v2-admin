@@ -535,9 +535,9 @@ export function MCPRunner() {
         })}
       </div>
 
-      {/* Recent Results - FP-Style Display (Sticky) */}
+      {/* Recent Results - FP-Style Display */}
       {results.length > 0 ? (
-        <Card className="sticky top-4 z-10 shadow-lg border-2 border-slate-300">
+        <Card className="border border-slate-200">
           <CardHeader className="py-3 bg-slate-50">
             <div className="flex items-center justify-between">
               <button
