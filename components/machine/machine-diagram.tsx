@@ -115,47 +115,21 @@ interface TableCounts {
 // DEMO USER DATA (from v0-demo-sync-admin-interface CLAUDE.md)
 // =============================================================================
 
+// V2 Test User - David Keener (User 60) is the primary test user for this workspace
 const DEMO_USERS: DemoUser[] = [
   {
-    id: 7,
-    name: "Michael Johnson",
-    email: "michael@demo.agentdashboards.com",
+    id: 60,
+    name: "David Keener",
+    email: "Dave@premieregrp.com",
     sourceUser: "David Keener",
     type: "team-owner",
     role: "Admin / Team Owner",
-    description: "Full access to roster, listings, transactions, network. Can emulate other users.",
-    teamName: "TEXAS PREMIER HOMES",
+    description: "Full access to roster, listings, transactions, network. Primary V2 test user.",
+    teamName: "PREMIERE GROUP",
     apiKeys: { rezen: true, fub: true, skyslope: true },
     dataAccess: { roster: true, listings: true, transactions: true, network: true, leads: true },
-    queryPattern: "Queries by team_id (owns team_id=1)",
+    queryPattern: "Queries by team_id=1, agent_id=37208",
     stats: { teamMembers: 280, networkAgents: 399, transactions: 3743, listings: 48 }
-  },
-  {
-    id: 256,
-    name: "Sarah Williams",
-    email: "sarah@demo.agentdashboards.com",
-    sourceUser: "Katie Grow",
-    type: "team-member",
-    role: "Team Member (Producing)",
-    description: "Sees own transactions + team context. Limited roster access.",
-    teamName: "METRO REAL ESTATE",
-    apiKeys: { rezen: true, fub: true, skyslope: false },
-    dataAccess: { roster: false, listings: true, transactions: true, network: true, leads: true },
-    queryPattern: "Queries by team_id (member of team)",
-    stats: { networkAgents: 45, transactions: 127, listings: 12 }
-  },
-  {
-    id: 133,
-    name: "James Anderson",
-    email: "james@demo.agentdashboards.com",
-    sourceUser: "Brad Walton",
-    type: "network-builder",
-    role: "Network Builder",
-    description: "Transactions + network only. NO roster or listings access.",
-    apiKeys: { rezen: true, fub: false, skyslope: false },
-    dataAccess: { roster: false, listings: false, transactions: true, network: true, leads: false },
-    queryPattern: "Queries by transaction_owner_agent_id (NOT team_id)",
-    stats: { networkAgents: 89, transactions: 234 }
   }
 ]
 
@@ -1214,7 +1188,7 @@ function DemoUserCard({
 export function MachineDiagram() {
   const [activeSection, setActiveSection] = useState<"crank" | "tables" | "journey">("journey")
   const [runStatus, setRunStatus] = useState<RunStatus>({})
-  const [userId, setUserId] = useState(7) // Default to David Keener / Michael Johnson
+  const [userId, setUserId] = useState(60) // Default to David Keener (V2 test user)
   const [activeJourneyStep, setActiveJourneyStep] = useState(1)
   const [selectedDemoUser, setSelectedDemoUser] = useState<DemoUser>(DEMO_USERS[0])
   const [tableCounts, setTableCounts] = useState<TableCounts>({})
@@ -1397,9 +1371,8 @@ export function MachineDiagram() {
                   </TooltipTrigger>
                   <TooltipContent>
                     <p>Workers/ functions require a user_id.<br/>
-                    Michael (7) = Team Owner<br/>
-                    Sarah (256) = Team Member<br/>
-                    James (133) = Network Builder</p>
+                    David Keener (60) = V2 Test User<br/>
+                    team_id=1, agent_id=37208</p>
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
