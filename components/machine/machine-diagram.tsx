@@ -1212,7 +1212,7 @@ function DemoUserCard({
 // =============================================================================
 
 export function MachineDiagram() {
-  const [activeSection, setActiveSection] = useState<"crank" | "tables" | "journey">("crank")
+  const [activeSection, setActiveSection] = useState<"crank" | "tables" | "journey">("journey")
   const [runStatus, setRunStatus] = useState<RunStatus>({})
   const [userId, setUserId] = useState(7) // Default to David Keener / Michael Johnson
   const [activeJourneyStep, setActiveJourneyStep] = useState(1)
@@ -1308,7 +1308,7 @@ export function MachineDiagram() {
           The Machine
         </h2>
         <p className="text-muted-foreground max-w-2xl mx-auto">
-          How data flows from external APIs → through background tasks → into tables → to the user's dashboard
+          From the user's dashboard → through the tables → via background tasks → to external APIs
         </p>
       </div>
 
@@ -1316,9 +1316,9 @@ export function MachineDiagram() {
       <div className="flex justify-center">
         <div className="inline-flex items-center gap-1 p-1.5 bg-muted/50 backdrop-blur-sm rounded-xl border shadow-sm">
           {[
-            { id: "crank" as const, label: "The Crank", icon: GitBranch, desc: "Call chains" },
-            { id: "tables" as const, label: "The Tables", icon: Database, desc: "Data zones" },
             { id: "journey" as const, label: "The User", icon: Users, desc: "Data journey" },
+            { id: "tables" as const, label: "The Tables", icon: Database, desc: "Data zones" },
+            { id: "crank" as const, label: "The Crank", icon: GitBranch, desc: "Call chains" },
           ].map(tab => (
             <button
               key={tab.id}
