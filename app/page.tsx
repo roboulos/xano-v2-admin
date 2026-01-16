@@ -91,7 +91,7 @@ export default function Home() {
             ))}
           </div>
           <Badge variant="outline" className="text-xs">
-            V2 Workspace • {stats.total} tasks • {stats.active} active
+            V2 Workspace • 218 Background Tasks • 109 Tasks/ • 203 Workers/
           </Badge>
         </div>
 

@@ -70,9 +70,9 @@ export function TaskCenterView() {
         {/* Render the selected advanced view */}
         {advancedView === "master" && <MasterTaskView />}
         {advancedView === "all" && <AllTasksTable />}
-        {advancedView === "list" && <TaskListView isRunning={null} onRunTask={() => {}} />}
-        {advancedView === "hierarchy" && <HierarchyView isRunning={null} onRunTask={() => {}} />}
-        {advancedView === "domain" && <DomainGrid isRunning={null} onRunTask={() => {}} />}
+        {advancedView === "list" && <TaskListView isRunning={() => false} onRunTask={() => {}} />}
+        {advancedView === "hierarchy" && <HierarchyView isRunning={() => false} onRunTask={() => {}} />}
+        {advancedView === "domain" && <DomainGrid isRunning={() => false} onRunTask={() => {}} />}
         {advancedView === "triggers" && <TriggerChainView />}
       </div>
     )
