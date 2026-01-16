@@ -48,7 +48,7 @@ const TOOL_CARDS: ToolCard[] = [
     title: "Function Inventory",
     description: "Catalog of Workers, Tasks, Background Tasks, and Endpoints",
     icon: Archive,
-    badge: "382 functions",
+    badge: "530 functions",
     color: "bg-blue-100 text-blue-600",
   },
   {
@@ -77,10 +77,11 @@ const MACHINE2_TOOLS = [
   { name: "Frontend API", description: "51 endpoints documentation", icon: Code },
 ]
 
+// Real function counts from V2 Xano Workspace (queried 2026-01-16 via Xano MCP)
 const INVENTORY_LINKS = [
-  { name: "Workers", count: 194, href: "/inventory/workers" },
-  { name: "Background Tasks", count: 100, href: "/inventory/background-tasks" },
-  { name: "Tasks", count: 50, href: "/inventory/tasks" },
+  { name: "Background Tasks", count: 218, href: "/inventory/background-tasks" },
+  { name: "Tasks/", count: 109, href: "/inventory/tasks" },
+  { name: "Workers/", count: 203, href: "/inventory/workers" },
   { name: "Test Endpoints", count: 38, href: "/inventory/test-endpoints" },
 ]
 
@@ -234,19 +235,19 @@ export function WorkspaceToolsView() {
         </CardContent>
       </Card>
 
-      {/* Quick Stats */}
+      {/* Quick Stats - Real counts from V2 Xano Workspace */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div className="p-4 bg-muted/30 rounded-lg text-center">
-          <p className="text-2xl font-bold">194</p>
-          <p className="text-sm text-muted-foreground">Workers</p>
-        </div>
-        <div className="p-4 bg-muted/30 rounded-lg text-center">
-          <p className="text-2xl font-bold">100</p>
+          <p className="text-2xl font-bold">218</p>
           <p className="text-sm text-muted-foreground">Background Tasks</p>
         </div>
         <div className="p-4 bg-muted/30 rounded-lg text-center">
-          <p className="text-2xl font-bold">51</p>
-          <p className="text-sm text-muted-foreground">API Endpoints</p>
+          <p className="text-2xl font-bold">109</p>
+          <p className="text-sm text-muted-foreground">Tasks/</p>
+        </div>
+        <div className="p-4 bg-muted/30 rounded-lg text-center">
+          <p className="text-2xl font-bold">203</p>
+          <p className="text-sm text-muted-foreground">Workers/</p>
         </div>
         <div className="p-4 bg-muted/30 rounded-lg text-center">
           <p className="text-2xl font-bold">10</p>
