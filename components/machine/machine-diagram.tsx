@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useCallback } from "react"
+import { useState, useCallback, useEffect } from "react"
 import {
   ChevronDown,
   ChevronRight,
@@ -20,7 +20,14 @@ import {
   Info,
   RefreshCw,
   Copy,
-  Check
+  Check,
+  Building2,
+  Phone,
+  FileText,
+  User,
+  Crown,
+  Network,
+  Key
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { MCP_BASES } from "@/lib/mcp-endpoints"
@@ -56,6 +63,37 @@ interface TableInfo {
   loading?: boolean
 }
 
+// Demo user personas from v0-demo-sync-admin-interface
+interface DemoUser {
+  id: number
+  name: string
+  email: string
+  sourceUser: string
+  type: "team-owner" | "team-member" | "network-builder"
+  role: string
+  description: string
+  teamName?: string
+  apiKeys: {
+    rezen: boolean
+    fub: boolean
+    skyslope: boolean
+  }
+  dataAccess: {
+    roster: boolean
+    listings: boolean
+    transactions: boolean
+    network: boolean
+    leads: boolean
+  }
+  queryPattern: string
+  stats: {
+    teamMembers?: number
+    networkAgents?: number
+    transactions?: number
+    listings?: number
+  }
+}
+
 interface TableGroup {
   id: string
   name: string
@@ -68,6 +106,58 @@ interface TableGroup {
 interface RunStatus {
   [key: string]: "idle" | "running" | "success" | "error"
 }
+
+interface TableCounts {
+  [tableName: string]: number
+}
+
+// =============================================================================
+// DEMO USER DATA (from v0-demo-sync-admin-interface CLAUDE.md)
+// =============================================================================
+
+const DEMO_USERS: DemoUser[] = [
+  {
+    id: 7,
+    name: "Michael Johnson",
+    email: "michael@demo.agentdashboards.com",
+    sourceUser: "David Keener",
+    type: "team-owner",
+    role: "Admin / Team Owner",
+    description: "Full access to roster, listings, transactions, network. Can emulate other users.",
+    teamName: "TEXAS PREMIER HOMES",
+    apiKeys: { rezen: true, fub: true, skyslope: true },
+    dataAccess: { roster: true, listings: true, transactions: true, network: true, leads: true },
+    queryPattern: "Queries by team_id (owns team_id=1)",
+    stats: { teamMembers: 280, networkAgents: 399, transactions: 3743, listings: 48 }
+  },
+  {
+    id: 256,
+    name: "Sarah Williams",
+    email: "sarah@demo.agentdashboards.com",
+    sourceUser: "Katie Grow",
+    type: "team-member",
+    role: "Team Member (Producing)",
+    description: "Sees own transactions + team context. Limited roster access.",
+    teamName: "METRO REAL ESTATE",
+    apiKeys: { rezen: true, fub: true, skyslope: false },
+    dataAccess: { roster: false, listings: true, transactions: true, network: true, leads: true },
+    queryPattern: "Queries by team_id (member of team)",
+    stats: { networkAgents: 45, transactions: 127, listings: 12 }
+  },
+  {
+    id: 133,
+    name: "James Anderson",
+    email: "james@demo.agentdashboards.com",
+    sourceUser: "Brad Walton",
+    type: "network-builder",
+    role: "Network Builder",
+    description: "Transactions + network only. NO roster or listings access.",
+    apiKeys: { rezen: true, fub: false, skyslope: false },
+    dataAccess: { roster: false, listings: false, transactions: true, network: true, leads: false },
+    queryPattern: "Queries by transaction_owner_agent_id (NOT team_id)",
+    stats: { networkAgents: 89, transactions: 234 }
+  }
+]
 
 // =============================================================================
 // THE MACHINE DATA
@@ -398,6 +488,31 @@ const USER_JOURNEY = [
     tables: ["agg_revenue_*", "agg_transactions_*", "agg_network_*"],
     description: "Queries pre-computed aggregations for instant load",
     icon: Zap
+  }
+]
+
+// API Key integration info
+const API_INTEGRATIONS = [
+  {
+    id: "rezen",
+    name: "reZEN",
+    description: "Real Brokerage API - transactions, listings, network, commissions",
+    color: "emerald",
+    tables: ["transaction", "listing", "network", "contribution", "participant"]
+  },
+  {
+    id: "fub",
+    name: "Follow Up Boss",
+    description: "CRM - contacts, calls, appointments, events, texts",
+    color: "violet",
+    tables: ["fub_people", "fub_calls", "fub_appointments", "fub_events", "fub_texts"]
+  },
+  {
+    id: "skyslope",
+    name: "SkySlope",
+    description: "Transaction management - documents, disclosures",
+    color: "sky",
+    tables: ["closing_disclosure"]
   }
 ]
 
@@ -734,6 +849,119 @@ function TableGroupCard({ group }: { group: TableGroup }) {
   )
 }
 
+function TableGroupCardWithCounts({ group, counts }: { group: TableGroup; counts: TableCounts }) {
+  const [expanded, setExpanded] = useState(false)
+
+  const colorStyles: Record<string, { bg: string; border: string; badge: string }> = {
+    amber: {
+      bg: "bg-gradient-to-br from-amber-500/5 to-yellow-500/5",
+      border: "border-amber-500/20",
+      badge: "bg-amber-500/10 text-amber-700"
+    },
+    emerald: {
+      bg: "bg-gradient-to-br from-emerald-500/5 to-green-500/5",
+      border: "border-emerald-500/20",
+      badge: "bg-emerald-500/10 text-emerald-700"
+    },
+    violet: {
+      bg: "bg-gradient-to-br from-violet-500/5 to-purple-500/5",
+      border: "border-violet-500/20",
+      badge: "bg-violet-500/10 text-violet-700"
+    },
+    sky: {
+      bg: "bg-gradient-to-br from-sky-500/5 to-blue-500/5",
+      border: "border-sky-500/20",
+      badge: "bg-sky-500/10 text-sky-700"
+    },
+    slate: {
+      bg: "bg-gradient-to-br from-slate-500/5 to-gray-500/5",
+      border: "border-slate-500/20",
+      badge: "bg-slate-500/10 text-slate-700"
+    },
+  }
+
+  const style = colorStyles[group.color]
+
+  // Calculate total from live counts
+  const totalLiveCount = group.tables.reduce((sum, table) => {
+    const liveCount = counts[table.name]
+    return sum + (liveCount || 0)
+  }, 0)
+
+  return (
+    <div className={cn(
+      "rounded-xl border p-4 transition-all hover:shadow-md",
+      style.bg,
+      style.border
+    )}>
+      <button
+        className="flex items-center gap-3 w-full text-left"
+        onClick={() => setExpanded(!expanded)}
+      >
+        <div className={cn("p-2 rounded-lg", style.badge)}>
+          <Database className="h-4 w-4" />
+        </div>
+        <div className="flex-1">
+          <div className="flex items-center gap-2">
+            <span className="font-semibold">{group.name}</span>
+            <span className={cn("text-xs px-2 py-0.5 rounded-full", style.badge)}>
+              {group.tables.length} tables
+            </span>
+            {totalLiveCount > 0 && (
+              <span className="text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20">
+                {totalLiveCount.toLocaleString()} records
+              </span>
+            )}
+          </div>
+          <p className="text-xs text-muted-foreground mt-0.5">{group.description}</p>
+        </div>
+        {expanded ? (
+          <ChevronDown className="h-4 w-4 text-muted-foreground" />
+        ) : (
+          <ChevronRight className="h-4 w-4 text-muted-foreground" />
+        )}
+      </button>
+
+      {expanded && (
+        <div className="mt-4 space-y-1.5">
+          {group.tables.map(table => {
+            const liveCount = counts[table.name]
+            return (
+              <div
+                key={table.name}
+                className="flex items-center justify-between p-2.5 rounded-lg bg-background/80 border hover:border-primary/30 transition-colors group"
+              >
+                <div className="flex items-center gap-2">
+                  <span className="font-mono text-xs font-medium">{table.name}</span>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <Info className="h-3 w-3 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>{table.purpose}</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </div>
+                <div className="flex items-center gap-2">
+                  {liveCount !== undefined ? (
+                    <span className="text-xs font-mono text-primary font-medium">
+                      {liveCount.toLocaleString()}
+                    </span>
+                  ) : (
+                    <span className="text-xs text-muted-foreground font-mono">{table.count}</span>
+                  )}
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      )}
+    </div>
+  )
+}
+
 function UserJourneyStep({
   step,
   isLast,
@@ -797,6 +1025,188 @@ function UserJourneyStep({
   )
 }
 
+function DemoUserCard({
+  user,
+  isSelected,
+  onClick
+}: {
+  user: DemoUser
+  isSelected: boolean
+  onClick: () => void
+}) {
+  const typeStyles = {
+    "team-owner": {
+      bg: "bg-gradient-to-br from-amber-500/10 to-orange-500/10",
+      border: "border-amber-500/30",
+      badge: "bg-amber-500/20 text-amber-700",
+      icon: Crown
+    },
+    "team-member": {
+      bg: "bg-gradient-to-br from-blue-500/10 to-indigo-500/10",
+      border: "border-blue-500/30",
+      badge: "bg-blue-500/20 text-blue-700",
+      icon: Users
+    },
+    "network-builder": {
+      bg: "bg-gradient-to-br from-emerald-500/10 to-green-500/10",
+      border: "border-emerald-500/30",
+      badge: "bg-emerald-500/20 text-emerald-700",
+      icon: Network
+    }
+  }
+
+  const style = typeStyles[user.type]
+  const Icon = style.icon
+
+  return (
+    <div
+      onClick={onClick}
+      className={cn(
+        "relative rounded-xl border p-5 transition-all cursor-pointer hover:shadow-lg",
+        style.bg,
+        style.border,
+        isSelected && "ring-2 ring-primary shadow-lg scale-[1.02]"
+      )}
+    >
+      {/* Header */}
+      <div className="flex items-start gap-4">
+        <div className={cn("p-3 rounded-xl", style.badge)}>
+          <Icon className="h-6 w-6" />
+        </div>
+        <div className="flex-1">
+          <div className="flex items-center gap-2 flex-wrap">
+            <h3 className="font-semibold text-lg">{user.name}</h3>
+            <span className="text-xs px-2 py-0.5 rounded-full bg-background/80 font-mono border">
+              user_id: {user.id}
+            </span>
+          </div>
+          <p className="text-sm text-muted-foreground">{user.role}</p>
+          <p className="text-xs text-muted-foreground/70 mt-1">
+            Source: {user.sourceUser}
+          </p>
+        </div>
+      </div>
+
+      {/* Description */}
+      <p className="text-sm mt-4 text-muted-foreground">
+        {user.description}
+      </p>
+
+      {/* Team Name */}
+      {user.teamName && (
+        <div className="flex items-center gap-2 mt-3">
+          <Building2 className="h-4 w-4 text-muted-foreground" />
+          <span className="text-sm font-medium">{user.teamName}</span>
+        </div>
+      )}
+
+      {/* API Keys */}
+      <div className="mt-4">
+        <p className="text-xs font-medium text-muted-foreground mb-2 flex items-center gap-1">
+          <Key className="h-3 w-3" />
+          API Connections
+        </p>
+        <div className="flex gap-2">
+          {API_INTEGRATIONS.map(api => {
+            const hasKey = user.apiKeys[api.id as keyof typeof user.apiKeys]
+            return (
+              <TooltipProvider key={api.id}>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <span
+                      className={cn(
+                        "text-xs px-2.5 py-1 rounded-full border font-medium transition-all",
+                        hasKey
+                          ? api.id === "rezen"
+                            ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-700"
+                            : api.id === "fub"
+                            ? "bg-violet-500/10 border-violet-500/30 text-violet-700"
+                            : "bg-sky-500/10 border-sky-500/30 text-sky-700"
+                          : "bg-muted/50 border-muted text-muted-foreground/50 line-through"
+                      )}
+                    >
+                      {api.name}
+                    </span>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>{hasKey ? `Connected: ${api.description}` : "Not connected"}</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            )
+          })}
+        </div>
+      </div>
+
+      {/* Data Access */}
+      <div className="mt-4">
+        <p className="text-xs font-medium text-muted-foreground mb-2">Data Access</p>
+        <div className="flex flex-wrap gap-1.5">
+          {Object.entries(user.dataAccess).map(([key, hasAccess]) => (
+            <span
+              key={key}
+              className={cn(
+                "text-xs px-2 py-0.5 rounded-md border capitalize",
+                hasAccess
+                  ? "bg-background/80 border-border"
+                  : "bg-muted/30 border-transparent text-muted-foreground/50 line-through"
+              )}
+            >
+              {key}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* Stats */}
+      <div className="mt-4 grid grid-cols-2 gap-2">
+        {user.stats.teamMembers !== undefined && (
+          <div className="flex items-center gap-2 text-sm">
+            <Users className="h-4 w-4 text-muted-foreground" />
+            <span className="font-medium">{user.stats.teamMembers.toLocaleString()}</span>
+            <span className="text-muted-foreground text-xs">team</span>
+          </div>
+        )}
+        {user.stats.networkAgents !== undefined && (
+          <div className="flex items-center gap-2 text-sm">
+            <Network className="h-4 w-4 text-muted-foreground" />
+            <span className="font-medium">{user.stats.networkAgents.toLocaleString()}</span>
+            <span className="text-muted-foreground text-xs">network</span>
+          </div>
+        )}
+        {user.stats.transactions !== undefined && (
+          <div className="flex items-center gap-2 text-sm">
+            <FileText className="h-4 w-4 text-muted-foreground" />
+            <span className="font-medium">{user.stats.transactions.toLocaleString()}</span>
+            <span className="text-muted-foreground text-xs">txns</span>
+          </div>
+        )}
+        {user.stats.listings !== undefined && (
+          <div className="flex items-center gap-2 text-sm">
+            <Building2 className="h-4 w-4 text-muted-foreground" />
+            <span className="font-medium">{user.stats.listings.toLocaleString()}</span>
+            <span className="text-muted-foreground text-xs">listings</span>
+          </div>
+        )}
+      </div>
+
+      {/* Query Pattern */}
+      <div className="mt-4 p-3 rounded-lg bg-background/80 border">
+        <p className="text-xs font-mono text-muted-foreground">
+          {user.queryPattern}
+        </p>
+      </div>
+
+      {/* Selected indicator */}
+      {isSelected && (
+        <div className="absolute top-3 right-3">
+          <CheckCircle2 className="h-5 w-5 text-primary" />
+        </div>
+      )}
+    </div>
+  )
+}
+
 // =============================================================================
 // MAIN COMPONENT
 // =============================================================================
@@ -804,8 +1214,60 @@ function UserJourneyStep({
 export function MachineDiagram() {
   const [activeSection, setActiveSection] = useState<"crank" | "tables" | "journey">("crank")
   const [runStatus, setRunStatus] = useState<RunStatus>({})
-  const [userId, setUserId] = useState(7) // Default to David Keener
+  const [userId, setUserId] = useState(7) // Default to David Keener / Michael Johnson
   const [activeJourneyStep, setActiveJourneyStep] = useState(1)
+  const [selectedDemoUser, setSelectedDemoUser] = useState<DemoUser>(DEMO_USERS[0])
+  const [tableCounts, setTableCounts] = useState<TableCounts>({})
+  const [loadingCounts, setLoadingCounts] = useState(false)
+  const [countsError, setCountsError] = useState<string | null>(null)
+
+  // Fetch live table counts
+  const fetchTableCounts = useCallback(async () => {
+    setLoadingCounts(true)
+    setCountsError(null)
+    try {
+      const response = await fetch(`${MCP_BASES.SYSTEM}/table-counts`)
+      if (response.ok) {
+        const data = await response.json()
+        // Handle both array and object formats
+        if (Array.isArray(data)) {
+          const counts: TableCounts = {}
+          data.forEach((item: { name?: string; table_name?: string; count: number }) => {
+            const name = item.name || item.table_name
+            if (name) counts[name] = item.count
+          })
+          setTableCounts(counts)
+        } else if (data.tables) {
+          const counts: TableCounts = {}
+          data.tables.forEach((item: { name: string; count: number }) => {
+            counts[item.name] = item.count
+          })
+          setTableCounts(counts)
+        } else {
+          setTableCounts(data)
+        }
+      } else {
+        setCountsError("Failed to fetch counts")
+      }
+    } catch (err) {
+      setCountsError("Network error")
+      console.error("Error fetching table counts:", err)
+    } finally {
+      setLoadingCounts(false)
+    }
+  }, [])
+
+  // Fetch counts on mount and when switching to tables view
+  useEffect(() => {
+    if (activeSection === "tables" && Object.keys(tableCounts).length === 0) {
+      fetchTableCounts()
+    }
+  }, [activeSection, tableCounts, fetchTableCounts])
+
+  // Update userId when demo user changes
+  useEffect(() => {
+    setUserId(selectedDemoUser.id)
+  }, [selectedDemoUser])
 
   const handleRun = useCallback(async (chain: CallChain) => {
     if (!chain.endpoint || !chain.apiGroup) return
@@ -875,42 +1337,73 @@ export function MachineDiagram() {
         </div>
       </div>
 
-      {/* Context bar for user_id */}
+      {/* Context bar for user_id with demo user selector */}
       {activeSection === "crank" && (
-        <div className="flex items-center justify-between gap-4 p-4 rounded-xl border bg-card/50 backdrop-blur-sm">
-          <div className="flex items-center gap-6 text-sm">
-            <div className="flex items-center gap-2">
-              <div className="w-3 h-3 rounded bg-amber-500/30 border border-amber-500/50" />
-              <span className="text-muted-foreground">Background</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-3 h-3 rounded bg-blue-500/30 border border-blue-500/50" />
-              <span className="text-muted-foreground">Tasks/</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-3 h-3 rounded bg-emerald-500/30 border border-emerald-500/50" />
-              <span className="text-muted-foreground">Workers/</span>
+        <div className="flex flex-col gap-4 p-4 rounded-xl border bg-card/50 backdrop-blur-sm">
+          {/* Demo User Quick Selector */}
+          <div className="flex items-center gap-3">
+            <span className="text-sm font-medium">Running as:</span>
+            <div className="flex gap-2">
+              {DEMO_USERS.map(user => (
+                <button
+                  key={user.id}
+                  onClick={() => setSelectedDemoUser(user)}
+                  className={cn(
+                    "flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm transition-all border",
+                    selectedDemoUser.id === user.id
+                      ? "bg-primary/10 border-primary/30 text-primary font-medium"
+                      : "bg-muted/50 border-transparent hover:bg-muted"
+                  )}
+                >
+                  {user.type === "team-owner" && <Crown className="h-3.5 w-3.5" />}
+                  {user.type === "team-member" && <Users className="h-3.5 w-3.5" />}
+                  {user.type === "network-builder" && <Network className="h-3.5 w-3.5" />}
+                  {user.name}
+                  <span className="text-xs opacity-70">({user.id})</span>
+                </button>
+              ))}
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
-            <label className="text-sm text-muted-foreground">User ID:</label>
-            <input
-              type="number"
-              value={userId}
-              onChange={(e) => setUserId(parseInt(e.target.value) || 0)}
-              className="w-20 px-3 py-1.5 text-sm rounded-lg border bg-background focus:ring-2 focus:ring-primary/20 focus:border-primary"
-            />
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger>
-                  <Info className="h-4 w-4 text-muted-foreground" />
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>Workers/ functions require a user_id to process.<br/>Default: 7 (David Keener)</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+          {/* Legend and manual user_id */}
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-6 text-sm">
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded bg-amber-500/30 border border-amber-500/50" />
+                <span className="text-muted-foreground">Background</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded bg-blue-500/30 border border-blue-500/50" />
+                <span className="text-muted-foreground">Tasks/</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 rounded bg-emerald-500/30 border border-emerald-500/50" />
+                <span className="text-muted-foreground">Workers/</span>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <label className="text-sm text-muted-foreground">user_id:</label>
+              <input
+                type="number"
+                value={userId}
+                onChange={(e) => setUserId(parseInt(e.target.value) || 0)}
+                className="w-20 px-3 py-1.5 text-sm rounded-lg border bg-background focus:ring-2 focus:ring-primary/20 focus:border-primary"
+              />
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <Info className="h-4 w-4 text-muted-foreground" />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Workers/ functions require a user_id.<br/>
+                    Michael (7) = Team Owner<br/>
+                    Sarah (256) = Team Member<br/>
+                    James (133) = Network Builder</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </div>
           </div>
         </div>
       )}
@@ -933,21 +1426,47 @@ export function MachineDiagram() {
       {/* THE TABLES */}
       {activeSection === "tables" && (
         <div className="space-y-6">
-          {/* Flow visualization */}
-          <div className="flex items-center justify-center gap-3 py-4">
-            {[
-              { label: "Staging", color: "bg-amber-500/20 text-amber-700 border-amber-500/30" },
-              { label: "Live", color: "bg-emerald-500/20 text-emerald-700 border-emerald-500/30" },
-              { label: "Aggregation", color: "bg-sky-500/20 text-sky-700 border-sky-500/30" },
-            ].map((stage, i) => (
-              <div key={stage.label} className="flex items-center gap-3">
-                <span className={cn("px-4 py-2 rounded-xl text-sm font-medium border", stage.color)}>
-                  {stage.label}
-                </span>
-                {i < 2 && <ArrowRight className="h-5 w-5 text-muted-foreground" />}
-              </div>
-            ))}
+          {/* Flow visualization with refresh */}
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              {[
+                { label: "Staging", color: "bg-amber-500/20 text-amber-700 border-amber-500/30" },
+                { label: "Live", color: "bg-emerald-500/20 text-emerald-700 border-emerald-500/30" },
+                { label: "Aggregation", color: "bg-sky-500/20 text-sky-700 border-sky-500/30" },
+              ].map((stage, i) => (
+                <div key={stage.label} className="flex items-center gap-3">
+                  <span className={cn("px-4 py-2 rounded-xl text-sm font-medium border", stage.color)}>
+                    {stage.label}
+                  </span>
+                  {i < 2 && <ArrowRight className="h-5 w-5 text-muted-foreground" />}
+                </div>
+              ))}
+            </div>
+
+            <button
+              onClick={fetchTableCounts}
+              disabled={loadingCounts}
+              className={cn(
+                "flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm border transition-all",
+                loadingCounts ? "opacity-50" : "hover:bg-muted"
+              )}
+            >
+              <RefreshCw className={cn("h-4 w-4", loadingCounts && "animate-spin")} />
+              {loadingCounts ? "Loading..." : "Refresh Counts"}
+            </button>
           </div>
+
+          {countsError && (
+            <div className="text-sm text-red-500 text-center p-2 bg-red-500/10 rounded-lg border border-red-500/20">
+              {countsError}
+            </div>
+          )}
+
+          {Object.keys(tableCounts).length > 0 && (
+            <div className="text-sm text-muted-foreground text-center">
+              Loaded {Object.keys(tableCounts).length} table counts from API
+            </div>
+          )}
 
           <p className="text-sm text-muted-foreground text-center max-w-xl mx-auto">
             Data flows through three zones: <strong>Staging</strong> (safe to fail) → <strong>Live</strong> (verified truth) → <strong>Aggregation</strong> (pre-computed for speed)
@@ -955,7 +1474,7 @@ export function MachineDiagram() {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
             {TABLE_GROUPS.map(group => (
-              <TableGroupCard key={group.id} group={group} />
+              <TableGroupCardWithCounts key={group.id} group={group} counts={tableCounts} />
             ))}
           </div>
         </div>
@@ -963,21 +1482,106 @@ export function MachineDiagram() {
 
       {/* THE USER JOURNEY */}
       {activeSection === "journey" && (
-        <div className="max-w-2xl mx-auto space-y-6">
-          <p className="text-sm text-muted-foreground text-center">
-            Follow an agent's data journey from signup to seeing their fully-loaded dashboard
-          </p>
+        <div className="space-y-8">
+          {/* Demo Users Section */}
+          <div className="space-y-4">
+            <div className="text-center">
+              <h3 className="text-xl font-semibold">Demo User Personas</h3>
+              <p className="text-sm text-muted-foreground mt-1">
+                Three user types show different data access patterns. Click to select active context.
+              </p>
+            </div>
 
-          <div className="p-8 rounded-2xl border bg-card/50 backdrop-blur-sm">
-            {USER_JOURNEY.map((step, i) => (
-              <UserJourneyStep
-                key={step.step}
-                step={step}
-                isLast={i === USER_JOURNEY.length - 1}
-                isActive={activeJourneyStep === step.step}
-                onClick={() => setActiveJourneyStep(step.step)}
-              />
-            ))}
+            <div className="grid md:grid-cols-3 gap-4">
+              {DEMO_USERS.map(user => (
+                <DemoUserCard
+                  key={user.id}
+                  user={user}
+                  isSelected={selectedDemoUser.id === user.id}
+                  onClick={() => setSelectedDemoUser(user)}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* API Integrations Breakdown */}
+          <div className="p-6 rounded-2xl border bg-card/50 backdrop-blur-sm">
+            <h4 className="font-semibold mb-4 flex items-center gap-2">
+              <Key className="h-5 w-5" />
+              API Integrations
+            </h4>
+            <div className="grid md:grid-cols-3 gap-4">
+              {API_INTEGRATIONS.map(api => (
+                <div
+                  key={api.id}
+                  className={cn(
+                    "p-4 rounded-xl border",
+                    api.id === "rezen" && "bg-emerald-500/5 border-emerald-500/20",
+                    api.id === "fub" && "bg-violet-500/5 border-violet-500/20",
+                    api.id === "skyslope" && "bg-sky-500/5 border-sky-500/20"
+                  )}
+                >
+                  <h5 className={cn(
+                    "font-semibold",
+                    api.id === "rezen" && "text-emerald-700",
+                    api.id === "fub" && "text-violet-700",
+                    api.id === "skyslope" && "text-sky-700"
+                  )}>
+                    {api.name}
+                  </h5>
+                  <p className="text-xs text-muted-foreground mt-1">{api.description}</p>
+                  <div className="flex flex-wrap gap-1 mt-3">
+                    {api.tables.map(t => (
+                      <span key={t} className="text-xs px-2 py-0.5 rounded-md bg-background/80 font-mono border">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Data Journey Steps */}
+          <div className="max-w-2xl mx-auto">
+            <h4 className="text-center font-semibold mb-4">Data Journey: Signup to Dashboard</h4>
+            <div className="p-8 rounded-2xl border bg-card/50 backdrop-blur-sm">
+              {USER_JOURNEY.map((step, i) => (
+                <UserJourneyStep
+                  key={step.step}
+                  step={step}
+                  isLast={i === USER_JOURNEY.length - 1}
+                  isActive={activeJourneyStep === step.step}
+                  onClick={() => setActiveJourneyStep(step.step)}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Current Context Summary */}
+          <div className="p-6 rounded-2xl border bg-primary/5 border-primary/20">
+            <h4 className="font-semibold mb-3 flex items-center gap-2">
+              <User className="h-5 w-5 text-primary" />
+              Current Context: {selectedDemoUser.name}
+            </h4>
+            <div className="grid md:grid-cols-2 gap-4 text-sm">
+              <div>
+                <p className="text-muted-foreground">Login Email</p>
+                <p className="font-mono">{selectedDemoUser.email}</p>
+              </div>
+              <div>
+                <p className="text-muted-foreground">user_id for API calls</p>
+                <p className="font-mono text-primary font-semibold">{selectedDemoUser.id}</p>
+              </div>
+              <div>
+                <p className="text-muted-foreground">Query Pattern</p>
+                <p className="font-mono text-xs">{selectedDemoUser.queryPattern}</p>
+              </div>
+              <div>
+                <p className="text-muted-foreground">Password (Demo)</p>
+                <p className="font-mono">AgentDashboards143!</p>
+              </div>
+            </div>
           </div>
         </div>
       )}

@@ -1,7 +1,7 @@
 "use client"
 
-import { useState, useEffect, useCallback } from "react"
-import { Zap, Layers, GitBranch, Database, Clock, CheckCircle, XCircle, ListTree, LayoutGrid, List, Network, TableIcon, Sparkles, Play, Cog } from "lucide-react"
+import { useState, useEffect, useCallback, Suspense } from "react"
+import { Zap, Layers, GitBranch, Database, Clock, CheckCircle, XCircle, ListTree, LayoutGrid, List, Network, TableIcon, Sparkles, Play, Cog, Users } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 
 // Task Control Components
@@ -22,6 +22,9 @@ import { DataFlowDiagram } from "@/components/data-flow/data-flow-diagram"
 // Machine Diagram - The unified visualization
 import { MachineDiagram } from "@/components/machine/machine-diagram"
 
+// Machine 2.0 - The new 5-tab user-centric view
+import { Machine2View } from "@/components/machine-2"
+
 // Hooks
 import { useActivityLog } from "@/hooks/use-activity-log"
 import { useTaskRunner } from "@/hooks/use-task-runner"
@@ -30,7 +33,7 @@ import { useTaskRunner } from "@/hooks/use-task-runner"
 import type { BackgroundTask } from "@/lib/types-v2"
 import { BACKGROUND_TASKS, getTaskStats } from "@/lib/api-v2"
 
-type ViewMode = "machine" | "tasks" | "dataflow" | "legacy"
+type ViewMode = "machine2" | "machine" | "tasks" | "dataflow" | "legacy"
 type TaskViewMode = "runner" | "master" | "all" | "list" | "hierarchy" | "domain" | "triggers"
 
 export default function Home() {
@@ -69,6 +72,7 @@ export default function Home() {
   }, [])
 
   const viewModes = [
+    { id: "machine2" as ViewMode, label: "Machine 2.0", icon: Users },
     { id: "machine" as ViewMode, label: "The Machine", icon: Cog },
     { id: "tasks" as ViewMode, label: "Task Control", icon: Zap },
     { id: "dataflow" as ViewMode, label: "Data Flow", icon: GitBranch },
@@ -146,6 +150,8 @@ export default function Home() {
         </div>
 
         {/* Main Content */}
+        {viewMode === "machine2" && <Machine2View />}
+
         {viewMode === "machine" && <MachineDiagram />}
 
         {viewMode === "tasks" && (
@@ -233,7 +239,9 @@ export default function Home() {
 
             {/* MCP Runner - actual endpoint testing */}
             {taskViewMode === "runner" && (
-              <MCPRunner />
+              <Suspense fallback={<div className="p-8 text-center">Loading...</div>}>
+                <MCPRunner />
+              </Suspense>
             )}
 
             {/* Master View - combines all views with business context */}
