@@ -227,23 +227,39 @@ export function UsersTab() {
   const [tableCounts, setTableCounts] = useState<TableCountsResponse | null>(null)
   const [isLoadingCounts, setIsLoadingCounts] = useState(false)
 
-  // Fetch demo users from V2 backend
+  // V2 Test User - User 60 (David Keener) is the VERIFIED test user for V2 migration
+  const V2_TEST_USER: DemoUser = {
+    id: 60,
+    email: "Dave@premieregrp.com",
+    first_name: "David",
+    last_name: "Keener",
+    role: "admin",
+    view: "Admin",
+    account_type: "Team",
+    is_team_owner: true,
+    is_director: true,
+    team_id: 1,
+    team_name: "PREMIERE GROUP",
+  }
+
+  const V2_PERSONA: DemoPersona = {
+    type: "team-owner",
+    label: "V2 Test User (Primary)",
+    description: "Agent ID: 37208 | 84% endpoint pass rate | Verified test user",
+    source_user: "David Keener (LIVE)",
+  }
+
+  // Initialize with V2 test user (hardcoded - this is the verified user from TRIGGER_ENDPOINTS_AUDIT.md)
   const fetchDemoUsers = useCallback(async () => {
     setIsLoading(true)
     setError(null)
     try {
-      // Demo users are on the V1 workspace demo_data branch
-      const response = await fetch("https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:FhhBIJA0:v1.5/demo-users")
-      if (!response.ok) throw new Error(`HTTP ${response.status}`)
-      const data: DemoUsersResponse = await response.json()
-      if (data.success && data.users) {
-        setDemoUsers(data.users)
-        setPersonas(data.personas || {})
-      } else {
-        throw new Error("No users returned")
-      }
+      // For V2 migration testing, we use the verified User 60 (David Keener)
+      // This is NOT the demo-sync users (7, 133, 256) - those are V1 demo users
+      setDemoUsers([V2_TEST_USER])
+      setPersonas({ "60": V2_PERSONA })
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to fetch demo users")
+      setError(err instanceof Error ? err.message : "Failed to load test users")
     } finally {
       setIsLoading(false)
     }
@@ -269,37 +285,39 @@ export function UsersTab() {
     fetchTableCounts()
   }, [fetchDemoUsers, fetchTableCounts])
 
-  // Test demo auth for a user
+  // Test V2 WORKERS endpoint with User 60
   const handleTestAuth = async (userId: number) => {
     setTestStates(prev => ({ ...prev, [userId]: { loading: true, result: null } }))
 
     try {
-      const response = await fetch("https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:FhhBIJA0:v1.5/demo-auth", {
+      // For V2, we test against the WORKERS endpoint (not demo-auth)
+      // Using a simple endpoint to verify user 60 works
+      const response = await fetch(`${MCP_BASES.WORKERS}/FUB_get_fub_account_id`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ user_id: userId }),
       })
-      const data: DemoAuthResponse = await response.json()
+      const data = await response.json()
 
-      if (data.success && data.authToken) {
+      if (response.ok && data) {
         setTestStates(prev => ({
           ...prev,
-          [userId]: { loading: false, result: { success: true, token: data.authToken } }
+          [userId]: { loading: false, result: { success: true, token: `FUB Account: ${data.fub_account_id || data.account_id || 'Found'}` } }
         }))
       } else {
-        throw new Error("No auth token returned")
+        throw new Error(data.message || "Endpoint returned error")
       }
     } catch (err) {
       setTestStates(prev => ({
         ...prev,
-        [userId]: { loading: false, result: { success: false, error: err instanceof Error ? err.message : "Auth failed" } }
+        [userId]: { loading: false, result: { success: false, error: err instanceof Error ? err.message : "Test failed" } }
       }))
     }
   }
 
   return (
     <div className="space-y-6">
-      {/* Section 1: Demo Users */}
+      {/* Section 1: V2 Test Users */}
       <Card>
         <CardHeader className="pb-4">
           <div className="flex items-center justify-between">
@@ -308,16 +326,16 @@ export function UsersTab() {
                 <Users className="h-5 w-5 text-purple-600" />
               </div>
               <div>
-                <CardTitle className="text-lg">Demo Users (V2 Backend)</CardTitle>
+                <CardTitle className="text-lg">V2 Test User</CardTitle>
                 <p className="text-sm text-muted-foreground">
-                  Live data from /demo-users endpoint
+                  User 60 (David Keener) - Verified from TRIGGER_ENDPOINTS_AUDIT.md
                 </p>
               </div>
             </div>
             <div className="flex items-center gap-2">
               <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
                 <CheckCircle2 className="h-3 w-3 mr-1" />
-                {demoUsers.length} Avatars
+                84% Pass Rate
               </Badge>
               <Button variant="outline" size="sm" onClick={fetchDemoUsers} disabled={isLoading}>
                 <RefreshCw className={`h-4 w-4 mr-2 ${isLoading ? "animate-spin" : ""}`} />
@@ -431,7 +449,7 @@ export function UsersTab() {
         </CardContent>
       </Card>
 
-      {/* Section 3: Source Users Reference */}
+      {/* Section 3: V1 vs V2 User Reference */}
       <Card>
         <CardHeader className="pb-4">
           <div className="flex items-center justify-between">
@@ -440,9 +458,9 @@ export function UsersTab() {
                 <UserCheck className="h-5 w-5 text-gray-600" />
               </div>
               <div>
-                <CardTitle className="text-lg">Source User Reference</CardTitle>
+                <CardTitle className="text-lg">V1 vs V2 Test Users</CardTitle>
                 <p className="text-sm text-muted-foreground">
-                  Live users whose data is anonymized for demos
+                  Different users for different purposes
                 </p>
               </div>
             </div>
@@ -453,33 +471,60 @@ export function UsersTab() {
             <table className="w-full">
               <thead className="bg-muted/50">
                 <tr>
-                  <th className="text-left px-4 py-3 text-sm font-medium">Demo Name</th>
-                  <th className="text-left px-4 py-3 text-sm font-medium">Source User</th>
-                  <th className="text-left px-4 py-3 text-sm font-medium">Type</th>
+                  <th className="text-left px-4 py-3 text-sm font-medium">Project</th>
+                  <th className="text-left px-4 py-3 text-sm font-medium">User</th>
                   <th className="text-left px-4 py-3 text-sm font-medium">User ID</th>
+                  <th className="text-left px-4 py-3 text-sm font-medium">Purpose</th>
                 </tr>
               </thead>
               <tbody className="divide-y">
-                {demoUsers.map(user => {
-                  const persona = personas[String(user.id)]
-                  return (
-                    <tr key={user.id} className="hover:bg-muted/30">
-                      <td className="px-4 py-3 font-medium">{user.first_name} {user.last_name}</td>
-                      <td className="px-4 py-3 text-muted-foreground">{persona?.source_user || "N/A"}</td>
-                      <td className="px-4 py-3">
-                        <Badge variant="outline" className="text-xs">
-                          {persona?.type || user.view}
-                        </Badge>
-                      </td>
-                      <td className="px-4 py-3 font-mono text-sm">{user.id}</td>
-                    </tr>
-                  )
-                })}
+                <tr className="bg-purple-50/50">
+                  <td className="px-4 py-3 font-medium">V2 Migration (this project)</td>
+                  <td className="px-4 py-3">David Keener</td>
+                  <td className="px-4 py-3 font-mono text-sm font-bold">60</td>
+                  <td className="px-4 py-3">
+                    <Badge variant="outline" className="text-xs bg-purple-100">
+                      WORKERS endpoint testing
+                    </Badge>
+                  </td>
+                </tr>
+                <tr className="hover:bg-muted/30">
+                  <td className="px-4 py-3 text-muted-foreground">V1 Demo Sync</td>
+                  <td className="px-4 py-3 text-muted-foreground">Michael Johnson</td>
+                  <td className="px-4 py-3 font-mono text-sm text-muted-foreground">7</td>
+                  <td className="px-4 py-3">
+                    <Badge variant="outline" className="text-xs">
+                      Demo avatar (Team Owner)
+                    </Badge>
+                  </td>
+                </tr>
+                <tr className="hover:bg-muted/30">
+                  <td className="px-4 py-3 text-muted-foreground">V1 Demo Sync</td>
+                  <td className="px-4 py-3 text-muted-foreground">Sarah Williams</td>
+                  <td className="px-4 py-3 font-mono text-sm text-muted-foreground">256</td>
+                  <td className="px-4 py-3">
+                    <Badge variant="outline" className="text-xs">
+                      Demo avatar (Team Member)
+                    </Badge>
+                  </td>
+                </tr>
+                <tr className="hover:bg-muted/30">
+                  <td className="px-4 py-3 text-muted-foreground">V1 Demo Sync</td>
+                  <td className="px-4 py-3 text-muted-foreground">James Anderson</td>
+                  <td className="px-4 py-3 font-mono text-sm text-muted-foreground">133</td>
+                  <td className="px-4 py-3">
+                    <Badge variant="outline" className="text-xs">
+                      Demo avatar (Network Builder)
+                    </Badge>
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>
           <p className="text-xs text-muted-foreground mt-3">
-            Source users' data is copied to demo_data datasource and anonymized for investor demos.
+            <strong>V2 Migration:</strong> Uses User 60 for WORKERS endpoint testing (agent_id: 37208, team_id: 1).
+            <br />
+            <strong>V1 Demo Sync:</strong> Uses demo avatars (7, 133, 256) for investor demonstrations.
           </p>
         </CardContent>
       </Card>

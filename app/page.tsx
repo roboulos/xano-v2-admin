@@ -1,7 +1,11 @@
 "use client"
 
 import { useState, useEffect, useCallback, Suspense } from "react"
-import { Zap, Layers, GitBranch, Database, Clock, CheckCircle, XCircle, ListTree, LayoutGrid, List, Network, TableIcon, Sparkles, Play, Cog, Users } from "lucide-react"
+import { Zap, Layers, GitBranch, Database, Clock, CheckCircle, XCircle, ListTree, LayoutGrid, List, Network, TableIcon, Sparkles, Play, Cog, Users, Archive, ExternalLink, ClipboardCheck } from "lucide-react"
+import Link from "next/link"
+
+// Verification
+import { AuditResults } from "@/components/verification/audit-results"
 import { Badge } from "@/components/ui/badge"
 
 // Task Control Components
@@ -33,7 +37,7 @@ import { useTaskRunner } from "@/hooks/use-task-runner"
 import type { BackgroundTask } from "@/lib/types-v2"
 import { BACKGROUND_TASKS, getTaskStats } from "@/lib/api-v2"
 
-type ViewMode = "machine2" | "machine" | "tasks" | "dataflow" | "legacy"
+type ViewMode = "machine2" | "machine" | "tasks" | "inventory" | "dataflow" | "verification" | "legacy"
 type TaskViewMode = "runner" | "master" | "all" | "list" | "hierarchy" | "domain" | "triggers"
 
 export default function Home() {
@@ -75,7 +79,9 @@ export default function Home() {
     { id: "machine2" as ViewMode, label: "Machine 2.0", icon: Users },
     { id: "machine" as ViewMode, label: "The Machine", icon: Cog },
     { id: "tasks" as ViewMode, label: "Task Control", icon: Zap },
+    { id: "inventory" as ViewMode, label: "Inventory", icon: Archive },
     { id: "dataflow" as ViewMode, label: "Data Flow", icon: GitBranch },
+    { id: "verification" as ViewMode, label: "Verification", icon: ClipboardCheck },
     { id: "legacy" as ViewMode, label: "Legacy View", icon: Layers },
   ]
 
@@ -285,7 +291,112 @@ export default function Home() {
           </>
         )}
 
+        {viewMode === "inventory" && (
+          <div className="space-y-6">
+            <div className="flex items-center gap-3 mb-6">
+              <Archive className="h-6 w-6 text-primary" />
+              <div>
+                <h2 className="text-xl font-bold">Function Inventory</h2>
+                <p className="text-sm text-muted-foreground">Complete catalog of all V2 workspace functions</p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              {/* Workers */}
+              <Link href="/inventory/workers" className="group">
+                <div className="p-6 border rounded-lg bg-card hover:bg-accent/50 hover:border-primary/50 transition-all">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="p-2 bg-blue-100 rounded-lg">
+                      <Cog className="h-5 w-5 text-blue-600" />
+                    </div>
+                    <ExternalLink className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
+                  </div>
+                  <h3 className="font-semibold text-lg mb-1">Workers/</h3>
+                  <p className="text-sm text-muted-foreground mb-3">Reusable worker functions</p>
+                  <Badge variant="secondary" className="text-lg">194</Badge>
+                  <p className="text-xs text-muted-foreground mt-2">FUB, reZEN, SkySlope, Title, AD...</p>
+                </div>
+              </Link>
+
+              {/* Background Tasks */}
+              <Link href="/inventory/background-tasks" className="group">
+                <div className="p-6 border rounded-lg bg-card hover:bg-accent/50 hover:border-primary/50 transition-all">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="p-2 bg-purple-100 rounded-lg">
+                      <Clock className="h-5 w-5 text-purple-600" />
+                    </div>
+                    <ExternalLink className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
+                  </div>
+                  <h3 className="font-semibold text-lg mb-1">Background Tasks</h3>
+                  <p className="text-sm text-muted-foreground mb-3">Scheduled & triggered tasks</p>
+                  <Badge variant="secondary" className="text-lg">100</Badge>
+                  <p className="text-xs text-muted-foreground mt-2">44 reZEN, 35 FUB, 10 AD...</p>
+                </div>
+              </Link>
+
+              {/* Tasks */}
+              <Link href="/inventory/tasks" className="group">
+                <div className="p-6 border rounded-lg bg-card hover:bg-accent/50 hover:border-primary/50 transition-all">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="p-2 bg-green-100 rounded-lg">
+                      <Zap className="h-5 w-5 text-green-600" />
+                    </div>
+                    <ExternalLink className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
+                  </div>
+                  <h3 className="font-semibold text-lg mb-1">Tasks/</h3>
+                  <p className="text-sm text-muted-foreground mb-3">Orchestration functions</p>
+                  <Badge variant="secondary" className="text-lg">~50</Badge>
+                  <p className="text-xs text-muted-foreground mt-2">Sync, process, aggregate...</p>
+                </div>
+              </Link>
+
+              {/* Test Endpoints */}
+              <Link href="/inventory/test-endpoints" className="group">
+                <div className="p-6 border rounded-lg bg-card hover:bg-accent/50 hover:border-primary/50 transition-all">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="p-2 bg-orange-100 rounded-lg">
+                      <Play className="h-5 w-5 text-orange-600" />
+                    </div>
+                    <ExternalLink className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
+                  </div>
+                  <h3 className="font-semibold text-lg mb-1">Test Endpoints</h3>
+                  <p className="text-sm text-muted-foreground mb-3">WORKERS trigger endpoints</p>
+                  <Badge variant="secondary" className="text-lg">38</Badge>
+                  <p className="text-xs text-muted-foreground mt-2">84% pass rate with User 60</p>
+                </div>
+              </Link>
+            </div>
+
+            {/* Summary Stats */}
+            <div className="mt-8 p-4 bg-muted/30 rounded-lg">
+              <div className="flex items-center gap-6 text-sm">
+                <div>
+                  <span className="text-muted-foreground">Total Functions:</span>
+                  <span className="font-bold ml-2">~382</span>
+                </div>
+                <div className="h-4 w-px bg-border" />
+                <div>
+                  <span className="text-muted-foreground">Domains:</span>
+                  <span className="font-bold ml-2">10</span>
+                </div>
+                <div className="h-4 w-px bg-border" />
+                <div>
+                  <span className="text-muted-foreground">V2 Workspace ID:</span>
+                  <span className="font-mono ml-2">5</span>
+                </div>
+                <div className="h-4 w-px bg-border" />
+                <div>
+                  <span className="text-muted-foreground">Test User:</span>
+                  <span className="font-mono ml-2">User 60</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         {viewMode === "dataflow" && <DataFlowDiagram />}
+
+        {viewMode === "verification" && <AuditResults />}
 
         {viewMode === "legacy" && (
           <div className="p-8 text-center border-2 border-dashed rounded-lg">

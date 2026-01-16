@@ -249,7 +249,7 @@ function StepCard({
 
 export function OnboardingTab() {
   const [steps, setSteps] = useState<OnboardingStep[]>(INITIAL_STEPS)
-  const [userId, setUserId] = useState<number>(7)
+  const [userId, setUserId] = useState<number>(60) // User 60 (David Keener) is the verified test user - see TRIGGER_ENDPOINTS_AUDIT.md
   const [isRunningAll, setIsRunningAll] = useState(false)
 
   const completedSteps = steps.filter((s) => s.status === "complete").length
@@ -378,11 +378,11 @@ export function OnboardingTab() {
               id="onboard-userId"
               type="number"
               value={userId}
-              onChange={(e) => setUserId(parseInt(e.target.value) || 7)}
+              onChange={(e) => setUserId(parseInt(e.target.value) || 60)}
               className="w-24"
             />
             <span className="text-xs text-muted-foreground">
-              Common: 7 (Michael), 256 (Sarah), 133 (James)
+              Verified test user: 60 (David Keener) - see TRIGGER_ENDPOINTS_AUDIT.md for full testing history
             </span>
           </div>
 

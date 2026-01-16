@@ -266,3 +266,189 @@ The frontend makes migration status undeniable. Every table, every count, every 
 | Staging | 16 |
 | Other | 20+ |
 | **TOTAL** | **251** |
+
+---
+
+## Machine 2.0 Frontend Structure
+
+### Tab Components (components/machine-2/)
+
+| Tab | File | Purpose |
+|-----|------|---------|
+| **Users** | `users-tab.tsx` | Demo user management (Michael, Sarah, James) |
+| **Onboarding** | `onboarding-tab.tsx` | 6-step data sync using V2 WORKERS endpoints |
+| **Syncing** | `syncing-tab.tsx` | Job queue visualization |
+| **Schema** | `schema-tab.tsx` | V1 vs V2 field comparison |
+| **API Contract** | `api-contract-tab.tsx` | Endpoint documentation & testing |
+| **Index** | `index.tsx` | Main Machine 2.0 view component |
+
+### Onboarding Steps (6 Steps)
+
+| Step | Name | Endpoints | Tables |
+|------|------|-----------|--------|
+| 1 | Team Data | `/test-function-8066-team-roster` | team, team_roster, team_owners, team_admins |
+| 2 | Agent Data | `/test-function-8051-agent-data` | agent, user |
+| 3 | Transactions | `/test-function-8052-txn-sync` | transaction, participant, paid_participant |
+| 4 | Listings | `/test-function-8053-listings-sync`, `/test-function-8054-listings-update` | listing |
+| 5 | Contributions | `/test-function-8056-contributions`, `/test-function-8060-load-contributions` | contribution, income, revshare_totals, contributors |
+| 6 | Network | `/test-function-8062-network-downline`, `/test-function-8070-sponsor-tree` | network, connections |
+
+### MCP Endpoint Mapping (lib/mcp-endpoints.ts)
+
+**Base URLs:**
+```typescript
+MCP_BASES = {
+  TASKS: "https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:4psV7fp6",
+  WORKERS: "https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:4UsTtl3m",
+  SYSTEM: "https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:LIdBL1AN",
+  SEEDING: "https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:2kCRUYxG",
+}
+```
+
+**Helper Functions:**
+- `getEndpointsByGroup(group)` - Filter endpoints by API group
+- `getEndpointsNeedingUserId()` - Get endpoints requiring user_id param
+- `getStandaloneEndpoints()` - Get endpoints that run without user_id
+
+---
+
+## 🔥 XanoScript Hard-Won Lessons (January 2026)
+
+### The Team Roster Sync Fix
+
+**Error:** `"Text filter requires an integer, float, string or boolean value" on input.2.value`
+
+**Root Cause:** Inline arrays with variables don't interpolate correctly in XanoScript.
+
+**❌ WRONG - Inline array with variable:**
+```xanoscript
+var $headers {
+  value = ["Content-Type: application/json", $api_key_header]
+}
+```
+
+**✅ CORRECT - Build array with |push filter:**
+```xanoscript
+var $headers_arr {
+  value = []
+    |push:"Content-Type: application/json"
+    |push:("X-API-KEY: "|concat:$the_api_key)
+}
+```
+
+### Key XanoScript Patterns
+
+#### 1. Header Array Construction
+```xanoscript
+// Build headers dynamically
+var $auth_header {
+  value = "Authorization: Bearer "|concat:$env.API_KEY
+}
+var $headers {
+  value = []
+    |push:"Content-Type: application/json"
+    |push:$auth_header
+}
+```
+
+#### 2. Safe Property Access with Defaults
+```xanoscript
+// Use |get filter with default value
+var $agent_id {
+  value = $input.user|get:"agent_id":0
+}
+```
+
+#### 3. Timestamp Formatting
+```xanoscript
+// format_timestamp filter (NOT format_date)
+var $date_str {
+  value = $timestamp|format_timestamp:"Y-m-d"
+}
+```
+
+#### 4. FP Result Type Pattern
+```xanoscript
+response = {
+  success: true
+  data   : { team_id: $team_id, members_count: $count }
+  error  : ""
+  step   : "team_roster_sync"
+}
+```
+
+### Common XanoScript Gotchas
+
+| Issue | Wrong | Correct |
+|-------|-------|---------|
+| Inline arrays with vars | `["header", $var]` | `[]|push:"header"|push:$var` |
+| String concatenation | `$a + $b` | `$a|concat:$b` or `$a ~ $b` |
+| Date formatting | `format_date` | `format_timestamp` |
+| Optional inputs | `text name?` | Derive internally, avoid optional |
+| Property access | `$obj.field` on null | `$obj|get:"field":default` |
+
+### Debugging XanoScript
+
+1. **Reduce inputs** - Match what the caller actually passes
+2. **Build incrementally** - Add one operation at a time
+3. **Test with curl** - Verify each change works
+4. **Check null values** - API responses can be null/false on timeout
+5. **Use |get with defaults** - Safe property access
+
+---
+
+## Quick Reference: Verified Test User
+
+**IMPORTANT:** User 60 (David Keener) is the VERIFIED test user with extensive testing history.
+
+| User | ID | Agent ID | Team ID | Notes |
+|------|-----|----------|---------|-------|
+| David Keener | 60 | 37208 | 1 | PRIMARY test user - see TRIGGER_ENDPOINTS_AUDIT.md |
+
+**For Demo Users (v0-demo-sync-admin-interface):**
+
+| User | ID | Email | Type |
+|------|-----|-------|------|
+| Michael Johnson | 7 | michael@demo.agentdashboards.com | Team Owner (Admin) |
+| Sarah Williams | 256 | sarah@demo.agentdashboards.com | Team Member |
+| James Anderson | 133 | james@demo.agentdashboards.com | Network Builder |
+
+**Password:** `AgentDashboards143!`
+
+### Testing Audit Reference
+Full testing documentation is in the agent_dashboards_2 project:
+- **File:** `/Users/sboulos/Desktop/ai_projects/agent_dashboards_2/TRIGGER_ENDPOINTS_AUDIT.md`
+- **Pass Rate:** 32/38 endpoints (84%) with user 60
+- **Working Groups:** FUB (9/9), Metrics (5/5), Network (4/4), Utility (3/3)
+
+### curl Test Template
+```bash
+# Test any WORKERS endpoint with verified user 60
+curl -s -X POST "https://xmpx-swi5-tlvy.n7c.xano.io/api:4UsTtl3m/ENDPOINT" \
+  -H "Content-Type: application/json" \
+  -d '{"user_id": 60}'
+```
+
+---
+
+## File Navigation
+
+### Main Entry Point
+- `app/page.tsx` - Main dashboard with tabs
+
+### Machine 2.0 Components
+- `components/machine-2/` - All Machine 2.0 tab components
+- `components/machine-2/onboarding-tab.tsx` - **Key file for onboarding sync**
+
+### Data Configuration
+- `lib/mcp-endpoints.ts` - **All endpoint mappings and base URLs**
+- `lib/v1-data.ts` - V1 workspace tables (251)
+- `lib/v2-data.ts` - V2 workspace tables (193)
+- `lib/table-mappings.ts` - V1 → V2 mappings
+
+### Other Components
+- `components/tabs/` - Original tab components (functions, tasks, endpoints, timeline)
+- `components/domains/` - Domain cards and task buttons
+- `components/task-control/` - Task control and search
+- `components/hierarchy/` - Hierarchy views
+- `components/triggers/` - Trigger chain visualization

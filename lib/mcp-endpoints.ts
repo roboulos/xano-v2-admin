@@ -248,11 +248,11 @@ export const MCP_ENDPOINTS: MCPEndpoint[] = [
   {
     taskId: 0,
     taskName: "reZEN - Team Roster",
-    endpoint: "/test-function-8066-team-roster",
+    endpoint: "/test-rezen-team-roster-sync",
     apiGroup: "WORKERS",
     method: "POST",
     requiresUserId: true,
-    description: "Sync team roster data"
+    description: "Sync team roster data (calls function #8032) - FIXED Jan 2026: headers now use |push pattern"
   },
   {
     taskId: 0,
