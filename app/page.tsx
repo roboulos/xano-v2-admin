@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge"
 import { DashboardView } from "@/components/dashboard/dashboard-view"
 import { TaskCenterView } from "@/components/task-center/task-center-view"
 import { WorkspaceToolsView } from "@/components/workspace-tools/workspace-tools-view"
-import { MachineDiagram } from "@/components/machine/machine-diagram"
+import { Machine2View } from "@/components/machine-2"
 
 // Hooks
 import { useActivityLog } from "@/hooks/use-activity-log"
@@ -91,7 +91,7 @@ export default function Home() {
             ))}
           </div>
           <Badge variant="outline" className="text-xs">
-            V2 Workspace • 218 Background Tasks • 109 Tasks/ • 203 Workers/
+            V2 Workspace • 109 V3 Tasks • 109 Tasks/ • 203 Workers/
           </Badge>
         </div>
 
@@ -99,7 +99,7 @@ export default function Home() {
         {viewMode === "dashboard" && <DashboardView />}
         {viewMode === "tasks" && <TaskCenterView />}
         {viewMode === "tools" && <WorkspaceToolsView />}
-        {viewMode === "machine" && <MachineDiagram />}
+        {viewMode === "machine" && <Machine2View />}
 
         {/* Footer */}
         <div className="mt-12 pt-6 border-t text-center text-sm text-muted-foreground">

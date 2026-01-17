@@ -18,32 +18,32 @@ import {
   Cog,
 } from "lucide-react"
 import { MachineDiagram } from "@/components/machine/machine-diagram"
-import { getTaskStats, getScheduledTasks } from "@/lib/api-v2"
+import { getTaskStats, getScheduledTasks, getTasksByDomain, DOMAIN_INFO } from "@/lib/api-v2"
 
-// Real function counts from V2 Xano Workspace (queried 2026-01-16 via Xano MCP)
-const WORKSPACE_STATS = {
-  backgroundTasks: 218, // Background Tasks - scheduled jobs (list_tasks)
-  tasks: 109,           // Tasks/ folder - orchestrator functions (search "Tasks/")
-  workers: 203,         // Workers/ folder - reusable logic functions (search "Workers/")
-  domains: 10,          // reZEN, FUB, SkySlope, Title, Aggregation, AD, Metrics, Reporting, Network, System
-}
+// V2 Architecture (verified 2026-01-16 via Xano MCP):
+// - 218 Background Tasks total: 109 V3 (active, call Tasks/) + 109 legacy (inactive)
+// - 109 Tasks/ functions: orchestrators called by V3 background tasks
+// - 203 Workers/ functions: reusable logic called by Tasks/
+//
+// The 1:1 mapping: Background Task (V3) → Tasks/ function → Workers/ functions
 
-// Real domain breakdown from task-data.ts
-const DOMAIN_COUNTS = [
-  { name: "reZEN", tasks: 28, color: "bg-blue-500" },
-  { name: "FUB", tasks: 34, color: "bg-green-500" },
-  { name: "SkySlope", tasks: 12, color: "bg-purple-500" },
-  { name: "Aggregation", tasks: 8, color: "bg-pink-500" },
-  { name: "AD", tasks: 10, color: "bg-cyan-500" },
-  { name: "Network", tasks: 4, color: "bg-orange-500" },
-  { name: "Title", tasks: 2, color: "bg-yellow-500" },
-  { name: "Metrics", tasks: 2, color: "bg-indigo-500" },
-]
+// Real counts from Xano MCP query (2026-01-16)
+const V2_ARCHITECTURE = {
+  bgTasksTotal: 218,      // Total background tasks
+  bgTasksV3: 109,         // Active V3 tasks (call Tasks/)
+  bgTasksLegacy: 109,     // Legacy inactive tasks
+  tasksFunctions: 109,    // Tasks/ orchestrator functions
+  workersFunctions: 203,  // Workers/ reusable logic
+} as const
 
 export function DashboardView() {
-  const stats = getTaskStats()
+  const snapshotStats = getTaskStats() // From 100-task snapshot
+  const tasksByDomain = getTasksByDomain()
   const scheduledTasks = getScheduledTasks().slice(0, 5) // Top 5 scheduled tasks
   const [isRefreshing, setIsRefreshing] = useState(false)
+
+  // Computed from real data
+  const domainCount = Object.keys(tasksByDomain).length
 
   const handleRefresh = () => {
     setIsRefreshing(true)
@@ -52,14 +52,15 @@ export function DashboardView() {
 
   return (
     <div className="space-y-6">
-      {/* Hero Stats Row - Real V2 Workspace Counts (queried from Xano MCP) */}
+      {/* Hero Stats Row - Real V2 Architecture Numbers */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <Card className="bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200">
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-purple-600 font-medium">Background Tasks</p>
-                <p className="text-3xl font-bold text-purple-700">{WORKSPACE_STATS.backgroundTasks}</p>
+                <p className="text-sm text-purple-600 font-medium">V3 Tasks</p>
+                <p className="text-3xl font-bold text-purple-700">{V2_ARCHITECTURE.bgTasksV3}</p>
+                <p className="text-xs text-purple-500">active, call Tasks/</p>
               </div>
               <Clock className="h-8 w-8 text-purple-400" />
             </div>
@@ -71,7 +72,8 @@ export function DashboardView() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-green-600 font-medium">Tasks/</p>
-                <p className="text-3xl font-bold text-green-700">{WORKSPACE_STATS.tasks}</p>
+                <p className="text-3xl font-bold text-green-700">{V2_ARCHITECTURE.tasksFunctions}</p>
+                <p className="text-xs text-green-500">orchestrators</p>
               </div>
               <Layers className="h-8 w-8 text-green-400" />
             </div>
@@ -83,7 +85,8 @@ export function DashboardView() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-blue-600 font-medium">Workers/</p>
-                <p className="text-3xl font-bold text-blue-700">{WORKSPACE_STATS.workers}</p>
+                <p className="text-3xl font-bold text-blue-700">{V2_ARCHITECTURE.workersFunctions}</p>
+                <p className="text-xs text-blue-500">reusable logic</p>
               </div>
               <Cog className="h-8 w-8 text-blue-400" />
             </div>
@@ -95,7 +98,8 @@ export function DashboardView() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-amber-600 font-medium">Domains</p>
-                <p className="text-3xl font-bold text-amber-700">{WORKSPACE_STATS.domains}</p>
+                <p className="text-3xl font-bold text-amber-700">{domainCount}</p>
+                <p className="text-xs text-amber-500">task categories</p>
               </div>
               <Database className="h-8 w-8 text-amber-400" />
             </div>
@@ -136,12 +140,12 @@ export function DashboardView() {
 
       {/* Two Column Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Scheduled Jobs - Real Data */}
+        {/* Scheduled Jobs - From Snapshot */}
         <Card>
           <CardHeader className="pb-3">
             <div className="flex items-center justify-between">
               <CardTitle className="text-lg">Scheduled Jobs</CardTitle>
-              <Badge variant="outline">{stats.scheduled} active</Badge>
+              <Badge variant="outline">{snapshotStats.scheduled} in snapshot</Badge>
             </div>
           </CardHeader>
           <CardContent>
@@ -176,26 +180,31 @@ export function DashboardView() {
               ))}
             </div>
             <Button variant="ghost" className="w-full mt-3" size="sm">
-              View All {stats.total} Background Jobs
+              View All {V2_ARCHITECTURE.bgTasksV3} V3 Background Jobs
               <ChevronRight className="h-4 w-4 ml-1" />
             </Button>
           </CardContent>
         </Card>
 
-        {/* Domain Summary - Real Counts */}
+        {/* Domain Summary - Computed from task-data.ts */}
         <Card>
           <CardHeader className="pb-3">
             <CardTitle className="text-lg">Background Jobs by Domain</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
-              {DOMAIN_COUNTS.map((domain) => (
-                <div key={domain.name} className="flex items-center gap-3">
-                  <div className={`w-3 h-3 rounded-full ${domain.color}`} />
-                  <span className="flex-1 font-medium">{domain.name}</span>
-                  <Badge variant="secondary">{domain.tasks} jobs</Badge>
-                </div>
-              ))}
+              {Object.entries(tasksByDomain)
+                .sort(([, a], [, b]) => b.length - a.length)
+                .map(([domain, tasks]) => {
+                  const info = DOMAIN_INFO[domain as keyof typeof DOMAIN_INFO]
+                  return (
+                    <div key={domain} className="flex items-center gap-3">
+                      <div className={`w-3 h-3 rounded-full bg-${info?.color || 'gray'}-500`} />
+                      <span className="flex-1 font-medium">{info?.name || domain}</span>
+                      <Badge variant="secondary">{tasks.length} jobs</Badge>
+                    </div>
+                  )
+                })}
             </div>
           </CardContent>
         </Card>

@@ -22,6 +22,9 @@ import {
   AlertCircle,
   Loader2,
   Database,
+  Cog,
+  Pause,
+  XCircle,
 } from "lucide-react"
 import { MCP_BASES, MCP_ENDPOINTS, type MCPEndpoint } from "@/lib/mcp-endpoints"
 
@@ -40,6 +43,7 @@ type OnboardingStep = {
 }
 
 // Map step names to actual V2 WORKERS endpoints
+// Each step uses a single primary endpoint verified to work with user_id: 60
 const INITIAL_STEPS: OnboardingStep[] = [
   {
     id: 1,
@@ -76,7 +80,7 @@ const INITIAL_STEPS: OnboardingStep[] = [
     name: "Listings",
     description: "Sync property listings",
     icon: Home,
-    endpoints: ["/test-function-8053-listings-sync", "/test-function-8054-listings-update"],
+    endpoints: ["/test-function-8053-listings-sync"],
     tables: ["listing"],
     status: "pending",
     recordsProcessed: 0,
@@ -86,7 +90,7 @@ const INITIAL_STEPS: OnboardingStep[] = [
     name: "Contributions",
     description: "Sync revenue share and contribution data",
     icon: DollarSign,
-    endpoints: ["/test-function-8056-contributions", "/test-function-8060-load-contributions"],
+    endpoints: ["/test-function-8056-contributions"],
     tables: ["contribution", "income", "revshare_totals", "contributors"],
     status: "pending",
     recordsProcessed: 0,
@@ -96,7 +100,7 @@ const INITIAL_STEPS: OnboardingStep[] = [
     name: "Network",
     description: "Build sponsored network and downline",
     icon: Network,
-    endpoints: ["/test-function-8062-network-downline", "/test-function-8070-sponsor-tree"],
+    endpoints: ["/test-function-8062-network-downline"],
     tables: ["network", "connections"],
     status: "pending",
     recordsProcessed: 0,
@@ -395,62 +399,83 @@ export function OnboardingTab() {
             <Progress value={progressPercent} className="h-3" />
           </div>
 
-          {/* Visual Pipeline */}
-          <div className="flex items-center justify-between mb-6 px-4 overflow-x-auto">
-            {steps.map((step, index) => {
-              const Icon = step.icon
-              const isComplete = step.status === "complete"
-              const isActive = step.status === "in_progress"
-              const hasError = step.status === "error"
+          {/* Visual Factory Pipeline */}
+          <div className="relative mb-6">
+            {/* Conveyor Belt Track */}
+            <div className={`absolute top-1/2 left-4 right-4 h-2 -translate-y-1/2 conveyor-belt rounded ${isRunningAll ? "" : "paused"}`} />
 
-              return (
-                <div key={step.id} className="flex items-center">
-                  <div
-                    className={`flex flex-col items-center ${
-                      isComplete
-                        ? "text-green-600"
-                        : isActive
-                        ? "text-blue-600"
-                        : hasError
-                        ? "text-red-600"
-                        : "text-gray-400"
-                    }`}
-                  >
+            <div className="relative flex items-center justify-between px-4 py-6">
+              {steps.map((step, index) => {
+                const Icon = step.icon
+                const isComplete = step.status === "complete"
+                const isActive = step.status === "in_progress"
+                const hasError = step.status === "error"
+
+                return (
+                  <div key={step.id} className="flex items-center">
                     <div
-                      className={`w-12 h-12 rounded-full flex items-center justify-center border-2 ${
+                      className={`flex flex-col items-center relative z-10 ${
                         isComplete
-                          ? "bg-green-100 border-green-500"
+                          ? "text-green-600"
                           : isActive
-                          ? "bg-blue-100 border-blue-500"
+                          ? "text-blue-600"
                           : hasError
-                          ? "bg-red-100 border-red-500"
-                          : "bg-gray-100 border-gray-300"
+                          ? "text-red-600"
+                          : "text-gray-400"
                       }`}
                     >
-                      {isComplete ? (
-                        <CheckCircle2 className="h-6 w-6" />
-                      ) : isActive ? (
-                        <Loader2 className="h-6 w-6 animate-spin" />
-                      ) : hasError ? (
-                        <AlertCircle className="h-6 w-6" />
-                      ) : (
-                        <Icon className="h-6 w-6" />
+                      {/* Spinning gear behind the step when active */}
+                      {isActive && (
+                        <Cog className="absolute h-20 w-20 text-amber-200 -z-10 animate-spin-gear-slow" />
+                      )}
+
+                      <div
+                        className={`w-14 h-14 rounded-full flex items-center justify-center border-3 shadow-md transition-all ${
+                          isComplete
+                            ? "bg-green-100 border-green-500 animate-success-glow"
+                            : isActive
+                            ? "bg-blue-100 border-blue-500 animate-bounce-in"
+                            : hasError
+                            ? "bg-red-100 border-red-500 animate-shake"
+                            : "bg-white border-gray-300"
+                        }`}
+                      >
+                        {isComplete ? (
+                          <CheckCircle2 className="h-7 w-7 animate-rotate-in" />
+                        ) : isActive ? (
+                          <Cog className="h-7 w-7 animate-spin-gear" />
+                        ) : hasError ? (
+                          <XCircle className="h-7 w-7" />
+                        ) : (
+                          <Icon className="h-6 w-6" />
+                        )}
+                      </div>
+                      <span className={`text-xs mt-2 font-semibold whitespace-nowrap ${isActive ? "animate-pulse-subtle" : ""}`}>
+                        {step.name}
+                      </span>
+                      {step.recordsProcessed > 0 && (
+                        <Badge variant="outline" className={`mt-1 text-[10px] ${isComplete ? "bg-green-50 text-green-700" : ""}`}>
+                          {step.recordsProcessed.toLocaleString()}
+                        </Badge>
                       )}
                     </div>
-                    <span className="text-xs mt-2 font-medium whitespace-nowrap">{step.name}</span>
+                    {index < steps.length - 1 && (
+                      <div className="flex items-center mx-1">
+                        <ArrowRight
+                          className={`h-6 w-6 shrink-0 transition-colors ${
+                            steps[index].status === "complete"
+                              ? "text-green-500"
+                              : steps[index].status === "in_progress"
+                              ? "text-blue-400 animate-pulse"
+                              : "text-gray-300"
+                          }`}
+                        />
+                      </div>
+                    )}
                   </div>
-                  {index < steps.length - 1 && (
-                    <ArrowRight
-                      className={`h-5 w-5 mx-2 shrink-0 ${
-                        steps[index + 1].status === "complete" || steps[index + 1].status === "in_progress"
-                          ? "text-green-500"
-                          : "text-gray-300"
-                      }`}
-                    />
-                  )}
-                </div>
-              )
-            })}
+                )
+              })}
+            </div>
           </div>
         </CardContent>
       </Card>

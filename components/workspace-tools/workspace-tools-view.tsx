@@ -18,6 +18,9 @@ import {
 } from "lucide-react"
 import Link from "next/link"
 
+// Import stats from task data
+import { getTaskStats, getTasksByDomain } from "@/lib/api-v2"
+
 // Import archived views
 import { Machine2View } from "@/components/machine-2"
 import { DataFlowDiagram } from "@/components/data-flow/data-flow-diagram"
@@ -34,13 +37,13 @@ interface ToolCard {
   color: string
 }
 
-const TOOL_CARDS: ToolCard[] = [
+// Tool cards - badge is computed dynamically in component for inventory
+const TOOL_CARDS_BASE: Omit<ToolCard, 'badge'>[] = [
   {
     id: "machine2",
     title: "Machine 2.0",
     description: "User onboarding, syncing, schema comparison, and API docs",
     icon: Users,
-    badge: "5 tools",
     color: "bg-purple-100 text-purple-600",
   },
   {
@@ -48,7 +51,6 @@ const TOOL_CARDS: ToolCard[] = [
     title: "Function Inventory",
     description: "Catalog of Workers, Tasks, Background Tasks, and Endpoints",
     icon: Archive,
-    badge: "530 functions",
     color: "bg-blue-100 text-blue-600",
   },
   {
@@ -56,7 +58,6 @@ const TOOL_CARDS: ToolCard[] = [
     title: "Data Flow",
     description: "Visual diagram of data sources, processing, and outputs",
     icon: GitBranch,
-    badge: "Reference",
     color: "bg-green-100 text-green-600",
   },
   {
@@ -64,7 +65,6 @@ const TOOL_CARDS: ToolCard[] = [
     title: "Verification",
     description: "Playwright audit results and screenshot gallery",
     icon: ClipboardCheck,
-    badge: "11 checks",
     color: "bg-amber-100 text-amber-600",
   },
 ]
@@ -87,6 +87,24 @@ const INVENTORY_LINKS = [
 
 export function WorkspaceToolsView() {
   const [activeSection, setActiveSection] = useState<WorkspaceSection>("overview")
+
+  // Get computed stats from task data
+  const stats = getTaskStats()
+  const tasksByDomain = getTasksByDomain()
+  const domainCount = Object.keys(tasksByDomain).length
+
+  // Compute total functions: 218 BG Tasks + 109 Tasks/ + 203 Workers/ = 530
+  // But we only have snapshot data for BG tasks, so show what we have
+  const totalFunctions = 218 + 109 + 203 // Real counts from Xano MCP query
+
+  // Build tool cards with dynamic badges
+  const toolCards: ToolCard[] = TOOL_CARDS_BASE.map(card => ({
+    ...card,
+    badge: card.id === "inventory" ? `${totalFunctions} functions` :
+           card.id === "machine2" ? "5 tools" :
+           card.id === "dataflow" ? "Reference" :
+           card.id === "verification" ? "11 checks" : undefined
+  }))
 
   if (activeSection === "machine2") {
     return (
@@ -186,7 +204,7 @@ export function WorkspaceToolsView() {
 
       {/* Tool Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {TOOL_CARDS.map((tool) => (
+        {toolCards.map((tool) => (
           <Card
             key={tool.id}
             className="cursor-pointer hover:shadow-md hover:border-primary/50 transition-all"
@@ -235,23 +253,28 @@ export function WorkspaceToolsView() {
         </CardContent>
       </Card>
 
-      {/* Quick Stats - Real counts from V2 Xano Workspace */}
+      {/* Quick Stats - Real counts from V2 Xano Workspace (queried 2026-01-16) */}
+      {/* Note: 218 BG Tasks = 109 V3 (active, call Tasks/) + 109 legacy (inactive) */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div className="p-4 bg-muted/30 rounded-lg text-center">
           <p className="text-2xl font-bold">218</p>
           <p className="text-sm text-muted-foreground">Background Tasks</p>
+          <p className="text-xs text-muted-foreground/60">109 V3 + 109 legacy</p>
         </div>
         <div className="p-4 bg-muted/30 rounded-lg text-center">
           <p className="text-2xl font-bold">109</p>
           <p className="text-sm text-muted-foreground">Tasks/</p>
+          <p className="text-xs text-muted-foreground/60">orchestrators</p>
         </div>
         <div className="p-4 bg-muted/30 rounded-lg text-center">
           <p className="text-2xl font-bold">203</p>
           <p className="text-sm text-muted-foreground">Workers/</p>
+          <p className="text-xs text-muted-foreground/60">reusable logic</p>
         </div>
         <div className="p-4 bg-muted/30 rounded-lg text-center">
-          <p className="text-2xl font-bold">10</p>
+          <p className="text-2xl font-bold">{domainCount}</p>
           <p className="text-sm text-muted-foreground">Domains</p>
+          <p className="text-xs text-muted-foreground/60">task categories</p>
         </div>
       </div>
     </div>

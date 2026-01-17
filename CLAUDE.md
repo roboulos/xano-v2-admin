@@ -1,5 +1,9 @@
 # CLAUDE.md - V1 to V2 Migration Admin Interface
 
+> **[PROJECT_HISTORY.md](./PROJECT_HISTORY.md)** - Complete 43-day timeline from Dec 5, 2025 to Jan 16, 2026. Covers all workstreams: Frontend (dashboards2.0), V2 Backend Refactor, Demo Sync Admin, and this Migration Admin. Includes what's been built, what remains, and detailed checklists.
+
+---
+
 ## Purpose
 
 This is a **"Frontend Reveals Backend"** admin interface that compares the V1 Xano workspace (production) against the V2 workspace (normalized, refactored). The frontend serves as a diagnostic tool - migration gaps become immediately visible.

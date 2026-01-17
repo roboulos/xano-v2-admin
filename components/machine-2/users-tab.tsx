@@ -21,8 +21,14 @@ import {
   Play,
   Eye,
   Database,
+  Trash2,
+  Rocket,
+  AlertTriangle,
 } from "lucide-react"
 import { MCP_BASES } from "@/lib/mcp-endpoints"
+
+// Demo API base URL (different from MCP_BASES)
+const DEMO_BASE = "https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:FhhBIJA0:v1.5"
 
 // Demo user type matching Xano response
 interface DemoUser {
@@ -94,15 +100,30 @@ type UserCardProps = {
   user: DemoUser
   persona?: DemoPersona
   onTest: () => void
+  onClear: () => void
+  onOnboard: () => void
+  onView: () => void
   isLoading: boolean
+  isClearingOrOnboarding: "clearing" | "onboarding" | null
   testResult: { success: boolean; token?: string; error?: string } | null
 }
 
-function DemoUserCard({ user, persona, onTest, isLoading, testResult }: UserCardProps) {
+function DemoUserCard({ user, persona, onTest, onClear, onOnboard, onView, isLoading, isClearingOrOnboarding, testResult }: UserCardProps) {
   const [copied, setCopied] = useState(false)
   const personaType = persona?.type || "team-owner"
   const Icon = personaIcons[personaType] || Crown
   const colors = personaColors[personaType] || personaColors["team-owner"]
+
+  // Determine status for pulsing indicator
+  const status = isClearingOrOnboarding
+    ? "syncing"
+    : isLoading
+    ? "syncing"
+    : testResult?.success
+    ? "ready"
+    : testResult?.error
+    ? "error"
+    : "pending"
 
   const copyEmail = async () => {
     await navigator.clipboard.writeText(user.email)
@@ -111,12 +132,24 @@ function DemoUserCard({ user, persona, onTest, isLoading, testResult }: UserCard
   }
 
   return (
-    <Card className={`${colors.bg} transition-all hover:shadow-md`}>
+    <Card className={`${colors.bg} transition-all hover:shadow-md animate-fade-in`}>
       <CardContent className="p-5">
-        {/* Header with Avatar */}
+        {/* Header with Avatar and Status Indicator */}
         <div className="flex items-start gap-3 mb-4">
-          <div className={`p-3 rounded-xl bg-white shadow-sm border`}>
+          <div className={`p-3 rounded-xl bg-white shadow-sm border relative`}>
             <Icon className={`h-6 w-6 ${colors.text}`} />
+            {/* Pulsing Status Dot */}
+            <div
+              className={`absolute -top-1 -right-1 h-3 w-3 rounded-full border-2 border-white ${
+                status === "ready"
+                  ? "bg-green-500 animate-pulse-dot"
+                  : status === "syncing"
+                  ? "bg-amber-500 animate-pulse"
+                  : status === "error"
+                  ? "bg-red-500"
+                  : "bg-gray-400"
+              }`}
+            />
           </div>
           <div className="flex-1 min-w-0">
             <Badge className={`${colors.bg} ${colors.text} border mb-2`}>
@@ -162,41 +195,91 @@ function DemoUserCard({ user, persona, onTest, isLoading, testResult }: UserCard
           </Button>
         </div>
 
-        {/* Actions */}
-        <div className="flex gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            className={`flex-1 ${
-              testResult?.success ? "bg-green-50 border-green-200 text-green-700" :
-              testResult?.error ? "bg-red-50 border-red-200 text-red-700" : ""
-            }`}
-            onClick={onTest}
-            disabled={isLoading}
-          >
-            {isLoading ? (
-              <Loader2 className="h-4 w-4 animate-spin" />
-            ) : testResult?.success ? (
-              <>
-                <CheckCircle2 className="h-4 w-4 mr-1" />
-                Auth OK
-              </>
-            ) : testResult?.error ? (
-              <>
-                <XCircle className="h-4 w-4 mr-1" />
-                Failed
-              </>
-            ) : (
-              <>
-                <Play className="h-4 w-4 mr-1" />
-                Test Auth
-              </>
-            )}
-          </Button>
-          <Button variant="default" size="sm" className="flex-1">
-            <Eye className="h-4 w-4 mr-1" />
-            View Data
-          </Button>
+        {/* Actions - Machine 2.0 Style */}
+        <div className="space-y-2">
+          {/* Row 1: CLEAR and ONBOARD */}
+          <div className="flex gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              className="flex-1 border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700"
+              onClick={onClear}
+              disabled={isClearingOrOnboarding !== null}
+            >
+              {isClearingOrOnboarding === "clearing" ? (
+                <>
+                  <Loader2 className="h-4 w-4 mr-1 animate-spin" />
+                  Clearing...
+                </>
+              ) : (
+                <>
+                  <Trash2 className="h-4 w-4 mr-1" />
+                  Clear
+                </>
+              )}
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              className="flex-1 border-amber-200 text-amber-600 hover:bg-amber-50 hover:text-amber-700"
+              onClick={onOnboard}
+              disabled={isClearingOrOnboarding !== null}
+            >
+              {isClearingOrOnboarding === "onboarding" ? (
+                <>
+                  <Loader2 className="h-4 w-4 mr-1 animate-spin" />
+                  Onboarding...
+                </>
+              ) : (
+                <>
+                  <Rocket className="h-4 w-4 mr-1" />
+                  Onboard
+                </>
+              )}
+            </Button>
+          </div>
+          {/* Row 2: TEST and VIEW */}
+          <div className="flex gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              className={`flex-1 ${
+                testResult?.success ? "bg-green-50 border-green-200 text-green-700" :
+                testResult?.error ? "bg-red-50 border-red-200 text-red-700" : ""
+              }`}
+              onClick={onTest}
+              disabled={isLoading || isClearingOrOnboarding !== null}
+            >
+              {isLoading ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : testResult?.success ? (
+                <>
+                  <CheckCircle2 className="h-4 w-4 mr-1" />
+                  Auth OK
+                </>
+              ) : testResult?.error ? (
+                <>
+                  <XCircle className="h-4 w-4 mr-1" />
+                  Failed
+                </>
+              ) : (
+                <>
+                  <Play className="h-4 w-4 mr-1" />
+                  Test
+                </>
+              )}
+            </Button>
+            <Button
+              variant="default"
+              size="sm"
+              className="flex-1"
+              disabled={isClearingOrOnboarding !== null || !testResult?.token}
+              onClick={onView}
+            >
+              <Eye className="h-4 w-4 mr-1" />
+              View
+            </Button>
+          </div>
         </div>
 
         {/* Token display if successful */}
@@ -226,40 +309,27 @@ export function UsersTab() {
   const [testStates, setTestStates] = useState<Record<number, { loading: boolean; result: { success: boolean; token?: string; error?: string } | null }>>({})
   const [tableCounts, setTableCounts] = useState<TableCountsResponse | null>(null)
   const [isLoadingCounts, setIsLoadingCounts] = useState(false)
+  const [actionStates, setActionStates] = useState<Record<number, "clearing" | "onboarding" | null>>({})
 
-  // V2 Test User - User 60 (David Keener) is the VERIFIED test user for V2 migration
-  const V2_TEST_USER: DemoUser = {
-    id: 60,
-    email: "Dave@premieregrp.com",
-    first_name: "David",
-    last_name: "Keener",
-    role: "admin",
-    view: "Admin",
-    account_type: "Team",
-    is_team_owner: true,
-    is_director: true,
-    team_id: 1,
-    team_name: "PREMIERE GROUP",
-  }
-
-  const V2_PERSONA: DemoPersona = {
-    type: "team-owner",
-    label: "V2 Test User (Primary)",
-    description: "Agent ID: 37208 | 84% endpoint pass rate | Verified test user",
-    source_user: "David Keener (LIVE)",
-  }
-
-  // Initialize with V2 test user (hardcoded - this is the verified user from TRIGGER_ENDPOINTS_AUDIT.md)
+  // Fetch demo users from the real API endpoint
   const fetchDemoUsers = useCallback(async () => {
     setIsLoading(true)
     setError(null)
     try {
-      // For V2 migration testing, we use the verified User 60 (David Keener)
-      // This is NOT the demo-sync users (7, 133, 256) - those are V1 demo users
-      setDemoUsers([V2_TEST_USER])
-      setPersonas({ "60": V2_PERSONA })
+      const response = await fetch(`${DEMO_BASE}/demo-users`)
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`)
+      }
+      const data: DemoUsersResponse = await response.json()
+
+      if (data.success && data.users) {
+        setDemoUsers(data.users)
+        setPersonas(data.personas || {})
+      } else {
+        throw new Error("Invalid response from demo-users endpoint")
+      }
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to load test users")
+      setError(err instanceof Error ? err.message : "Failed to load demo users")
     } finally {
       setIsLoading(false)
     }
@@ -285,39 +355,69 @@ export function UsersTab() {
     fetchTableCounts()
   }, [fetchDemoUsers, fetchTableCounts])
 
-  // Test V2 WORKERS endpoint with User 60
+  // Test demo auth endpoint - returns auth token for the user
   const handleTestAuth = async (userId: number) => {
     setTestStates(prev => ({ ...prev, [userId]: { loading: true, result: null } }))
 
     try {
-      // For V2, we test against the WORKERS endpoint (not demo-auth)
-      // Using a simple endpoint to verify user 60 works
-      const response = await fetch(`${MCP_BASES.WORKERS}/FUB_get_fub_account_id`, {
+      const response = await fetch(`${DEMO_BASE}/demo-auth`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ user_id: userId }),
       })
-      const data = await response.json()
+      const data: DemoAuthResponse = await response.json()
 
-      if (response.ok && data) {
+      if (response.ok && data.success && data.authToken) {
         setTestStates(prev => ({
           ...prev,
-          [userId]: { loading: false, result: { success: true, token: `FUB Account: ${data.fub_account_id || data.account_id || 'Found'}` } }
+          [userId]: { loading: false, result: { success: true, token: data.authToken } }
         }))
       } else {
-        throw new Error(data.message || "Endpoint returned error")
+        throw new Error(data.success === false ? "Auth failed" : "No token returned")
       }
     } catch (err) {
       setTestStates(prev => ({
         ...prev,
-        [userId]: { loading: false, result: { success: false, error: err instanceof Error ? err.message : "Test failed" } }
+        [userId]: { loading: false, result: { success: false, error: err instanceof Error ? err.message : "Auth test failed" } }
       }))
+    }
+  }
+
+  // Clear user data - endpoint not yet available
+  const handleClearUser = async (userId: number) => {
+    const user = demoUsers.find(u => u.id === userId)
+    const userName = user ? `${user.first_name} ${user.last_name}` : `User ${userId}`
+    alert(`Clear endpoint not available - needs backend implementation.\n\nUser: ${userName} (ID: ${userId})`)
+    // Reset test result to allow re-testing
+    setTestStates(prev => ({ ...prev, [userId]: { loading: false, result: null } }))
+  }
+
+  // Onboard user - shows alert for now (full implementation in Spec 4)
+  const handleOnboardUser = async (userId: number) => {
+    const user = demoUsers.find(u => u.id === userId)
+    const userName = user ? `${user.first_name} ${user.last_name}` : `User ${userId}`
+    alert(`Starting onboarding for user ${userId}...\n\nUser: ${userName}\n\n(Full implementation will be done in Spec 4)`)
+  }
+
+  // View user - copy token to clipboard
+  const handleViewUser = async (userId: number) => {
+    const testResult = testStates[userId]?.result
+    if (testResult?.token) {
+      try {
+        await navigator.clipboard.writeText(testResult.token)
+        alert(`Auth token copied to clipboard!\n\nToken preview:\n${testResult.token.substring(0, 80)}...`)
+      } catch (err) {
+        // Fallback for browsers that don't support clipboard API
+        alert(`Auth token:\n\n${testResult.token}`)
+      }
+    } else {
+      alert("No auth token available. Please run Test first.")
     }
   }
 
   return (
     <div className="space-y-6">
-      {/* Section 1: V2 Test Users */}
+      {/* Section 1: Demo Users */}
       <Card>
         <CardHeader className="pb-4">
           <div className="flex items-center justify-between">
@@ -326,16 +426,15 @@ export function UsersTab() {
                 <Users className="h-5 w-5 text-purple-600" />
               </div>
               <div>
-                <CardTitle className="text-lg">V2 Test User</CardTitle>
+                <CardTitle className="text-lg">Demo Users</CardTitle>
                 <p className="text-sm text-muted-foreground">
-                  User 60 (David Keener) - Verified from TRIGGER_ENDPOINTS_AUDIT.md
+                  Live from {DEMO_BASE}/demo-users
                 </p>
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
-                <CheckCircle2 className="h-3 w-3 mr-1" />
-                84% Pass Rate
+              <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
+                {demoUsers.length} users loaded
               </Badge>
               <Button variant="outline" size="sm" onClick={fetchDemoUsers} disabled={isLoading}>
                 <RefreshCw className={`h-4 w-4 mr-2 ${isLoading ? "animate-spin" : ""}`} />
@@ -367,7 +466,11 @@ export function UsersTab() {
                   user={user}
                   persona={personas[String(user.id)]}
                   onTest={() => handleTestAuth(user.id)}
+                  onClear={() => handleClearUser(user.id)}
+                  onOnboard={() => handleOnboardUser(user.id)}
+                  onView={() => handleViewUser(user.id)}
                   isLoading={testStates[user.id]?.loading || false}
+                  isClearingOrOnboarding={actionStates[user.id] || null}
                   testResult={testStates[user.id]?.result || null}
                 />
               ))}
