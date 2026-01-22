@@ -1,0 +1,86 @@
+// Endpoint created via MCP - lambda/job_checkpoint
+query "lambda/job_checkpoint" verb=POST {
+  input {
+    text job_id? filters=trim
+    text job_type? filters=trim
+    json logs?
+    json progress_state?
+    int user_id? {
+      table = "user"
+    }
+  }
+
+  stack {
+    var $logs {
+      value = $input.logs
+    }
+
+    foreach ($logs) {
+      each as $item {
+        db.add lambda_job_logs {
+          data = {
+            created_at       : now
+            job_id           : $input.job_id
+            type             : $item.type
+            timestamp        : $item.timestamp
+            level            : $item.level
+            message          : $item.message
+            metadata         : $item.metadata
+            updatedAt        : $item.updatedAt
+            execution_time_ms: $item.execution_time_ms
+            progress_state   : $input.progress_state
+          }
+        } as $lambda_job_log1
+      }
+    }
+
+    // FIX: Safe access to progress_state.status with default value
+    var $status {
+      value = $input.progress_state|get:"status":""
+    }
+
+    conditional {
+      if ($status == "COMPLETE" || $status == "FAILED") {
+        db.add_or_edit lambda_job_status {
+          field_name = "job_id"
+          field_value = $input.job_id
+          data = {
+            user_id          : $input.user_id
+            job_type         : $input.job_type
+            status           : $status
+            started_at       : $input.progress_state|get:"started_at":0
+            completed_at     : now
+            last_activity    : now
+            recovery_info    : $input.progress_state
+            next_page_url    : $input.progress_state|get:"next_page_url":""
+            lastSuccessfulUrl: $input.progress_state|get:"lastSuccessfulUrl":""
+            currentUrl       : $input.progress_state|get:"currentUrl":""
+            recordsProcessed : $input.progress_state|get:"recordsProcessed":0
+            recordsStored    : $input.progress_state|get:"recordsStored":0
+          }
+        } as $lambda_job_status1
+      }
+
+      else {
+        db.add_or_edit lambda_job_status {
+          field_name = "job_id"
+          field_value = $input.job_id
+          data = {
+            job_type         : $input.job_type
+            status           : $status
+            started_at       : $input.progress_state|get:"started_at":0
+            last_activity    : now
+            recovery_info    : $input.progress_state
+            next_page_url    : $input.progress_state|get:"next_page_url":""
+            lastSuccessfulUrl: $input.progress_state|get:"lastSuccessfulUrl":""
+            currentUrl       : $input.progress_state|get:"currentUrl":""
+            recordsProcessed : $input.progress_state|get:"recordsProcessed":0
+            recordsStored    : $input.progress_state|get:"recordsStored":0
+          }
+        } as $lambda_job_status1
+      }
+    }
+  }
+
+  response = $lambda_job_log1
+}

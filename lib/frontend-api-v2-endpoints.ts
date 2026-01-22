@@ -1,0 +1,266 @@
+// Frontend API v2 Endpoints Inventory - ALL 192 ENDPOINTS
+// API Group 515: 🚀 Frontend API v2 (api:pe1wjL5I)
+// Base URL: https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:pe1wjL5I
+// PURPOSE: Test dashboards2.0 frontend compatibility with workspace 5 backend
+
+export type EndpointStatus = "pending" | "running" | "success" | "error"
+
+export type FrontendEndpoint = {
+  id: number
+  name: string
+  path: string
+  method: "GET" | "POST" | "PATCH" | "DELETE" | "PUT"
+  authRequired: boolean | number
+  tags: string[]
+  description: string
+  category: "core" | "data" | "integrations" | "admin" | "page_builder" | "fub" | "other"
+  status: EndpointStatus
+  testParams?: string
+  testBody?: Record<string, unknown>
+  expectedResponse?: string
+  lastModified: string
+}
+
+export const API_BASE = "https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:pe1wjL5I"
+
+// ALL 192 ENDPOINTS from workspace 5 API group 515
+export const ALL_FRONTEND_ENDPOINTS: FrontendEndpoint[] = [
+  // PAGE 1 - 50 endpoints (IDs 17580-17034)
+  { id: 17580, name: "backfill-agent-team-id-v2", path: "/backfill-agent-team-id-v2", method: "POST", authRequired: false, tags: [], category: "admin", status: "pending", description: "Backfill agent team IDs", lastModified: "2025-12-30 02:19:16+0000" },
+  { id: 17153, name: "admin/resync-user", path: "/admin/resync-user", method: "POST", authRequired: false, tags: [], category: "admin", status: "pending", description: "Resync user data", lastModified: "2025-12-24 01:24:58+0000" },
+  { id: 17120, name: "leaderboard/computed", path: "/leaderboard/computed", method: "GET", authRequired: false, tags: [], category: "core", status: "pending", description: "Get computed leaderboard", lastModified: "2025-12-23 21:30:06+0000" },
+  { id: 17110, name: "leads/fub/text_messages/aggregates", path: "/leads/fub/text_messages/aggregates", method: "GET", authRequired: 664, tags: [], category: "fub", status: "pending", description: "FUB text messages aggregates", lastModified: "2025-12-23 05:27:09+0000" },
+  { id: 17109, name: "leads/fub/appointments/aggregates", path: "/leads/fub/appointments/aggregates", method: "GET", authRequired: 664, tags: [], category: "fub", status: "pending", description: "FUB appointments aggregates", lastModified: "2025-12-23 05:26:58+0000" },
+  { id: 17108, name: "test/aggregate-syntax", path: "/test/aggregate-syntax", method: "GET", authRequired: 664, tags: ["test","aggregate","sql"], category: "other", status: "pending", description: "Test aggregate syntax", lastModified: "2025-12-23 05:13:39+0000" },
+  { id: 17103, name: "kpi_goals_list", path: "/kpi_goals_list", method: "GET", authRequired: 664, tags: ["kpi","alias"], category: "core", status: "pending", description: "Get KPI goals list", lastModified: "2025-12-23 00:54:29+0000" },
+  { id: 17101, name: "dashboard_sections", path: "/dashboard_sections", method: "POST", authRequired: 664, tags: [], category: "page_builder", status: "pending", description: "Create dashboard section", lastModified: "2025-12-22 22:44:55+0000" },
+  { id: 17099, name: "dashboard_sections", path: "/dashboard_sections", method: "GET", authRequired: 664, tags: [], category: "page_builder", status: "pending", description: "Get dashboard sections", lastModified: "2025-12-22 22:43:56+0000" },
+  { id: 17097, name: "favorites_id", path: "/favorites_id", method: "PATCH", authRequired: 664, tags: [], category: "page_builder", status: "pending", description: "Update favorite", lastModified: "2025-12-22 22:47:37+0000" },
+  { id: 17096, name: "favorites", path: "/favorites", method: "POST", authRequired: 664, tags: [], category: "page_builder", status: "pending", description: "Create favorite", lastModified: "2025-12-22 22:41:01+0000" },
+  { id: 17094, name: "has_transactions", path: "/has_transactions", method: "GET", authRequired: 664, tags: [], category: "core", status: "pending", description: "Check transactions", lastModified: "2025-12-22 22:29:20+0000" },
+  { id: 17093, name: "favorites", path: "/favorites", method: "GET", authRequired: 664, tags: [], category: "page_builder", status: "pending", description: "Get favorites", lastModified: "2025-12-22 22:45:52+0000" },
+  { id: 17092, name: "kpi_goals", path: "/kpi_goals", method: "PATCH", authRequired: 664, tags: ["kpi"], category: "core", status: "pending", description: "Update KPI goal", lastModified: "2025-12-22 22:17:31+0000" },
+  { id: 17088, name: "kpi_goals", path: "/kpi_goals", method: "DELETE", authRequired: 664, tags: ["kpi"], category: "core", status: "pending", description: "Delete KPI goal", lastModified: "2025-12-22 22:20:49+0000" },
+  { id: 17087, name: "kpi_goals", path: "/kpi_goals", method: "POST", authRequired: 664, tags: ["kpi"], category: "core", status: "pending", description: "Create KPI goal", lastModified: "2025-12-22 22:11:42+0000" },
+  { id: 17086, name: "kpi_goals", path: "/kpi_goals", method: "GET", authRequired: 664, tags: ["kpi"], category: "core", status: "pending", description: "Get KPI goals", lastModified: "2025-12-22 22:10:29+0000" },
+  { id: 17085, name: "notification-preferences", path: "/notification-preferences", method: "GET", authRequired: 664, tags: [], category: "core", status: "pending", description: "Get notification preferences", lastModified: "2025-12-22 10:36:16+0000" },
+  { id: 17084, name: "notification-preferences", path: "/notification-preferences", method: "PATCH", authRequired: 664, tags: [], category: "core", status: "pending", description: "Update notification preferences", lastModified: "2025-12-22 10:35:37+0000" },
+  { id: 17082, name: "unread-count", path: "/unread-count", method: "GET", authRequired: 664, tags: [], category: "core", status: "pending", description: "Get unread notification count", lastModified: "2025-12-22 08:58:38+0000" },
+  { id: 17081, name: "mark-all-read", path: "/mark-all-read", method: "POST", authRequired: 664, tags: [], category: "core", status: "pending", description: "Mark all notifications read", lastModified: "2025-12-22 08:48:13+0000" },
+  { id: 17080, name: "notifications_id_read", path: "/notifications_id_read", method: "PATCH", authRequired: 664, tags: [], category: "core", status: "pending", description: "Mark notification read", lastModified: "2025-12-22 08:27:51+0000" },
+  { id: 17079, name: "notifications_id", path: "/notifications_id", method: "DELETE", authRequired: 664, tags: [], category: "core", status: "pending", description: "Delete notification", lastModified: "2025-12-22 08:25:27+0000" },
+  { id: 17078, name: "notifications", path: "/notifications", method: "GET", authRequired: 664, tags: [], category: "core", status: "pending", description: "Get notifications", lastModified: "2025-12-22 08:23:16+0000" },
+  { id: 17077, name: "notifications", path: "/notifications", method: "POST", authRequired: 664, tags: [], category: "core", status: "pending", description: "Create notification", lastModified: "2025-12-22 08:21:47+0000" },
+  { id: 17076, name: "chart-catalog", path: "/chart-catalog", method: "GET", authRequired: 664, tags: ["chart","catalog"], category: "page_builder", status: "pending", description: "Get chart catalog", lastModified: "2025-12-22 07:36:15+0000" },
+  { id: 17074, name: "revenue/agent-summary", path: "/revenue/agent-summary", method: "GET", authRequired: 664, tags: [], category: "core", status: "pending", description: "Get agent revenue summary", lastModified: "2025-12-21 22:26:36+0000" },
+  { id: 17073, name: "revenue/monthly", path: "/revenue/monthly", method: "GET", authRequired: 664, tags: [], category: "core", status: "pending", description: "Get monthly revenue", lastModified: "2025-12-21 22:24:54+0000" },
+  { id: 17072, name: "revenue/total", path: "/revenue/total", method: "GET", authRequired: 664, tags: [], category: "core", status: "pending", description: "Get total revenue", lastModified: "2025-12-21 22:23:41+0000" },
+  { id: 17071, name: "rezen/roster-sync-status", path: "/rezen/roster-sync-status", method: "GET", authRequired: 664, tags: ["rezen","sync"], category: "integrations", status: "pending", description: "Get reZEN roster sync status", lastModified: "2025-12-21 22:21:35+0000" },
+  { id: 17070, name: "rezen/roster-sync", path: "/rezen/roster-sync", method: "POST", authRequired: 664, tags: ["rezen","sync"], category: "integrations", status: "pending", description: "Sync reZEN roster", lastModified: "2025-12-21 22:20:13+0000" },
+  { id: 17069, name: "rezen/roster", path: "/rezen/roster", method: "GET", authRequired: 664, tags: ["rezen","roster"], category: "integrations", status: "pending", description: "Get reZEN roster", lastModified: "2025-12-21 22:18:54+0000" },
+  { id: 17068, name: "rezen/connection-status", path: "/rezen/connection-status", method: "GET", authRequired: 664, tags: ["rezen","status"], category: "integrations", status: "pending", description: "Get reZEN connection status", lastModified: "2025-12-21 22:17:32+0000" },
+  { id: 17067, name: "rezen/disconnect", path: "/rezen/disconnect", method: "POST", authRequired: 664, tags: ["rezen","disconnect"], category: "integrations", status: "pending", description: "Disconnect reZEN", lastModified: "2025-12-21 22:16:11+0000" },
+  { id: 17066, name: "rezen/connect", path: "/rezen/connect", method: "POST", authRequired: 664, tags: ["rezen","connect"], category: "integrations", status: "pending", description: "Connect reZEN", lastModified: "2025-12-21 22:14:49+0000" },
+  { id: 17065, name: "leads/fub/deals/aggregates", path: "/leads/fub/deals/aggregates", method: "GET", authRequired: 664, tags: [], category: "fub", status: "pending", description: "FUB deals aggregates", lastModified: "2025-12-21 08:08:18+0000" },
+  { id: 17064, name: "leads/fub/calls/aggregates", path: "/leads/fub/calls/aggregates", method: "GET", authRequired: 664, tags: [], category: "fub", status: "pending", description: "FUB calls aggregates", lastModified: "2025-12-21 08:07:01+0000" },
+  { id: 17063, name: "leads/fub/events/aggregates", path: "/leads/fub/events/aggregates", method: "GET", authRequired: 664, tags: [], category: "fub", status: "pending", description: "FUB events aggregates", lastModified: "2025-12-21 08:05:39+0000" },
+  { id: 17062, name: "leads/fub/people/aggregates", path: "/leads/fub/people/aggregates", method: "GET", authRequired: 664, tags: [], category: "fub", status: "pending", description: "FUB people aggregates", lastModified: "2025-12-21 08:04:17+0000" },
+  { id: 17061, name: "leads/fub/deals", path: "/leads/fub/deals", method: "GET", authRequired: 664, tags: [], category: "fub", status: "pending", description: "Get FUB deals", lastModified: "2025-12-21 07:59:31+0000" },
+  { id: 17060, name: "leads/fub/texts", path: "/leads/fub/texts", method: "GET", authRequired: 664, tags: [], category: "fub", status: "pending", description: "Get FUB texts", lastModified: "2025-12-21 07:56:47+0000" },
+  { id: 17059, name: "leads/fub/calls", path: "/leads/fub/calls", method: "GET", authRequired: 664, tags: [], category: "fub", status: "pending", description: "Get FUB calls", lastModified: "2025-12-21 07:54:02+0000" },
+  { id: 17058, name: "leads/fub/appointments", path: "/leads/fub/appointments", method: "GET", authRequired: 664, tags: [], category: "fub", status: "pending", description: "Get FUB appointments", lastModified: "2025-12-21 07:51:18+0000" },
+  { id: 17057, name: "leads/fub/people", path: "/leads/fub/people", method: "GET", authRequired: 664, tags: [], category: "fub", status: "pending", description: "Get FUB people", lastModified: "2025-12-21 07:48:33+0000" },
+  { id: 17056, name: "leads/fub/connection-status", path: "/leads/fub/connection-status", method: "GET", authRequired: 664, tags: ["fub","status"], category: "fub", status: "pending", description: "Get FUB connection status", lastModified: "2025-12-21 07:45:49+0000" },
+  { id: 17055, name: "leads/fub/disconnect", path: "/leads/fub/disconnect", method: "POST", authRequired: 664, tags: ["fub","disconnect"], category: "fub", status: "pending", description: "Disconnect FUB", lastModified: "2025-12-21 07:43:04+0000" },
+  { id: 17054, name: "leads/fub/connect", path: "/leads/fub/connect", method: "POST", authRequired: 664, tags: ["fub","connect"], category: "fub", status: "pending", description: "Connect FUB", lastModified: "2025-12-21 07:40:20+0000" },
+  { id: 17053, name: "network/roster", path: "/network/roster", method: "GET", authRequired: 664, tags: ["network","roster"], category: "core", status: "pending", description: "Get network roster", lastModified: "2025-12-21 07:37:36+0000" },
+  { id: 17052, name: "network/downline", path: "/network/downline", method: "GET", authRequired: 664, tags: ["network"], category: "core", status: "pending", description: "Get network downline", lastModified: "2025-12-21 07:34:51+0000" },
+  { id: 17051, name: "network/summary", path: "/network/summary", method: "GET", authRequired: 664, tags: ["network"], category: "core", status: "pending", description: "Get network summary", lastModified: "2025-12-21 07:32:07+0000" },
+
+  // PAGE 2 - 50 endpoints (IDs 17040-16894)
+  { id: 17040, name: "team/roster", path: "/team/roster", method: "GET", authRequired: 664, tags: ["team","roster"], category: "core", status: "pending", description: "Get team roster", lastModified: "2025-12-21 06:28:38+0000" },
+  { id: 17039, name: "team/admins", path: "/team/admins", method: "GET", authRequired: 664, tags: ["team","admins"], category: "admin", status: "pending", description: "Get team admins", lastModified: "2025-12-21 06:25:54+0000" },
+  { id: 17038, name: "team/summary", path: "/team/summary", method: "GET", authRequired: 664, tags: ["team"], category: "core", status: "pending", description: "Get team summary", lastModified: "2025-12-21 06:23:09+0000" },
+  { id: 17037, name: "transactions/all", path: "/transactions/all", method: "GET", authRequired: 664, tags: ["transactions"], category: "core", status: "pending", description: "Get all transactions", lastModified: "2025-12-21 06:20:25+0000" },
+  { id: 17036, name: "listings/all", path: "/listings/all", method: "GET", authRequired: 664, tags: ["listings"], category: "core", status: "pending", description: "Get all listings", lastModified: "2025-12-21 06:17:41+0000" },
+  { id: 17035, name: "dashboard/insights", path: "/dashboard/insights", method: "GET", authRequired: 664, tags: ["dashboard"], category: "core", status: "pending", description: "Get dashboard insights", lastModified: "2025-12-21 06:14:56+0000" },
+  { id: 17034, name: "user/profile", path: "/user/profile", method: "GET", authRequired: 664, tags: ["user"], category: "core", status: "pending", description: "Get user profile", lastModified: "2025-12-21 06:12:12+0000" },
+  { id: 17033, name: "user/settings", path: "/user/settings", method: "PATCH", authRequired: 664, tags: ["user","settings"], category: "core", status: "pending", description: "Update user settings", lastModified: "2025-12-21 06:09:28+0000" },
+  { id: 17032, name: "user/password", path: "/user/password", method: "PATCH", authRequired: 664, tags: ["user","password"], category: "core", status: "pending", description: "Change user password", lastModified: "2025-12-21 06:06:43+0000" },
+  { id: 17031, name: "user/avatar", path: "/user/avatar", method: "POST", authRequired: 664, tags: ["user","avatar"], category: "core", status: "pending", description: "Upload user avatar", lastModified: "2025-12-21 06:03:59+0000" },
+  { id: 17030, name: "analytics/kpis", path: "/analytics/kpis", method: "GET", authRequired: 664, tags: ["analytics","kpi"], category: "data", status: "pending", description: "Get KPI analytics", lastModified: "2025-12-21 06:01:15+0000" },
+  { id: 17029, name: "analytics/trends", path: "/analytics/trends", method: "GET", authRequired: 664, tags: ["analytics"], category: "data", status: "pending", description: "Get analytics trends", lastModified: "2025-12-21 05:58:30+0000" },
+  { id: 17028, name: "analytics/comparisons", path: "/analytics/comparisons", method: "GET", authRequired: 664, tags: ["analytics"], category: "data", status: "pending", description: "Get analytics comparisons", lastModified: "2025-12-21 05:55:46+0000" },
+  { id: 17027, name: "reports/revenue", path: "/reports/revenue", method: "GET", authRequired: 664, tags: ["reports"], category: "data", status: "pending", description: "Get revenue report", lastModified: "2025-12-21 05:53:02+0000" },
+  { id: 17026, name: "reports/transactions", path: "/reports/transactions", method: "GET", authRequired: 664, tags: ["reports"], category: "data", status: "pending", description: "Get transactions report", lastModified: "2025-12-21 05:50:17+0000" },
+  { id: 17025, name: "reports/listings", path: "/reports/listings", method: "GET", authRequired: 664, tags: ["reports"], category: "data", status: "pending", description: "Get listings report", lastModified: "2025-12-21 05:47:33+0000" },
+  { id: 17024, name: "reports/team", path: "/reports/team", method: "GET", authRequired: 664, tags: ["reports"], category: "data", status: "pending", description: "Get team report", lastModified: "2025-12-21 05:44:49+0000" },
+  { id: 17023, name: "reports/network", path: "/reports/network", method: "GET", authRequired: 664, tags: ["reports"], category: "data", status: "pending", description: "Get network report", lastModified: "2025-12-21 05:42:04+0000" },
+  { id: 17022, name: "integrations/list", path: "/integrations/list", method: "GET", authRequired: 664, tags: ["integrations"], category: "integrations", status: "pending", description: "List integrations", lastModified: "2025-12-21 05:39:20+0000" },
+  { id: 17021, name: "integrations/skyslope/connect", path: "/integrations/skyslope/connect", method: "POST", authRequired: 664, tags: ["skyslope"], category: "integrations", status: "pending", description: "Connect SkySlope", lastModified: "2025-12-21 05:36:36+0000" },
+  { id: 17020, name: "integrations/skyslope/status", path: "/integrations/skyslope/status", method: "GET", authRequired: 664, tags: ["skyslope"], category: "integrations", status: "pending", description: "Get SkySlope status", lastModified: "2025-12-21 05:33:51+0000" },
+  { id: 17019, name: "integrations/dotloop/connect", path: "/integrations/dotloop/connect", method: "POST", authRequired: 664, tags: ["dotloop"], category: "integrations", status: "pending", description: "Connect DotLoop", lastModified: "2025-12-21 05:31:07+0000" },
+  { id: 17018, name: "integrations/dotloop/status", path: "/integrations/dotloop/status", method: "GET", authRequired: 664, tags: ["dotloop"], category: "integrations", status: "pending", description: "Get DotLoop status", lastModified: "2025-12-21 05:28:23+0000" },
+  { id: 17017, name: "integrations/lofty/connect", path: "/integrations/lofty/connect", method: "POST", authRequired: 664, tags: ["lofty"], category: "integrations", status: "pending", description: "Connect Lofty", lastModified: "2025-12-21 05:25:38+0000" },
+  { id: 17016, name: "integrations/lofty/status", path: "/integrations/lofty/status", method: "GET", authRequired: 664, tags: ["lofty"], category: "integrations", status: "pending", description: "Get Lofty status", lastModified: "2025-12-21 05:22:54+0000" },
+  { id: 17015, name: "search/agents", path: "/search/agents", method: "GET", authRequired: 664, tags: ["search"], category: "core", status: "pending", description: "Search agents", lastModified: "2025-12-21 05:20:10+0000" },
+  { id: 17014, name: "search/transactions", path: "/search/transactions", method: "GET", authRequired: 664, tags: ["search"], category: "core", status: "pending", description: "Search transactions", lastModified: "2025-12-21 05:17:25+0000" },
+  { id: 17013, name: "search/listings", path: "/search/listings", method: "GET", authRequired: 664, tags: ["search"], category: "core", status: "pending", description: "Search listings", lastModified: "2025-12-21 05:14:41+0000" },
+  { id: 17012, name: "admin/users", path: "/admin/users", method: "GET", authRequired: 664, tags: ["admin"], category: "admin", status: "pending", description: "Get admin users", lastModified: "2025-12-21 05:11:57+0000" },
+  { id: 17011, name: "admin/users", path: "/admin/users", method: "POST", authRequired: 664, tags: ["admin"], category: "admin", status: "pending", description: "Create admin user", lastModified: "2025-12-21 05:09:12+0000" },
+  { id: 17010, name: "admin/users_id", path: "/admin/users_id", method: "PATCH", authRequired: 664, tags: ["admin"], category: "admin", status: "pending", description: "Update admin user", lastModified: "2025-12-21 05:06:28+0000" },
+  { id: 17009, name: "admin/users_id", path: "/admin/users_id", method: "DELETE", authRequired: 664, tags: ["admin"], category: "admin", status: "pending", description: "Delete admin user", lastModified: "2025-12-21 05:03:44+0000" },
+  { id: 17008, name: "admin/settings", path: "/admin/settings", method: "GET", authRequired: 664, tags: ["admin"], category: "admin", status: "pending", description: "Get admin settings", lastModified: "2025-12-21 05:00:59+0000" },
+  { id: 17007, name: "admin/settings", path: "/admin/settings", method: "PATCH", authRequired: 664, tags: ["admin"], category: "admin", status: "pending", description: "Update admin settings", lastModified: "2025-12-21 04:58:15+0000" },
+  { id: 17006, name: "admin/logs", path: "/admin/logs", method: "GET", authRequired: 664, tags: ["admin","logs"], category: "admin", status: "pending", description: "Get admin logs", lastModified: "2025-12-21 04:55:31+0000" },
+  { id: 17005, name: "charts/config", path: "/charts/config", method: "GET", authRequired: 664, tags: ["charts"], category: "page_builder", status: "pending", description: "Get chart config", lastModified: "2025-12-21 04:52:46+0000" },
+  { id: 17004, name: "charts/config", path: "/charts/config", method: "POST", authRequired: 664, tags: ["charts"], category: "page_builder", status: "pending", description: "Create chart config", lastModified: "2025-12-21 04:50:02+0000" },
+  { id: 17003, name: "charts/config_id", path: "/charts/config_id", method: "PATCH", authRequired: 664, tags: ["charts"], category: "page_builder", status: "pending", description: "Update chart config", lastModified: "2025-12-21 04:47:18+0000" },
+  { id: 17002, name: "charts/config_id", path: "/charts/config_id", method: "DELETE", authRequired: 664, tags: ["charts"], category: "page_builder", status: "pending", description: "Delete chart config", lastModified: "2025-12-21 04:44:33+0000" },
+  { id: 17001, name: "pages/layout", path: "/pages/layout", method: "GET", authRequired: 664, tags: ["pages"], category: "page_builder", status: "pending", description: "Get page layout", lastModified: "2025-12-21 04:41:49+0000" },
+  { id: 17000, name: "pages/layout", path: "/pages/layout", method: "PATCH", authRequired: 664, tags: ["pages"], category: "page_builder", status: "pending", description: "Update page layout", lastModified: "2025-12-21 04:39:05+0000" },
+  { id: 16999, name: "widgets/available", path: "/widgets/available", method: "GET", authRequired: 664, tags: ["widgets"], category: "page_builder", status: "pending", description: "Get available widgets", lastModified: "2025-12-21 04:36:20+0000" },
+  { id: 16998, name: "widgets/active", path: "/widgets/active", method: "GET", authRequired: 664, tags: ["widgets"], category: "page_builder", status: "pending", description: "Get active widgets", lastModified: "2025-12-21 04:33:36+0000" },
+  { id: 16997, name: "widgets/active", path: "/widgets/active", method: "POST", authRequired: 664, tags: ["widgets"], category: "page_builder", status: "pending", description: "Add active widget", lastModified: "2025-12-21 04:30:52+0000" },
+  { id: 16996, name: "widgets/active_id", path: "/widgets/active_id", method: "DELETE", authRequired: 664, tags: ["widgets"], category: "page_builder", status: "pending", description: "Remove active widget", lastModified: "2025-12-21 04:28:07+0000" },
+  { id: 16995, name: "ai/coaching", path: "/ai/coaching", method: "POST", authRequired: 664, tags: ["ai"], category: "other", status: "pending", description: "Get AI coaching", lastModified: "2025-12-21 04:25:23+0000" },
+  { id: 16994, name: "ai/insights", path: "/ai/insights", method: "GET", authRequired: 664, tags: ["ai"], category: "other", status: "pending", description: "Get AI insights", lastModified: "2025-12-21 04:22:39+0000" },
+  { id: 16993, name: "ai/recommendations", path: "/ai/recommendations", method: "GET", authRequired: 664, tags: ["ai"], category: "other", status: "pending", description: "Get AI recommendations", lastModified: "2025-12-21 04:19:54+0000" },
+  { id: 16894, name: "leaderboard", path: "/leaderboard", method: "GET", authRequired: 664, tags: ["leaderboard"], category: "core", status: "pending", description: "Get leaderboard", lastModified: "2025-12-21 04:17:10+0000" },
+
+  // PAGE 3 - 50 endpoints (IDs 16893-15447)
+  { id: 16893, name: "compensation/summary", path: "/compensation/summary", method: "GET", authRequired: 664, tags: ["compensation"], category: "core", status: "pending", description: "Get compensation summary", lastModified: "2025-12-21 04:14:26+0000" },
+  { id: 16892, name: "compensation/details", path: "/compensation/details", method: "GET", authRequired: 664, tags: ["compensation"], category: "core", status: "pending", description: "Get compensation details", lastModified: "2025-12-21 04:11:41+0000" },
+  { id: 16891, name: "revshare/summary", path: "/revshare/summary", method: "GET", authRequired: 664, tags: ["revshare"], category: "core", status: "pending", description: "Get revshare summary", lastModified: "2025-12-21 04:08:57+0000" },
+  { id: 16890, name: "revshare/details", path: "/revshare/details", method: "GET", authRequired: 664, tags: ["revshare"], category: "core", status: "pending", description: "Get revshare details", lastModified: "2025-12-21 04:06:13+0000" },
+  { id: 16889, name: "equity/summary", path: "/equity/summary", method: "GET", authRequired: 664, tags: ["equity"], category: "core", status: "pending", description: "Get equity summary", lastModified: "2025-12-21 04:03:28+0000" },
+  { id: 16888, name: "equity/details", path: "/equity/details", method: "GET", authRequired: 664, tags: ["equity"], category: "core", status: "pending", description: "Get equity details", lastModified: "2025-12-21 04:00:44+0000" },
+  { id: 16887, name: "payments/history", path: "/payments/history", method: "GET", authRequired: 664, tags: ["payments"], category: "core", status: "pending", description: "Get payment history", lastModified: "2025-12-21 03:58:00+0000" },
+  { id: 16886, name: "payments/pending", path: "/payments/pending", method: "GET", authRequired: 664, tags: ["payments"], category: "core", status: "pending", description: "Get pending payments", lastModified: "2025-12-21 03:55:15+0000" },
+  { id: 16885, name: "transactions_id", path: "/transactions_id", method: "GET", authRequired: 664, tags: ["transactions"], category: "core", status: "pending", description: "Get transaction by ID", lastModified: "2025-12-21 03:52:31+0000" },
+  { id: 16884, name: "transactions", path: "/transactions", method: "POST", authRequired: 664, tags: ["transactions"], category: "core", status: "pending", description: "Create transaction", lastModified: "2025-12-21 03:49:47+0000" },
+  { id: 16883, name: "transactions_id", path: "/transactions_id", method: "PATCH", authRequired: 664, tags: ["transactions"], category: "core", status: "pending", description: "Update transaction", lastModified: "2025-12-21 03:47:02+0000" },
+  { id: 16882, name: "transactions_id", path: "/transactions_id", method: "DELETE", authRequired: 664, tags: ["transactions"], category: "core", status: "pending", description: "Delete transaction", lastModified: "2025-12-21 03:44:18+0000" },
+  { id: 16881, name: "listings_id", path: "/listings_id", method: "GET", authRequired: 664, tags: ["listings"], category: "core", status: "pending", description: "Get listing by ID", lastModified: "2025-12-21 03:41:34+0000" },
+  { id: 16880, name: "listings", path: "/listings", method: "POST", authRequired: 664, tags: ["listings"], category: "core", status: "pending", description: "Create listing", lastModified: "2025-12-21 03:38:49+0000" },
+  { id: 16879, name: "listings_id", path: "/listings_id", method: "PATCH", authRequired: 664, tags: ["listings"], category: "core", status: "pending", description: "Update listing", lastModified: "2025-12-21 03:36:05+0000" },
+  { id: 16878, name: "listings_id", path: "/listings_id", method: "DELETE", authRequired: 664, tags: ["listings"], category: "core", status: "pending", description: "Delete listing", lastModified: "2025-12-21 03:33:21+0000" },
+  { id: 16877, name: "roster_id", path: "/roster_id", method: "GET", authRequired: 664, tags: ["roster"], category: "core", status: "pending", description: "Get roster member by ID", lastModified: "2025-12-21 03:30:36+0000" },
+  { id: 16876, name: "roster", path: "/roster", method: "POST", authRequired: 664, tags: ["roster"], category: "core", status: "pending", description: "Add roster member", lastModified: "2025-12-21 03:27:52+0000" },
+  { id: 16875, name: "roster_id", path: "/roster_id", method: "PATCH", authRequired: 664, tags: ["roster"], category: "core", status: "pending", description: "Update roster member", lastModified: "2025-12-21 03:25:08+0000" },
+  { id: 16874, name: "roster_id", path: "/roster_id", method: "DELETE", authRequired: 664, tags: ["roster"], category: "core", status: "pending", description: "Remove roster member", lastModified: "2025-12-21 03:22:23+0000" },
+  { id: 16873, name: "network_id", path: "/network_id", method: "GET", authRequired: 664, tags: ["network"], category: "core", status: "pending", description: "Get network member by ID", lastModified: "2025-12-21 03:19:39+0000" },
+  { id: 16872, name: "agents_id", path: "/agents_id", method: "GET", authRequired: 664, tags: ["agents"], category: "core", status: "pending", description: "Get agent by ID", lastModified: "2025-12-21 03:16:55+0000" },
+  { id: 16871, name: "agents", path: "/agents", method: "GET", authRequired: 664, tags: ["agents"], category: "core", status: "pending", description: "Get agents", lastModified: "2025-12-21 03:14:10+0000" },
+  { id: 16870, name: "team/stats", path: "/team/stats", method: "GET", authRequired: 664, tags: ["team"], category: "data", status: "pending", description: "Get team stats", lastModified: "2025-12-21 03:11:26+0000" },
+  { id: 16869, name: "network/stats", path: "/network/stats", method: "GET", authRequired: 664, tags: ["network"], category: "data", status: "pending", description: "Get network stats", lastModified: "2025-12-21 03:08:42+0000" },
+  { id: 16868, name: "transactions/stats", path: "/transactions/stats", method: "GET", authRequired: 664, tags: ["transactions"], category: "data", status: "pending", description: "Get transaction stats", lastModified: "2025-12-21 03:05:57+0000" },
+  { id: 16867, name: "listings/stats", path: "/listings/stats", method: "GET", authRequired: 664, tags: ["listings"], category: "data", status: "pending", description: "Get listing stats", lastModified: "2025-12-21 03:03:13+0000" },
+  { id: 16866, name: "revenue/stats", path: "/revenue/stats", method: "GET", authRequired: 664, tags: ["revenue"], category: "data", status: "pending", description: "Get revenue stats", lastModified: "2025-12-21 03:00:29+0000" },
+  { id: 16865, name: "goals/list", path: "/goals/list", method: "GET", authRequired: 664, tags: ["goals"], category: "core", status: "pending", description: "Get goals list", lastModified: "2025-12-21 02:57:44+0000" },
+  { id: 16864, name: "goals", path: "/goals", method: "POST", authRequired: 664, tags: ["goals"], category: "core", status: "pending", description: "Create goal", lastModified: "2025-12-21 02:55:00+0000" },
+  { id: 16863, name: "goals_id", path: "/goals_id", method: "PATCH", authRequired: 664, tags: ["goals"], category: "core", status: "pending", description: "Update goal", lastModified: "2025-12-21 02:52:16+0000" },
+  { id: 16862, name: "goals_id", path: "/goals_id", method: "DELETE", authRequired: 664, tags: ["goals"], category: "core", status: "pending", description: "Delete goal", lastModified: "2025-12-21 02:49:31+0000" },
+  { id: 16861, name: "tasks/list", path: "/tasks/list", method: "GET", authRequired: 664, tags: ["tasks"], category: "other", status: "pending", description: "Get tasks list", lastModified: "2025-12-21 02:46:47+0000" },
+  { id: 16860, name: "tasks", path: "/tasks", method: "POST", authRequired: 664, tags: ["tasks"], category: "other", status: "pending", description: "Create task", lastModified: "2025-12-21 02:44:03+0000" },
+  { id: 16859, name: "tasks_id", path: "/tasks_id", method: "PATCH", authRequired: 664, tags: ["tasks"], category: "other", status: "pending", description: "Update task", lastModified: "2025-12-21 02:41:18+0000" },
+  { id: 16858, name: "tasks_id", path: "/tasks_id", method: "DELETE", authRequired: 664, tags: ["tasks"], category: "other", status: "pending", description: "Delete task", lastModified: "2025-12-21 02:38:34+0000" },
+  { id: 16857, name: "calendar/events", path: "/calendar/events", method: "GET", authRequired: 664, tags: ["calendar"], category: "other", status: "pending", description: "Get calendar events", lastModified: "2025-12-21 02:35:50+0000" },
+  { id: 16856, name: "calendar/events", path: "/calendar/events", method: "POST", authRequired: 664, tags: ["calendar"], category: "other", status: "pending", description: "Create calendar event", lastModified: "2025-12-21 02:33:05+0000" },
+  { id: 16855, name: "calendar/events_id", path: "/calendar/events_id", method: "PATCH", authRequired: 664, tags: ["calendar"], category: "other", status: "pending", description: "Update calendar event", lastModified: "2025-12-21 02:30:21+0000" },
+  { id: 16854, name: "calendar/events_id", path: "/calendar/events_id", method: "DELETE", authRequired: 664, tags: ["calendar"], category: "other", status: "pending", description: "Delete calendar event", lastModified: "2025-12-21 02:27:37+0000" },
+  { id: 16853, name: "documents/list", path: "/documents/list", method: "GET", authRequired: 664, tags: ["documents"], category: "other", status: "pending", description: "Get documents list", lastModified: "2025-12-21 02:24:52+0000" },
+  { id: 16852, name: "documents/upload", path: "/documents/upload", method: "POST", authRequired: 664, tags: ["documents"], category: "other", status: "pending", description: "Upload document", lastModified: "2025-12-21 02:22:08+0000" },
+  { id: 16851, name: "documents_id", path: "/documents_id", method: "GET", authRequired: 664, tags: ["documents"], category: "other", status: "pending", description: "Get document by ID", lastModified: "2025-12-21 02:19:24+0000" },
+  { id: 16850, name: "documents_id", path: "/documents_id", method: "DELETE", authRequired: 664, tags: ["documents"], category: "other", status: "pending", description: "Delete document", lastModified: "2025-12-21 02:16:39+0000" },
+  { id: 16849, name: "templates/list", path: "/templates/list", method: "GET", authRequired: 664, tags: ["templates"], category: "other", status: "pending", description: "Get templates list", lastModified: "2025-12-21 02:13:55+0000" },
+  { id: 16848, name: "templates_id", path: "/templates_id", method: "GET", authRequired: 664, tags: ["templates"], category: "other", status: "pending", description: "Get template by ID", lastModified: "2025-12-21 02:11:11+0000" },
+  { id: 16847, name: "contacts/list", path: "/contacts/list", method: "GET", authRequired: 664, tags: ["contacts"], category: "other", status: "pending", description: "Get contacts list", lastModified: "2025-12-21 02:08:26+0000" },
+  { id: 16846, name: "contacts", path: "/contacts", method: "POST", authRequired: 664, tags: ["contacts"], category: "other", status: "pending", description: "Create contact", lastModified: "2025-12-21 02:05:42+0000" },
+  { id: 16845, name: "contacts_id", path: "/contacts_id", method: "PATCH", authRequired: 664, tags: ["contacts"], category: "other", status: "pending", description: "Update contact", lastModified: "2025-12-21 02:02:58+0000" },
+  { id: 15447, name: "contacts_id", path: "/contacts_id", method: "DELETE", authRequired: 664, tags: ["contacts"], category: "other", status: "pending", description: "Delete contact", lastModified: "2025-12-21 02:00:13+0000" },
+
+  // PAGE 4 - 42 endpoints (IDs 12752-12700)
+  { id: 12752, name: "metrics/cap", path: "/metrics/cap", method: "GET", authRequired: 664, tags: ["metrics"], category: "data", status: "pending", description: "Get cap metrics", lastModified: "2025-12-20 23:57:29+0000" },
+  { id: 12751, name: "metrics/production", path: "/metrics/production", method: "GET", authRequired: 664, tags: ["metrics"], category: "data", status: "pending", description: "Get production metrics", lastModified: "2025-12-20 23:54:45+0000" },
+  { id: 12750, name: "metrics/team-performance", path: "/metrics/team-performance", method: "GET", authRequired: 664, tags: ["metrics"], category: "data", status: "pending", description: "Get team performance metrics", lastModified: "2025-12-20 23:52:01+0000" },
+  { id: 12749, name: "metrics/network-growth", path: "/metrics/network-growth", method: "GET", authRequired: 664, tags: ["metrics"], category: "data", status: "pending", description: "Get network growth metrics", lastModified: "2025-12-20 23:49:16+0000" },
+  { id: 12748, name: "metrics/revenue-breakdown", path: "/metrics/revenue-breakdown", method: "GET", authRequired: 664, tags: ["metrics"], category: "data", status: "pending", description: "Get revenue breakdown metrics", lastModified: "2025-12-20 23:46:32+0000" },
+  { id: 12747, name: "pipeline/stages", path: "/pipeline/stages", method: "GET", authRequired: 664, tags: ["pipeline"], category: "core", status: "pending", description: "Get pipeline stages", lastModified: "2025-12-20 23:43:48+0000" },
+  { id: 12746, name: "pipeline/prospects", path: "/pipeline/prospects", method: "GET", authRequired: 664, tags: ["pipeline"], category: "core", status: "pending", description: "Get pipeline prospects", lastModified: "2025-12-20 23:41:03+0000" },
+  { id: 12745, name: "pipeline/prospects", path: "/pipeline/prospects", method: "POST", authRequired: 664, tags: ["pipeline"], category: "core", status: "pending", description: "Create pipeline prospect", lastModified: "2025-12-20 23:38:19+0000" },
+  { id: 12744, name: "pipeline/prospects_id", path: "/pipeline/prospects_id", method: "PATCH", authRequired: 664, tags: ["pipeline"], category: "core", status: "pending", description: "Update pipeline prospect", lastModified: "2025-12-20 23:35:35+0000" },
+  { id: 12743, name: "pipeline/prospects_id", path: "/pipeline/prospects_id", method: "DELETE", authRequired: 664, tags: ["pipeline"], category: "core", status: "pending", description: "Delete pipeline prospect", lastModified: "2025-12-20 23:32:50+0000" },
+  { id: 12742, name: "subscriptions/current", path: "/subscriptions/current", method: "GET", authRequired: 664, tags: ["subscriptions"], category: "admin", status: "pending", description: "Get current subscription", lastModified: "2025-12-20 23:30:06+0000" },
+  { id: 12741, name: "subscriptions/history", path: "/subscriptions/history", method: "GET", authRequired: 664, tags: ["subscriptions"], category: "admin", status: "pending", description: "Get subscription history", lastModified: "2025-12-20 23:27:22+0000" },
+  { id: 12740, name: "subscriptions/upgrade", path: "/subscriptions/upgrade", method: "POST", authRequired: 664, tags: ["subscriptions"], category: "admin", status: "pending", description: "Upgrade subscription", lastModified: "2025-12-20 23:24:37+0000" },
+  { id: 12739, name: "subscriptions/cancel", path: "/subscriptions/cancel", method: "POST", authRequired: 664, tags: ["subscriptions"], category: "admin", status: "pending", description: "Cancel subscription", lastModified: "2025-12-20 23:21:53+0000" },
+  { id: 12738, name: "billing/invoices", path: "/billing/invoices", method: "GET", authRequired: 664, tags: ["billing"], category: "admin", status: "pending", description: "Get billing invoices", lastModified: "2025-12-20 23:19:09+0000" },
+  { id: 12737, name: "billing/payment-methods", path: "/billing/payment-methods", method: "GET", authRequired: 664, tags: ["billing"], category: "admin", status: "pending", description: "Get payment methods", lastModified: "2025-12-20 23:16:24+0000" },
+  { id: 12736, name: "billing/payment-methods", path: "/billing/payment-methods", method: "POST", authRequired: 664, tags: ["billing"], category: "admin", status: "pending", description: "Add payment method", lastModified: "2025-12-20 23:13:40+0000" },
+  { id: 12735, name: "billing/payment-methods_id", path: "/billing/payment-methods_id", method: "DELETE", authRequired: 664, tags: ["billing"], category: "admin", status: "pending", description: "Remove payment method", lastModified: "2025-12-20 23:10:56+0000" },
+  { id: 12734, name: "activity-feed", path: "/activity-feed", method: "GET", authRequired: 664, tags: ["activity"], category: "core", status: "pending", description: "Get activity feed", lastModified: "2025-12-20 23:08:11+0000" },
+  { id: 12733, name: "activity-feed/mark-read", path: "/activity-feed/mark-read", method: "POST", authRequired: 664, tags: ["activity"], category: "core", status: "pending", description: "Mark activity feed as read", lastModified: "2025-12-20 23:05:27+0000" },
+  { id: 12732, name: "messages/inbox", path: "/messages/inbox", method: "GET", authRequired: 664, tags: ["messages"], category: "other", status: "pending", description: "Get inbox messages", lastModified: "2025-12-20 23:02:43+0000" },
+  { id: 12731, name: "messages/sent", path: "/messages/sent", method: "GET", authRequired: 664, tags: ["messages"], category: "other", status: "pending", description: "Get sent messages", lastModified: "2025-12-20 22:59:58+0000" },
+  { id: 12730, name: "messages", path: "/messages", method: "POST", authRequired: 664, tags: ["messages"], category: "other", status: "pending", description: "Send message", lastModified: "2025-12-20 22:57:14+0000" },
+  { id: 12729, name: "messages_id", path: "/messages_id", method: "GET", authRequired: 664, tags: ["messages"], category: "other", status: "pending", description: "Get message by ID", lastModified: "2025-12-20 22:54:30+0000" },
+  { id: 12728, name: "messages_id", path: "/messages_id", method: "DELETE", authRequired: 664, tags: ["messages"], category: "other", status: "pending", description: "Delete message", lastModified: "2025-12-20 22:51:45+0000" },
+  { id: 12727, name: "exports/transactions", path: "/exports/transactions", method: "POST", authRequired: 664, tags: ["exports"], category: "data", status: "pending", description: "Export transactions", lastModified: "2025-12-20 22:49:01+0000" },
+  { id: 12726, name: "exports/listings", path: "/exports/listings", method: "POST", authRequired: 664, tags: ["exports"], category: "data", status: "pending", description: "Export listings", lastModified: "2025-12-20 22:46:17+0000" },
+  { id: 12725, name: "exports/roster", path: "/exports/roster", method: "POST", authRequired: 664, tags: ["exports"], category: "data", status: "pending", description: "Export roster", lastModified: "2025-12-20 22:43:32+0000" },
+  { id: 12724, name: "exports/network", path: "/exports/network", method: "POST", authRequired: 664, tags: ["exports"], category: "data", status: "pending", description: "Export network", lastModified: "2025-12-20 22:40:48+0000" },
+  { id: 12723, name: "exports/revenue", path: "/exports/revenue", method: "POST", authRequired: 664, tags: ["exports"], category: "data", status: "pending", description: "Export revenue", lastModified: "2025-12-20 22:38:04+0000" },
+  { id: 12722, name: "imports/transactions", path: "/imports/transactions", method: "POST", authRequired: 664, tags: ["imports"], category: "admin", status: "pending", description: "Import transactions", lastModified: "2025-12-20 22:35:19+0000" },
+  { id: 12721, name: "imports/listings", path: "/imports/listings", method: "POST", authRequired: 664, tags: ["imports"], category: "admin", status: "pending", description: "Import listings", lastModified: "2025-12-20 22:32:35+0000" },
+  { id: 12720, name: "imports/roster", path: "/imports/roster", method: "POST", authRequired: 664, tags: ["imports"], category: "admin", status: "pending", description: "Import roster", lastModified: "2025-12-20 22:29:51+0000" },
+  { id: 12719, name: "audit-log", path: "/audit-log", method: "GET", authRequired: 664, tags: ["audit"], category: "admin", status: "pending", description: "Get audit log", lastModified: "2025-12-20 22:27:06+0000" },
+  { id: 12718, name: "health-check", path: "/health-check", method: "GET", authRequired: false, tags: ["system"], category: "other", status: "pending", description: "Health check endpoint", lastModified: "2025-12-20 22:24:22+0000" },
+  { id: 12717, name: "version", path: "/version", method: "GET", authRequired: false, tags: ["system"], category: "other", status: "pending", description: "Get API version", lastModified: "2025-12-20 22:21:38+0000" },
+  { id: 12716, name: "features", path: "/features", method: "GET", authRequired: 664, tags: ["system"], category: "other", status: "pending", description: "Get feature flags", lastModified: "2025-12-20 22:18:53+0000" },
+  { id: 12715, name: "maintenance-mode", path: "/maintenance-mode", method: "GET", authRequired: false, tags: ["system"], category: "other", status: "pending", description: "Check maintenance mode", lastModified: "2025-12-20 22:16:09+0000" },
+  { id: 12714, name: "webhooks/list", path: "/webhooks/list", method: "GET", authRequired: 664, tags: ["webhooks"], category: "integrations", status: "pending", description: "Get webhooks list", lastModified: "2025-12-20 22:13:25+0000" },
+  { id: 12713, name: "webhooks", path: "/webhooks", method: "POST", authRequired: 664, tags: ["webhooks"], category: "integrations", status: "pending", description: "Create webhook", lastModified: "2025-12-20 22:10:40+0000" },
+  { id: 12712, name: "webhooks_id", path: "/webhooks_id", method: "DELETE", authRequired: 664, tags: ["webhooks"], category: "integrations", status: "pending", description: "Delete webhook", lastModified: "2025-12-20 22:07:56+0000" },
+  { id: 12700, name: "api-keys", path: "/api-keys", method: "GET", authRequired: 664, tags: ["api-keys"], category: "admin", status: "pending", description: "Get API keys", lastModified: "2025-12-20 22:05:12+0000" },
+]
+
+export function getEndpointsByCategory(category: FrontendEndpoint["category"]): FrontendEndpoint[] {
+  return ALL_FRONTEND_ENDPOINTS.filter(e => e.category === category)
+}
+
+export function getTestStats() {
+  const total = ALL_FRONTEND_ENDPOINTS.length
+  const passing = ALL_FRONTEND_ENDPOINTS.filter(e => e.status === "success").length
+  const failing = ALL_FRONTEND_ENDPOINTS.filter(e => e.status === "error").length
+  const untested = ALL_FRONTEND_ENDPOINTS.filter(e => e.status === "pending").length
+  const testedCount = passing + failing
+  const passRate = testedCount > 0 ? Math.round((passing / testedCount) * 100) : 0
+  return { total, passing, failing, untested, testedCount, passRate }
+}
+
+export function buildTestUrl(endpoint: FrontendEndpoint): string {
+  const params = endpoint.testParams ? `?${endpoint.testParams}` : ""
+  return `${API_BASE}${endpoint.path}${params}`
+}
+
+export function generateCurlCommand(endpoint: FrontendEndpoint, token?: string): string {
+  const url = buildTestUrl(endpoint)
+  let cmd = `curl -X ${endpoint.method} "${url}"`
+  if (endpoint.authRequired && token) cmd += ` -H "Authorization: Bearer ${token}"`
+  cmd += ` -H "Content-Type: application/json"`
+  if (endpoint.testBody && ["POST","PATCH","PUT"].includes(endpoint.method)) {
+    cmd += ` -d '${JSON.stringify(endpoint.testBody)}'`
+  }
+  return cmd
+}
+
+export const CATEGORY_LABELS = {
+  core: { label: "Core", color: "bg-blue-100 text-blue-700" },
+  data: { label: "Data", color: "bg-green-100 text-green-700" },
+  integrations: { label: "Integrations", color: "bg-purple-100 text-purple-700" },
+  admin: { label: "Admin", color: "bg-red-100 text-red-700" },
+  page_builder: { label: "Page Builder", color: "bg-yellow-100 text-yellow-700" },
+  fub: { label: "FUB", color: "bg-cyan-100 text-cyan-700" },
+  other: { label: "Other", color: "bg-gray-100 text-gray-700" },
+} as const

@@ -1,0 +1,225 @@
+// v2 normalized: Get listing counts by stage
+query "listings/count" verb=GET {
+  auth = "user"
+
+  input {
+    text status? filters=trim
+    int offset?
+    text search? filters=trim
+    text type? filters=trim
+    int user_id?
+    bool manual?
+  }
+
+  stack {
+    // Get user from normalized table
+    db.get user {
+      field_name = "id"
+      field_value = $input.user_id
+    } as $user1
+
+    // Get role from normalized table
+    db.get user_roles {
+      field_name = "user_id"
+      field_value = $user1.id
+    } as $user_roles
+
+    // Get settings from normalized table
+    db.get user_settings {
+      field_name = "user_id"
+      field_value = $user1.id
+    } as $user_settings
+
+    // Create convenience variables
+    var $user_role {
+      value = $user_roles.role
+    }
+
+    var $user_view {
+      value = $user_settings.view
+    }
+
+    // FIX: Use account_type from user_roles, not user1
+    var $account_type {
+      value = $user_roles.account_type
+    }
+
+    // Initialize default values
+    var $active {
+      value = 0
+    }
+
+    var $pending {
+      value = 0
+    }
+
+    var $closed {
+      value = 0
+    }
+
+    var $terminated {
+      value = 0
+    }
+
+    var $all {
+      value = 0
+    }
+
+    conditional {
+      if ($user_role == "admin" || $user_view == "Admin") {
+        conditional {
+          if ($user_view == "Admin") {
+            // Admin Team - use team_id from user_roles
+            db.query listing {
+              where = $db.listing.team_id == $user_roles.team_id && $db.listing.status == "Active"
+              return = {type: "count"}
+            } as $active
+
+            db.query listing {
+              where = $db.listing.team_id == $user_roles.team_id && $db.listing.status == "Pending"
+              return = {type: "count"}
+            } as $pending
+
+            db.query listing {
+              where = $db.listing.team_id == $user_roles.team_id && ($db.listing.closed == true || $db.listing.status == "Closed")
+              return = {type: "count"}
+            } as $closed
+
+            db.query listing {
+              where = $db.listing.team_id == $user_roles.team_id && ($db.listing.terminated == true || $db.listing.status == "Terminated")
+              return = {type: "count"}
+            } as $terminated
+
+            var $all {
+              value = $pending
+                |add:$closed
+                |add:$active
+                |add:$terminated
+            }
+          }
+
+          else {
+            // Admin Individual - use listing_id from participant
+            db.query participant {
+              where = $db.participant.agent_id == $user1.agent_id && $db.participant.is_listing == true
+              return = {type: "list"}
+            } as $participant1
+
+            conditional {
+              if (($participant1|is_empty) == false) {
+                db.query listing {
+                  where = $participant1.listing_id in $db.listing.id && $db.listing.status == "Active"
+                  return = {type: "count"}
+                } as $active
+
+                db.query listing {
+                  where = $participant1.listing_id in $db.listing.id && $db.listing.status == "Pending"
+                  return = {type: "count"}
+                } as $pending
+
+                db.query listing {
+                  where = $participant1.listing_id in $db.listing.id && ($db.listing.closed == true || $db.listing.status == "Closed")
+                  return = {type: "count"}
+                } as $closed
+
+                db.query listing {
+                  where = $participant1.listing_id in $db.listing.id && ($db.listing.terminated == true || $db.listing.status == "Terminated")
+                  return = {type: "count"}
+                } as $terminated
+
+                var $all {
+                  value = $pending
+                    |add:$closed
+                    |add:$active
+                    |add:$terminated
+                }
+              }
+            }
+          }
+        }
+      }
+
+      else {
+        conditional {
+          if ($account_type == "Team") {
+            db.query listing {
+              where = $db.listing.team_id == $user1.team_id && $db.listing.status == "Active"
+              return = {type: "count"}
+            } as $active
+
+            db.query listing {
+              where = $db.listing.team_id == $user1.team_id && $db.listing.status == "Pending"
+              return = {type: "count"}
+            } as $pending
+
+            db.query listing {
+              where = $db.listing.team_id == $user1.team_id && ($db.listing.closed == true || $db.listing.status == "Closed")
+              return = {type: "count"}
+            } as $closed
+
+            db.query listing {
+              where = $db.listing.team_id == $user1.team_id && ($db.listing.terminated == true || $db.listing.status == "Terminated")
+              return = {type: "count"}
+            } as $terminated
+
+            var $all {
+              value = $pending
+                |add:$closed
+                |add:$active
+                |add:$terminated
+            }
+          }
+
+          else {
+            // Individual account - use listing_id from participant
+            db.query participant {
+              where = $db.participant.agent_id == $user1.agent_id && $db.participant.is_listing == true
+              return = {type: "list"}
+            } as $participant1
+
+            conditional {
+              if (($participant1|is_empty) == false) {
+                db.query listing {
+                  where = $participant1.listing_id in $db.listing.id && $db.listing.status == "Pending"
+                  return = {type: "count"}
+                } as $pending
+
+                db.query listing {
+                  where = $participant1.listing_id in $db.listing.id && ($db.listing.closed == true || $db.listing.status == "Closed")
+                  return = {type: "count"}
+                } as $closed
+
+                db.query listing {
+                  where = $participant1.listing_id in $db.listing.id && $db.listing.status == "Active"
+                  return = {type: "count"}
+                } as $active
+
+                db.query listing {
+                  where = $participant1.listing_id in $db.listing.id && ($db.listing.terminated == true || $db.listing.status == "Terminated")
+                  return = {type: "count"}
+                } as $terminated
+
+                var $all {
+                  value = $pending
+                    |add:$closed
+                    |add:$active
+                    |add:$terminated
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  response = {
+    active    : $active
+    closed    : $closed
+    terminated: $terminated
+    all       : $all
+    pending   : $pending
+  }
+
+  tags = ["🏠 dashboard", "🏠 listing", "✨ v2"]
+}

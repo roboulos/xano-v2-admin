@@ -1,0 +1,85 @@
+{
+  "meta": {
+    "started": "2026-01-17T00:00:00Z",
+    "last_updated": "2026-01-17T16:00:00Z",
+    "total_functions": 359,
+    "audited": 21,
+    "fixed": 6,
+    "verified": 18
+  },
+  "waves": {
+    "wave1_onboarding": {
+      "status": "verification_complete",
+      "functions": [8066, 8051, 8052, 8053, 8054, 8055, 8056, 8057, 8058, 8059, 8060, 8061, 8062, 8068, 8069, 8070, 8071, 8072, 8073, 8074, 8034],
+      "audited": [8066, 8051, 8052, 8053, 8054, 8055, 8056, 8057, 8058, 8059, 8060, 8061, 8062, 8068, 8069, 8070, 8071, 8072, 8073, 8074, 8034],
+      "needs_fix": [8066, 8055, 8060, 8034, 8059, 8074],
+      "fixed": [8069, 8071, 8072],
+      "verified": [8051, 8052, 8053, 8054, 8056, 8057, 8058, 8061, 8062, 8068, 8069, 8070, 8071, 8072, 8073],
+      "fp_compliant": [8051, 8052, 8053, 8054, 8056, 8057, 8058, 8061, 8062, 8068, 8069, 8070, 8071, 8072, 8073]
+    },
+    "wave2_continuous": {
+      "status": "pending",
+      "functions": [],
+      "audited": [],
+      "needs_fix": [],
+      "fixed": [],
+      "verified": [],
+      "fp_compliant": []
+    },
+    "wave3_supporting": {
+      "status": "pending",
+      "functions": [],
+      "audited": [],
+      "needs_fix": [],
+      "fixed": [],
+      "verified": [],
+      "fp_compliant": []
+    }
+  },
+  "broken_functions": {
+    "8069": { "issue": "var redeclaration in catch block instead of var.update", "status": "verified", "fix": "Changed var to var.update in catch block" },
+    "8071": { "issue": "No try/catch - removed due to syntax error, always returns success:true", "status": "verified", "fix": "Added try_catch wrapper around function.run with error state variables" },
+    "8072": { "issue": "Silent failure - catch logs but always returns success:true", "status": "verified", "fix": "Added error_occurred and error_message variables, used in response" },
+    "8034": { "issue": "Unable to locate var: user.agent_id_raw - XanoScript variable reference bug", "status": "fixed", "fix": "Changed to use $sponsoringAgent.agent_id_raw, updated to V2 network_member table" },
+    "8062": { "issue": "Duplicate variable declarations, depends on Archive function", "status": "verified" },
+    "8074": { "issue": "Incomplete stub - does not perform actual sync", "status": "needs_fix" },
+    "8066": { "issue": "Team roster sync fails - empty error message, API response handling", "status": "needs_fix" },
+    "8055": { "issue": "Endpoint not found - ERROR_CODE_NOT_FOUND", "status": "needs_fix" },
+    "8060": { "issue": "Load contributions fails - empty error message", "status": "needs_fix", "fix": "In catch block: use var.update with $error|get:\"message\":\"Unknown error\" - MCP was timing out during fix attempt" },
+    "8059": { "issue": "reZEN API returns 404 - external API endpoint issue", "status": "needs_fix" },
+    "8280": { "issue": "needs complete rewrite", "status": "pending" }
+  },
+  "new_endpoints": {
+    "clear-user-data": { "status": "created", "api_group": "SEEDING", "api_id": 18033, "url": "https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:2kCRUYxG/clear-user-data" },
+    "job-queue-status": { "status": "created", "api_group": "SYSTEM", "api_id": 18035, "url": "https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:LIdBL1AN/job-queue-status" }
+  },
+  "test_users": {
+    "60": { "name": "David Keener", "onboarding_complete": false, "test_result": "5/6 PASS", "notes": "Step 1 fails - team roster API path issue" },
+    "7": { "name": "Michael Johnson", "onboarding_complete": false, "test_result": "0/6 FAIL", "notes": "No agent_id_raw or api_key configured" },
+    "133": { "name": "James Anderson", "onboarding_complete": false, "test_result": "0/6 FAIL", "notes": "User does not exist in V2 database" },
+    "256": { "name": "Sarah Williams", "onboarding_complete": false, "test_result": "0/6 FAIL", "notes": "No agent_id_raw or api_key configured" }
+  },
+  "audit_results": {
+    "8066": { "fp_compliant": true, "recommendation": "fp-result-type", "tags": ["v3", "team", "worker", "fp-result-type"] },
+    "8051": { "fp_compliant": true, "recommendation": "fp-result-type", "tags": ["v3", "rezen", "worker", "fp-result-type"] },
+    "8068": { "fp_compliant": true, "recommendation": "fp-result-type", "tags": ["fp-result-type", "rezen", "worker", "onboarding"] },
+    "8069": { "fp_compliant": false, "recommendation": "needs-fp-conversion", "issues": ["var redeclaration in catch block"] },
+    "8052": { "fp_compliant": true, "recommendation": "fp-result-type", "tags": ["v3", "rezen", "worker", "fp-result-type"] },
+    "8053": { "fp_compliant": true, "recommendation": "fp-result-type", "tags": ["v3", "rezen", "worker", "fp-result-type"] },
+    "8054": { "fp_compliant": true, "recommendation": "fp-result-type", "tags": ["v3", "rezen", "worker", "fp-result-type"] },
+    "8055": { "fp_compliant": true, "recommendation": "fp-result-type", "tags": ["v3", "rezen", "worker", "fp-result-type"] },
+    "8056": { "fp_compliant": true, "recommendation": "fp-result-type", "tags": ["v3", "rezen", "worker", "fp-result-type"] },
+    "8057": { "fp_compliant": true, "recommendation": "fp-result-type", "tags": ["v3", "rezen", "worker", "fp-result-type"] },
+    "8060": { "fp_compliant": true, "recommendation": "fp-result-type", "tags": ["v3", "rezen", "worker", "fp-result-type"] },
+    "8061": { "fp_compliant": true, "recommendation": "fp-result-type", "tags": ["v3", "rezen", "worker", "fp-result-type"] },
+    "8071": { "fp_compliant": false, "recommendation": "needs-fp-conversion", "issues": ["No try/catch", "always returns success"] },
+    "8072": { "fp_compliant": false, "recommendation": "needs-fp-conversion", "issues": ["Silent failure pattern"] },
+    "8073": { "fp_compliant": true, "recommendation": "fp-result-type", "tags": ["v3", "rezen", "worker", "fp-result-type"] },
+    "8034": { "fp_compliant": false, "recommendation": "needs-fp-conversion", "issues": ["Missing FP Result fields", "silent failure"] },
+    "8058": { "fp_compliant": true, "recommendation": "fp-result-type", "tags": ["v3", "rezen", "worker", "fp-result-type"] },
+    "8059": { "fp_compliant": true, "recommendation": "fp-result-type", "tags": ["v3", "rezen", "worker", "fp-result-type"] },
+    "8062": { "fp_compliant": false, "recommendation": "worker-broken-needs-fix", "issues": ["Duplicate variable declarations", "Archive dependency"] },
+    "8070": { "fp_compliant": true, "recommendation": "fp-result-type", "tags": ["v3", "rezen", "worker", "fp-result-type"] },
+    "8074": { "fp_compliant": false, "recommendation": "worker-broken-needs-fix", "issues": ["Incomplete stub"] }
+  }
+}
