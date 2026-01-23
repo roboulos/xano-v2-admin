@@ -27,6 +27,7 @@ if (!cachedFunctions && !isPreloading) {
   ;(async () => {
     try {
       const allFunctions: any[] = []
+      const seenIds = new Set<number>()
       let currentPage = 1
       const fetchLimit = 50
 
@@ -38,7 +39,19 @@ if (!cachedFunctions && !isPreloading) {
 
         if (!result.functions || result.functions.length === 0) break
 
-        allFunctions.push(...result.functions)
+        // Filter out duplicates
+        const newFunctions = result.functions.filter(f => {
+          if (seenIds.has(f.id)) return false
+          seenIds.add(f.id)
+          return true
+        })
+
+        if (newFunctions.length === 0) {
+          console.log(`[V2 Functions API] Pre-load: No new functions on page ${currentPage}, stopping`)
+          break
+        }
+
+        allFunctions.push(...newFunctions)
 
         if (result.functions.length < fetchLimit) break
 
@@ -130,20 +143,37 @@ export async function GET(request: Request) {
       console.log('[V2 Functions API] Starting to fetch all functions...')
 
     // Fetch all functions in batches until we get no more results
+    const seenIds = new Set<number>()
+
     while (true) {
       const result = await v2Client.listFunctions({
         page: currentPage,
         limit: fetchLimit,
       })
 
-      console.log(`[V2 Functions API] Page ${currentPage}: fetched ${result.functions.length} functions`)
+      console.log(`[V2 Functions API] Page ${currentPage}: fetched ${result.functions.length} functions (first ID: ${result.functions[0]?.id || 'none'})`)
 
       // Break if no more results
       if (!result.functions || result.functions.length === 0) {
         break
       }
 
-      allFunctions.push(...result.functions)
+      // Check for duplicates - if we're seeing functions we've already seen, we've hit the end
+      const newFunctions = result.functions.filter(f => {
+        if (seenIds.has(f.id)) {
+          return false // Skip duplicates
+        }
+        seenIds.add(f.id)
+        return true
+      })
+
+      // If no new functions were found, we've reached the end
+      if (newFunctions.length === 0) {
+        console.log(`[V2 Functions API] No new functions on page ${currentPage}, stopping pagination`)
+        break
+      }
+
+      allFunctions.push(...newFunctions)
 
       // Break if we got fewer results than requested (last page)
       if (result.functions.length < fetchLimit) {

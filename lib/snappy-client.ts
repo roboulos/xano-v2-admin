@@ -57,7 +57,8 @@ export interface XanoAPIGroup {
  */
 async function execSnappy(tool: string, args: Record<string, any> = {}): Promise<any> {
   const argsJson = JSON.stringify(args)
-  const command = `${SNAPPY_PATH} exec ${tool} '${argsJson}' --json`
+  const command = `${SNAPPY_PATH} exec ${tool} --args '${argsJson}' --json`
+
 
   try {
     const { stdout, stderr } = await execAsync(command, {
@@ -152,9 +153,11 @@ export class SnappyClient {
     limit?: number,
     page?: number
   } = {}): Promise<{ functions: XanoFunction[], total: number }> {
+    const { limit, ...rest } = options
     const result = await execSnappy('list_functions', {
       ...this.config,
-      ...options,
+      ...rest,
+      ...(limit && { per_page: limit }),  // Map "limit" to "per_page" for snappy CLI
     })
     return {
       functions: result.functions || [],
