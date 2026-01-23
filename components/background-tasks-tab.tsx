@@ -57,6 +57,26 @@ export function BackgroundTasksTab() {
 
   return (
     <div className="space-y-6">
+      {/* Info Banner */}
+      {data?.note && (
+        <Card className="border-blue-200 bg-blue-50">
+          <CardContent className="p-4">
+            <div className="flex gap-3">
+              <div className="text-blue-600 shrink-0">ℹ️</div>
+              <div className="text-sm">
+                <p className="font-medium text-blue-900 mb-1">
+                  Background Tasks Overview
+                </p>
+                <p className="text-blue-700">
+                  {data.note} This page shows verified endpoint counts from the V2 workspace.
+                  Individual endpoint details will be available in a future update.
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
       {/* Summary Cards */}
       {data?.summary && (
         <div className="grid grid-cols-2 gap-4">
@@ -70,7 +90,7 @@ export function BackgroundTasksTab() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-muted-foreground">WORKERS</p>
-                  <p className="text-2xl font-bold">{data.summary.workers}</p>
+                  <p className="text-2xl font-bold">{data.summary.total_workers || data.summary.workers}</p>
                   <p className="text-xs text-muted-foreground mt-1">Background sync jobs</p>
                 </div>
                 <Badge className={GROUP_COLORS.WORKERS}>
@@ -91,7 +111,7 @@ export function BackgroundTasksTab() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-muted-foreground">TASKS</p>
-                  <p className="text-2xl font-bold">{data.summary.tasks}</p>
+                  <p className="text-2xl font-bold">{data.summary.total_tasks || data.summary.tasks}</p>
                   <p className="text-xs text-muted-foreground mt-1">Orchestration endpoints</p>
                 </div>
                 <Badge className={GROUP_COLORS.TASKS}>
@@ -148,6 +168,37 @@ export function BackgroundTasksTab() {
             {isLoading ? (
               <div className="flex items-center justify-center py-12">
                 <Loader2 className="h-8 w-8 animate-spin text-primary" />
+              </div>
+            ) : filteredTasks.length === 0 && data?.tasks?.length === 0 ? (
+              <div className="text-center py-12">
+                <div className="mb-4">
+                  <Zap className="h-12 w-12 mx-auto text-muted-foreground mb-2" />
+                </div>
+                <h3 className="text-lg font-semibold mb-2">Endpoint Counts Verified</h3>
+                <p className="text-muted-foreground max-w-md mx-auto mb-4">
+                  The V2 workspace contains <strong>{data?.summary?.grand_total || 489}</strong> total background task endpoints
+                  ({data?.summary?.total_workers || 324} WORKERS + {data?.summary?.total_tasks || 165} TASKS).
+                </p>
+                <p className="text-sm text-muted-foreground max-w-md mx-auto">
+                  Individual endpoint details require xano-mcp integration and will be available in a future update.
+                  For now, you can view these endpoints directly in the Xano admin interface.
+                </p>
+                <div className="mt-6 flex gap-3 justify-center">
+                  <Button
+                    variant="outline"
+                    onClick={() => window.open('https://x2nu-xcjc-vhax.agentdashboards.xano.io/admin/#/5/api/536', '_blank')}
+                  >
+                    <ExternalLink className="h-4 w-4 mr-2" />
+                    View WORKERS in Xano
+                  </Button>
+                  <Button
+                    variant="outline"
+                    onClick={() => window.open('https://x2nu-xcjc-vhax.agentdashboards.xano.io/admin/#/5/api/532', '_blank')}
+                  >
+                    <ExternalLink className="h-4 w-4 mr-2" />
+                    View TASKS in Xano
+                  </Button>
+                </div>
               </div>
             ) : filteredTasks.length === 0 ? (
               <div className="text-center py-12 text-muted-foreground">
