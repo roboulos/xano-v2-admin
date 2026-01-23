@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Loader2, Search, Code, FolderTree } from 'lucide-react'
+import { FunctionCodeModal } from '@/components/function-code-modal'
 
 const fetcher = (url: string) => fetch(url).then(r => r.json())
 
@@ -38,6 +39,7 @@ export function FunctionsTab() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
   const [page, setPage] = useState(1)
+  const [selectedFunction, setSelectedFunction] = useState<{ id: number, name: string } | null>(null)
 
   const { data, error, isLoading } = useSWR(
     `/api/v2/functions?page=${page}&limit=100`,
@@ -180,10 +182,7 @@ export function FunctionsTab() {
                       <Button
                         variant="outline"
                         size="sm"
-                        onClick={() => {
-                          // TODO: Open function details modal with code
-                          window.open(`/function/${func.id}`, '_blank')
-                        }}
+                        onClick={() => setSelectedFunction({ id: func.id, name: func.name })}
                       >
                         View Code
                       </Button>
@@ -220,6 +219,17 @@ export function FunctionsTab() {
           )}
         </CardContent>
       </Card>
+
+      {/* Function Code Modal */}
+      {selectedFunction && (
+        <FunctionCodeModal
+          functionId={selectedFunction.id}
+          workspace="5"
+          functionName={selectedFunction.name}
+          isOpen={!!selectedFunction}
+          onClose={() => setSelectedFunction(null)}
+        />
+      )}
     </div>
   )
 }

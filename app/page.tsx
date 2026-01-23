@@ -1,15 +1,16 @@
 "use client"
 
 import { useState } from "react"
-import { GitCompare, CheckCircle2, Activity, Code } from "lucide-react"
+import { GitCompare, CheckCircle2, Activity, Code, Zap } from "lucide-react"
 
 // Tabs
 import { SchemaTab } from "@/components/machine-2/schema-tab"
 import { BackendValidationTab } from "@/components/machine-2/backend-validation-tab"
 import { LiveMigrationStatus } from "@/components/live-migration-status"
 import { FunctionsTab } from "@/components/functions-tab"
+import { BackgroundTasksTab } from "@/components/background-tasks-tab"
 
-type ViewMode = "schema" | "validation" | "live" | "functions"
+type ViewMode = "schema" | "validation" | "live" | "functions" | "tasks"
 
 export default function Home() {
   const [viewMode, setViewMode] = useState<ViewMode>("live")
@@ -17,6 +18,7 @@ export default function Home() {
   const viewModes = [
     { id: "live" as ViewMode, label: "Live Status", icon: Activity },
     { id: "functions" as ViewMode, label: "Functions Deep Dive", icon: Code },
+    { id: "tasks" as ViewMode, label: "Background Tasks", icon: Zap },
     { id: "schema" as ViewMode, label: "Schema Changes", icon: GitCompare },
     { id: "validation" as ViewMode, label: "Validation Status", icon: CheckCircle2 },
   ]
@@ -54,6 +56,7 @@ export default function Home() {
         <div className="mt-6">
           {viewMode === "live" && <LiveMigrationStatus />}
           {viewMode === "functions" && <FunctionsTab />}
+          {viewMode === "tasks" && <BackgroundTasksTab />}
           {viewMode === "schema" && <SchemaTab />}
           {viewMode === "validation" && <BackendValidationTab />}
         </div>

@@ -11,12 +11,13 @@ export const dynamic = 'force-dynamic'
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const { searchParams } = new URL(request.url)
     const workspace = searchParams.get('workspace') || '5'
-    const functionId = parseInt(params.id)
+    const resolvedParams = await params
+    const functionId = parseInt(resolvedParams.id)
 
     // Choose client based on workspace
     const client = workspace === '1' ? v1Client : v2Client
