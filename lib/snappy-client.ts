@@ -249,7 +249,8 @@ export class SnappyClient {
     })
     return {
       tasks: result.tasks || [],
-      total: result.total || 0
+      total: result.total || 0,
+      next_page: result.next_page || null
     }
   }
 }
