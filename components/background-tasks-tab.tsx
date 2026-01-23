@@ -6,44 +6,32 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/com
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Loader2, Search, Zap, Clock, ExternalLink } from 'lucide-react'
+import { Loader2, Search, Clock, ExternalLink, Play, Pause } from 'lucide-react'
 
 const fetcher = (url: string) => fetch(url).then(r => r.json())
 
 interface BackgroundTask {
   id: number
   name: string
-  path: string
-  method: string
-  group: 'WORKERS' | 'TASKS'
-  group_id: number
-  function_id?: number
-  description?: string
-  last_modified?: string
-}
-
-const GROUP_COLORS = {
-  'WORKERS': 'bg-blue-100 text-blue-800',
-  'TASKS': 'bg-purple-100 text-purple-800',
+  type: string
+  active: boolean
+  schedule: string
+  draft: boolean
+  last_modified: string
+  created: string
 }
 
 export function BackgroundTasksTab() {
-  const [selectedGroup, setSelectedGroup] = useState<'workers' | 'tasks' | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
   const [page, setPage] = useState(1)
 
   const { data, error, isLoading } = useSWR(
-    `/api/v2/background-tasks?${selectedGroup ? `group=${selectedGroup}&` : ''}page=${page}&limit=50`,
+    `/api/v2/background-tasks?page=${page}&limit=50&search=${searchQuery}`,
     fetcher,
     { refreshInterval: 0 }
   )
 
-  const filteredTasks = data?.tasks?.filter((task: BackgroundTask) => {
-    const matchesSearch = !searchQuery ||
-      task.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      task.path.toLowerCase().includes(searchQuery.toLowerCase())
-    return matchesSearch
-  }) || []
+  const filteredTasks = data?.tasks || []
 
   if (error) {
     return (
@@ -57,95 +45,33 @@ export function BackgroundTasksTab() {
 
   return (
     <div className="space-y-6">
-      {/* Info Banner */}
-      {data?.note && (
-        <Card className="border-blue-200 bg-blue-50">
-          <CardContent className="p-4">
-            <div className="flex gap-3">
-              <div className="text-blue-600 shrink-0">ℹ️</div>
-              <div className="text-sm">
-                <p className="font-medium text-blue-900 mb-1">
-                  Background Tasks Overview
-                </p>
-                <p className="text-blue-700">
-                  {data.note} This page shows verified endpoint counts from the V2 workspace.
-                  Individual endpoint details will be available in a future update.
-                </p>
-              </div>
+      {/* Summary Card */}
+      <Card>
+        <CardContent className="p-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="text-2xl font-bold">{data?.total || 0}</h3>
+              <p className="text-sm text-muted-foreground">Total Background Tasks</p>
             </div>
-          </CardContent>
-        </Card>
-      )}
+            <Clock className="h-8 w-8 text-primary" />
+          </div>
+        </CardContent>
+      </Card>
 
-      {/* Summary Cards */}
-      {data?.summary && (
-        <div className="grid grid-cols-2 gap-4">
-          <Card
-            className={`cursor-pointer transition-all hover:shadow-md ${
-              selectedGroup === 'workers' ? 'ring-2 ring-primary' : ''
-            }`}
-            onClick={() => setSelectedGroup(selectedGroup === 'workers' ? null : 'workers')}
-          >
-            <CardContent className="p-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-muted-foreground">WORKERS</p>
-                  <p className="text-2xl font-bold">{data.summary.total_workers || data.summary.workers}</p>
-                  <p className="text-xs text-muted-foreground mt-1">Background sync jobs</p>
-                </div>
-                <Badge className={GROUP_COLORS.WORKERS}>
-                  <Zap className="h-3 w-3 mr-1" />
-                  WORKERS
-                </Badge>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card
-            className={`cursor-pointer transition-all hover:shadow-md ${
-              selectedGroup === 'tasks' ? 'ring-2 ring-primary' : ''
-            }`}
-            onClick={() => setSelectedGroup(selectedGroup === 'tasks' ? null : 'tasks')}
-          >
-            <CardContent className="p-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-muted-foreground">TASKS</p>
-                  <p className="text-2xl font-bold">{data.summary.total_tasks || data.summary.tasks}</p>
-                  <p className="text-xs text-muted-foreground mt-1">Orchestration endpoints</p>
-                </div>
-                <Badge className={GROUP_COLORS.TASKS}>
-                  <Clock className="h-3 w-3 mr-1" />
-                  TASKS
-                </Badge>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      )}
-
-      {/* Search and Filters */}
+      {/* Search */}
       <Card>
         <CardContent className="p-4">
-          <div className="flex items-center gap-4">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
-                placeholder="Search background tasks by name or path..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10"
-              />
-            </div>
-            {selectedGroup && (
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setSelectedGroup(null)}
-              >
-                Clear Filter
-              </Button>
-            )}
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              placeholder="Search background tasks by name..."
+              value={searchQuery}
+              onChange={(e) => {
+                setSearchQuery(e.target.value)
+                setPage(1) // Reset to page 1 when searching
+              }}
+              className="pl-10"
+            />
           </div>
         </CardContent>
       </Card>
@@ -154,13 +80,12 @@ export function BackgroundTasksTab() {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Zap className="h-5 w-5" />
+            <Clock className="h-5 w-5" />
             Background Tasks
             {isLoading && <Loader2 className="h-4 w-4 animate-spin" />}
           </CardTitle>
           <CardDescription>
             Showing {filteredTasks.length} of {data?.total || 0} background tasks
-            {selectedGroup && ` in ${selectedGroup.toUpperCase()}`}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -169,40 +94,9 @@ export function BackgroundTasksTab() {
               <div className="flex items-center justify-center py-12">
                 <Loader2 className="h-8 w-8 animate-spin text-primary" />
               </div>
-            ) : filteredTasks.length === 0 && data?.tasks?.length === 0 ? (
-              <div className="text-center py-12">
-                <div className="mb-4">
-                  <Zap className="h-12 w-12 mx-auto text-muted-foreground mb-2" />
-                </div>
-                <h3 className="text-lg font-semibold mb-2">Endpoint Counts Verified</h3>
-                <p className="text-muted-foreground max-w-md mx-auto mb-4">
-                  The V2 workspace contains <strong>{data?.summary?.grand_total || 489}</strong> total background task endpoints
-                  ({data?.summary?.total_workers || 324} WORKERS + {data?.summary?.total_tasks || 165} TASKS).
-                </p>
-                <p className="text-sm text-muted-foreground max-w-md mx-auto">
-                  Individual endpoint details require xano-mcp integration and will be available in a future update.
-                  For now, you can view these endpoints directly in the Xano admin interface.
-                </p>
-                <div className="mt-6 flex gap-3 justify-center">
-                  <Button
-                    variant="outline"
-                    onClick={() => window.open('https://x2nu-xcjc-vhax.agentdashboards.xano.io/admin/#/5/api/536', '_blank')}
-                  >
-                    <ExternalLink className="h-4 w-4 mr-2" />
-                    View WORKERS in Xano
-                  </Button>
-                  <Button
-                    variant="outline"
-                    onClick={() => window.open('https://x2nu-xcjc-vhax.agentdashboards.xano.io/admin/#/5/api/532', '_blank')}
-                  >
-                    <ExternalLink className="h-4 w-4 mr-2" />
-                    View TASKS in Xano
-                  </Button>
-                </div>
-              </div>
             ) : filteredTasks.length === 0 ? (
               <div className="text-center py-12 text-muted-foreground">
-                No background tasks found matching your criteria
+                No background tasks found{searchQuery && ` matching "${searchQuery}"`}
               </div>
             ) : (
               filteredTasks.map((task: BackgroundTask) => (
@@ -211,41 +105,38 @@ export function BackgroundTasksTab() {
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-2">
-                          {task.group === 'WORKERS' ? (
-                            <Zap className="h-4 w-4 text-blue-600 shrink-0" />
+                          {task.active ? (
+                            <Play className="h-4 w-4 text-green-600 shrink-0" />
                           ) : (
-                            <Clock className="h-4 w-4 text-purple-600 shrink-0" />
+                            <Pause className="h-4 w-4 text-gray-400 shrink-0" />
                           )}
                           <h3 className="font-mono text-sm font-medium truncate">
                             {task.name}
                           </h3>
-                          <Badge className={GROUP_COLORS[task.group]}>
-                            {task.group}
-                          </Badge>
+                          {task.active ? (
+                            <Badge className="bg-green-100 text-green-800">Active</Badge>
+                          ) : (
+                            <Badge variant="outline" className="text-gray-600">Inactive</Badge>
+                          )}
+                          {task.draft && (
+                            <Badge variant="outline" className="text-orange-600">Draft</Badge>
+                          )}
                         </div>
-                        <div className="flex items-center gap-2 mb-2">
-                          <Badge variant="outline" className="text-xs">
-                            {task.method}
-                          </Badge>
-                          <code className="text-xs text-muted-foreground truncate">
-                            {task.path}
-                          </code>
+                        <div className="flex items-center gap-3 text-xs text-muted-foreground mb-2">
+                          <span>Type: <code className="bg-muted px-1 rounded">{task.type}</code></span>
+                          <span>•</span>
+                          <span>Schedule: <code className="bg-muted px-1 rounded">{task.schedule}</code></span>
                         </div>
-                        {task.description && (
-                          <p className="text-xs text-muted-foreground">{task.description}</p>
-                        )}
-                        {task.last_modified && (
-                          <p className="text-xs text-muted-foreground mt-1">
-                            Modified: {new Date(task.last_modified).toLocaleDateString()}
-                          </p>
-                        )}
+                        <p className="text-xs text-muted-foreground">
+                          Modified: {new Date(task.last_modified).toLocaleString()}
+                        </p>
                       </div>
                       <Button
                         variant="outline"
                         size="sm"
                         onClick={() => {
                           const baseUrl = 'https://x2nu-xcjc-vhax.agentdashboards.xano.io'
-                          window.open(`${baseUrl}/admin/#/5/api/${task.group_id}/endpoint/${task.id}`, '_blank')
+                          window.open(`${baseUrl}/admin/#/5/task/${task.id}`, '_blank')
                         }}
                       >
                         <ExternalLink className="h-4 w-4 mr-2" />
