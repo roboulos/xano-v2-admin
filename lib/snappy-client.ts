@@ -70,14 +70,25 @@ async function execSnappy(tool: string, args: Record<string, any> = {}): Promise
       throw new Error(`No JSON found in snappy output. stderr: ${stderr}`)
     }
 
-    const result = JSON.parse(jsonMatch[0])
+    const wrapper = JSON.parse(jsonMatch[0])
 
-    // Check for error in response
-    if (result.error) {
-      throw new Error(result.error)
+    // Check for error in wrapper
+    if (wrapper.error) {
+      throw new Error(wrapper.error)
     }
 
-    return result
+    // Snappy returns data inside content[0].text as JSON string
+    if (wrapper.content && wrapper.content[0] && wrapper.content[0].text) {
+      const textContent = wrapper.content[0].text
+      // Extract the JSON object from the formatted text (skip the header lines)
+      const dataMatch = textContent.match(/\{[\s\S]*\}/)
+      if (dataMatch) {
+        return JSON.parse(dataMatch[0])
+      }
+    }
+
+    // Fallback to wrapper if no content field
+    return wrapper
   } catch (error: any) {
     console.error(`[snappy] ${tool} failed:`, error.message)
     throw error
