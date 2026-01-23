@@ -3,6 +3,7 @@
  *
  * Fetch ALL V2 functions with full details
  * Uses snappy CLI to get complete function list
+ * Cached for 5 minutes to improve performance
  */
 
 import { NextResponse } from 'next/server'
@@ -10,6 +11,11 @@ import { v2Client } from '@/lib/snappy-client'
 
 export const dynamic = 'force-dynamic'
 export const maxDuration = 60 // Allow 60 seconds for large fetch
+
+// In-memory cache
+let cachedFunctions: any[] | null = null
+let cacheTimestamp: number = 0
+const CACHE_TTL = 5 * 60 * 1000 // 5 minutes
 
 /**
  * Categorize function based on name/folder
@@ -65,30 +71,60 @@ export async function GET(request: Request) {
     const limit = parseInt(searchParams.get('limit') || '100')
     const category = searchParams.get('category') // Filter by category
     const hideArchive = searchParams.get('hideArchive') === 'true'
+    const forceRefresh = searchParams.get('refresh') === 'true'
 
-    // Fetch ALL functions from V2 (we need all to properly categorize)
-    // Note: Xano limit is per page, so we may need multiple requests
+    // Check cache first
+    const now = Date.now()
+    const isCacheValid = cachedFunctions && (now - cacheTimestamp) < CACHE_TTL && !forceRefresh
+
     let allFunctions: any[] = []
-    let currentPage = 1
-    let totalFetched = 0
-    const fetchLimit = 200 // Fetch in batches of 200
 
-    // Fetch all functions in batches
+    if (isCacheValid) {
+      console.log('[V2 Functions API] Using cached functions')
+      allFunctions = cachedFunctions!
+    } else {
+      // Fetch ALL functions from V2 (we need all to properly categorize)
+      // Note: Xano limit is per page, so we may need multiple requests
+      let currentPage = 1
+      const fetchLimit = 50 // Xano maxes at 50 per request
+
+      console.log('[V2 Functions API] Starting to fetch all functions...')
+
+    // Fetch all functions in batches until we get no more results
     while (true) {
       const result = await v2Client.listFunctions({
         page: currentPage,
         limit: fetchLimit,
       })
 
-      allFunctions.push(...result.functions)
-      totalFetched += result.functions.length
+      console.log(`[V2 Functions API] Page ${currentPage}: fetched ${result.functions.length} functions`)
 
-      // Break if we've fetched all or no more results
-      if (totalFetched >= result.total || result.functions.length < fetchLimit) {
+      // Break if no more results
+      if (!result.functions || result.functions.length === 0) {
+        break
+      }
+
+      allFunctions.push(...result.functions)
+
+      // Break if we got fewer results than requested (last page)
+      if (result.functions.length < fetchLimit) {
         break
       }
 
       currentPage++
+
+      // Safety limit to prevent infinite loops
+      if (currentPage > 50) {
+        console.warn('[V2 Functions API] Hit safety limit of 50 pages')
+        break
+      }
+    }
+
+      console.log(`[V2 Functions API] Total functions fetched: ${allFunctions.length}`)
+
+      // Cache the results
+      cachedFunctions = allFunctions
+      cacheTimestamp = Date.now()
     }
 
     // Categorize ALL functions
