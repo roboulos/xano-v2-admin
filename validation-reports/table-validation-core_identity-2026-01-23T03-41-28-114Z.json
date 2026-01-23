@@ -1,0 +1,130 @@
+{
+  "summary": {
+    "total": 17,
+    "passed": 0,
+    "failed": 17,
+    "passRate": 0
+  },
+  "results": [
+    {
+      "success": false,
+      "name": "user",
+      "type": "table",
+      "error": "xanoMCP is deprecated. Use direct Xano API endpoints instead. Tool: query_table",
+      "timestamp": "2026-01-23T03:41:28.112Z"
+    },
+    {
+      "success": false,
+      "name": "user_credentials",
+      "type": "table",
+      "error": "xanoMCP is deprecated. Use direct Xano API endpoints instead. Tool: query_table",
+      "timestamp": "2026-01-23T03:41:28.113Z"
+    },
+    {
+      "success": false,
+      "name": "user_settings",
+      "type": "table",
+      "error": "xanoMCP is deprecated. Use direct Xano API endpoints instead. Tool: query_table",
+      "timestamp": "2026-01-23T03:41:28.113Z"
+    },
+    {
+      "success": false,
+      "name": "user_roles",
+      "type": "table",
+      "error": "xanoMCP is deprecated. Use direct Xano API endpoints instead. Tool: query_table",
+      "timestamp": "2026-01-23T03:41:28.113Z"
+    },
+    {
+      "success": false,
+      "name": "user_subscriptions",
+      "type": "table",
+      "error": "xanoMCP is deprecated. Use direct Xano API endpoints instead. Tool: query_table",
+      "timestamp": "2026-01-23T03:41:28.113Z"
+    },
+    {
+      "success": false,
+      "name": "agent",
+      "type": "table",
+      "error": "xanoMCP is deprecated. Use direct Xano API endpoints instead. Tool: query_table",
+      "timestamp": "2026-01-23T03:41:28.113Z"
+    },
+    {
+      "success": false,
+      "name": "agent_cap_data",
+      "type": "table",
+      "error": "xanoMCP is deprecated. Use direct Xano API endpoints instead. Tool: query_table",
+      "timestamp": "2026-01-23T03:41:28.113Z"
+    },
+    {
+      "success": false,
+      "name": "agent_commission",
+      "type": "table",
+      "error": "xanoMCP is deprecated. Use direct Xano API endpoints instead. Tool: query_table",
+      "timestamp": "2026-01-23T03:41:28.113Z"
+    },
+    {
+      "success": false,
+      "name": "agent_hierarchy",
+      "type": "table",
+      "error": "xanoMCP is deprecated. Use direct Xano API endpoints instead. Tool: query_table",
+      "timestamp": "2026-01-23T03:41:28.113Z"
+    },
+    {
+      "success": false,
+      "name": "agent_performance",
+      "type": "table",
+      "error": "xanoMCP is deprecated. Use direct Xano API endpoints instead. Tool: query_table",
+      "timestamp": "2026-01-23T03:41:28.113Z"
+    },
+    {
+      "success": false,
+      "name": "team",
+      "type": "table",
+      "error": "xanoMCP is deprecated. Use direct Xano API endpoints instead. Tool: query_table",
+      "timestamp": "2026-01-23T03:41:28.113Z"
+    },
+    {
+      "success": false,
+      "name": "team_members",
+      "type": "table",
+      "error": "xanoMCP is deprecated. Use direct Xano API endpoints instead. Tool: query_table",
+      "timestamp": "2026-01-23T03:41:28.113Z"
+    },
+    {
+      "success": false,
+      "name": "team_settings",
+      "type": "table",
+      "error": "xanoMCP is deprecated. Use direct Xano API endpoints instead. Tool: query_table",
+      "timestamp": "2026-01-23T03:41:28.113Z"
+    },
+    {
+      "success": false,
+      "name": "team_director_assignments",
+      "type": "table",
+      "error": "xanoMCP is deprecated. Use direct Xano API endpoints instead. Tool: query_table",
+      "timestamp": "2026-01-23T03:41:28.113Z"
+    },
+    {
+      "success": false,
+      "name": "team_owners",
+      "type": "table",
+      "error": "xanoMCP is deprecated. Use direct Xano API endpoints instead. Tool: query_table",
+      "timestamp": "2026-01-23T03:41:28.113Z"
+    },
+    {
+      "success": false,
+      "name": "team_admins",
+      "type": "table",
+      "error": "xanoMCP is deprecated. Use direct Xano API endpoints instead. Tool: query_table",
+      "timestamp": "2026-01-23T03:41:28.113Z"
+    },
+    {
+      "success": false,
+      "name": "team_admins_permissions",
+      "type": "table",
+      "error": "xanoMCP is deprecated. Use direct Xano API endpoints instead. Tool: query_table",
+      "timestamp": "2026-01-23T03:41:28.113Z"
+    }
+  ],
+  "duration": 0
+}

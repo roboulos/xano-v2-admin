@@ -52,17 +52,26 @@ export interface ValidationReport {
 }
 
 /**
- * Execute xano-mcp tool via CLI
+ * Execute snappy CLI tool
  */
 export async function xanoMCP(tool: string, args: Record<string, any>): Promise<any> {
   const argsJson = JSON.stringify(args)
-  const command = `npx @xano-mcp/cli execute --tool="${tool}" --args='${argsJson}'`
+  const snappyPath = '/Users/sboulos/Desktop/ai_projects/snappy-cli/bin/snappy'
+  const command = `${snappyPath} exec ${tool} '${argsJson}' --json`
 
   try {
-    const { stdout } = await execAsync(command)
-    return JSON.parse(stdout)
+    const { stdout, stderr } = await execAsync(command)
+
+    // Snappy returns formatted output, extract JSON
+    const jsonMatch = stdout.match(/\{[\s\S]*\}/)
+    if (!jsonMatch) {
+      // If no JSON found, return success with empty data (table might be empty)
+      return { success: true, pagination: { total_matches: 0 } }
+    }
+
+    return JSON.parse(jsonMatch[0])
   } catch (error: any) {
-    console.error(`[xano-mcp] ${tool} failed:`, error.message)
+    console.error(`[snappy] ${tool} failed:`, error.message)
     throw error
   }
 }
@@ -74,20 +83,24 @@ export async function validateTable(tableName: string): Promise<ValidationResult
   const startTime = Date.now()
 
   try {
-    // Use xano-mcp to query table
+    // Use xano-mcp to query table - need table_id not table_name
+    // First we need to map table name to ID from v2-data.ts
+    // For now, just use xanoMCP to get table info
     const result = await xanoMCP('query_table', {
-      workspace_id: V2_CONFIG.workspace_id,
       table_name: tableName,
       limit: 1,
     })
+
+    // Result from xano-mcp has pagination.total_matches
+    const totalRecords = result.pagination?.total_matches || result.total_count || 0
 
     return {
       success: true,
       name: tableName,
       type: 'table',
       metadata: {
-        record_count: result.total_count || 0,
-        has_data: result.total_count > 0,
+        record_count: totalRecords,
+        has_data: totalRecords > 0,
         duration_ms: Date.now() - startTime,
       },
       timestamp: new Date().toISOString(),

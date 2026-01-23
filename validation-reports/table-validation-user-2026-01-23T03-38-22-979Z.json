@@ -1,0 +1,22 @@
+{
+  "summary": {
+    "total": 1,
+    "passed": 1,
+    "failed": 0,
+    "passRate": 100
+  },
+  "results": [
+    {
+      "success": true,
+      "name": "user",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 214
+      },
+      "timestamp": "2026-01-23T03:38:22.978Z"
+    }
+  ],
+  "duration": 214
+}

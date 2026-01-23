@@ -20,7 +20,7 @@ import {
   printResults,
   ValidationResult,
 } from './utils'
-import { v2Tables } from '../../lib/v2-data'
+import { TABLES_DATA as v2Tables } from '../../lib/v2-data'
 
 // Table categories for organized testing
 const TABLE_CATEGORIES = {

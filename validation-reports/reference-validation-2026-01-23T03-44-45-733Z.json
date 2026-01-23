@@ -1,0 +1,440 @@
+{
+  "summary": {
+    "total": 33,
+    "passed": 33,
+    "failed": 0,
+    "passRate": 100
+  },
+  "results": [
+    {
+      "success": true,
+      "name": "user_credentials.user_id",
+      "type": "reference",
+      "metadata": {
+        "references": "user.id",
+        "orphan_count": 0,
+        "nullable": false,
+        "cascade_delete": true,
+        "duration_ms": 155
+      },
+      "timestamp": "2026-01-23T03:44:40.793Z"
+    },
+    {
+      "success": true,
+      "name": "user_settings.user_id",
+      "type": "reference",
+      "metadata": {
+        "references": "user.id",
+        "orphan_count": 0,
+        "nullable": false,
+        "cascade_delete": true,
+        "duration_ms": 150
+      },
+      "timestamp": "2026-01-23T03:44:40.944Z"
+    },
+    {
+      "success": true,
+      "name": "user_roles.user_id",
+      "type": "reference",
+      "metadata": {
+        "references": "user.id",
+        "orphan_count": 0,
+        "nullable": false,
+        "cascade_delete": true,
+        "duration_ms": 153
+      },
+      "timestamp": "2026-01-23T03:44:41.097Z"
+    },
+    {
+      "success": true,
+      "name": "user_subscriptions.user_id",
+      "type": "reference",
+      "metadata": {
+        "references": "user.id",
+        "orphan_count": 0,
+        "nullable": false,
+        "cascade_delete": true,
+        "duration_ms": 150
+      },
+      "timestamp": "2026-01-23T03:44:41.247Z"
+    },
+    {
+      "success": true,
+      "name": "agent.user_id",
+      "type": "reference",
+      "metadata": {
+        "references": "user.id",
+        "orphan_count": 0,
+        "nullable": false,
+        "cascade_delete": false,
+        "duration_ms": 148
+      },
+      "timestamp": "2026-01-23T03:44:41.395Z"
+    },
+    {
+      "success": true,
+      "name": "team_members.user_id",
+      "type": "reference",
+      "metadata": {
+        "references": "user.id",
+        "orphan_count": 0,
+        "nullable": false,
+        "cascade_delete": false,
+        "duration_ms": 146
+      },
+      "timestamp": "2026-01-23T03:44:41.541Z"
+    },
+    {
+      "success": true,
+      "name": "team_owners.user_id",
+      "type": "reference",
+      "metadata": {
+        "references": "user.id",
+        "orphan_count": 0,
+        "nullable": false,
+        "cascade_delete": false,
+        "duration_ms": 147
+      },
+      "timestamp": "2026-01-23T03:44:41.688Z"
+    },
+    {
+      "success": true,
+      "name": "team_admins.user_id",
+      "type": "reference",
+      "metadata": {
+        "references": "user.id",
+        "orphan_count": 0,
+        "nullable": false,
+        "cascade_delete": false,
+        "duration_ms": 152
+      },
+      "timestamp": "2026-01-23T03:44:41.840Z"
+    },
+    {
+      "success": true,
+      "name": "network_user_prefs.user_id",
+      "type": "reference",
+      "metadata": {
+        "references": "user.id",
+        "orphan_count": 0,
+        "nullable": false,
+        "cascade_delete": true,
+        "duration_ms": 151
+      },
+      "timestamp": "2026-01-23T03:44:41.991Z"
+    },
+    {
+      "success": true,
+      "name": "agent_cap_data.agent_id",
+      "type": "reference",
+      "metadata": {
+        "references": "agent.id",
+        "orphan_count": 0,
+        "nullable": false,
+        "cascade_delete": true,
+        "duration_ms": 165
+      },
+      "timestamp": "2026-01-23T03:44:42.156Z"
+    },
+    {
+      "success": true,
+      "name": "agent_commission.agent_id",
+      "type": "reference",
+      "metadata": {
+        "references": "agent.id",
+        "orphan_count": 0,
+        "nullable": false,
+        "cascade_delete": true,
+        "duration_ms": 198
+      },
+      "timestamp": "2026-01-23T03:44:42.354Z"
+    },
+    {
+      "success": true,
+      "name": "agent_hierarchy.agent_id",
+      "type": "reference",
+      "metadata": {
+        "references": "agent.id",
+        "orphan_count": 0,
+        "nullable": false,
+        "cascade_delete": true,
+        "duration_ms": 149
+      },
+      "timestamp": "2026-01-23T03:44:42.503Z"
+    },
+    {
+      "success": true,
+      "name": "agent_performance.agent_id",
+      "type": "reference",
+      "metadata": {
+        "references": "agent.id",
+        "orphan_count": 0,
+        "nullable": false,
+        "cascade_delete": true,
+        "duration_ms": 145
+      },
+      "timestamp": "2026-01-23T03:44:42.648Z"
+    },
+    {
+      "success": true,
+      "name": "user.agent_id",
+      "type": "reference",
+      "metadata": {
+        "references": "agent.id",
+        "orphan_count": 0,
+        "nullable": true,
+        "cascade_delete": false,
+        "duration_ms": 160
+      },
+      "timestamp": "2026-01-23T03:44:42.808Z"
+    },
+    {
+      "success": true,
+      "name": "transaction.transaction_owner_agent_id",
+      "type": "reference",
+      "metadata": {
+        "references": "agent.id",
+        "orphan_count": 0,
+        "nullable": true,
+        "cascade_delete": false,
+        "duration_ms": 153
+      },
+      "timestamp": "2026-01-23T03:44:42.961Z"
+    },
+    {
+      "success": true,
+      "name": "income.agent_id",
+      "type": "reference",
+      "metadata": {
+        "references": "agent.id",
+        "orphan_count": 0,
+        "nullable": false,
+        "cascade_delete": false,
+        "duration_ms": 161
+      },
+      "timestamp": "2026-01-23T03:44:43.122Z"
+    },
+    {
+      "success": true,
+      "name": "contribution.agent_id",
+      "type": "reference",
+      "metadata": {
+        "references": "agent.id",
+        "orphan_count": 0,
+        "nullable": false,
+        "cascade_delete": false,
+        "duration_ms": 151
+      },
+      "timestamp": "2026-01-23T03:44:43.273Z"
+    },
+    {
+      "success": true,
+      "name": "transaction_financials.transaction_id",
+      "type": "reference",
+      "metadata": {
+        "references": "transaction.id",
+        "orphan_count": 0,
+        "nullable": false,
+        "cascade_delete": true,
+        "duration_ms": 148
+      },
+      "timestamp": "2026-01-23T03:44:43.421Z"
+    },
+    {
+      "success": true,
+      "name": "transaction_history.transaction_id",
+      "type": "reference",
+      "metadata": {
+        "references": "transaction.id",
+        "orphan_count": 0,
+        "nullable": false,
+        "cascade_delete": true,
+        "duration_ms": 146
+      },
+      "timestamp": "2026-01-23T03:44:43.567Z"
+    },
+    {
+      "success": true,
+      "name": "transaction_participants.transaction_id",
+      "type": "reference",
+      "metadata": {
+        "references": "transaction.id",
+        "orphan_count": 0,
+        "nullable": false,
+        "cascade_delete": true,
+        "duration_ms": 151
+      },
+      "timestamp": "2026-01-23T03:44:43.718Z"
+    },
+    {
+      "success": true,
+      "name": "transaction_tags.transaction_id",
+      "type": "reference",
+      "metadata": {
+        "references": "transaction.id",
+        "orphan_count": 0,
+        "nullable": false,
+        "cascade_delete": true,
+        "duration_ms": 152
+      },
+      "timestamp": "2026-01-23T03:44:43.870Z"
+    },
+    {
+      "success": true,
+      "name": "income.transaction_id",
+      "type": "reference",
+      "metadata": {
+        "references": "transaction.id",
+        "orphan_count": 0,
+        "nullable": true,
+        "cascade_delete": false,
+        "duration_ms": 156
+      },
+      "timestamp": "2026-01-23T03:44:44.026Z"
+    },
+    {
+      "success": true,
+      "name": "transaction.address_id",
+      "type": "reference",
+      "metadata": {
+        "references": "address.id",
+        "orphan_count": 0,
+        "nullable": true,
+        "cascade_delete": false,
+        "duration_ms": 152
+      },
+      "timestamp": "2026-01-23T03:44:44.178Z"
+    },
+    {
+      "success": true,
+      "name": "listing.address_id",
+      "type": "reference",
+      "metadata": {
+        "references": "address.id",
+        "orphan_count": 0,
+        "nullable": true,
+        "cascade_delete": false,
+        "duration_ms": 158
+      },
+      "timestamp": "2026-01-23T03:44:44.336Z"
+    },
+    {
+      "success": true,
+      "name": "listing_history.listing_id",
+      "type": "reference",
+      "metadata": {
+        "references": "listing.id",
+        "orphan_count": 0,
+        "nullable": false,
+        "cascade_delete": true,
+        "duration_ms": 164
+      },
+      "timestamp": "2026-01-23T03:44:44.500Z"
+    },
+    {
+      "success": true,
+      "name": "listing_photos.listing_id",
+      "type": "reference",
+      "metadata": {
+        "references": "listing.id",
+        "orphan_count": 0,
+        "nullable": false,
+        "cascade_delete": true,
+        "duration_ms": 154
+      },
+      "timestamp": "2026-01-23T03:44:44.654Z"
+    },
+    {
+      "success": true,
+      "name": "team_members.team_id",
+      "type": "reference",
+      "metadata": {
+        "references": "team.id",
+        "orphan_count": 0,
+        "nullable": false,
+        "cascade_delete": true,
+        "duration_ms": 153
+      },
+      "timestamp": "2026-01-23T03:44:44.807Z"
+    },
+    {
+      "success": true,
+      "name": "team_settings.team_id",
+      "type": "reference",
+      "metadata": {
+        "references": "team.id",
+        "orphan_count": 0,
+        "nullable": false,
+        "cascade_delete": true,
+        "duration_ms": 150
+      },
+      "timestamp": "2026-01-23T03:44:44.957Z"
+    },
+    {
+      "success": true,
+      "name": "team_director_assignments.team_id",
+      "type": "reference",
+      "metadata": {
+        "references": "team.id",
+        "orphan_count": 0,
+        "nullable": false,
+        "cascade_delete": true,
+        "duration_ms": 156
+      },
+      "timestamp": "2026-01-23T03:44:45.113Z"
+    },
+    {
+      "success": true,
+      "name": "team_owners.team_id",
+      "type": "reference",
+      "metadata": {
+        "references": "team.id",
+        "orphan_count": 0,
+        "nullable": false,
+        "cascade_delete": true,
+        "duration_ms": 149
+      },
+      "timestamp": "2026-01-23T03:44:45.262Z"
+    },
+    {
+      "success": true,
+      "name": "team_admins.team_id",
+      "type": "reference",
+      "metadata": {
+        "references": "team.id",
+        "orphan_count": 0,
+        "nullable": false,
+        "cascade_delete": true,
+        "duration_ms": 157
+      },
+      "timestamp": "2026-01-23T03:44:45.419Z"
+    },
+    {
+      "success": true,
+      "name": "network_member.network_id",
+      "type": "reference",
+      "metadata": {
+        "references": "network_hierarchy.id",
+        "orphan_count": 0,
+        "nullable": false,
+        "cascade_delete": true,
+        "duration_ms": 153
+      },
+      "timestamp": "2026-01-23T03:44:45.572Z"
+    },
+    {
+      "success": true,
+      "name": "contributors.contribution_id",
+      "type": "reference",
+      "metadata": {
+        "references": "contribution.id",
+        "orphan_count": 0,
+        "nullable": false,
+        "cascade_delete": true,
+        "duration_ms": 161
+      },
+      "timestamp": "2026-01-23T03:44:45.733Z"
+    }
+  ],
+  "duration": 5094
+}
