@@ -16,6 +16,45 @@ export const maxDuration = 60 // Allow 60 seconds for large fetch
 let cachedFunctions: any[] | null = null
 let cacheTimestamp: number = 0
 const CACHE_TTL = 5 * 60 * 1000 // 5 minutes
+let isPreloading = false
+
+// Pre-load cache on server start (runs in background)
+if (!cachedFunctions && !isPreloading) {
+  isPreloading = true
+  console.log('[V2 Functions API] Pre-loading function cache on server start...')
+
+  // Run preload in background (don't block server startup)
+  ;(async () => {
+    try {
+      const allFunctions: any[] = []
+      let currentPage = 1
+      const fetchLimit = 50
+
+      while (true) {
+        const result = await v2Client.listFunctions({
+          page: currentPage,
+          limit: fetchLimit,
+        })
+
+        if (!result.functions || result.functions.length === 0) break
+
+        allFunctions.push(...result.functions)
+
+        if (result.functions.length < fetchLimit) break
+
+        currentPage++
+        if (currentPage > 50) break // Safety limit
+      }
+
+      cachedFunctions = allFunctions
+      cacheTimestamp = Date.now()
+      console.log(`[V2 Functions API] Pre-load complete: ${allFunctions.length} functions cached`)
+    } catch (error) {
+      console.error('[V2 Functions API] Pre-load failed:', error)
+      isPreloading = false
+    }
+  })()
+}
 
 /**
  * Categorize function based on name/folder
