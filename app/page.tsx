@@ -1,18 +1,20 @@
 "use client"
 
 import { useState } from "react"
-import { GitCompare, CheckCircle2 } from "lucide-react"
+import { GitCompare, CheckCircle2, Activity } from "lucide-react"
 
-// Only 2 tabs we care about
+// Tabs
 import { SchemaTab } from "@/components/machine-2/schema-tab"
 import { BackendValidationTab } from "@/components/machine-2/backend-validation-tab"
+import { LiveMigrationStatus } from "@/components/live-migration-status"
 
-type ViewMode = "schema" | "validation"
+type ViewMode = "schema" | "validation" | "live"
 
 export default function Home() {
-  const [viewMode, setViewMode] = useState<ViewMode>("schema")
+  const [viewMode, setViewMode] = useState<ViewMode>("live")
 
   const viewModes = [
+    { id: "live" as ViewMode, label: "Live Status", icon: Activity },
     { id: "schema" as ViewMode, label: "Schema Changes", icon: GitCompare },
     { id: "validation" as ViewMode, label: "Validation Status", icon: CheckCircle2 },
   ]
@@ -48,6 +50,7 @@ export default function Home() {
 
         {/* Content */}
         <div className="mt-6">
+          {viewMode === "live" && <LiveMigrationStatus />}
           {viewMode === "schema" && <SchemaTab />}
           {viewMode === "validation" && <BackendValidationTab />}
         </div>

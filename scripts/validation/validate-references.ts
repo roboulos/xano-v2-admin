@@ -21,7 +21,6 @@
  */
 
 import {
-  validateTableReferences,
   generateReport,
   saveReport,
   printResults,
