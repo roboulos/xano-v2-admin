@@ -5,8 +5,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Progress } from '@/components/ui/progress'
-import { AlertCircle, CheckCircle, Clock, Play, Database, Code, Globe, Link as LinkIcon } from 'lucide-react'
+import { AlertCircle, CheckCircle, Clock, Play, Database, Code, Globe, Link as LinkIcon, RefreshCw } from 'lucide-react'
 import { Alert, AlertDescription } from '@/components/ui/alert'
+import { ExportDropdown } from '@/components/export-dropdown'
+import { exportSummaryToPDF } from '@/lib/exporters'
+import { formatRelativeTime } from '@/lib/utils'
 import type { ValidationConfig, ValidationStage } from '@/validation.config'
 
 interface StageResult {
@@ -169,6 +172,7 @@ export function ValidationPipelineView() {
     results: {},
   })
   const [loading, setLoading] = useState(true)
+  const [lastUpdated, setLastUpdated] = useState<Date>(new Date())
 
   const fetchConfig = useCallback(async () => {
     try {
@@ -206,6 +210,7 @@ export function ValidationPipelineView() {
           results: newResults,
           completedStages: Object.keys(newResults),
         }))
+        setLastUpdated(new Date())
       }
     } catch (error) {
       console.error('Failed to fetch reports:', error)
@@ -327,10 +332,82 @@ export function ValidationPipelineView() {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div>
-        <h1 className="text-3xl font-bold">{config.name}</h1>
-        <p className="text-muted-foreground mt-2">{config.description}</p>
+      {/* Header with Timestamp and Refresh */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold">{config.name}</h1>
+          <p className="text-muted-foreground mt-2">{config.description}</p>
+          <p className="text-sm text-muted-foreground mt-1">
+            Last updated: {formatRelativeTime(lastUpdated)}
+          </p>
+        </div>
+        <div className="flex gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => {
+              fetchReports()
+              checkStatus()
+            }}
+            disabled={loading || status.running}
+          >
+            <RefreshCw className={`h-4 w-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
+            Refresh
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => {
+              const sections = [
+                {
+                  title: 'Overall Score',
+                  content: [
+                    `Score: ${overallScore.toFixed(1)}%`,
+                    `Minimum Required: ${config.overallSuccessCriteria.minimumScore}%`,
+                    `Status: ${meetsCriteria ? 'Production Ready' : 'Not Ready'}`,
+                  ],
+                },
+                {
+                  title: 'Business Context',
+                  content: [
+                    `Purpose: ${config.businessContext.purpose}`,
+                    `Timeline: ${config.businessContext.timeline}`,
+                    `Stakeholders: ${config.businessContext.stakeholders.join(', ')}`,
+                    `Risks: ${config.businessContext.risks.join('; ')}`,
+                  ],
+                },
+                ...config.stages.map(stage => {
+                  const result = status.results[stage.id]
+                  return {
+                    title: `Stage: ${stage.name}`,
+                    content: [
+                      `Status: ${result ? (result.meetsSuccessCriteria ? 'Passed' : 'Failed') : 'Not Run'}`,
+                      `Business Value: ${stage.businessValue}`,
+                      `Success Criteria: ${stage.successCriteria}`,
+                      result?.report ? `Progress: ${result.report.summary.passRate}%` : '',
+                      result?.report ? `Passed: ${result.report.summary.passed}/${result.report.summary.total}` : '',
+                      result?.duration ? `Duration: ${Math.round(result.duration / 1000)}s` : '',
+                    ].filter(Boolean),
+                  }
+                }),
+              ]
+
+              exportSummaryToPDF(
+                sections,
+                `validation-pipeline-report_${new Date().toISOString().slice(0, 10)}.pdf`,
+                config.name,
+                {
+                  title: config.name,
+                  timestamp: new Date(),
+                  totalRecords: config.stages.length,
+                }
+              )
+            }}
+            disabled={loading || !config}
+          >
+            Export PDF Report
+          </Button>
+        </div>
       </div>
 
       {/* Overall Score */}

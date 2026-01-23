@@ -1,6 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
 import fs from 'fs/promises'
 import path from 'path'
+import {
+  calculateMigrationScore,
+  getDefaultScoreData,
+  KNOWN_TOTALS,
+  type MigrationScoreData,
+} from '@/lib/migration-score'
 
 interface ValidationReport {
   summary: {
@@ -84,20 +90,47 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    // Calculate overall score if we have all reports
-    let overallScore = null
-    if (reportsByType.tables && reportsByType.functions && reportsByType.endpoints && reportsByType.references) {
-      const tableScore = reportsByType.tables.summary.passRate
-      const functionScore = reportsByType.functions.summary.passRate
-      const endpointScore = reportsByType.endpoints.summary.passRate
-      const referenceScore = reportsByType.references.summary.passRate
-
-      overallScore = (tableScore * 0.2 + functionScore * 0.3 + endpointScore * 0.3 + referenceScore * 0.2)
+    // Build score data from reports
+    const scoreData: MigrationScoreData = {
+      tables: {
+        validated: reportsByType.tables?.summary.total || 0,
+        total: KNOWN_TOTALS.V2_TABLES_VALIDATED,
+        passRate: reportsByType.tables?.summary.passRate || 0,
+      },
+      functions: {
+        validated: reportsByType.functions?.summary.total || 0,
+        total: KNOWN_TOTALS.V2_FUNCTIONS,
+        passRate: reportsByType.functions?.summary.passRate || 0,
+      },
+      endpoints: {
+        validated: reportsByType.endpoints?.summary.total || 0,
+        total: KNOWN_TOTALS.V2_ENDPOINTS,
+        passRate: reportsByType.endpoints?.summary.passRate || 0,
+      },
+      references: {
+        validated: reportsByType.references?.summary.total || 0,
+        total: KNOWN_TOTALS.V2_REFERENCES,
+        passRate: reportsByType.references?.summary.passRate || 0,
+      },
     }
+
+    // Calculate migration score using shared calculation
+    const migrationScore = calculateMigrationScore(scoreData)
 
     return NextResponse.json({
       reports: reportsByType,
-      overallScore,
+      migrationScore: {
+        overall: migrationScore.overall,
+        status: migrationScore.status,
+        breakdown: {
+          tables: migrationScore.tables,
+          functions: migrationScore.functions,
+          endpoints: migrationScore.endpoints,
+          references: migrationScore.references,
+        },
+        weights: migrationScore.breakdown,
+      },
+      scoreData,
       message: Object.keys(reportsByType).length > 0 ? 'Reports loaded successfully' : 'No reports found',
     })
   } catch (error: any) {

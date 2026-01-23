@@ -6,25 +6,105 @@
  */
 
 import { NextResponse } from 'next/server'
+import fs from 'fs/promises'
+import path from 'path'
+import {
+  calculateMigrationScore,
+  getDefaultScoreData,
+  KNOWN_TOTALS,
+  type MigrationScoreData,
+} from '@/lib/migration-score'
 
 export const dynamic = 'force-dynamic'
 
-// Known values from migration plan and validation
-const V1_TABLES = 251
-const V2_TABLES = 193 // 223 validated, but 193 in actual schema
-const V1_FUNCTIONS = 971 // ~700 archive + ~271 active
-const V2_FUNCTIONS = 971 // Same as V1, organized differently
-const V1_ENDPOINTS = 800 // Estimated from V1 workspace
-const V2_ENDPOINTS = 801 // 200 Frontend API + 374 WORKERS + 165 TASKS + 38 SYSTEM + 24 SEEDING
+interface ValidationReport {
+  summary: {
+    total: number
+    passed: number
+    failed: number
+    passRate: number
+  }
+}
+
+/**
+ * Read validation reports from disk to get real scores
+ */
+async function getValidationScores(): Promise<MigrationScoreData> {
+  const reportsDir = path.join(process.cwd(), 'validation-reports')
+
+  try {
+    await fs.access(reportsDir)
+  } catch {
+    // No reports yet - return zeros
+    return getDefaultScoreData()
+  }
+
+  const files = await fs.readdir(reportsDir)
+  const reportsByType: Record<string, ValidationReport> = {}
+
+  // Read latest report for each type
+  for (const file of files) {
+    if (!file.endsWith('.json')) continue
+
+    const match = file.match(/^(table|function|endpoint|reference)-validation/)
+    if (!match) continue
+
+    const reportType = match[1] + 's' // tables, functions, endpoints, references
+
+    try {
+      const filepath = path.join(reportsDir, file)
+      const content = await fs.readFile(filepath, 'utf-8')
+      const report: ValidationReport = JSON.parse(content)
+
+      // Keep only latest (files are sorted by timestamp in filename)
+      const stats = await fs.stat(filepath)
+      if (!reportsByType[reportType]) {
+        reportsByType[reportType] = report
+      } else {
+        const existingFile = path.join(
+          reportsDir,
+          files.find((f) => f.includes(reportType.slice(0, -1))) || ''
+        )
+        const existingStats = await fs.stat(existingFile)
+        if (stats.mtime > existingStats.mtime) {
+          reportsByType[reportType] = report
+        }
+      }
+    } catch (error) {
+      console.error(`Failed to read report ${file}:`, error)
+    }
+  }
+
+  // Build score data from reports
+  return {
+    tables: {
+      validated: reportsByType.tables?.summary.total || 0,
+      total: KNOWN_TOTALS.V2_TABLES_VALIDATED,
+      passRate: reportsByType.tables?.summary.passRate || 0,
+    },
+    functions: {
+      validated: reportsByType.functions?.summary.total || 0,
+      total: KNOWN_TOTALS.V2_FUNCTIONS,
+      passRate: reportsByType.functions?.summary.passRate || 0,
+    },
+    endpoints: {
+      validated: reportsByType.endpoints?.summary.total || 0,
+      total: KNOWN_TOTALS.V2_ENDPOINTS,
+      passRate: reportsByType.endpoints?.summary.passRate || 0,
+    },
+    references: {
+      validated: reportsByType.references?.summary.total || 0,
+      total: KNOWN_TOTALS.V2_REFERENCES,
+      passRate: reportsByType.references?.summary.passRate || 0,
+    },
+  }
+}
 
 export async function GET() {
   try {
-    // Use known accurate counts instead of slow snappy calls
-    // Migration score based on validation results
-    const tablesScore = 100 // 223/223 tables validated successfully
-    const functionsScore = Math.round((V2_FUNCTIONS / V1_FUNCTIONS) * 100)
-    const endpointsScore = Math.round((V2_ENDPOINTS / V1_ENDPOINTS) * 100)
-    const overallScore = Math.round((tablesScore + functionsScore + endpointsScore) / 3)
+    // Get real validation scores from reports
+    const scoreData = await getValidationScores()
+    const migrationScore = calculateMigrationScore(scoreData)
 
     return NextResponse.json({
       success: true,
@@ -34,17 +114,17 @@ export async function GET() {
         instance: 'xmpx-swi5-tlvy.n7c.xano.io',
         workspace_id: 1,
         tables: {
-          count: V1_TABLES,
+          count: KNOWN_TOTALS.V1_TABLES,
           total_records: '~500K', // Estimated from production
         },
         functions: {
-          count: V1_FUNCTIONS,
+          count: KNOWN_TOTALS.V1_FUNCTIONS,
         },
         api_groups: {
           count: 15, // Estimated
         },
         endpoints: {
-          count: V1_ENDPOINTS,
+          count: KNOWN_TOTALS.V1_ENDPOINTS,
         },
       },
       v2: {
@@ -52,12 +132,12 @@ export async function GET() {
         instance: 'x2nu-xcjc-vhax.agentdashboards.xano.io',
         workspace_id: 5,
         tables: {
-          count: V2_TABLES,
+          count: KNOWN_TOTALS.V2_TABLES,
           total_records: '~500K', // Synced from V1
-          validated: 223, // From validation scripts
+          validated: KNOWN_TOTALS.V2_TABLES_VALIDATED, // From validation scripts
         },
         functions: {
-          count: V2_FUNCTIONS,
+          count: KNOWN_TOTALS.V2_FUNCTIONS,
           breakdown: {
             archive: 700,
             workers: 100,
@@ -70,7 +150,7 @@ export async function GET() {
           major: 5, // Frontend API v2, WORKERS, TASKS, SYSTEM, SEEDING
         },
         endpoints: {
-          count: V2_ENDPOINTS,
+          count: KNOWN_TOTALS.V2_ENDPOINTS,
           breakdown: {
             frontend_api_v2: 200,
             workers: 374,
@@ -82,10 +162,11 @@ export async function GET() {
       },
       comparison: {
         tables: {
-          gap: V1_TABLES - V2_TABLES,
-          v1_to_v2_ratio: V2_TABLES / V1_TABLES,
+          gap: KNOWN_TOTALS.V1_TABLES - KNOWN_TOTALS.V2_TABLES,
+          v1_to_v2_ratio: KNOWN_TOTALS.V2_TABLES / KNOWN_TOTALS.V1_TABLES,
           description: 'V1 had 251 tables with redundancy, V2 normalized to 193 tables',
-          explanation: '58 fewer tables through normalization - split tables (user → 5, agent → 5, transaction → 4) replaced redundant aggregation tables',
+          explanation:
+            '58 fewer tables through normalization - split tables (user → 5, agent → 5, transaction → 4) replaced redundant aggregation tables',
         },
         functions: {
           gap: 0,
@@ -93,45 +174,40 @@ export async function GET() {
           description: 'Same function count, reorganized by domain (Archive/*, Workers/, Tasks/)',
         },
         endpoints: {
-          gap: V2_ENDPOINTS - V1_ENDPOINTS,
-          v1_to_v2_ratio: V2_ENDPOINTS / V1_ENDPOINTS,
+          gap: KNOWN_TOTALS.V2_ENDPOINTS - KNOWN_TOTALS.V1_ENDPOINTS,
+          v1_to_v2_ratio: KNOWN_TOTALS.V2_ENDPOINTS / KNOWN_TOTALS.V1_ENDPOINTS,
           description: 'V2 has +1 endpoint - refactored API groups with clearer separation',
         },
       },
       migration_score: {
-        tables: tablesScore,
-        functions: functionsScore,
-        endpoints: endpointsScore,
-        overall: overallScore,
-        status: overallScore >= 95 ? 'READY' : overallScore >= 80 ? 'NEAR_READY' : 'IN_PROGRESS',
+        tables: migrationScore.tables,
+        functions: migrationScore.functions,
+        endpoints: migrationScore.endpoints,
+        references: migrationScore.references,
+        overall: migrationScore.overall,
+        status: migrationScore.status,
+        breakdown: migrationScore.breakdown,
       },
       validation_results: {
         tables: {
-          validated: 223,
-          passed: 223,
-          failed: 0,
-          pass_rate: 100,
+          validated: scoreData.tables.validated,
+          total: scoreData.tables.total,
+          pass_rate: scoreData.tables.passRate,
         },
-        table_references: {
-          validated: 33,
-          passed: 33,
-          failed: 0,
-          orphaned_keys: 0,
-          pass_rate: 100,
+        functions: {
+          validated: scoreData.functions.validated,
+          total: scoreData.functions.total,
+          pass_rate: scoreData.functions.passRate,
         },
         endpoints: {
-          frontend_api_v2: {
-            total: 200,
-            passing: 199, // 1 fix needed: /contact_log
-            failing: 1,
-            pass_rate: 99.5,
-          },
-          workers: {
-            total: 374,
-            passing: 368, // 6 fixes needed
-            failing: 6,
-            pass_rate: 98.4,
-          },
+          validated: scoreData.endpoints.validated,
+          total: scoreData.endpoints.total,
+          pass_rate: scoreData.endpoints.passRate,
+        },
+        references: {
+          validated: scoreData.references.validated,
+          total: scoreData.references.total,
+          pass_rate: scoreData.references.passRate,
         },
       },
     })

@@ -10,7 +10,8 @@ import { v2Client } from '@/lib/snappy-client'
 
 export const dynamic = 'force-dynamic'
 
-// Known total from manual verification (100 + 100 + 18 = 218)
+// Known total from xano-mcp verification (2026-01-23)
+// This represents scheduled background tasks (not functions)
 const TOTAL_BACKGROUND_TASKS = 218
 
 export async function GET(request: Request) {

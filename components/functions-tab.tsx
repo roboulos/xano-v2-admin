@@ -6,8 +6,16 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/com
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Loader2, Search, Code, FolderTree } from 'lucide-react'
+import { Loader2, Search, Code, FolderTree, RefreshCw, Play, CheckCircle2, XCircle, Clock, Archive } from 'lucide-react'
 import { FunctionCodeModal } from '@/components/function-code-modal'
+import { formatRelativeTime } from '@/lib/utils'
+import {
+  getTestResults,
+  saveTestResult,
+  saveTestResults,
+  getTestStats,
+  FunctionTestResult
+} from '@/lib/test-results-storage'
 
 const fetcher = (url: string) => fetch(url).then(r => r.json())
 
@@ -16,6 +24,8 @@ interface Function {
   name: string
   type: string
   category: string
+  folder?: string
+  subFolder?: string
   tags: string[]
   last_modified: string
   created: string
@@ -39,21 +49,130 @@ export function FunctionsTab() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
   const [page, setPage] = useState(1)
+  const [hideArchive, setHideArchive] = useState(true) // Hide Archive by default
   const [selectedFunction, setSelectedFunction] = useState<{ id: number, name: string } | null>(null)
+  const [testResults, setTestResults] = useState<Record<number, FunctionTestResult>>({})
+  const [testingFunction, setTestingFunction] = useState<number | null>(null)
+  const [testingAll, setTestingAll] = useState(false)
 
-  const { data, error, isLoading } = useSWR(
-    `/api/v2/functions?page=${page}&limit=100`,
+  // Build URL with all filters
+  const buildApiUrl = () => {
+    const params = new URLSearchParams({
+      page: page.toString(),
+      limit: '50',
+    })
+    if (selectedCategory) params.set('category', selectedCategory)
+    if (hideArchive) params.set('hideArchive', 'true')
+    return `/api/v2/functions?${params.toString()}`
+  }
+
+  const { data, error, isLoading, mutate } = useSWR(
+    buildApiUrl(),
     fetcher,
-    { refreshInterval: 0 } // Don't auto-refresh
+    {
+      refreshInterval: 0, // Don't auto-refresh
+      revalidateOnFocus: false,
+    }
   )
 
+  // Load test results from localStorage on mount
+  useEffect(() => {
+    setTestResults(getTestResults())
+  }, [])
+
+  // Apply client-side search (category filtering is done server-side)
   const filteredFunctions = data?.functions?.filter((func: Function) => {
-    const matchesCategory = !selectedCategory || func.category === selectedCategory
     const matchesSearch = !searchQuery ||
       func.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       func.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()))
-    return matchesCategory && matchesSearch
+    return matchesSearch
   }) || []
+
+  // Reset page when filters change
+  const handleCategoryChange = (category: string | null) => {
+    setSelectedCategory(category)
+    setPage(1)
+  }
+
+  const handleArchiveToggle = () => {
+    setHideArchive(!hideArchive)
+    setPage(1)
+  }
+
+  // Test a single function
+  const testFunction = async (functionId: number) => {
+    setTestingFunction(functionId)
+    try {
+      const response = await fetch(`/api/v2/functions/${functionId}/test`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ testParams: { user_id: 60 } })
+      })
+      const result = await response.json()
+      saveTestResult(result)
+      setTestResults(getTestResults())
+    } catch (error) {
+      console.error('Test failed:', error)
+    } finally {
+      setTestingFunction(null)
+    }
+  }
+
+  // Test all visible functions
+  const testAllVisible = async () => {
+    setTestingAll(true)
+    const functionIds = filteredFunctions.map((f: Function) => f.id)
+
+    try {
+      const response = await fetch('/api/v2/functions/test-all', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ functionIds, testParams: { user_id: 60 } })
+      })
+      const result = await response.json()
+      if (result.success && result.results) {
+        saveTestResults(result.results)
+        setTestResults(getTestResults())
+      }
+    } catch (error) {
+      console.error('Batch test failed:', error)
+    } finally {
+      setTestingAll(false)
+    }
+  }
+
+  // Get status badge for a function
+  const getStatusBadge = (functionId: number) => {
+    const result = testResults[functionId]
+    if (!result) {
+      return <Badge variant="outline" className="text-xs">Not Tested</Badge>
+    }
+
+    if (result.status === 'passed') {
+      return (
+        <Badge className="bg-green-100 text-green-800 text-xs">
+          <CheckCircle2 className="h-3 w-3 mr-1" />
+          Passing
+        </Badge>
+      )
+    } else if (result.status === 'failed') {
+      return (
+        <Badge className="bg-red-100 text-red-800 text-xs">
+          <XCircle className="h-3 w-3 mr-1" />
+          Failing
+        </Badge>
+      )
+    } else {
+      return (
+        <Badge className="bg-yellow-100 text-yellow-800 text-xs">
+          <Clock className="h-3 w-3 mr-1" />
+          Simulated
+        </Badge>
+      )
+    }
+  }
+
+  const testStats = getTestStats()
 
   if (error) {
     return (
@@ -67,32 +186,111 @@ export function FunctionsTab() {
 
   return (
     <div className="space-y-6">
+      {/* Header with Timestamp and Refresh */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-2xl font-bold">V2 Functions</h2>
+          {data?.timestamp && (
+            <p className="text-sm text-muted-foreground">
+              Last updated: {formatRelativeTime(data.timestamp)}
+            </p>
+          )}
+          {data?.totalAll && (
+            <p className="text-sm text-muted-foreground mt-1">
+              Showing {data.total} of {data.totalAll} total functions
+              {hideArchive && <span> (Archive hidden)</span>}
+            </p>
+          )}
+          {testStats.total > 0 && (
+            <p className="text-sm text-muted-foreground mt-1">
+              Test Results: {testStats.passed} passed, {testStats.failed} failed, {testStats.simulated} simulated ({testStats.pass_rate}% pass rate)
+            </p>
+          )}
+        </div>
+        <div className="flex gap-2">
+          <Button
+            variant={hideArchive ? "outline" : "default"}
+            size="sm"
+            onClick={handleArchiveToggle}
+          >
+            {hideArchive ? 'Show Archive' : 'Hide Archive'}
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={testAllVisible}
+            disabled={testingAll || isLoading || filteredFunctions.length === 0}
+          >
+            <Play className={`h-4 w-4 mr-2 ${testingAll ? 'animate-spin' : ''}`} />
+            Test All Visible ({filteredFunctions.length})
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => mutate()}
+            disabled={isLoading}
+          >
+            <RefreshCw className={`h-4 w-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
+            Refresh
+          </Button>
+          <ExportDropdown
+            data={filteredFunctions.map(f => ({
+              id: f.id,
+              name: f.name,
+              type: f.type,
+              category: f.category,
+              tags: f.tags.join(', '),
+              test_status: testResults[f.id]?.status || 'not_tested',
+              last_modified: f.last_modified,
+              created: f.created,
+            }))}
+            filename="v2-functions"
+            title="V2 Functions Export"
+            metadata={{
+              filters: {
+                category: selectedCategory || 'all',
+                search: searchQuery || 'none',
+                hideArchive,
+              },
+            }}
+            disabled={isLoading || filteredFunctions.length === 0}
+          />
+        </div>
+      </div>
+
       {/* Summary Cards */}
       {data?.summary && (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-          {data.summary.map((cat: { category: string, count: number }) => (
-            <Card
-              key={cat.category}
-              className={`cursor-pointer transition-all hover:shadow-md ${
-                selectedCategory === cat.category ? 'ring-2 ring-primary' : ''
-              }`}
-              onClick={() => setSelectedCategory(
-                selectedCategory === cat.category ? null : cat.category
-              )}
-            >
-              <CardContent className="p-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-muted-foreground">{cat.category}</p>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+          {data.summary.map((cat: { category: string, count: number }) => {
+            // Skip Archive category if it's hidden (it won't be in the filtered data anyway)
+            if (hideArchive && cat.category === 'Archive') {
+              return null
+            }
+
+            return (
+              <Card
+                key={cat.category}
+                className={`cursor-pointer transition-all hover:shadow-md ${
+                  selectedCategory === cat.category ? 'ring-2 ring-primary' : ''
+                }`}
+                onClick={() => handleCategoryChange(
+                  selectedCategory === cat.category ? null : cat.category
+                )}
+              >
+                <CardContent className="p-4">
+                  <div className="flex flex-col gap-2">
+                    <div className="flex items-center justify-between">
+                      <p className="text-sm text-muted-foreground truncate">{cat.category}</p>
+                      <Badge className={CATEGORY_COLORS[cat.category] || CATEGORY_COLORS.Other} variant="secondary">
+                        {cat.count}
+                      </Badge>
+                    </div>
                     <p className="text-2xl font-bold">{cat.count}</p>
                   </div>
-                  <Badge className={CATEGORY_COLORS[cat.category] || CATEGORY_COLORS.Other}>
-                    {cat.category}
-                  </Badge>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+                </CardContent>
+              </Card>
+            )
+          })}
         </div>
       )}
 
@@ -113,7 +311,7 @@ export function FunctionsTab() {
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => setSelectedCategory(null)}
+                onClick={() => handleCategoryChange(null)}
               >
                 Clear Filter
               </Button>
@@ -133,6 +331,11 @@ export function FunctionsTab() {
           <CardDescription>
             Showing {filteredFunctions.length} of {data?.total || 0} functions
             {selectedCategory && ` in ${selectedCategory}`}
+            {data?.total && !selectedCategory && !searchQuery && (
+              <span className="ml-2 text-muted-foreground">
+                • Page {page} of {Math.ceil(data.total / 50)}
+              </span>
+            )}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -146,55 +349,92 @@ export function FunctionsTab() {
                 No functions found matching your criteria
               </div>
             ) : (
-              filteredFunctions.map((func: Function) => (
-                <Card key={func.id} className="hover:shadow-md transition-shadow">
-                  <CardContent className="p-4">
-                    <div className="flex items-start justify-between gap-4">
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 mb-2">
-                          <Code className="h-4 w-4 text-muted-foreground shrink-0" />
-                          <h3 className="font-mono text-sm font-medium truncate">
-                            {func.name}
-                          </h3>
-                          <Badge variant="outline" className="shrink-0">
-                            {func.type}
-                          </Badge>
-                        </div>
-                        <div className="flex flex-wrap gap-1 mb-2">
-                          <Badge className={CATEGORY_COLORS[func.category] || CATEGORY_COLORS.Other}>
-                            {func.category}
-                          </Badge>
-                          {func.tags.slice(0, 3).map((tag, i) => (
-                            <Badge key={i} variant="secondary" className="text-xs">
-                              {tag}
+              filteredFunctions.map((func: Function) => {
+                const testResult = testResults[func.id]
+                return (
+                  <Card key={func.id} className="hover:shadow-md transition-shadow">
+                    <CardContent className="p-4">
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 mb-2">
+                            {func.folder === 'Archive' ? (
+                              <Archive className="h-4 w-4 text-muted-foreground shrink-0" />
+                            ) : (
+                              <Code className="h-4 w-4 text-muted-foreground shrink-0" />
+                            )}
+                            <h3 className="font-mono text-sm font-medium truncate">
+                              {func.name}
+                            </h3>
+                            <Badge variant="outline" className="shrink-0">
+                              {func.type}
                             </Badge>
-                          ))}
-                          {func.tags.length > 3 && (
-                            <Badge variant="secondary" className="text-xs">
-                              +{func.tags.length - 3} more
-                            </Badge>
+                            {getStatusBadge(func.id)}
+                          </div>
+                          {func.subFolder && (
+                            <div className="flex items-center gap-1 mb-2">
+                              <FolderTree className="h-3 w-3 text-muted-foreground" />
+                              <span className="text-xs text-muted-foreground">
+                                {func.folder}/{func.subFolder}
+                              </span>
+                            </div>
                           )}
+                          <div className="flex flex-wrap gap-1 mb-2">
+                            <Badge className={CATEGORY_COLORS[func.category] || CATEGORY_COLORS.Other}>
+                              {func.category}
+                            </Badge>
+                            {func.tags.slice(0, 3).map((tag, i) => (
+                              <Badge key={i} variant="secondary" className="text-xs">
+                                {tag}
+                              </Badge>
+                            ))}
+                            {func.tags.length > 3 && (
+                              <Badge variant="secondary" className="text-xs">
+                                +{func.tags.length - 3} more
+                              </Badge>
+                            )}
+                          </div>
+                          <div className="text-xs text-muted-foreground space-y-1">
+                            <p>Modified: {new Date(func.last_modified).toLocaleDateString()}</p>
+                            {testResult && (
+                              <p>
+                                Last tested: {formatRelativeTime(testResult.tested_at)} ({testResult.execution_time_ms}ms)
+                              </p>
+                            )}
+                          </div>
                         </div>
-                        <p className="text-xs text-muted-foreground">
-                          Modified: {new Date(func.last_modified).toLocaleDateString()}
-                        </p>
+                        <div className="flex flex-col gap-2 shrink-0">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => testFunction(func.id)}
+                            disabled={testingFunction === func.id}
+                          >
+                            {testingFunction === func.id ? (
+                              <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                            ) : (
+                              <Play className="h-4 w-4 mr-2" />
+                            )}
+                            Test
+                          </Button>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => setSelectedFunction({ id: func.id, name: func.name })}
+                          >
+                            <Code className="h-4 w-4 mr-2" />
+                            View
+                          </Button>
+                        </div>
                       </div>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => setSelectedFunction({ id: func.id, name: func.name })}
-                      >
-                        View Code
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))
+                    </CardContent>
+                  </Card>
+                )
+              })
             )}
           </div>
 
           {/* Pagination */}
-          {data && data.total > 100 && (
+          {data && data.total > 50 && (
             <div className="flex items-center justify-center gap-2 mt-6">
               <Button
                 variant="outline"
@@ -205,12 +445,12 @@ export function FunctionsTab() {
                 Previous
               </Button>
               <span className="text-sm text-muted-foreground">
-                Page {page} of {Math.ceil(data.total / 100)}
+                Page {page} of {Math.ceil(data.total / 50)}
               </span>
               <Button
                 variant="outline"
                 size="sm"
-                disabled={page >= Math.ceil(data.total / 100)}
+                disabled={page >= Math.ceil(data.total / 50)}
                 onClick={() => setPage(p => p + 1)}
               >
                 Next

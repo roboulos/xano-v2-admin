@@ -6,7 +6,9 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/com
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Loader2, Search, Clock, ExternalLink, Play, Pause } from 'lucide-react'
+import { Loader2, Search, Clock, ExternalLink, Play, Pause, RefreshCw } from 'lucide-react'
+import { ExportDropdown } from '@/components/export-dropdown'
+import { formatRelativeTime } from '@/lib/utils'
 
 const fetcher = (url: string) => fetch(url).then(r => r.json())
 
@@ -25,10 +27,13 @@ export function BackgroundTasksTab() {
   const [searchQuery, setSearchQuery] = useState('')
   const [page, setPage] = useState(1)
 
-  const { data, error, isLoading } = useSWR(
+  const { data, error, isLoading, mutate } = useSWR(
     `/api/v2/background-tasks?page=${page}&limit=50&search=${searchQuery}`,
     fetcher,
-    { refreshInterval: 0 }
+    {
+      refreshInterval: 0,
+      revalidateOnFocus: false,
+    }
   )
 
   const filteredTasks = data?.tasks || []
@@ -45,13 +50,61 @@ export function BackgroundTasksTab() {
 
   return (
     <div className="space-y-6">
+      {/* Header with Timestamp and Refresh */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-2xl font-bold">Background Tasks</h2>
+          {data?.timestamp && (
+            <p className="text-sm text-muted-foreground">
+              Last updated: {formatRelativeTime(data.timestamp)}
+            </p>
+          )}
+        </div>
+        <div className="flex gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => mutate()}
+            disabled={isLoading}
+          >
+            <RefreshCw className={`h-4 w-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
+            Refresh
+          </Button>
+          <ExportDropdown
+            data={filteredTasks.map((t: BackgroundTask) => ({
+              id: t.id,
+              name: t.name,
+              type: t.type,
+              active: t.active,
+              schedule: t.schedule,
+              draft: t.draft,
+              last_modified: t.last_modified,
+              created: t.created,
+            }))}
+            filename="v2-background-tasks"
+            title="V2 Background Tasks Export"
+            metadata={{
+              filters: {
+                search: searchQuery || 'none',
+              },
+            }}
+            disabled={isLoading || filteredTasks.length === 0}
+          />
+        </div>
+      </div>
+
       {/* Summary Card */}
       <Card>
         <CardContent className="p-6">
           <div className="flex items-center justify-between">
             <div>
               <h3 className="text-2xl font-bold">{data?.total || 0}</h3>
-              <p className="text-sm text-muted-foreground">Total Background Tasks</p>
+              <p className="text-sm text-muted-foreground">
+                Scheduled Background Tasks (Xano Tasks)
+              </p>
+              <p className="text-xs text-muted-foreground mt-1">
+                Note: This count excludes the 600+ XanoScript Functions in the workspace
+              </p>
             </div>
             <Clock className="h-8 w-8 text-primary" />
           </div>

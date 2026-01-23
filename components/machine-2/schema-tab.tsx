@@ -5,6 +5,16 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
+import { ExportDropdown } from "@/components/export-dropdown"
+import { formatRelativeTime } from "@/lib/utils"
+import { exportSummaryToPDF } from "@/lib/exporters"
+import {
+  getTableMapping,
+  getStrategyBadgeColor,
+  getStrategyLabel,
+  type DetailedTableMapping,
+  type MappingStrategy,
+} from "@/lib/table-mappings-detailed"
 import {
   CheckCircle2,
   XCircle,
@@ -24,6 +34,8 @@ import {
   Link2,
   Layers,
   Info,
+  GitBranch,
+  Eye,
 } from "lucide-react"
 
 // ============================================================================
@@ -464,10 +476,16 @@ function getFieldTypeIcon(field: SchemaField) {
   return <Columns className="h-3 w-3" />
 }
 
+function countReferences(fields: SchemaField[]): number {
+  return fields.filter((f) => f.reference).length
+}
+
 export function SchemaTab() {
   const [searchTerm, setSearchTerm] = useState("")
   const [statusFilter, setStatusFilter] = useState<FilterMode>("all")
   const [expandedTables, setExpandedTables] = useState<Set<string>>(new Set(["user"]))
+  const [expandedMappings, setExpandedMappings] = useState<Set<string>>(new Set())
+  const [lastUpdated, setLastUpdated] = useState(new Date())
 
   // Compute all table comparisons
   const tableComparisons = useMemo(() => {
@@ -547,6 +565,18 @@ export function SchemaTab() {
     })
   }
 
+  const toggleMapping = (tableName: string) => {
+    setExpandedMappings((prev) => {
+      const next = new Set(prev)
+      if (next.has(tableName)) {
+        next.delete(tableName)
+      } else {
+        next.add(tableName)
+      }
+      return next
+    })
+  }
+
   const expandAll = () => {
     setExpandedTables(new Set(tableComparisons.map((tc) => tc.tableName)))
   }
@@ -596,6 +626,24 @@ export function SchemaTab() {
 
   return (
     <div className="space-y-6">
+      {/* Header with Timestamp and Refresh */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-2xl font-bold">Schema Comparison</h2>
+          <p className="text-sm text-muted-foreground">
+            Last updated: {formatRelativeTime(lastUpdated)}
+          </p>
+        </div>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => setLastUpdated(new Date())}
+        >
+          <RefreshCw className="h-4 w-4 mr-2" />
+          Refresh
+        </Button>
+      </div>
+
       {/* Overview Stats */}
       <Card>
         <CardHeader className="pb-4">
@@ -619,10 +667,91 @@ export function SchemaTab() {
               <Button variant="outline" size="sm" onClick={collapseAll}>
                 Collapse All
               </Button>
-              <Button variant="outline" size="sm">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  // Flatten the comparison data for export
+                  const exportData = filteredComparisons.flatMap(table =>
+                    table.comparisons.map(field => ({
+                      table_name: table.tableName,
+                      field_name: field.fieldName,
+                      v1_type: field.v1Field?.type || '',
+                      v1_required: field.v1Field?.required || false,
+                      v1_indexed: field.v1Field?.indexed || false,
+                      v1_unique: field.v1Field?.unique || false,
+                      v2_type: field.v2Field?.type || '',
+                      v2_required: field.v2Field?.required || false,
+                      v2_indexed: field.v2Field?.indexed || false,
+                      v2_unique: field.v2Field?.unique || false,
+                      status: field.status,
+                      differences: field.differences?.join('; ') || '',
+                    }))
+                  )
+
+                  // For PDF, create a summary report
+                  const sections = [
+                    {
+                      title: 'Schema Comparison Summary',
+                      content: [
+                        `Total Fields: ${overallSummary.totalFields}`,
+                        `Matching: ${overallSummary.matching}`,
+                        `Changed: ${overallSummary.different}`,
+                        `Removed: ${overallSummary.missingInV2}`,
+                        `New in V2: ${overallSummary.missingInV1}`,
+                      ],
+                    },
+                    {
+                      title: 'Table Comparisons',
+                      content: `Comparing ${tableComparisons.length} tables between V1 and V2`,
+                      table: exportData.slice(0, 50), // First 50 rows for PDF
+                    },
+                  ]
+
+                  exportSummaryToPDF(
+                    sections,
+                    `v1-v2-schema-comparison_${new Date().toISOString().slice(0, 10)}.pdf`,
+                    'V1 → V2 Schema Comparison',
+                    {
+                      title: 'Schema Comparison',
+                      timestamp: new Date(),
+                      totalRecords: exportData.length,
+                      filters: { search: searchTerm, statusFilter },
+                    }
+                  )
+                }}
+              >
                 <Download className="h-4 w-4 mr-2" />
-                Export
+                Export PDF
               </Button>
+              <ExportDropdown
+                data={filteredComparisons.flatMap(table =>
+                  table.comparisons.map(field => ({
+                    table_name: table.tableName,
+                    field_name: field.fieldName,
+                    v1_type: field.v1Field?.type || '',
+                    v1_required: field.v1Field?.required || false,
+                    v1_indexed: field.v1Field?.indexed || false,
+                    v1_unique: field.v1Field?.unique || false,
+                    v2_type: field.v2Field?.type || '',
+                    v2_required: field.v2Field?.required || false,
+                    v2_indexed: field.v2Field?.indexed || false,
+                    v2_unique: field.v2Field?.unique || false,
+                    status: field.status,
+                    differences: field.differences?.join('; ') || '',
+                  }))
+                )}
+                filename="v1-v2-schema-comparison"
+                title="V1 → V2 Schema Comparison"
+                metadata={{
+                  filters: {
+                    search: searchTerm || 'none',
+                    statusFilter,
+                  },
+                }}
+                disabled={filteredComparisons.length === 0}
+                className="ml-2"
+              />
             </div>
           </div>
         </CardHeader>
@@ -692,6 +821,9 @@ export function SchemaTab() {
           <div className="space-y-3">
             {filteredComparisons.map((table) => {
               const isExpanded = expandedTables.has(table.tableName)
+              const isMappingExpanded = expandedMappings.has(table.tableName)
+              const v2RefCount = countReferences(table.comparisons.filter((c) => c.v2Field).map((c) => c.v2Field!))
+              const mapping = getTableMapping(table.tableName)
 
               return (
                 <div key={table.tableName} className="border rounded-lg overflow-hidden">
@@ -703,9 +835,28 @@ export function SchemaTab() {
                     <div className="flex items-center gap-3">
                       <Database className="h-5 w-5 text-muted-foreground" />
                       <span className="font-mono font-medium">{table.tableName}</span>
+
+                      {/* Strategy Badge */}
+                      {mapping && (
+                        <Badge
+                          variant="outline"
+                          className={`text-xs ${getStrategyBadgeColor(mapping.strategy)}`}
+                          title={mapping.reason}
+                        >
+                          <span className="mr-1">{mapping.icon}</span>
+                          {getStrategyLabel(mapping.strategy)}
+                        </Badge>
+                      )}
+
                       <Badge variant="outline" className="text-xs">
                         V1: {table.v1FieldCount} / V2: {table.v2FieldCount}
                       </Badge>
+                      {v2RefCount > 0 && (
+                        <Badge variant="outline" className="text-xs bg-purple-50 text-purple-700 border-purple-200">
+                          <Link2 className="h-3 w-3 mr-1" />
+                          {v2RefCount} FK{v2RefCount > 1 ? 's' : ''}
+                        </Badge>
+                      )}
                     </div>
                     <div className="flex items-center gap-4">
                       <div className="flex items-center gap-2">
@@ -734,6 +885,23 @@ export function SchemaTab() {
                           </Badge>
                         )}
                       </div>
+
+                      {/* View Mapping Details Button (for split tables) */}
+                      {mapping && mapping.strategy === "split" && mapping.fieldMappings && (
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            toggleMapping(table.tableName)
+                          }}
+                          className="text-xs"
+                        >
+                          <GitBranch className="h-3 w-3 mr-1" />
+                          View Split Details
+                        </Button>
+                      )}
+
                       {isExpanded ? (
                         <ChevronDown className="h-4 w-4 text-muted-foreground" />
                       ) : (
@@ -741,6 +909,65 @@ export function SchemaTab() {
                       )}
                     </div>
                   </button>
+
+                  {/* Mapping Details Section (for split tables) */}
+                  {isMappingExpanded && mapping && mapping.strategy === "split" && mapping.fieldMappings && (
+                    <div className="border-t bg-purple-50/30 p-4">
+                      <div className="flex items-start gap-3 mb-3">
+                        <GitBranch className="h-5 w-5 text-purple-600 flex-shrink-0 mt-0.5" />
+                        <div className="flex-1">
+                          <h4 className="font-medium text-purple-900 mb-1">Split Mapping Details</h4>
+                          <p className="text-sm text-purple-700">{mapping.reason}</p>
+                          <div className="mt-2 flex flex-wrap gap-2">
+                            {mapping.v2Tables.map((v2Table) => (
+                              <Badge key={v2Table} variant="outline" className="bg-white">
+                                {v2Table}
+                              </Badge>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Field Mapping Tree */}
+                      <div className="bg-white rounded-lg border p-4">
+                        <h5 className="text-sm font-medium mb-3">Field Distribution</h5>
+                        <div className="space-y-2">
+                          {mapping.v2Tables.map((v2Table) => {
+                            const fieldsForTable = mapping.fieldMappings!.filter((fm) => fm.v2Table === v2Table)
+                            if (fieldsForTable.length === 0) return null
+
+                            return (
+                              <div key={v2Table} className="border rounded-lg p-3 bg-gray-50">
+                                <div className="flex items-center gap-2 mb-2">
+                                  <Database className="h-4 w-4 text-purple-600" />
+                                  <span className="font-mono font-medium text-sm">{v2Table}</span>
+                                  <Badge variant="outline" className="text-xs">
+                                    {fieldsForTable.length} fields
+                                  </Badge>
+                                </div>
+                                <div className="grid grid-cols-2 gap-2 text-xs">
+                                  {fieldsForTable.map((fm) => (
+                                    <div key={fm.v1Field} className="flex items-center gap-2 text-muted-foreground">
+                                      <ArrowRight className="h-3 w-3" />
+                                      <span className="font-mono">{fm.v1Field}</span>
+                                      {fm.v1Field !== fm.v2Field && (
+                                        <span className="text-purple-600">→ {fm.v2Field}</span>
+                                      )}
+                                      {fm.notes && (
+                                        <span className="text-amber-600" title={fm.notes}>
+                                          ⓘ
+                                        </span>
+                                      )}
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            )
+                          })}
+                        </div>
+                      </div>
+                    </div>
+                  )}
 
                   {/* Expanded Field List */}
                   {isExpanded && (
