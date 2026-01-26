@@ -28,6 +28,13 @@ import {
   xanoMCP,
   V2_CONFIG,
 } from './utils'
+import { TABLES_DATA } from '../../lib/v2-data'
+
+// Build table name to ID mapping
+const TABLE_NAME_TO_ID: Map<string, number> = new Map()
+for (const table of TABLES_DATA) {
+  TABLE_NAME_TO_ID.set(table.name, table.id)
+}
 
 interface TableReference {
   table: string
@@ -233,42 +240,12 @@ const TABLE_REFERENCES: TableReference[] = [
     nullable: false,
     cascade_delete: true,
   },
-  {
-    table: 'team_owners',
-    field: 'team_id',
-    references_table: 'team',
-    references_field: 'id',
-    nullable: false,
-    cascade_delete: true,
-  },
-  {
-    table: 'team_admins',
-    field: 'team_id',
-    references_table: 'team',
-    references_field: 'id',
-    nullable: false,
-    cascade_delete: true,
-  },
+  // Note: team_owners and team_admins do not exist in V2 schema
+  // Team ownership is likely tracked differently in V2
 
   // Team → User relationships
   {
     table: 'team_members',
-    field: 'user_id',
-    references_table: 'user',
-    references_field: 'id',
-    nullable: false,
-    cascade_delete: false,
-  },
-  {
-    table: 'team_owners',
-    field: 'user_id',
-    references_table: 'user',
-    references_field: 'id',
-    nullable: false,
-    cascade_delete: false,
-  },
-  {
-    table: 'team_admins',
     field: 'user_id',
     references_table: 'user',
     references_field: 'id',
@@ -319,14 +296,8 @@ const TABLE_REFERENCES: TableReference[] = [
     nullable: false,
     cascade_delete: false,
   },
-  {
-    table: 'contributors',
-    field: 'contribution_id',
-    references_table: 'contribution',
-    references_field: 'id',
-    nullable: false,
-    cascade_delete: true,
-  },
+  // Note: contributors table does not exist in V2 schema
+  // Contribution data is likely structured differently in V2
 ]
 
 /**
@@ -337,12 +308,25 @@ async function checkOrphanedReferences(ref: TableReference): Promise<{
   sample_ids: number[]
 }> {
   try {
+    // Get table IDs from name mapping
+    const childTableId = TABLE_NAME_TO_ID.get(ref.table)
+    const parentTableId = TABLE_NAME_TO_ID.get(ref.references_table)
+
+    if (!childTableId) {
+      console.error(`   ❌ Table not found: ${ref.table}`)
+      return { orphan_count: -1, sample_ids: [] }
+    }
+
+    if (!parentTableId) {
+      console.error(`   ❌ Parent table not found: ${ref.references_table}`)
+      return { orphan_count: -1, sample_ids: [] }
+    }
+
     // Query child table for records with non-null FK
-    // Note: snappy-cli expects filters as an object with field/operator/value keys, not an array
     const childQuery = await xanoMCP('query_table', {
       workspace_id: V2_CONFIG.workspace_id,
-      table_name: ref.table,
-      limit: 1000,
+      table_id: childTableId,
+      limit: 100, // Limit to 100 for performance
     })
 
     if (!childQuery.records || childQuery.records.length === 0) {
@@ -350,6 +334,8 @@ async function checkOrphanedReferences(ref: TableReference): Promise<{
     }
 
     const orphanIds: number[] = []
+    const checkedParentIds: Set<number> = new Set()
+    const validParentIds: Set<number> = new Set()
 
     // Check each FK value exists in parent table
     for (const record of childQuery.records) {
@@ -359,14 +345,29 @@ async function checkOrphanedReferences(ref: TableReference): Promise<{
         continue
       }
 
-      // Check if parent record exists using get_record_by_id if FK field is 'id'
-      // or query_table without filters and check manually
+      if (fkValue === null && !ref.nullable) {
+        // Non-nullable FK with null value is an orphan
+        orphanIds.push(record.id)
+        continue
+      }
+
+      // Skip if we already checked this parent ID
+      if (checkedParentIds.has(fkValue)) {
+        if (!validParentIds.has(fkValue)) {
+          orphanIds.push(record.id)
+        }
+        continue
+      }
+
+      checkedParentIds.add(fkValue)
+
+      // Check if parent record exists using get_record
       let parentExists = false
       if (ref.references_field === 'id') {
         try {
           const parentQuery = await xanoMCP('get_record', {
             workspace_id: V2_CONFIG.workspace_id,
-            table_name: ref.references_table,
+            table_id: parentTableId,
             record_id: fkValue,
           })
           parentExists = parentQuery && parentQuery.id
@@ -374,12 +375,13 @@ async function checkOrphanedReferences(ref: TableReference): Promise<{
           parentExists = false
         }
       } else {
-        // For non-id fields, we'd need a different approach
-        // For now, assume these are valid as they're rare
+        // For non-id fields, assume valid (rare case)
         parentExists = true
       }
 
-      if (!parentExists) {
+      if (parentExists) {
+        validParentIds.add(fkValue)
+      } else {
         orphanIds.push(record.id)
       }
     }
