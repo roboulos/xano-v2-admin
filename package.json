@@ -26,6 +26,7 @@
     "validate:onboarding": "tsx scripts/validation/validate-onboarding-flow.ts",
     "validate:daily-sync": "tsx scripts/validation/validate-daily-sync.ts",
     "validate:webhooks": "tsx scripts/validation/validate-webhooks.ts",
+    "validate:aggregation": "tsx scripts/validation/validate-aggregation.ts",
     "prepare": "husky"
   },
   "dependencies": {
