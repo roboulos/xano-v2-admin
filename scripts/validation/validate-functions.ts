@@ -192,7 +192,8 @@ async function validateFunctionBatch(
 
   const results: ValidationResult[] = []
   let successCount = 0
-  let errorCount = 0
+  let failedCount = 0
+  let untestableCount = 0
 
   for (const func of functions) {
     process.stdout.write(`   Testing ${func.name}... `)
@@ -203,19 +204,24 @@ async function validateFunctionBatch(
     if (result.success) {
       successCount++
       console.log(`✅`)
+    } else if (result.metadata?.status === 'untestable') {
+      untestableCount++
+      console.log(`⚠️  ${result.error}`)
     } else {
-      errorCount++
+      failedCount++
       console.log(`❌ ${result.error}`)
     }
 
-    // Progress indicator
-    if ((successCount + errorCount) % 10 === 0) {
-      console.log(`   Progress: ${successCount + errorCount}/${functions.length}`)
+    // Progress indicator every 20 functions
+    const processed = successCount + failedCount + untestableCount
+    if (processed % 20 === 0) {
+      console.log(`   Progress: ${processed}/${functions.length}`)
     }
   }
 
   console.log(`\n   ✅ Passed: ${successCount}`)
-  console.log(`   ❌ Failed: ${errorCount}`)
+  console.log(`   ❌ Failed: ${failedCount}`)
+  console.log(`   ⚠️  Untestable: ${untestableCount}`)
 
   return results
 }

@@ -12,8 +12,34 @@ import { exec } from 'child_process'
 import { promisify } from 'util'
 import fs from 'fs/promises'
 import path from 'path'
+import { MCP_ENDPOINTS, MCP_BASES } from '../../lib/mcp-endpoints'
 
 const execAsync = promisify(exec)
+
+// Build function ID to test endpoint mapping from MCP_ENDPOINTS
+// Pattern: /test-function-8052-txn-sync -> function_id: 8052
+interface TestEndpointInfo {
+  endpoint: string
+  apiGroup: string
+  method: string
+  requiresUserId: boolean
+}
+
+const FUNCTION_ID_TO_TEST_ENDPOINT: Map<number, TestEndpointInfo> = new Map()
+
+for (const mcpEndpoint of MCP_ENDPOINTS) {
+  // Extract function ID from endpoint path like /test-function-8052-txn-sync
+  const match = mcpEndpoint.endpoint.match(/test-function-(\d+)/)
+  if (match) {
+    const functionId = parseInt(match[1], 10)
+    FUNCTION_ID_TO_TEST_ENDPOINT.set(functionId, {
+      endpoint: mcpEndpoint.endpoint,
+      apiGroup: mcpEndpoint.apiGroup,
+      method: mcpEndpoint.method,
+      requiresUserId: mcpEndpoint.requiresUserId,
+    })
+  }
+}
 
 // V2 Workspace Configuration
 export const V2_CONFIG = {
@@ -45,7 +71,9 @@ export interface ValidationReport {
     total: number
     passed: number
     failed: number
+    untestable: number
     passRate: number
+    testablePassRate: number // Pass rate excluding untestable
   }
   results: ValidationResult[]
   duration: number
@@ -187,8 +215,12 @@ export async function validateEndpoint(
  * Test function execution (via endpoint curls)
  *
  * NOTE: Xano functions cannot be executed directly - they must be called
- * by endpoints. This function uses the function-endpoint mapping to find
- * and curl the appropriate endpoint.
+ * by endpoints. This function uses multiple sources to find test endpoints:
+ * 1. MCP_ENDPOINTS (from mcp-endpoints.ts) - known working test endpoints
+ * 2. function-endpoint-mapping.json - auto-generated mapping file
+ *
+ * Workers/ functions often don't have direct endpoints, so we use the
+ * MCP test-function-* endpoints to validate them.
  */
 export async function validateFunction(
   functionId: number,
@@ -197,45 +229,60 @@ export async function validateFunction(
 ): Promise<ValidationResult> {
   const startTime = Date.now()
 
-  // Load mapping if not provided
-  if (!functionEndpointMapping) {
-    try {
-      const fs = await import('fs/promises')
-      const path = await import('path')
-      const mappingPath = path.join(process.cwd(), 'lib', 'function-endpoint-mapping.json')
-      const mappingData = await fs.readFile(mappingPath, 'utf-8')
-      functionEndpointMapping = JSON.parse(mappingData)
-    } catch (error: any) {
-      return {
-        success: false,
-        name: functionName,
-        type: 'function',
-        error: `Failed to load function-endpoint mapping: ${error.message}`,
-        metadata: { function_id: functionId },
-        timestamp: new Date().toISOString(),
+  try {
+    // 1. First check MCP_ENDPOINTS for known test endpoints (e.g., /test-function-8052-txn-sync)
+    const mcpTestEndpoint = FUNCTION_ID_TO_TEST_ENDPOINT.get(functionId)
+    if (mcpTestEndpoint) {
+      return await testFunctionViaEndpoint(
+        functionId,
+        functionName,
+        mcpTestEndpoint.endpoint,
+        mcpTestEndpoint.apiGroup,
+        mcpTestEndpoint.method,
+        mcpTestEndpoint.requiresUserId,
+        startTime
+      )
+    }
+
+    // 2. Fall back to function-endpoint mapping file
+    if (!functionEndpointMapping) {
+      try {
+        const mappingPath = path.join(process.cwd(), 'lib', 'function-endpoint-mapping.json')
+        const mappingData = await fs.readFile(mappingPath, 'utf-8')
+        functionEndpointMapping = JSON.parse(mappingData)
+      } catch (error: any) {
+        return {
+          success: false,
+          name: functionName,
+          type: 'function',
+          error: `Failed to load function-endpoint mapping: ${error.message}`,
+          metadata: { function_id: functionId },
+          timestamp: new Date().toISOString(),
+        }
       }
     }
-  }
 
-  try {
     // Find mapping for this function
     const mapping = functionEndpointMapping.find((m: any) => m.function_id === functionId)
 
     if (!mapping || mapping.endpoints.length === 0) {
+      // No test endpoint found - mark as untestable (not failed)
+      // This is expected for many internal Workers/ functions
       return {
         success: false,
         name: functionName,
         type: 'function',
-        error: 'No test endpoint found for this function',
+        error: 'No test endpoint available',
         metadata: {
           function_id: functionId,
-          note: 'Function may not have a callable endpoint, or mapping heuristics failed',
+          status: 'untestable',
+          note: 'Internal function without public test endpoint. Verify manually if needed.',
         },
         timestamp: new Date().toISOString(),
       }
     }
 
-    // Use the first endpoint
+    // Use the first endpoint from mapping file
     const endpoint = mapping.endpoints[0]
     const apiGroupKey = Object.keys(V2_CONFIG.api_groups).find(
       (key) =>
@@ -253,33 +300,15 @@ export async function validateFunction(
       }
     }
 
-    const apiConfig = V2_CONFIG.api_groups[apiGroupKey as keyof typeof V2_CONFIG.api_groups]
-    const url = `${V2_CONFIG.base_url}/${apiConfig.path}${endpoint.path}`
-
-    // Curl the endpoint
-    const curlCommand = `curl -s -w "\\n%{http_code}" -X ${endpoint.method} "${url}" \\
-      -H "Content-Type: application/json" \\
-      -d '{"user_id": ${V2_CONFIG.test_user.id}, "team_id": ${V2_CONFIG.test_user.team_id}}'`
-
-    const { stdout } = await execAsync(curlCommand)
-    const lines = stdout.trim().split('\n')
-    const statusCode = lines[lines.length - 1]
-
-    const success = statusCode === '200'
-
-    return {
-      success,
-      name: functionName,
-      type: 'function',
-      error: success ? undefined : `HTTP ${statusCode}`,
-      metadata: {
-        function_id: functionId,
-        tested_via: endpoint.path,
-        api_group: endpoint.api_group,
-        duration_ms: Date.now() - startTime,
-      },
-      timestamp: new Date().toISOString(),
-    }
+    return await testFunctionViaEndpoint(
+      functionId,
+      functionName,
+      endpoint.path,
+      endpoint.api_group,
+      endpoint.method,
+      true, // assume requires user_id for safety
+      startTime
+    )
   } catch (error: any) {
     return {
       success: false,
@@ -289,6 +318,68 @@ export async function validateFunction(
       metadata: { function_id: functionId },
       timestamp: new Date().toISOString(),
     }
+  }
+}
+
+/**
+ * Test a function by calling its test endpoint via curl
+ */
+async function testFunctionViaEndpoint(
+  functionId: number,
+  functionName: string,
+  endpointPath: string,
+  apiGroupName: string,
+  method: string,
+  requiresUserId: boolean,
+  startTime: number
+): Promise<ValidationResult> {
+  // Map API group name to config key
+  const apiGroupKey = Object.keys(V2_CONFIG.api_groups).find(
+    (key) => V2_CONFIG.api_groups[key as keyof typeof V2_CONFIG.api_groups].name === apiGroupName
+  )
+
+  if (!apiGroupKey) {
+    return {
+      success: false,
+      name: functionName,
+      type: 'function',
+      error: `Unknown API group: ${apiGroupName}`,
+      metadata: { function_id: functionId },
+      timestamp: new Date().toISOString(),
+    }
+  }
+
+  const apiConfig = V2_CONFIG.api_groups[apiGroupKey as keyof typeof V2_CONFIG.api_groups]
+  const url = `${V2_CONFIG.base_url}/${apiConfig.path}${endpointPath}`
+
+  // Build request body based on requirements
+  const requestBody = requiresUserId
+    ? `{"user_id": ${V2_CONFIG.test_user.id}, "team_id": ${V2_CONFIG.test_user.team_id}}`
+    : '{}'
+
+  // Curl the endpoint
+  const curlCommand = `curl -s -w "\\n%{http_code}" -X ${method} "${url}" \\
+    -H "Content-Type: application/json" \\
+    -d '${requestBody}'`
+
+  const { stdout } = await execAsync(curlCommand)
+  const lines = stdout.trim().split('\n')
+  const statusCode = lines[lines.length - 1]
+
+  const success = statusCode === '200'
+
+  return {
+    success,
+    name: functionName,
+    type: 'function',
+    error: success ? undefined : `HTTP ${statusCode}`,
+    metadata: {
+      function_id: functionId,
+      tested_via: endpointPath,
+      api_group: apiGroupName,
+      duration_ms: Date.now() - startTime,
+    },
+    timestamp: new Date().toISOString(),
   }
 }
 
@@ -354,14 +445,18 @@ async function checkOrphanedRefs(
  */
 export function generateReport(results: ValidationResult[]): ValidationReport {
   const passed = results.filter((r) => r.success).length
-  const failed = results.length - passed
+  const untestable = results.filter((r) => !r.success && r.metadata?.status === 'untestable').length
+  const failed = results.length - passed - untestable
+  const testable = results.length - untestable
 
   return {
     summary: {
       total: results.length,
       passed,
       failed,
+      untestable,
       passRate: results.length > 0 ? (passed / results.length) * 100 : 0,
+      testablePassRate: testable > 0 ? (passed / testable) * 100 : 0,
     },
     results,
     duration: results.reduce((sum, r) => sum + (r.metadata?.duration_ms || 0), 0),
@@ -389,19 +484,42 @@ export function printResults(report: ValidationReport): void {
   console.log('V2 VALIDATION REPORT')
   console.log('='.repeat(80))
   console.log(`\n📈 Summary:`)
-  console.log(`   Total:     ${report.summary.total}`)
-  console.log(`   ✅ Passed:  ${report.summary.passed}`)
-  console.log(`   ❌ Failed:  ${report.summary.failed}`)
-  console.log(`   📊 Pass Rate: ${report.summary.passRate.toFixed(2)}%`)
+  console.log(`   Total:      ${report.summary.total}`)
+  console.log(`   ✅ Passed:   ${report.summary.passed}`)
+  console.log(`   ❌ Failed:   ${report.summary.failed}`)
+  console.log(`   ⚠️  Untestable: ${report.summary.untestable}`)
+  console.log(`   📊 Overall Pass Rate: ${report.summary.passRate.toFixed(2)}%`)
+  console.log(`   📊 Testable Pass Rate: ${report.summary.testablePassRate.toFixed(2)}%`)
   console.log(`   ⏱️  Duration: ${(report.duration / 1000).toFixed(2)}s`)
 
-  if (report.summary.failed > 0) {
-    console.log(`\n❌ Failed Items:`)
-    report.results
-      .filter((r) => !r.success)
-      .forEach((r) => {
-        console.log(`   - ${r.name} (${r.type}): ${r.error}`)
-      })
+  // Show actual failures (not untestable)
+  const actualFailures = report.results.filter(
+    (r) => !r.success && r.metadata?.status !== 'untestable'
+  )
+  if (actualFailures.length > 0) {
+    console.log(`\n❌ Failed Items (${actualFailures.length}):`)
+    actualFailures.slice(0, 20).forEach((r) => {
+      console.log(`   - ${r.name}: ${r.error}`)
+    })
+    if (actualFailures.length > 20) {
+      console.log(`   ... and ${actualFailures.length - 20} more`)
+    }
+  }
+
+  // Show untestable summary
+  const untestableItems = report.results.filter(
+    (r) => !r.success && r.metadata?.status === 'untestable'
+  )
+  if (untestableItems.length > 0) {
+    console.log(`\n⚠️  Untestable Items (${untestableItems.length}):`)
+    console.log(`   These are internal functions without public test endpoints.`)
+    console.log(`   First 10:`)
+    untestableItems.slice(0, 10).forEach((r) => {
+      console.log(`   - ${r.name}`)
+    })
+    if (untestableItems.length > 10) {
+      console.log(`   ... and ${untestableItems.length - 10} more`)
+    }
   }
 
   console.log('\n' + '='.repeat(80))
