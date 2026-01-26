@@ -1,0 +1,169 @@
+{
+  "summary": {
+    "total_steps": 6,
+    "passed": 3,
+    "failed": 2,
+    "skipped": 1,
+    "duration_ms": 9678
+  },
+  "test_user": {
+    "id": 60,
+    "name": "David Keener",
+    "agent_id": 37208,
+    "team_id": 1
+  },
+  "steps": [
+    {
+      "step": 1,
+      "name": "Team Data",
+      "endpoint": "/test-rezen-team-roster-sync",
+      "success": false,
+      "skipped": false,
+      "response": {
+        "success": false,
+        "data": {
+          "team_id": 1,
+          "members_count": 0,
+          "leader_id": "1ff98827-d8de-458c-800b-8d7dd47e6f9b"
+        },
+        "error": "Team roster sync failed: Unable to locate var: api_response.response.result.teamMembers",
+        "step": "rezen_team_roster_sync"
+      },
+      "error": "Team roster sync failed: Unable to locate var: api_response.response.result.teamMembers",
+      "duration_ms": 1090,
+      "timestamp": "2026-01-26T14:52:39.781Z"
+    },
+    {
+      "step": 2,
+      "name": "Agent Data",
+      "endpoint": "/test-function-8051-agent-data",
+      "success": false,
+      "skipped": false,
+      "response": {
+        "success": false,
+        "data": {
+          "user_id": 60,
+          "agent_id": 37208,
+          "agent_id_raw": "1ff98827-d8de-458c-800b-8d7dd47e6f9b",
+          "api_key_present": true
+        },
+        "error": "Failed to sync agent data",
+        "step": "rezen_agent_data"
+      },
+      "error": "Failed to sync agent data",
+      "duration_ms": 1238,
+      "timestamp": "2026-01-26T14:52:41.022Z"
+    },
+    {
+      "step": 3,
+      "name": "Transactions",
+      "endpoint": "/test-function-8052-txn-sync",
+      "success": true,
+      "skipped": false,
+      "response": {
+        "success": true,
+        "data": {
+          "user_id": 60,
+          "agent_id_raw": "1ff98827-d8de-458c-800b-8d7dd47e6f9b",
+          "api_key_present": true,
+          "transaction_counts": {
+            "open": null
+          },
+          "timestamp": "now"
+        },
+        "error": null,
+        "step": "rezen_transactions_sync"
+      },
+      "duration_ms": 991,
+      "timestamp": "2026-01-26T14:52:42.017Z"
+    },
+    {
+      "step": 4,
+      "name": "Listings",
+      "endpoint": "/test-function-8053-listings-sync",
+      "success": true,
+      "skipped": false,
+      "response": {
+        "success": true,
+        "data": {
+          "user_id": 60,
+          "agent_id": 37208,
+          "agent_id_raw": "1ff98827-d8de-458c-800b-8d7dd47e6f9b",
+          "api_key_present": true,
+          "sync_job_id": null,
+          "listing_counts": {
+            "active": null
+          },
+          "skipped": false,
+          "timestamp": "now"
+        },
+        "error": null,
+        "step": "rezen_listings_sync"
+      },
+      "duration_ms": 820,
+      "timestamp": "2026-01-26T14:52:42.838Z"
+    },
+    {
+      "step": 5,
+      "name": "Contributions",
+      "endpoint": "/test-function-8056-contributions",
+      "success": true,
+      "skipped": false,
+      "response": {
+        "success": true,
+        "data": {
+          "user_id": 60,
+          "agent_id": 37208,
+          "agent_id_raw": "1ff98827-d8de-458c-800b-8d7dd47e6f9b",
+          "api_key_present": true,
+          "tier": 1,
+          "type": "",
+          "job_id": null,
+          "contributions_count": null,
+          "skipped": false,
+          "timestamp": "now"
+        },
+        "error": null,
+        "step": "rezen_contributions"
+      },
+      "duration_ms": 4141,
+      "timestamp": "2026-01-26T14:52:46.979Z"
+    },
+    {
+      "step": 6,
+      "name": "Network",
+      "endpoint": "/test-function-8062-network-downline",
+      "success": true,
+      "skipped": true,
+      "response": {
+        "success": false,
+        "error": "No pending onboarding jobs found",
+        "step": "query_onboarding_job",
+        "skipped": true,
+        "data": {
+          "job_id": null,
+          "user_id": null,
+          "job_completed": false,
+          "remaining_items": null,
+          "downline_update": null,
+          "timestamp": "now"
+        }
+      },
+      "error": "No pending onboarding jobs found",
+      "duration_ms": 690,
+      "timestamp": "2026-01-26T14:52:47.669Z"
+    }
+  ],
+  "table_counts": {
+    "agent": 36200,
+    "listing": 16784,
+    "transaction": 51835,
+    "user": 324,
+    "network_hierarchy": 2,
+    "network_member": 82688,
+    "contribution": 515369,
+    "rezen_onboarding_jobs": 1,
+    "stage_listings": 44688,
+    "stage_transactions": 102843
+  }
+}
