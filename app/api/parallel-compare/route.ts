@@ -448,8 +448,7 @@ async function fetchWithTiming(
     const response = await fetch(url, {
       method,
       headers,
-      // @ts-expect-error - Next.js specific
-      next: { revalidate: 0 },
+      cache: 'no-store',
     })
 
     const duration_ms = Math.round(performance.now() - start)
