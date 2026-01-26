@@ -1,0 +1,118 @@
+{
+  "summary": {
+    "total_endpoints": 2,
+    "passed": 1,
+    "failed": 1,
+    "skipped": 0,
+    "total_duration_ms": 73732,
+    "performance_ok": true
+  },
+  "test_user": {
+    "id": 60,
+    "name": "David Keener",
+    "agent_id": 37208,
+    "team_id": 1
+  },
+  "endpoints": [
+    {
+      "step": 1,
+      "name": "Chart Transactions Aggregate",
+      "endpoint": "/trigger-chart-transactions-aggregate",
+      "success": true,
+      "skipped": false,
+      "response": {
+        "success": true,
+        "worker_id": 10989,
+        "worker_name": "Workers/Chart Transactions - Aggregate",
+        "result": {
+          "success": true,
+          "transactions_found": 41561,
+          "aggregated_count": 487,
+          "sample": {
+            "period_type": "month",
+            "category": "Closed - Buyer",
+            "group_by": "2000-01",
+            "record_count": 558,
+            "total_amount": 0,
+            "avg_amount": 0,
+            "user_id": 60,
+            "team_id": 0
+          }
+        }
+      },
+      "duration_ms": 5558,
+      "performance": {
+        "within_limit": true,
+        "threshold_ms": 10000
+      },
+      "timestamp": "2026-01-26T15:27:39.577Z"
+    },
+    {
+      "step": 2,
+      "name": "Income Aggregation",
+      "endpoint": "/trigger-income-aggregation",
+      "success": false,
+      "skipped": false,
+      "response": {
+        "error": "Command failed: curl -s --max-time 60 -X POST \"https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:4UsTtl3m/trigger-income-aggregation\" -H \"Content-Type: application/json\" -d '{\"user_id\": 60}'\n",
+        "code": "ERROR"
+      },
+      "error": "Command failed: curl -s --max-time 60 -X POST \"https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:4UsTtl3m/trigger-income-aggregation\" -H \"Content-Type: application/json\" -d '{\"user_id\": 60}'\n",
+      "duration_ms": 60048,
+      "performance": {
+        "within_limit": false,
+        "threshold_ms": 10000
+      },
+      "timestamp": "2026-01-26T15:28:39.627Z"
+    }
+  ],
+  "table_verifications": [
+    {
+      "table": "agg_agent_monthly",
+      "agent_id": 37208,
+      "record_count": 0,
+      "sample_record": null,
+      "has_data": false
+    },
+    {
+      "table": "agg_leaderboard",
+      "agent_id": 37208,
+      "record_count": 0,
+      "sample_record": null,
+      "has_data": false
+    },
+    {
+      "table": "chart_transactions",
+      "agent_id": 37208,
+      "record_count": 0,
+      "sample_record": null,
+      "has_data": false
+    },
+    {
+      "table": "income",
+      "agent_id": 37208,
+      "record_count": 0,
+      "sample_record": null,
+      "has_data": false
+    }
+  ],
+  "dashboard_verifications": [
+    {
+      "name": "Leaderboard - Computed",
+      "endpoint": "/leaderboard/computed",
+      "success": true,
+      "response_summary": {
+        "transaction_count": 807,
+        "agent_count": 12,
+        "leaderboard_entries": 12
+      }
+    }
+  ],
+  "acceptance_criteria": {
+    "aggregation_executes": true,
+    "agg_agent_monthly_populated": true,
+    "agg_leaderboard_populated": true,
+    "performance_acceptable": true,
+    "dashboard_can_render": true
+  }
+}

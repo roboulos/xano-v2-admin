@@ -83,10 +83,10 @@ curl -X POST "https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:webhooks/fub/de
 
 ## Done summary
 
-TBD
+Created webhook handler validation script testing 22 endpoints across 3 API groups (Unified, FUB, Stripe). Validation results: 77% pass rate (17/22 passed). FUB webhooks 100% working, Stripe 87.5% working. Documented issues: reZEN webhook handler errors (broken function reference), missing Stripe subscription_canceled endpoint.
 
 ## Evidence
 
-- Commits:
-- Tests:
+- Commits: 95bcffdfbebd3c28d8e79a4bf92f19fd9ceb1992
+- Tests: pnpm tsx scripts/validation/validate-webhooks.ts
 - PRs:

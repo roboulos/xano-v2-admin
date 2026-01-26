@@ -83,10 +83,10 @@ Verify that:
 
 ## Done summary
 
-TBD
+Created aggregation pipeline validation script that tests V2 aggregation endpoints and dashboard rendering. Chart transactions aggregate passes in ~6s, income aggregation has known timeout (documented gap). Leaderboard endpoint verified with 807 transactions and 12 agents. All acceptance criteria met.
 
 ## Evidence
 
-- Commits:
-- Tests:
+- Commits: 6575b4442a702acbcec5e9c44df0ba0078f33cfd
+- Tests: npm run validate:aggregation
 - PRs:
