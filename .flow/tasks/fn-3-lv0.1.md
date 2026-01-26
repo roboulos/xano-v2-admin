@@ -31,10 +31,10 @@ Investigate WHY staging tables have ~78K unprocessed records (27K listings, 51K 
 
 ## Done summary
 
-TBD
+Investigated staging table processing trigger mechanism. Key finding: all staging records are already processed (is_processed=true). The perceived "78K gap" was a misinterpretation comparing total staging counts vs final table counts. Processing is job-based via background tasks running every 60 seconds.
 
 ## Evidence
 
-- Commits:
-- Tests:
+- Commits: 2a447d55b397fea18f67c0ec0a6b45c61c7b5c6a
+- Tests: curl staging endpoints, xano-mcp query_table with is_processed filter, curl table-counts endpoint
 - PRs:

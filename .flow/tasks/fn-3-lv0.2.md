@@ -30,10 +30,10 @@ Debug why FUB Lambda Coordinator fails with "No ad_user_id provided".
 
 ## Done summary
 
-TBD
+Debugged and fixed FUB Lambda Coordinator ad_user_id issue. Root cause: Function 8118 expects `ad_user_id` parameter (not `user_id`), and also requires `endpoint_type` (people|events|calls|appointments|deals|textMessages). Updated mcp-endpoints.ts interface to support custom param names and added proper configuration for this endpoint. Updated validate-daily-sync.ts to pass correct parameters.
 
 ## Evidence
 
-- Commits:
-- Tests:
+- Commits: 2a447d55b397fea18f67c0ec0a6b45c61c7b5c6a, 6e9a803a474de3f3c00f7a1f8084eca0f4638548
+- Tests: curl with user_id returns 'No ad_user_id provided', curl with ad_user_id passes check (fails later on missing endpoint_type), curl with ad_user_id + endpoint_type processes correctly (times out - long-running)
 - PRs:

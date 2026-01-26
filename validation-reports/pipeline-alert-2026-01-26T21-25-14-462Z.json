@@ -1,0 +1,85 @@
+{
+  "summary": {
+    "total_alerts": 2,
+    "critical": 2,
+    "warning": 0,
+    "info": 0,
+    "overall_health": "unhealthy"
+  },
+  "alerts": [
+    {
+      "level": "critical",
+      "category": "daily_sync",
+      "message": "Daily sync failed: reZEN Transactions",
+      "details": {
+        "endpoint": "/test-task-8023",
+        "status": 200,
+        "error": "No agent record found for user"
+      },
+      "timestamp": "2026-01-26T21:25:12.501Z"
+    },
+    {
+      "level": "critical",
+      "category": "daily_sync",
+      "message": "Daily sync failed: reZEN Listings",
+      "details": {
+        "endpoint": "/test-task-8024",
+        "status": 200,
+        "error": "No agent record found for user"
+      },
+      "timestamp": "2026-01-26T21:25:12.978Z"
+    }
+  ],
+  "health_checks": [
+    {
+      "name": "Table Counts",
+      "status": "healthy",
+      "message": "Retrieved counts for 10 tables",
+      "metrics": {
+        "agent": 36203,
+        "listing": 16784,
+        "transaction": 51835,
+        "user": 327,
+        "network_hierarchy": 2,
+        "network_member": 82688,
+        "contribution": 515369,
+        "rezen_onboarding_jobs": 1,
+        "stage_listings": 44688,
+        "stage_transactions": 102843
+      }
+    },
+    {
+      "name": "Staging Backlog",
+      "status": "healthy",
+      "message": "60 records pending processing",
+      "metrics": {
+        "user_id": 60
+      }
+    },
+    {
+      "name": "Onboarding Jobs",
+      "status": "healthy",
+      "message": "0 completed, 0 pending, 0 failed",
+      "metrics": {
+        "pending": 0,
+        "in_progress": 0,
+        "completed": 0,
+        "failed": 0
+      }
+    },
+    {
+      "name": "Daily Sync",
+      "status": "unhealthy",
+      "message": "3/5 sync steps passed",
+      "metrics": {
+        "total": 5,
+        "passed": 3,
+        "failed": 2,
+        "failure_rate": "40.0%",
+        "failed_steps": ["reZEN Transactions", "reZEN Listings"]
+      }
+    }
+  ],
+  "generated_at": "2026-01-26T21:25:14.461Z",
+  "slack_notification_sent": false
+}

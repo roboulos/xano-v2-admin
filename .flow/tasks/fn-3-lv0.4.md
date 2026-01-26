@@ -30,10 +30,10 @@ Audit background tasks - why do 100+ tasks have empty schedule strings?
 
 ## Done summary
 
-TBD
+Audited all 100 background tasks in V2 workspace. Key finding: list_tasks API returns empty "schedule" field, but schedules ARE defined in XanoScript code. All tasks have schedules properly configured. Updated background-tasks-cache.json with full schedule data (freq_seconds, domain, human-readable schedule labels). Added audit script and npm run audit:tasks command.
 
 ## Evidence
 
-- Commits:
-- Tests:
+- Commits: b53b41cea085fe6805c50ed5366c0f89f9ff3bbe, 6e9a803a474de3f3c00f7a1f8084eca0f4638548
+- Tests: npm run audit:tasks
 - PRs:
