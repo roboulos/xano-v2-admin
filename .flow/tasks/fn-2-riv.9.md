@@ -130,10 +130,10 @@ curl -X POST "https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:4psV7fp6/test-s
 
 ## Done summary
 
-Created automated daily sync validation script that tests 11 endpoints across 3 integrations (FUB, reZEN, SkySlope). Results: 8/11 PASS, 2/11 FAIL (FUB Lambda needs ad_user_id, SkySlope returns null), 1/11 SKIP (Network Downline - no pending jobs). Captures table counts before/after sync. Flow completes in 22 seconds.
+Created automated daily sync validation script that tests 11 endpoints across 3 integrations (FUB, reZEN, SkySlope). Results: 8/11 PASS, 2/11 FAIL (FUB Lambda needs ad_user_id, SkySlope returns null), 1/11 SKIP (expected). Captures table counts before/after sync. Flow completes in 22 seconds.
 
 ## Evidence
 
-- Commits:
+- Commits: e2702e924c32978d2357766ce212d3205372586d
 - Tests: npm run validate:daily-sync
 - PRs:
