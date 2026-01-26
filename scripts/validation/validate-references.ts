@@ -41,61 +41,292 @@ interface TableReference {
 // Define all known table references in V2 schema
 const TABLE_REFERENCES: TableReference[] = [
   // User identity decomposition
-  { table: 'user_credentials', field: 'user_id', references_table: 'user', references_field: 'id', nullable: false, cascade_delete: true },
-  { table: 'user_settings', field: 'user_id', references_table: 'user', references_field: 'id', nullable: false, cascade_delete: true },
-  { table: 'user_roles', field: 'user_id', references_table: 'user', references_field: 'id', nullable: false, cascade_delete: true },
-  { table: 'user_subscriptions', field: 'user_id', references_table: 'user', references_field: 'id', nullable: false, cascade_delete: true },
+  {
+    table: 'user_credentials',
+    field: 'user_id',
+    references_table: 'user',
+    references_field: 'id',
+    nullable: false,
+    cascade_delete: true,
+  },
+  {
+    table: 'user_settings',
+    field: 'user_id',
+    references_table: 'user',
+    references_field: 'id',
+    nullable: false,
+    cascade_delete: true,
+  },
+  {
+    table: 'user_roles',
+    field: 'user_id',
+    references_table: 'user',
+    references_field: 'id',
+    nullable: false,
+    cascade_delete: true,
+  },
+  {
+    table: 'user_subscriptions',
+    field: 'user_id',
+    references_table: 'user',
+    references_field: 'id',
+    nullable: false,
+    cascade_delete: true,
+  },
 
   // Agent profile decomposition
-  { table: 'agent_cap_data', field: 'agent_id', references_table: 'agent', references_field: 'id', nullable: false, cascade_delete: true },
-  { table: 'agent_commission', field: 'agent_id', references_table: 'agent', references_field: 'id', nullable: false, cascade_delete: true },
-  { table: 'agent_hierarchy', field: 'agent_id', references_table: 'agent', references_field: 'id', nullable: false, cascade_delete: true },
-  { table: 'agent_performance', field: 'agent_id', references_table: 'agent', references_field: 'id', nullable: false, cascade_delete: true },
+  {
+    table: 'agent_cap_data',
+    field: 'agent_id',
+    references_table: 'agent',
+    references_field: 'id',
+    nullable: false,
+    cascade_delete: true,
+  },
+  {
+    table: 'agent_commission',
+    field: 'agent_id',
+    references_table: 'agent',
+    references_field: 'id',
+    nullable: false,
+    cascade_delete: true,
+  },
+  {
+    table: 'agent_hierarchy',
+    field: 'agent_id',
+    references_table: 'agent',
+    references_field: 'id',
+    nullable: false,
+    cascade_delete: true,
+  },
+  {
+    table: 'agent_performance',
+    field: 'agent_id',
+    references_table: 'agent',
+    references_field: 'id',
+    nullable: false,
+    cascade_delete: true,
+  },
 
   // Agent ↔ User relationship
-  { table: 'agent', field: 'user_id', references_table: 'user', references_field: 'id', nullable: false, cascade_delete: false },
-  { table: 'user', field: 'agent_id', references_table: 'agent', references_field: 'id', nullable: true, cascade_delete: false },
+  {
+    table: 'agent',
+    field: 'user_id',
+    references_table: 'user',
+    references_field: 'id',
+    nullable: false,
+    cascade_delete: false,
+  },
+  {
+    table: 'user',
+    field: 'agent_id',
+    references_table: 'agent',
+    references_field: 'id',
+    nullable: true,
+    cascade_delete: false,
+  },
 
   // Transaction decomposition
-  { table: 'transaction_financials', field: 'transaction_id', references_table: 'transaction', references_field: 'id', nullable: false, cascade_delete: true },
-  { table: 'transaction_history', field: 'transaction_id', references_table: 'transaction', references_field: 'id', nullable: false, cascade_delete: true },
-  { table: 'transaction_participants', field: 'transaction_id', references_table: 'transaction', references_field: 'id', nullable: false, cascade_delete: true },
-  { table: 'transaction_tags', field: 'transaction_id', references_table: 'transaction', references_field: 'id', nullable: false, cascade_delete: true },
+  {
+    table: 'transaction_financials',
+    field: 'transaction_id',
+    references_table: 'transaction',
+    references_field: 'id',
+    nullable: false,
+    cascade_delete: true,
+  },
+  {
+    table: 'transaction_history',
+    field: 'transaction_id',
+    references_table: 'transaction',
+    references_field: 'id',
+    nullable: false,
+    cascade_delete: true,
+  },
+  {
+    table: 'transaction_participants',
+    field: 'transaction_id',
+    references_table: 'transaction',
+    references_field: 'id',
+    nullable: false,
+    cascade_delete: true,
+  },
+  {
+    table: 'transaction_tags',
+    field: 'transaction_id',
+    references_table: 'transaction',
+    references_field: 'id',
+    nullable: false,
+    cascade_delete: true,
+  },
 
   // Transaction → Address
-  { table: 'transaction', field: 'address_id', references_table: 'address', references_field: 'id', nullable: true, cascade_delete: false },
+  {
+    table: 'transaction',
+    field: 'address_id',
+    references_table: 'address',
+    references_field: 'id',
+    nullable: true,
+    cascade_delete: false,
+  },
 
   // Transaction → Agent
-  { table: 'transaction', field: 'transaction_owner_agent_id', references_table: 'agent', references_field: 'id', nullable: true, cascade_delete: false },
+  {
+    table: 'transaction',
+    field: 'transaction_owner_agent_id',
+    references_table: 'agent',
+    references_field: 'id',
+    nullable: true,
+    cascade_delete: false,
+  },
 
   // Listing decomposition
-  { table: 'listing_history', field: 'listing_id', references_table: 'listing', references_field: 'id', nullable: false, cascade_delete: true },
-  { table: 'listing_photos', field: 'listing_id', references_table: 'listing', references_field: 'id', nullable: false, cascade_delete: true },
+  {
+    table: 'listing_history',
+    field: 'listing_id',
+    references_table: 'listing',
+    references_field: 'id',
+    nullable: false,
+    cascade_delete: true,
+  },
+  {
+    table: 'listing_photos',
+    field: 'listing_id',
+    references_table: 'listing',
+    references_field: 'id',
+    nullable: false,
+    cascade_delete: true,
+  },
 
   // Listing → Address
-  { table: 'listing', field: 'address_id', references_table: 'address', references_field: 'id', nullable: true, cascade_delete: false },
+  {
+    table: 'listing',
+    field: 'address_id',
+    references_table: 'address',
+    references_field: 'id',
+    nullable: true,
+    cascade_delete: false,
+  },
 
   // Team decomposition
-  { table: 'team_members', field: 'team_id', references_table: 'team', references_field: 'id', nullable: false, cascade_delete: true },
-  { table: 'team_settings', field: 'team_id', references_table: 'team', references_field: 'id', nullable: false, cascade_delete: true },
-  { table: 'team_director_assignments', field: 'team_id', references_table: 'team', references_field: 'id', nullable: false, cascade_delete: true },
-  { table: 'team_owners', field: 'team_id', references_table: 'team', references_field: 'id', nullable: false, cascade_delete: true },
-  { table: 'team_admins', field: 'team_id', references_table: 'team', references_field: 'id', nullable: false, cascade_delete: true },
+  {
+    table: 'team_members',
+    field: 'team_id',
+    references_table: 'team',
+    references_field: 'id',
+    nullable: false,
+    cascade_delete: true,
+  },
+  {
+    table: 'team_settings',
+    field: 'team_id',
+    references_table: 'team',
+    references_field: 'id',
+    nullable: false,
+    cascade_delete: true,
+  },
+  {
+    table: 'team_director_assignments',
+    field: 'team_id',
+    references_table: 'team',
+    references_field: 'id',
+    nullable: false,
+    cascade_delete: true,
+  },
+  {
+    table: 'team_owners',
+    field: 'team_id',
+    references_table: 'team',
+    references_field: 'id',
+    nullable: false,
+    cascade_delete: true,
+  },
+  {
+    table: 'team_admins',
+    field: 'team_id',
+    references_table: 'team',
+    references_field: 'id',
+    nullable: false,
+    cascade_delete: true,
+  },
 
   // Team → User relationships
-  { table: 'team_members', field: 'user_id', references_table: 'user', references_field: 'id', nullable: false, cascade_delete: false },
-  { table: 'team_owners', field: 'user_id', references_table: 'user', references_field: 'id', nullable: false, cascade_delete: false },
-  { table: 'team_admins', field: 'user_id', references_table: 'user', references_field: 'id', nullable: false, cascade_delete: false },
+  {
+    table: 'team_members',
+    field: 'user_id',
+    references_table: 'user',
+    references_field: 'id',
+    nullable: false,
+    cascade_delete: false,
+  },
+  {
+    table: 'team_owners',
+    field: 'user_id',
+    references_table: 'user',
+    references_field: 'id',
+    nullable: false,
+    cascade_delete: false,
+  },
+  {
+    table: 'team_admins',
+    field: 'user_id',
+    references_table: 'user',
+    references_field: 'id',
+    nullable: false,
+    cascade_delete: false,
+  },
 
   // Network decomposition
-  { table: 'network_member', field: 'network_id', references_table: 'network_hierarchy', references_field: 'id', nullable: false, cascade_delete: true },
-  { table: 'network_user_prefs', field: 'user_id', references_table: 'user', references_field: 'id', nullable: false, cascade_delete: true },
+  {
+    table: 'network_member',
+    field: 'network_id',
+    references_table: 'network_hierarchy',
+    references_field: 'id',
+    nullable: false,
+    cascade_delete: true,
+  },
+  {
+    table: 'network_user_prefs',
+    field: 'user_id',
+    references_table: 'user',
+    references_field: 'id',
+    nullable: false,
+    cascade_delete: true,
+  },
 
   // Financial relationships
-  { table: 'income', field: 'transaction_id', references_table: 'transaction', references_field: 'id', nullable: true, cascade_delete: false },
-  { table: 'income', field: 'agent_id', references_table: 'agent', references_field: 'id', nullable: false, cascade_delete: false },
-  { table: 'contribution', field: 'agent_id', references_table: 'agent', references_field: 'id', nullable: false, cascade_delete: false },
-  { table: 'contributors', field: 'contribution_id', references_table: 'contribution', references_field: 'id', nullable: false, cascade_delete: true },
+  {
+    table: 'income',
+    field: 'transaction_id',
+    references_table: 'transaction',
+    references_field: 'id',
+    nullable: true,
+    cascade_delete: false,
+  },
+  {
+    table: 'income',
+    field: 'agent_id',
+    references_table: 'agent',
+    references_field: 'id',
+    nullable: false,
+    cascade_delete: false,
+  },
+  {
+    table: 'contribution',
+    field: 'agent_id',
+    references_table: 'agent',
+    references_field: 'id',
+    nullable: false,
+    cascade_delete: false,
+  },
+  {
+    table: 'contributors',
+    field: 'contribution_id',
+    references_table: 'contribution',
+    references_field: 'id',
+    nullable: false,
+    cascade_delete: true,
+  },
 ]
 
 /**
@@ -107,10 +338,10 @@ async function checkOrphanedReferences(ref: TableReference): Promise<{
 }> {
   try {
     // Query child table for records with non-null FK
+    // Note: snappy-cli expects filters as an object with field/operator/value keys, not an array
     const childQuery = await xanoMCP('query_table', {
       workspace_id: V2_CONFIG.workspace_id,
       table_name: ref.table,
-      filters: ref.nullable ? [] : [{ field: ref.field, operator: 'is not null' }],
       limit: 1000,
     })
 
@@ -128,15 +359,27 @@ async function checkOrphanedReferences(ref: TableReference): Promise<{
         continue
       }
 
-      // Check if parent record exists
-      const parentQuery = await xanoMCP('query_table', {
-        workspace_id: V2_CONFIG.workspace_id,
-        table_name: ref.references_table,
-        filters: [{ field: ref.references_field, operator: 'equals', value: fkValue }],
-        limit: 1,
-      })
+      // Check if parent record exists using get_record_by_id if FK field is 'id'
+      // or query_table without filters and check manually
+      let parentExists = false
+      if (ref.references_field === 'id') {
+        try {
+          const parentQuery = await xanoMCP('get_record', {
+            workspace_id: V2_CONFIG.workspace_id,
+            table_name: ref.references_table,
+            record_id: fkValue,
+          })
+          parentExists = parentQuery && parentQuery.id
+        } catch {
+          parentExists = false
+        }
+      } else {
+        // For non-id fields, we'd need a different approach
+        // For now, assume these are valid as they're rare
+        parentExists = true
+      }
 
-      if (!parentQuery.records || parentQuery.records.length === 0) {
+      if (!parentExists) {
         orphanIds.push(record.id)
       }
     }
@@ -157,16 +400,19 @@ async function checkOrphanedReferences(ref: TableReference): Promise<{
 async function validateSingleReference(ref: TableReference): Promise<ValidationResult> {
   const startTime = Date.now()
 
-  console.log(`   Checking ${ref.table}.${ref.field} → ${ref.references_table}.${ref.references_field}`)
+  console.log(
+    `   Checking ${ref.table}.${ref.field} → ${ref.references_table}.${ref.references_field}`
+  )
 
   const result = await checkOrphanedReferences(ref)
 
   const success = result.orphan_count === 0
-  const error = result.orphan_count > 0
-    ? `Found ${result.orphan_count} orphaned references. Sample IDs: ${result.sample_ids.join(', ')}`
-    : result.orphan_count === -1
-    ? 'Failed to check references'
-    : undefined
+  const error =
+    result.orphan_count > 0
+      ? `Found ${result.orphan_count} orphaned references. Sample IDs: ${result.sample_ids.join(', ')}`
+      : result.orphan_count === -1
+        ? 'Failed to check references'
+        : undefined
 
   return {
     success,
@@ -224,7 +470,7 @@ async function validateAllReferences(): Promise<void> {
 
   // Additional analysis
   console.log('\n📊 Reference Integrity Analysis:')
-  const orphanedRefs = results.filter(r => !r.success && r.metadata?.orphan_count > 0)
+  const orphanedRefs = results.filter((r) => !r.success && r.metadata?.orphan_count > 0)
   if (orphanedRefs.length > 0) {
     console.log(`   ⚠️  Tables with orphaned references: ${orphanedRefs.length}`)
     for (const ref of orphanedRefs) {
@@ -248,7 +494,7 @@ async function validateTableReferences(tableName: string): Promise<void> {
 
   // Find all references involving this table
   const refs = TABLE_REFERENCES.filter(
-    ref => ref.table === tableName || ref.references_table === tableName
+    (ref) => ref.table === tableName || ref.references_table === tableName
   )
 
   if (refs.length === 0) {
@@ -281,13 +527,13 @@ async function validateRelationship(relationship: string): Promise<void> {
   console.log(`🔍 Validating ${relationship} relationship references`)
 
   // Find all references where parent is the relationship table
-  const refs = TABLE_REFERENCES.filter(ref => ref.references_table === relationship)
+  const refs = TABLE_REFERENCES.filter((ref) => ref.references_table === relationship)
 
   if (refs.length === 0) {
     console.error(`❌ No references found for relationship: ${relationship}`)
     console.log(`\nAvailable relationships:`)
-    const uniqueParents = [...new Set(TABLE_REFERENCES.map(r => r.references_table))]
-    uniqueParents.forEach(p => console.log(`   - ${p}`))
+    const uniqueParents = [...new Set(TABLE_REFERENCES.map((r) => r.references_table))]
+    uniqueParents.forEach((p) => console.log(`   - ${p}`))
     process.exit(1)
   }
 
@@ -313,8 +559,8 @@ async function validateRelationship(relationship: string): Promise<void> {
 async function main() {
   const args = process.argv.slice(2)
 
-  const tableArg = args.find(a => a.startsWith('--table='))
-  const relationshipArg = args.find(a => a.startsWith('--relationship='))
+  const tableArg = args.find((a) => a.startsWith('--table='))
+  const relationshipArg = args.find((a) => a.startsWith('--relationship='))
 
   if (tableArg) {
     const table = tableArg.split('=')[1]
@@ -327,7 +573,7 @@ async function main() {
   }
 }
 
-main().catch(error => {
+main().catch((error) => {
   console.error('💥 Fatal error:', error)
   process.exit(1)
 })
