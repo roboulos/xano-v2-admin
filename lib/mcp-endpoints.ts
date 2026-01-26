@@ -12,6 +12,13 @@
 //
 // FIXED (Jan 2026):
 // - /test-skyslope-account-users-sync: Was returning null (empty stack), now calls function 7966
+// - /test-function-8118-lambda-coordinator: Uses `ad_user_id` not `user_id` (ad = Agent Dashboards)
+//   Also requires `endpoint_type` parameter: "people", "events", "calls", "appointments", "deals", "textMessages"
+//
+// PARAMETER NAMING:
+// - Most endpoints use `user_id` for the test user parameter
+// - FUB Lambda Coordinator (8118) uses `ad_user_id` instead
+// - Some endpoints require additional parameters beyond user_id
 
 export interface MCPEndpoint {
   taskId: number // Background task ID
@@ -20,6 +27,8 @@ export interface MCPEndpoint {
   apiGroup: 'TASKS' | 'WORKERS' | 'SYSTEM' | 'SEEDING'
   method: 'GET' | 'POST'
   requiresUserId: boolean // Does this endpoint need user_id param?
+  userIdParamName?: string // Custom param name if not 'user_id' (e.g., 'ad_user_id')
+  additionalParams?: Record<string, string | number | boolean> // Additional required params
   description: string // What this endpoint does
 }
 
@@ -340,7 +349,10 @@ export const MCP_ENDPOINTS: MCPEndpoint[] = [
     apiGroup: 'WORKERS',
     method: 'POST',
     requiresUserId: true,
-    description: 'FUB lambda job coordinator',
+    userIdParamName: 'ad_user_id', // Uses ad_user_id, NOT user_id
+    additionalParams: { endpoint_type: 'people' }, // Required: people|events|calls|appointments|deals|textMessages
+    description:
+      'FUB lambda job coordinator - FIXED Jan 2026: uses ad_user_id param (not user_id), requires endpoint_type',
   },
   {
     taskId: 0,
@@ -359,6 +371,34 @@ export const MCP_ENDPOINTS: MCPEndpoint[] = [
     method: 'POST',
     requiresUserId: true,
     description: 'Get agent profile data',
+  },
+  {
+    taskId: 0,
+    taskName: 'reZEN - Create Onboarding Job',
+    endpoint: '/trigger-rezen-create-onboarding-job',
+    apiGroup: 'WORKERS',
+    method: 'POST',
+    requiresUserId: true,
+    description:
+      'Create onboarding job for a user (status=New). Required before onboarding can run. Function #8299.',
+  },
+  {
+    taskId: 0,
+    taskName: 'Admin - Trigger Onboarding',
+    endpoint: '/admin/trigger-onboarding',
+    apiGroup: 'WORKERS',
+    method: 'POST',
+    requiresUserId: false,
+    description: 'Polls for New onboarding jobs and processes them. Does NOT create jobs.',
+  },
+  {
+    taskId: 0,
+    taskName: 'reZEN - Onboarding Orchestrator',
+    endpoint: '/trigger-rezen-onboarding-orchestrator',
+    apiGroup: 'WORKERS',
+    method: 'POST',
+    requiresUserId: true,
+    description: 'Main onboarding orchestrator - runs all 9 steps. Function #8297.',
   },
 
   // ============================================================================

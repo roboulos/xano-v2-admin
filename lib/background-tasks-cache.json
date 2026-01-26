@@ -5,83 +5,938 @@
       "name": "AD - unregister all webhooks",
       "type": "xs",
       "active": true,
-      "schedule": "",
-      "draft": false
+      "schedule": "daily",
+      "freq_seconds": 86400,
+      "domain": "ad"
     },
     {
       "id": 3134,
       "name": "Aggregation - Leaderboard Worker",
       "type": "xs",
       "active": true,
-      "schedule": "",
-      "draft": false
+      "schedule": "hourly",
+      "freq_seconds": 3600,
+      "domain": "aggregation"
     },
     {
       "id": 3133,
       "name": "Aggregation - Monthly Worker",
       "type": "xs",
       "active": true,
-      "schedule": "",
-      "draft": false
+      "schedule": "hourly",
+      "freq_seconds": 3600,
+      "domain": "aggregation"
     },
     {
       "id": 3132,
       "name": "Aggregation - Daily Scheduler",
       "type": "xs",
       "active": true,
-      "schedule": "",
-      "draft": false
+      "schedule": "daily",
+      "freq_seconds": 86400,
+      "domain": "aggregation"
     },
     {
       "id": 3123,
       "name": "Daily Commission Sync",
       "type": "xs",
       "active": true,
-      "schedule": "",
-      "draft": false
+      "schedule": "daily",
+      "freq_seconds": 86400,
+      "domain": "ad"
     },
     {
       "id": 3121,
       "name": "AD - Run All Linking Functions",
       "type": "xs",
       "active": true,
-      "schedule": "",
-      "draft": false
+      "schedule": "hourly",
+      "freq_seconds": 3600,
+      "domain": "ad"
     },
     {
       "id": 2478,
       "name": "reZEN - Network - Downline Sync v2 V3",
       "type": "xs",
       "active": true,
-      "schedule": "",
-      "draft": false
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "rezen"
     },
     {
       "id": 2477,
       "name": "reZEN - Onboarding - Process Pending Contributions V3",
       "type": "xs",
       "active": true,
-      "schedule": "",
-      "draft": false
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "rezen"
     },
     {
       "id": 2476,
       "name": "reZEN - Onboarding - Process Stage Contributions V3",
       "type": "xs",
       "active": true,
-      "schedule": "",
-      "draft": false
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "rezen"
     },
     {
       "id": 2475,
       "name": "reZEN - Onboarding - Process Stage Listings V3",
       "type": "xs",
       "active": true,
-      "schedule": "",
-      "draft": false
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "rezen"
+    },
+    {
+      "id": 2474,
+      "name": "reZEN - Onboarding - Process Stage Transactions - Small Sets V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "rezen"
+    },
+    {
+      "id": 2473,
+      "name": "reZEN - Onboarding - Process Stage Transactions - Large Sets V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "rezen"
+    },
+    {
+      "id": 2472,
+      "name": "reZEN - Transactions Sync - Worker 2 V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "rezen"
+    },
+    {
+      "id": 2471,
+      "name": "reZEN - Transactions Sync - Worker 1 V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "rezen"
+    },
+    {
+      "id": 2470,
+      "name": "reZEN - Network - Update Frontline ASYNC, Brad V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "daily",
+      "freq_seconds": 86400,
+      "domain": "rezen"
+    },
+    {
+      "id": 2469,
+      "name": "reZEN - Network - Update Frontline ASYNC, Tim V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "daily",
+      "freq_seconds": 86400,
+      "domain": "rezen"
+    },
+    {
+      "id": 2468,
+      "name": "reZEN - Network - Frontline - Tim V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "daily",
+      "freq_seconds": 86400,
+      "domain": "rezen"
+    },
+    {
+      "id": 2467,
+      "name": "reZEN - Network - Frontline - Brad V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "daily",
+      "freq_seconds": 86400,
+      "domain": "rezen"
+    },
+    {
+      "id": 2466,
+      "name": "reZEN - Remove Duplicates - Network and Contributions V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "6hr",
+      "freq_seconds": 21600,
+      "domain": "rezen"
+    },
+    {
+      "id": 2465,
+      "name": "FUB - Fix_people_data_in_FUB - People V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "6hr",
+      "freq_seconds": 21600,
+      "domain": "fub"
+    },
+    {
+      "id": 2464,
+      "name": "FUB - Onboarding - Calls - Worker 4 V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "fub"
+    },
+    {
+      "id": 2463,
+      "name": "FUB - Onboarding - Calls - Worker 3 V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "fub"
+    },
+    {
+      "id": 2462,
+      "name": "FUB - Onboarding - Calls - Worker 2 V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "fub"
+    },
+    {
+      "id": 2461,
+      "name": "FUB - Onboarding - Appointments from Users V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "fub"
+    },
+    {
+      "id": 2460,
+      "name": "FUB - Pull Text Messages From Calling Number V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "fub"
+    },
+    {
+      "id": 2459,
+      "name": "FUB - fix_appointments_missing_created_by V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "fub"
+    },
+    {
+      "id": 2458,
+      "name": "FUB - fix_calls_missing_record_username V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "fub"
+    },
+    {
+      "id": 2457,
+      "name": "FUB - people url V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "fub"
+    },
+    {
+      "id": 2456,
+      "name": "FUB - Daily Update - Text Messages via phone V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "hourly",
+      "freq_seconds": 3600,
+      "domain": "fub"
+    },
+    {
+      "id": 2455,
+      "name": "FUB - Onboarding Jobs V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "fub"
+    },
+    {
+      "id": 2454,
+      "name": "FUB - import_[fub_users_id] V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "fub"
+    },
+    {
+      "id": 2453,
+      "name": "AD - upload team roster images V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "ad"
+    },
+    {
+      "id": 2452,
+      "name": "Title - Get Today's Qualia Orders V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "6hr",
+      "freq_seconds": 21600,
+      "domain": "title"
+    },
+    {
+      "id": 2451,
+      "name": "FUB - pull_events_with_people_id_0 V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "fub"
+    },
+    {
+      "id": 2450,
+      "name": "Title - Orders V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "daily",
+      "freq_seconds": 86400,
+      "domain": "title"
+    },
+    {
+      "id": 2449,
+      "name": "FUB - Get_appointments_missing_data V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "hourly",
+      "freq_seconds": 3600,
+      "domain": "fub"
+    },
+    {
+      "id": 2448,
+      "name": "reZEN - Onboarding - Load Contributions V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "rezen"
+    },
+    {
+      "id": 2447,
+      "name": "FUB - Fix People Data in events V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "hourly",
+      "freq_seconds": 3600,
+      "domain": "fub"
+    },
+    {
+      "id": 2446,
+      "name": "SkySlope - Account Users Sync - Worker 1 V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "skyslope"
+    },
+    {
+      "id": 2445,
+      "name": "reZEN - Onboarding - Completion V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "rezen"
+    },
+    {
+      "id": 2444,
+      "name": "FUB - Pull count records and update V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "6hr",
+      "freq_seconds": 21600,
+      "domain": "fub"
+    },
+    {
+      "id": 2443,
+      "name": "Skyslope - Listings Sync - Worker 1 V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "skyslope"
+    },
+    {
+      "id": 2442,
+      "name": "reZEN - Process Pending Contributions V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "rezen"
+    },
+    {
+      "id": 2441,
+      "name": "FUB - process text messages from stage table V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "fub"
+    },
+    {
+      "id": 2440,
+      "name": "SkySlope - Move Listings from Staging V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "skyslope"
+    },
+    {
+      "id": 2439,
+      "name": "reZEN - daily - Load Pending Contributions V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "daily",
+      "freq_seconds": 86400,
+      "domain": "rezen"
+    },
+    {
+      "id": 2438,
+      "name": "SkySlope - Move Transactions from Staging V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "skyslope"
+    },
+    {
+      "id": 2437,
+      "name": "rezen - Contributions - daily update - processing V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "rezen"
+    },
+    {
+      "id": 2436,
+      "name": "SkySlope - Transactions Sync - Worker 1 V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "skyslope"
+    },
+    {
+      "id": 2435,
+      "name": "reZEN - Contributions - Full Update V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "daily",
+      "freq_seconds": 86400,
+      "domain": "rezen"
+    },
+    {
+      "id": 2434,
+      "name": "Reporting - Process Errors and Send to Slack V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "reporting"
+    },
+    {
+      "id": 2433,
+      "name": "Metrics - Create Snapshot V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "hourly",
+      "freq_seconds": 3600,
+      "domain": "metrics"
+    },
+    {
+      "id": 2432,
+      "name": "FUB - Delete Lambda Logs V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "daily",
+      "freq_seconds": 86400,
+      "domain": "fub"
+    },
+    {
+      "id": 2431,
+      "name": "FUB - Webhook Check V3",
+      "type": "xs",
+      "active": false,
+      "schedule": "hourly",
+      "freq_seconds": 3600,
+      "domain": "fub"
+    },
+    {
+      "id": 2430,
+      "name": "FUB - Get Stages V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "daily",
+      "freq_seconds": 86400,
+      "domain": "fub"
+    },
+    {
+      "id": 2429,
+      "name": "FUB - Get Users V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "6hr",
+      "freq_seconds": 21600,
+      "domain": "fub"
+    },
+    {
+      "id": 2428,
+      "name": "FUB - Refresh Tokens V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "hourly",
+      "freq_seconds": 3600,
+      "domain": "fub"
+    },
+    {
+      "id": 2427,
+      "name": "FUB - Onboarding - Deals from People V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "fub"
+    },
+    {
+      "id": 2426,
+      "name": "FUB - Onboarding - Text Messages from People V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "fub"
+    },
+    {
+      "id": 2425,
+      "name": "FUB - Onboarding - Appointments Worker V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "fub"
+    },
+    {
+      "id": 2424,
+      "name": "FUB - Onboarding - Events - Worker 1 V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "fub"
+    },
+    {
+      "id": 2423,
+      "name": "FUB - Onboarding - Calls - Worker 1 V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "fub"
+    },
+    {
+      "id": 2422,
+      "name": "FUB - Onboarding - People - Worker 1 V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "fub"
+    },
+    {
+      "id": 2421,
+      "name": "reZEN - Network - Missing Frontline Data V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "rezen"
+    },
+    {
+      "id": 2420,
+      "name": "reZEN - Network - Missing Cap Data V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "rezen"
+    },
+    {
+      "id": 2419,
+      "name": "reZEN - Paid Participant - Incomplete Mapping V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "rezen"
+    },
+    {
+      "id": 2418,
+      "name": "FUB - Daily Update - People V2 V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "15min",
+      "freq_seconds": 900,
+      "domain": "fub"
+    },
+    {
+      "id": 2417,
+      "name": "reZEN - Paid Participant - Missing Addresses V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "rezen"
+    },
+    {
+      "id": 2416,
+      "name": "FUB - Daily Update - Events V2 V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "15min",
+      "freq_seconds": 900,
+      "domain": "fub"
+    },
+    {
+      "id": 2415,
+      "name": "reZEN - Team Roster - Caps and Splits V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "15min",
+      "freq_seconds": 900,
+      "domain": "rezen"
+    },
+    {
+      "id": 2414,
+      "name": "FUB - Daily Update - Deals V2 V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "15min",
+      "freq_seconds": 900,
+      "domain": "fub"
+    },
+    {
+      "id": 2413,
+      "name": "reZEN - RevShare Totals V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "15min",
+      "freq_seconds": 900,
+      "domain": "rezen"
+    },
+    {
+      "id": 2412,
+      "name": "rezen - generate referral code V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "rezen"
+    },
+    {
+      "id": 2411,
+      "name": "FUB - Daily Update - Text Messages V2 V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "15min",
+      "freq_seconds": 900,
+      "domain": "fub"
+    },
+    {
+      "id": 2410,
+      "name": "AD - CSV_Insert_data_from_temp_table V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "ad"
+    },
+    {
+      "id": 2409,
+      "name": "FUB - Daily Update - Appointments V2 V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "15min",
+      "freq_seconds": 900,
+      "domain": "fub"
+    },
+    {
+      "id": 2408,
+      "name": "rezen - Network Name Sync V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "rezen"
+    },
+    {
+      "id": 2407,
+      "name": "AD - upload network images V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "ad"
+    },
+    {
+      "id": 2406,
+      "name": "FUB - Daily Update - Calls V2 V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "15min",
+      "freq_seconds": 900,
+      "domain": "fub"
+    },
+    {
+      "id": 2405,
+      "name": "reZEN - process webhooks and delete V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "rezen"
+    },
+    {
+      "id": 2404,
+      "name": "AD - Missing Team Roster Avatars V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "ad"
+    },
+    {
+      "id": 2403,
+      "name": "rezen - webhooks - register and check status V3",
+      "type": "xs",
+      "active": false,
+      "schedule": "hourly",
+      "freq_seconds": 3600,
+      "domain": "rezen"
+    },
+    {
+      "id": 2402,
+      "name": "AD - Missing Agent IDs Participants V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "ad"
+    },
+    {
+      "id": 2401,
+      "name": "reZEN - Monitor Sync Locks and Recover V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "rezen"
+    },
+    {
+      "id": 2400,
+      "name": "AD - Email - Network News - Weekly v2 V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "weekly",
+      "freq_seconds": 604800,
+      "domain": "ad"
+    },
+    {
+      "id": 2399,
+      "name": "AD - Email - Network News - Daily v2 V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "daily",
+      "freq_seconds": 86400,
+      "domain": "ad"
+    },
+    {
+      "id": 2398,
+      "name": "reZEN - Onboarding - Process Pending RevShare Totals V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "rezen"
+    },
+    {
+      "id": 2397,
+      "name": "reZEN - Onboarding - Process Contributors V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "rezen"
+    },
+    {
+      "id": 2396,
+      "name": "reZEN - Onboarding - Process Contributions V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "rezen"
+    },
+    {
+      "id": 2395,
+      "name": "reZEN - Onboarding - Process Agent Sponsor Tree V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "rezen"
+    },
+    {
+      "id": 2394,
+      "name": "reZEN - Onboarding - Process Equity V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "rezen"
+    },
+    {
+      "id": 2393,
+      "name": "reZEN - Onboarding - Process Cap Data V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "rezen"
+    },
+    {
+      "id": 2392,
+      "name": "reZEN - Onboarding - Process Network Frontline V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "rezen"
+    },
+    {
+      "id": 2391,
+      "name": "reZEN - Onboarding - Process Network Downline V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "rezen"
+    },
+    {
+      "id": 2390,
+      "name": "reZEN - Onboarding - Process Listings V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "rezen"
+    },
+    {
+      "id": 2389,
+      "name": "reZEN - Onboarding - Process Transactions V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "rezen"
+    },
+    {
+      "id": 2388,
+      "name": "reZEN - Onboarding - Load Network Downline V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "rezen"
+    },
+    {
+      "id": 2387,
+      "name": "reZEN - Onboarding - Load Listings V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "rezen"
+    },
+    {
+      "id": 2386,
+      "name": "reZEN - Onboarding - Load Transactions V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "rezen"
+    },
+    {
+      "id": 2385,
+      "name": "reZEN - Onboarding - Start Onboarding Job V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "3min",
+      "freq_seconds": 180,
+      "domain": "rezen"
     }
   ],
-  "total": 10,
-  "last_updated": "2026-01-24T05:38:55.370Z",
-  "note": "Background tasks data from xano-mcp. Snappy CLI's list_tasks is broken (returns 404)."
+  "total": 100,
+  "last_updated": "2026-01-26T21:30:00.000Z",
+  "audit_findings": {
+    "key_finding": "The list_tasks API returns empty 'schedule' field, but schedules ARE defined inside the XanoScript code as: schedule = [{starts_on: ..., freq: ...}]. This is an API response limitation, not missing schedule configuration.",
+    "schedule_distribution": {
+      "frequent_3min": 71,
+      "every_15min": 6,
+      "hourly": 10,
+      "every_6hr": 5,
+      "daily": 13,
+      "weekly": 1
+    },
+    "domain_counts": {
+      "rezen": 44,
+      "fub": 34,
+      "ad": 10,
+      "skyslope": 5,
+      "aggregation": 3,
+      "title": 2,
+      "metrics": 1,
+      "reporting": 1
+    },
+    "inactive_tasks": [
+      {
+        "id": 2403,
+        "name": "rezen - webhooks - register and check status V3",
+        "reason": "Webhook registration handled elsewhere"
+      },
+      { "id": 2431, "name": "FUB - Webhook Check V3", "reason": "Disabled as of 2026-01-06" }
+    ],
+    "critical_daily_tasks": [
+      { "id": 3132, "name": "Aggregation - Daily Scheduler", "freq": "daily" },
+      { "id": 3123, "name": "Daily Commission Sync", "freq": "daily" },
+      { "id": 2435, "name": "reZEN - Contributions - Full Update V3", "freq": "daily" },
+      { "id": 2433, "name": "Metrics - Create Snapshot V3", "freq": "hourly" }
+    ]
+  },
+  "note": "Schedules extracted from XanoScript code via get_task API. The list_tasks API does not expose schedule data in its response."
 }

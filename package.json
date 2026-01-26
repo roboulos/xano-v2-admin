@@ -27,6 +27,7 @@
     "validate:daily-sync": "tsx scripts/validation/validate-daily-sync.ts",
     "validate:webhooks": "tsx scripts/validation/validate-webhooks.ts",
     "validate:aggregation": "tsx scripts/validation/validate-aggregation.ts",
+    "audit:tasks": "tsx scripts/audit-background-task-schedules.ts",
     "prepare": "husky"
   },
   "dependencies": {
