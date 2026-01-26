@@ -3,31 +3,48 @@
  * Compare Response Structures: V1 vs V2
  *
  * Fetches the SAME endpoints from both workspaces and compares response structures
+ *
+ * Setup:
+ *   1. Copy .env.test.local.example to .env.test.local
+ *   2. Set TEST_USER_PASSWORD in .env.test.local
+ *   3. Run: tsx scripts/compare-response-structures.ts
  */
 
+import 'dotenv/config'
 import axios from 'axios'
 import { readFileSync, writeFileSync } from 'fs'
 import { resolve } from 'path'
 
 // V1 (Workspace 1) - What dashboards2.0 currently uses
-const V1_BASE = 'https://xmpx-swi5-tlvy.n7c.xano.io'
+const V1_BASE = process.env.V1_BASE_URL || 'https://xmpx-swi5-tlvy.n7c.xano.io'
 const V1_API_GROUPS = {
   MAIN_V1_0: 'api:kaVkk3oM',
   TRANSACTIONS_V2: 'api:KPx5ivcP',
 }
 
 // V2 (Workspace 5) - Frontend API v2
-const V2_BASE = 'https://x2nu-xcjc-vhax.agentdashboards.xano.io'
+const V2_BASE = process.env.V2_BASE_URL || 'https://x2nu-xcjc-vhax.agentdashboards.xano.io'
 const V2_API_GROUP = 'api:pe1wjL5I'
 
 // Auth endpoints
-const V1_AUTH_URL = 'https://xmpx-swi5-tlvy.n7c.xano.io/api:lkmcgxf_:v1.5/auth/login'
-const V2_AUTH_URL = 'https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:i6a062_x/auth/test-login'
+const V1_AUTH_URL = `${V1_BASE}/api:lkmcgxf_:v1.5/auth/login`
+const V2_AUTH_URL = `${V2_BASE}/api:i6a062_x/auth/test-login`
 
+// Test user credentials from environment variables
 const TEST_USER = {
-  email: 'dave@premieregrp.com',
-  password: 'Password123!',
-  user_id: 60,
+  email: process.env.TEST_USER_EMAIL || 'dave@premieregrp.com',
+  password: process.env.TEST_USER_PASSWORD || '',
+  user_id: parseInt(process.env.TEST_USER_ID || '60', 10),
+}
+
+// Validate required environment variables
+if (!TEST_USER.password) {
+  console.error('\n❌ ERROR: TEST_USER_PASSWORD not set in environment\n')
+  console.error('Setup instructions:')
+  console.error('  1. Copy .env.test.local.example to .env.test.local')
+  console.error('  2. Set TEST_USER_PASSWORD in .env.test.local')
+  console.error('  3. Run: tsx scripts/compare-response-structures.ts\n')
+  process.exit(1)
 }
 
 interface ComparisonResult {

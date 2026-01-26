@@ -235,7 +235,7 @@ export function FunctionsTab() {
             Refresh
           </Button>
           <ExportDropdown
-            data={filteredFunctions.map(f => ({
+            data={filteredFunctions.map((f: Function) => ({
               id: f.id,
               name: f.name,
               type: f.type,

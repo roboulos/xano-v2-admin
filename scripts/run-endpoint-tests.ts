@@ -4,23 +4,43 @@
  *
  * Runs all 174 endpoints and shows failures immediately.
  * Use this to systematically close gaps in MINUTES.
+ *
+ * Setup:
+ *   1. Copy .env.test.local.example to .env.test.local
+ *   2. Set TEST_USER_PASSWORD in .env.test.local
+ *   3. Run: npm run test:endpoints
  */
 
+import 'dotenv/config'
 import { readFileSync } from 'fs'
 import { resolve } from 'path'
 import axios from 'axios'
 
 const OPENAPI_SPEC_PATH = resolve(__dirname, '../lib/frontend-api-v2-openapi.json')
-const BASE_URL = 'https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:pe1wjL5I'
-const AUTH_URL = 'https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:i6a062_x/auth/test-login'
+const BASE_URL = process.env.V2_BASE_URL
+  ? `${process.env.V2_BASE_URL}/api:pe1wjL5I`
+  : 'https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:pe1wjL5I'
+const AUTH_URL = process.env.V2_BASE_URL
+  ? `${process.env.V2_BASE_URL}/api:i6a062_x/auth/test-login`
+  : 'https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:i6a062_x/auth/test-login'
 
-// Test user (User 60 - Dave)
+// Test user credentials from environment variables
 const TEST_USER = {
-  id: 60,
-  email: 'dave@premieregrp.com',
-  password: 'Password123!',
-  agent_id: 37208,
-  team_id: 1,
+  id: parseInt(process.env.TEST_USER_ID || '60', 10),
+  email: process.env.TEST_USER_EMAIL || 'dave@premieregrp.com',
+  password: process.env.TEST_USER_PASSWORD || '',
+  agent_id: parseInt(process.env.TEST_AGENT_ID || '37208', 10),
+  team_id: parseInt(process.env.TEST_TEAM_ID || '1', 10),
+}
+
+// Validate required environment variables
+if (!TEST_USER.password) {
+  console.error('\n❌ ERROR: TEST_USER_PASSWORD not set in environment\n')
+  console.error('Setup instructions:')
+  console.error('  1. Copy .env.test.local.example to .env.test.local')
+  console.error('  2. Set TEST_USER_PASSWORD in .env.test.local')
+  console.error('  3. Run: npm run test:endpoints\n')
+  process.exit(1)
 }
 
 let AUTH_TOKEN: string | null = null

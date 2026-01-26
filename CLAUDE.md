@@ -208,23 +208,110 @@ pnpm lint         # Run ESLint
 ### File Structure
 ```
 app/
-├── page.tsx              # Main comparison dashboard
-├── layout.tsx            # Root layout
-├── globals.css           # Tailwind styles
-lib/
-├── v1-data.ts            # V1 workspace data (251 tables)
-├── v2-data.ts            # V2 workspace data (193 tables)
-├── table-mappings.ts     # V1 → V2 table mappings
-├── utils.ts              # Utility functions
-types/
-├── migration.ts          # Migration-specific types
-├── xano.ts               # Xano data types
+├── page.tsx                    # Main dashboard with tabs
+├── layout.tsx                  # Root layout
+├── providers.tsx               # React Query provider
+├── globals.css                 # Tailwind styles
+├── inventory/                  # Inventory pages
+│   ├── page.tsx                # Main inventory
+│   ├── frontend-api/           # Frontend API browser
+│   ├── workers/                # Workers inventory
+│   ├── tasks/                  # Tasks inventory
+│   ├── background-tasks/       # Background tasks
+│   └── test-endpoints/         # Endpoint testing
+├── api/                        # API routes
+│   ├── v1/                     # V1 workspace routes
+│   │   ├── tables/             # V1 table operations
+│   │   └── functions/          # V1 function operations
+│   ├── v2/                     # V2 workspace routes
+│   │   ├── tables/             # V2 tables + counts + integrity
+│   │   ├── functions/          # V2 functions + testing
+│   │   ├── endpoints/          # Endpoint health checks
+│   │   └── background-tasks/   # Background task management
+│   └── validation/             # Validation pipeline routes
+│       ├── pipeline/           # Pipeline status
+│       ├── run/                # Run validation
+│       ├── reports/            # Report retrieval
+│       └── status/             # Current status
 components/
-├── ui/                   # ShadCN components
-├── migration-overview.tsx
-├── table-comparison.tsx
-├── v2-only-tables.tsx
+├── ui/                         # ShadCN components (15 components)
+├── machine-2/                  # Machine 2.0 components
+│   ├── backend-validation-tab.tsx
+│   └── schema-tab.tsx
+├── comparison-modal.tsx        # V1/V2 comparison modal
+├── endpoint-tester-modal.tsx   # Endpoint testing modal
+├── functions-tab.tsx           # Functions management
+├── background-tasks-tab.tsx    # Background tasks UI
+├── live-migration-status.tsx   # Migration status (65KB)
+├── validation-pipeline-view.tsx # Validation pipeline UI
+├── function-code-modal.tsx     # Function code viewer
+└── export-dropdown.tsx         # Export functionality
+lib/
+├── api/                        # API client layer
+│   ├── client.ts               # Axios client with auth
+│   ├── generated-types.ts      # Auto-generated types (~8K lines)
+│   ├── generated-hooks.ts      # Auto-generated React Query hooks (~12K lines)
+│   ├── generated-schemas.ts    # Auto-generated Zod schemas (~8.5K lines)
+│   └── endpoint-tester.ts      # Endpoint testing utilities
+├── v1-data.ts                  # V1 workspace data (251 tables)
+├── v2-data.ts                  # V2 workspace data (193 tables)
+├── table-mappings.ts           # V1 → V2 table mappings
+├── mcp-endpoints.ts            # MCP endpoint configuration
+├── frontend-api-v2-endpoints.ts # Frontend API endpoint mappings
+├── snappy-client.ts            # MCP tool wrapper
+├── validation-executor.ts      # Validation execution
+├── utils.ts                    # Utility functions
+└── *.json                      # Generated data files
+    ├── frontend-api-v2-openapi.json (889KB)
+    └── function-endpoint-mapping.json (217KB)
+scripts/
+├── validation/                 # Validation scripts
+│   ├── validate-tables.ts      # 193 V2 tables
+│   ├── validate-functions.ts   # 270 active functions
+│   ├── validate-endpoints.ts   # 801 API endpoints
+│   ├── validate-references.ts  # 156 foreign keys
+│   └── utils.ts                # Shared utilities
+├── generate-types.ts           # TypeScript type generation
+├── generate-hooks.ts           # React Query hook generation
+├── generate-schemas.ts         # Zod schema generation
+├── run-endpoint-tests.ts       # CLI endpoint tester
+└── compare-response-structures.ts # V1/V2 comparison
+test/
+└── v2-integration.test.ts      # 280+ test cases
+validation-reports/             # Generated validation JSON
+.github/
+└── workflows/
+    └── ci.yml                  # GitHub Actions CI
 ```
+
+---
+
+## API Automation Pipeline
+
+Auto-generated code from OpenAPI spec (28,574 lines total):
+
+| Command | Output | Lines |
+|---------|--------|-------|
+| `npm run types:gen` | `lib/api/generated-types.ts` | ~8,000 |
+| `npm run hooks:gen` | `lib/api/generated-hooks.ts` | ~12,000 |
+| `npm run schemas:gen` | `lib/api/generated-schemas.ts` | ~8,500 |
+| `npm run api:gen` | All three | 28,574 |
+
+**When to regenerate:** After any Xano backend changes, run `npm run api:gen`.
+
+---
+
+## Validation Commands
+
+```bash
+npm run validate:tables      # 193 V2 tables - schema integrity
+npm run validate:functions   # 270 functions - business logic
+npm run validate:endpoints   # 801 endpoints - API contracts
+npm run validate:references  # 156 foreign keys - data integrity
+npm run validate:all         # Run all 4 validators
+```
+
+**Minimum scores:** Tables 100%, Functions 95%, Endpoints 96%, References 100%
 
 ---
 

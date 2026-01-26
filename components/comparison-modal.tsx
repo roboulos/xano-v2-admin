@@ -284,8 +284,12 @@ export function ComparisonModal({ isOpen, onClose, type, v1Id, v2Id, v1Name, v2N
       for (const field of fields) {
         const v1Value = v1Func[field as keyof FunctionMetadata]
         const v2Value = v2Func[field as keyof FunctionMetadata]
-        const v1Str = Array.isArray(v1Value) ? v1Value : String(v1Value || "")
-        const v2Str = Array.isArray(v2Value) ? v2Value : String(v2Value || "")
+        const v1Str: string | string[] = Array.isArray(v1Value)
+          ? (v1Value as string[])
+          : String(v1Value || "")
+        const v2Str: string | string[] = Array.isArray(v2Value)
+          ? (v2Value as string[])
+          : String(v2Value || "")
 
         let status: ComparisonStatus = "match"
         if (JSON.stringify(v1Str) !== JSON.stringify(v2Str)) {

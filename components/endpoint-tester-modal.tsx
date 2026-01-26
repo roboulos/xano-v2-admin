@@ -147,7 +147,7 @@ export function EndpointTesterModal({
     return 'text-red-600'
   }
 
-  const formatJson = (data: unknown) => {
+  const formatJson = (data: unknown): string => {
     try {
       return JSON.stringify(data, null, 2)
     } catch {
@@ -284,14 +284,14 @@ export function EndpointTesterModal({
                   </div>
                 )}
 
-                {testResult.response_data && (
+                {testResult.response_data !== undefined && testResult.response_data !== null ? (
                   <div className="space-y-2">
                     <div className="font-semibold text-sm">Response Data:</div>
                     <pre className="bg-background p-3 rounded text-xs overflow-x-auto max-h-[300px] overflow-y-auto">
                       {formatJson(testResult.response_data)}
                     </pre>
                   </div>
-                )}
+                ) : null}
               </div>
             </div>
           )}
