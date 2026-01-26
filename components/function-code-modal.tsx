@@ -1,7 +1,13 @@
-"use client"
+'use client'
 
 import { useState, useEffect } from 'react'
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from '@/components/ui/dialog'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Loader2, Copy, ExternalLink, Code2, GitCompareArrows } from 'lucide-react'
@@ -20,28 +26,44 @@ export function FunctionCodeModal({
   workspace,
   functionName,
   isOpen,
-  onClose
+  onClose,
 }: FunctionCodeModalProps) {
   const [data, setData] = useState<any>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    if (isOpen && functionId) {
-      setLoading(true)
-      setError(null)
+    if (!isOpen || !functionId) return
 
-      fetch(`/api/function/${functionId}?workspace=${workspace}`)
-        .then(r => r.json())
-        .then(data => {
-          if (data.success) {
-            setData(data.function)
-          } else {
-            setError(data.error || 'Failed to load function')
-          }
-        })
-        .catch(err => setError(err.message))
-        .finally(() => setLoading(false))
+    let cancelled = false
+
+    const fetchData = async () => {
+      try {
+        const r = await fetch(`/api/function/${functionId}?workspace=${workspace}`)
+        const data = await r.json()
+        if (cancelled) return
+        if (data.success) {
+          setData(data.function)
+        } else {
+          setError(data.error || 'Failed to load function')
+        }
+      } catch (err) {
+        if (!cancelled) {
+          setError(err instanceof Error ? err.message : 'Unknown error')
+        }
+      } finally {
+        if (!cancelled) {
+          setLoading(false)
+        }
+      }
+    }
+
+    setLoading(true)
+    setError(null)
+    fetchData()
+
+    return () => {
+      cancelled = true
     }
   }, [isOpen, functionId, workspace])
 
@@ -62,9 +84,7 @@ export function FunctionCodeModal({
               {workspace === '1' ? 'V1' : 'V2'} Workspace {workspace}
             </Badge>
           </DialogTitle>
-          <DialogDescription>
-            Function ID: {functionId}
-          </DialogDescription>
+          <DialogDescription>Function ID: {functionId}</DialogDescription>
         </DialogHeader>
 
         {loading && (
@@ -102,7 +122,9 @@ export function FunctionCodeModal({
                   </div>
                   <div>
                     <span className="text-muted-foreground">Modified:</span>
-                    <p>{data.last_modified ? new Date(data.last_modified).toLocaleString() : 'N/A'}</p>
+                    <p>
+                      {data.last_modified ? new Date(data.last_modified).toLocaleString() : 'N/A'}
+                    </p>
                   </div>
                   {data.tags && data.tags.length > 0 && (
                     <div className="col-span-2">
@@ -133,8 +155,14 @@ export function FunctionCodeModal({
                       <div key={i} className="flex items-center gap-3 text-sm">
                         <Badge variant="outline">{input.type || 'text'}</Badge>
                         <code className="font-mono">{input.name}</code>
-                        {input.required && <Badge variant="destructive" className="text-xs">required</Badge>}
-                        {input.default && <span className="text-muted-foreground">= {input.default}</span>}
+                        {input.required && (
+                          <Badge variant="destructive" className="text-xs">
+                            required
+                          </Badge>
+                        )}
+                        {input.default && (
+                          <span className="text-muted-foreground">= {input.default}</span>
+                        )}
                       </div>
                     ))}
                   </div>
@@ -154,10 +182,14 @@ export function FunctionCodeModal({
                     variant="outline"
                     size="sm"
                     onClick={() => {
-                      const baseUrl = workspace === '1'
-                        ? 'https://xmpx-swi5-tlvy.n7c.xano.io'
-                        : 'https://x2nu-xcjc-vhax.agentdashboards.xano.io'
-                      window.open(`${baseUrl}/admin/#/${workspace}/function/${functionId}`, '_blank')
+                      const baseUrl =
+                        workspace === '1'
+                          ? 'https://xmpx-swi5-tlvy.n7c.xano.io'
+                          : 'https://x2nu-xcjc-vhax.agentdashboards.xano.io'
+                      window.open(
+                        `${baseUrl}/admin/#/${workspace}/function/${functionId}`,
+                        '_blank'
+                      )
                     }}
                   >
                     <ExternalLink className="h-4 w-4 mr-2" />
@@ -173,11 +205,14 @@ export function FunctionCodeModal({
                         XanoScript Code Retrieval Currently Limited
                       </p>
                       <p className="text-amber-700 mb-2">
-                        The snappy CLI's <code className="bg-amber-100 px-1 rounded">get_function</code> tool has a parameter issue
-                        that prevents retrieving full function code programmatically.
+                        The snappy CLI's{' '}
+                        <code className="bg-amber-100 px-1 rounded">get_function</code> tool has a
+                        parameter issue that prevents retrieving full function code
+                        programmatically.
                       </p>
                       <p className="text-amber-700">
-                        Click "Open in Xano" above to view the complete XanoScript code in the Xano admin interface.
+                        Click "Open in Xano" above to view the complete XanoScript code in the Xano
+                        admin interface.
                       </p>
                     </div>
                   </div>

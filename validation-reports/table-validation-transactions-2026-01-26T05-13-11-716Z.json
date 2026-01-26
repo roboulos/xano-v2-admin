@@ -1,0 +1,99 @@
+{
+  "summary": {
+    "total": 8,
+    "passed": 8,
+    "failed": 0,
+    "passRate": 100
+  },
+  "results": [
+    {
+      "success": true,
+      "name": "transaction",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1431
+      },
+      "timestamp": "2026-01-26T05:13:01.331Z"
+    },
+    {
+      "success": true,
+      "name": "transaction_financials",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1471
+      },
+      "timestamp": "2026-01-26T05:13:02.804Z"
+    },
+    {
+      "success": true,
+      "name": "transaction_history",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1401
+      },
+      "timestamp": "2026-01-26T05:13:04.206Z"
+    },
+    {
+      "success": true,
+      "name": "transaction_participants",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 2025
+      },
+      "timestamp": "2026-01-26T05:13:06.231Z"
+    },
+    {
+      "success": true,
+      "name": "transaction_tags",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1411
+      },
+      "timestamp": "2026-01-26T05:13:07.642Z"
+    },
+    {
+      "success": true,
+      "name": "participant",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1540
+      },
+      "timestamp": "2026-01-26T05:13:09.182Z"
+    },
+    {
+      "success": true,
+      "name": "paid_participant",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1225
+      },
+      "timestamp": "2026-01-26T05:13:10.407Z"
+    },
+    {
+      "success": true,
+      "name": "closing_disclosure",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1309
+      },
+      "timestamp": "2026-01-26T05:13:11.716Z"
+    }
+  ],
+  "duration": 11813
+}

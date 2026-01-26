@@ -159,7 +159,7 @@ function filterByIntegration(functions: XanoFunction[], integration: string): Xa
     return []
   }
 
-  return functions.filter(f => {
+  return functions.filter((f) => {
     const path = f.path || f.name || ''
     return config.path_pattern.test(path)
   })
@@ -174,7 +174,7 @@ function filterByDomain(functions: XanoFunction[], domain: string): XanoFunction
     return []
   }
 
-  return functions.filter(f => {
+  return functions.filter((f) => {
     const path = f.path || f.name || ''
     return config.path_pattern.test(path)
   })
@@ -185,7 +185,8 @@ function filterByDomain(functions: XanoFunction[], domain: string): XanoFunction
  */
 async function validateFunctionBatch(
   functions: XanoFunction[],
-  batchName: string
+  batchName: string,
+  functionEndpointMapping: any
 ): Promise<ValidationResult[]> {
   console.log(`\n🔍 Validating ${batchName} (${functions.length} functions)...`)
 
@@ -196,7 +197,7 @@ async function validateFunctionBatch(
   for (const func of functions) {
     process.stdout.write(`   Testing ${func.name}... `)
 
-    const result = await validateFunction(func.id, func.name)
+    const result = await validateFunction(func.id, func.name, functionEndpointMapping)
     results.push(result)
 
     if (result.success) {
@@ -220,10 +221,27 @@ async function validateFunctionBatch(
 }
 
 /**
+ * Load function-endpoint mapping
+ */
+async function loadFunctionEndpointMapping(): Promise<any> {
+  console.log('📥 Loading function-endpoint mapping...')
+  const fs = await import('fs/promises')
+  const path = await import('path')
+  const mappingPath = path.join(process.cwd(), 'lib', 'function-endpoint-mapping.json')
+  const mappingData = await fs.readFile(mappingPath, 'utf-8')
+  const mapping = JSON.parse(mappingData)
+  console.log(`✅ Loaded ${mapping.length} function mappings`)
+  return mapping
+}
+
+/**
  * Validate all functions (excluding archived)
  */
 async function validateAllFunctions(): Promise<void> {
   console.log('🚀 Starting V2 Function Validation')
+
+  // Load mapping
+  const functionEndpointMapping = await loadFunctionEndpointMapping()
 
   const allFunctions = await fetchAllFunctions()
   const categories = categorizeFunctions(allFunctions)
@@ -243,7 +261,7 @@ async function validateAllFunctions(): Promise<void> {
     }
 
     if (funcs.length > 0) {
-      const results = await validateFunctionBatch(funcs, category)
+      const results = await validateFunctionBatch(funcs, category, functionEndpointMapping)
       allResults.push(...results)
     }
   }
@@ -264,6 +282,7 @@ async function validateAllFunctions(): Promise<void> {
 async function validateByApiGroup(apiGroup: string): Promise<void> {
   console.log(`🔍 Validating ${apiGroup.toUpperCase()} functions`)
 
+  const functionEndpointMapping = await loadFunctionEndpointMapping()
   const allFunctions = await fetchAllFunctions()
   const categories = categorizeFunctions(allFunctions)
 
@@ -274,7 +293,11 @@ async function validateByApiGroup(apiGroup: string): Promise<void> {
     process.exit(1)
   }
 
-  const results = await validateFunctionBatch(functions, `${apiGroup} functions`)
+  const results = await validateFunctionBatch(
+    functions,
+    `${apiGroup} functions`,
+    functionEndpointMapping
+  )
   const report = generateReport(results)
   printResults(report)
 
@@ -290,6 +313,7 @@ async function validateByApiGroup(apiGroup: string): Promise<void> {
 async function validateByIntegration(integration: string): Promise<void> {
   console.log(`🔍 Validating ${integration.toUpperCase()} integration functions`)
 
+  const functionEndpointMapping = await loadFunctionEndpointMapping()
   const allFunctions = await fetchAllFunctions()
   const functions = filterByIntegration(allFunctions, integration)
 
@@ -298,7 +322,11 @@ async function validateByIntegration(integration: string): Promise<void> {
     process.exit(1)
   }
 
-  const results = await validateFunctionBatch(functions, `${integration} integration`)
+  const results = await validateFunctionBatch(
+    functions,
+    `${integration} integration`,
+    functionEndpointMapping
+  )
   const report = generateReport(results)
   printResults(report)
 
@@ -314,6 +342,7 @@ async function validateByIntegration(integration: string): Promise<void> {
 async function validateByDomain(domain: string): Promise<void> {
   console.log(`🔍 Validating ${domain.toUpperCase()} domain functions`)
 
+  const functionEndpointMapping = await loadFunctionEndpointMapping()
   const allFunctions = await fetchAllFunctions()
   const functions = filterByDomain(allFunctions, domain)
 
@@ -322,7 +351,11 @@ async function validateByDomain(domain: string): Promise<void> {
     process.exit(1)
   }
 
-  const results = await validateFunctionBatch(functions, `${domain} domain`)
+  const results = await validateFunctionBatch(
+    functions,
+    `${domain} domain`,
+    functionEndpointMapping
+  )
   const report = generateReport(results)
   printResults(report)
 
@@ -336,9 +369,9 @@ async function validateByDomain(domain: string): Promise<void> {
 async function main() {
   const args = process.argv.slice(2)
 
-  const apiGroupArg = args.find(a => a.startsWith('--api-group='))
-  const integrationArg = args.find(a => a.startsWith('--integration='))
-  const domainArg = args.find(a => a.startsWith('--domain='))
+  const apiGroupArg = args.find((a) => a.startsWith('--api-group='))
+  const integrationArg = args.find((a) => a.startsWith('--integration='))
+  const domainArg = args.find((a) => a.startsWith('--domain='))
 
   if (apiGroupArg) {
     const apiGroup = apiGroupArg.split('=')[1]
@@ -354,7 +387,7 @@ async function main() {
   }
 }
 
-main().catch(error => {
+main().catch((error) => {
   console.error('💥 Fatal error:', error)
   process.exit(1)
 })

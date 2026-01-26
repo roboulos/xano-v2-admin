@@ -1,0 +1,14 @@
+{
+  "assignee": null,
+  "claim_note": "",
+  "claimed_at": null,
+  "created_at": "2026-01-26T05:52:10.902818Z",
+  "depends_on": [],
+  "epic": "fn-1-2cy",
+  "id": "fn-1-2cy.16",
+  "priority": 16,
+  "spec_path": ".flow/tasks/fn-1-2cy.16.md",
+  "status": "todo",
+  "title": "6.2 Trace FUB contact: webhook \u2192 people table",
+  "updated_at": "2026-01-26T05:52:10.903042Z"
+}

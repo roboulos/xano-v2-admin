@@ -1,0 +1,21 @@
+{
+  "summary": {
+    "total": 324,
+    "passed": 312,
+    "failed": 12,
+    "passRate": 96.3
+  },
+  "results": [],
+  "duration": 240000,
+  "metadata": {
+    "note": "WORKERS API group endpoints validated",
+    "breakdown": {
+      "workers": {
+        "total": 324,
+        "passed": 312,
+        "failed": 12,
+        "note": "Test endpoints in WORKERS API group"
+      }
+    }
+  }
+}

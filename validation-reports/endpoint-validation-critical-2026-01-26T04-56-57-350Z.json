@@ -1,0 +1,167 @@
+{
+  "summary": {
+    "total": 12,
+    "passed": 0,
+    "failed": 12,
+    "passRate": 0
+  },
+  "results": [
+    {
+      "success": false,
+      "name": "/roster",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 671,
+        "response_size": 69
+      },
+      "timestamp": "2026-01-26T04:56:52.021Z"
+    },
+    {
+      "success": false,
+      "name": "/transactions/all",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 328,
+        "response_size": 69
+      },
+      "timestamp": "2026-01-26T04:56:52.351Z"
+    },
+    {
+      "success": false,
+      "name": "/listings/all",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 617,
+        "response_size": 69
+      },
+      "timestamp": "2026-01-26T04:56:52.968Z"
+    },
+    {
+      "success": false,
+      "name": "/revenue/all",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 638,
+        "response_size": 69
+      },
+      "timestamp": "2026-01-26T04:56:53.606Z"
+    },
+    {
+      "success": false,
+      "name": "/network/all",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 520,
+        "response_size": 69
+      },
+      "timestamp": "2026-01-26T04:56:54.127Z"
+    },
+    {
+      "success": false,
+      "name": "/hq/dashboard",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 324,
+        "response_size": 69
+      },
+      "timestamp": "2026-01-26T04:56:54.451Z"
+    },
+    {
+      "success": false,
+      "name": "/leaderboard",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 356,
+        "response_size": 69
+      },
+      "timestamp": "2026-01-26T04:56:54.807Z"
+    },
+    {
+      "success": false,
+      "name": "/sync-fub-data",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "WORKERS",
+        "duration_ms": 722,
+        "response_size": 69
+      },
+      "timestamp": "2026-01-26T04:56:55.529Z"
+    },
+    {
+      "success": false,
+      "name": "/sync-transactions",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "WORKERS",
+        "duration_ms": 598,
+        "response_size": 69
+      },
+      "timestamp": "2026-01-26T04:56:56.127Z"
+    },
+    {
+      "success": false,
+      "name": "/sync-network",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "WORKERS",
+        "duration_ms": 321,
+        "response_size": 69
+      },
+      "timestamp": "2026-01-26T04:56:56.448Z"
+    },
+    {
+      "success": false,
+      "name": "/health-check",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "SYSTEM",
+        "duration_ms": 284,
+        "response_size": 69
+      },
+      "timestamp": "2026-01-26T04:56:56.732Z"
+    },
+    {
+      "success": false,
+      "name": "/metrics",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "SYSTEM",
+        "duration_ms": 618,
+        "response_size": 69
+      },
+      "timestamp": "2026-01-26T04:56:57.350Z"
+    }
+  ],
+  "duration": 5997
+}

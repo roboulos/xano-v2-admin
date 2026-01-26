@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import { useState } from 'react'
 import useSWR from 'swr'
@@ -10,7 +10,7 @@ import { Loader2, Search, Clock, ExternalLink, Play, Pause, RefreshCw } from 'lu
 import { ExportDropdown } from '@/components/export-dropdown'
 import { formatRelativeTime } from '@/lib/utils'
 
-const fetcher = (url: string) => fetch(url).then(r => r.json())
+const fetcher = (url: string) => fetch(url).then((r) => r.json())
 
 interface BackgroundTask {
   id: number
@@ -61,12 +61,7 @@ export function BackgroundTasksTab() {
           )}
         </div>
         <div className="flex gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => mutate()}
-            disabled={isLoading}
-          >
+          <Button variant="outline" size="sm" onClick={() => mutate()} disabled={isLoading}>
             <RefreshCw className={`h-4 w-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
             Refresh
           </Button>
@@ -102,9 +97,11 @@ export function BackgroundTasksTab() {
               <p className="text-sm text-muted-foreground">
                 Scheduled Background Tasks (Xano Tasks)
               </p>
-              <p className="text-xs text-muted-foreground mt-1">
-                Note: This count excludes the 600+ XanoScript Functions in the workspace
-              </p>
+              {data?.cache_updated && (
+                <p className="text-xs text-muted-foreground mt-1">
+                  Cache updated: {new Date(data.cache_updated).toLocaleString()}
+                </p>
+              )}
             </div>
             <Clock className="h-8 w-8 text-primary" />
           </div>
@@ -163,22 +160,28 @@ export function BackgroundTasksTab() {
                           ) : (
                             <Pause className="h-4 w-4 text-gray-400 shrink-0" />
                           )}
-                          <h3 className="font-mono text-sm font-medium truncate">
-                            {task.name}
-                          </h3>
+                          <h3 className="font-mono text-sm font-medium truncate">{task.name}</h3>
                           {task.active ? (
                             <Badge className="bg-green-100 text-green-800">Active</Badge>
                           ) : (
-                            <Badge variant="outline" className="text-gray-600">Inactive</Badge>
+                            <Badge variant="outline" className="text-gray-600">
+                              Inactive
+                            </Badge>
                           )}
                           {task.draft && (
-                            <Badge variant="outline" className="text-orange-600">Draft</Badge>
+                            <Badge variant="outline" className="text-orange-600">
+                              Draft
+                            </Badge>
                           )}
                         </div>
                         <div className="flex items-center gap-3 text-xs text-muted-foreground mb-2">
-                          <span>Type: <code className="bg-muted px-1 rounded">{task.type}</code></span>
+                          <span>
+                            Type: <code className="bg-muted px-1 rounded">{task.type}</code>
+                          </span>
                           <span>•</span>
-                          <span>Schedule: <code className="bg-muted px-1 rounded">{task.schedule}</code></span>
+                          <span>
+                            Schedule: <code className="bg-muted px-1 rounded">{task.schedule}</code>
+                          </span>
                         </div>
                         <p className="text-xs text-muted-foreground">
                           Modified: {new Date(task.last_modified).toLocaleString()}
@@ -209,7 +212,7 @@ export function BackgroundTasksTab() {
                 variant="outline"
                 size="sm"
                 disabled={page === 1}
-                onClick={() => setPage(p => p - 1)}
+                onClick={() => setPage((p) => p - 1)}
               >
                 Previous
               </Button>
@@ -220,7 +223,7 @@ export function BackgroundTasksTab() {
                 variant="outline"
                 size="sm"
                 disabled={page >= Math.ceil(data.total / 50)}
-                onClick={() => setPage(p => p + 1)}
+                onClick={() => setPage((p) => p + 1)}
               >
                 Next
               </Button>

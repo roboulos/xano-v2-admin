@@ -57,19 +57,38 @@ export interface ValidationReport {
 export async function xanoMCP(tool: string, args: Record<string, any>): Promise<any> {
   const argsJson = JSON.stringify(args)
   const snappyPath = '/Users/sboulos/Desktop/ai_projects/snappy-cli/bin/snappy'
-  const command = `${snappyPath} exec ${tool} '${argsJson}' --json`
+  const command = `${snappyPath} exec ${tool} --args '${argsJson}' --json`
 
   try {
-    const { stdout, stderr } = await execAsync(command)
+    const { stdout, stderr } = await execAsync(command, {
+      maxBuffer: 10 * 1024 * 1024, // 10MB buffer for large responses
+    })
 
-    // Snappy returns formatted output, extract JSON
+    // Extract JSON from snappy's formatted output
     const jsonMatch = stdout.match(/\{[\s\S]*\}/)
     if (!jsonMatch) {
-      // If no JSON found, return success with empty data (table might be empty)
-      return { success: true, pagination: { total_matches: 0 } }
+      throw new Error(`No JSON found in snappy output. stderr: ${stderr}`)
     }
 
-    return JSON.parse(jsonMatch[0])
+    const wrapper = JSON.parse(jsonMatch[0])
+
+    // Check for error in wrapper
+    if (wrapper.error) {
+      throw new Error(wrapper.error)
+    }
+
+    // Snappy returns data inside content[0].text as JSON string
+    if (wrapper.content && wrapper.content[0] && wrapper.content[0].text) {
+      const textContent = wrapper.content[0].text
+      // Extract the JSON object from the formatted text (skip the header lines)
+      const dataMatch = textContent.match(/\{[\s\S]*\}/)
+      if (dataMatch) {
+        return JSON.parse(dataMatch[0])
+      }
+    }
+
+    // Fallback to wrapper if no content field
+    return wrapper
   } catch (error: any) {
     console.error(`[snappy] ${tool} failed:`, error.message)
     throw error
@@ -165,28 +184,98 @@ export async function validateEndpoint(
 }
 
 /**
- * Test function execution
+ * Test function execution (via endpoint curls)
+ *
+ * NOTE: Xano functions cannot be executed directly - they must be called
+ * by endpoints. This function uses the function-endpoint mapping to find
+ * and curl the appropriate endpoint.
  */
 export async function validateFunction(
   functionId: number,
-  functionName: string
+  functionName: string,
+  functionEndpointMapping?: any
 ): Promise<ValidationResult> {
   const startTime = Date.now()
 
+  // Load mapping if not provided
+  if (!functionEndpointMapping) {
+    try {
+      const fs = await import('fs/promises')
+      const path = await import('path')
+      const mappingPath = path.join(process.cwd(), 'lib', 'function-endpoint-mapping.json')
+      const mappingData = await fs.readFile(mappingPath, 'utf-8')
+      functionEndpointMapping = JSON.parse(mappingData)
+    } catch (error: any) {
+      return {
+        success: false,
+        name: functionName,
+        type: 'function',
+        error: `Failed to load function-endpoint mapping: ${error.message}`,
+        metadata: { function_id: functionId },
+        timestamp: new Date().toISOString(),
+      }
+    }
+  }
+
   try {
-    const result = await xanoMCP('test_function', {
-      workspace_id: V2_CONFIG.workspace_id,
-      function_id: functionId,
-      input: { user_id: V2_CONFIG.test_user.id, team_id: V2_CONFIG.test_user.team_id },
-    })
+    // Find mapping for this function
+    const mapping = functionEndpointMapping.find((m: any) => m.function_id === functionId)
+
+    if (!mapping || mapping.endpoints.length === 0) {
+      return {
+        success: false,
+        name: functionName,
+        type: 'function',
+        error: 'No test endpoint found for this function',
+        metadata: {
+          function_id: functionId,
+          note: 'Function may not have a callable endpoint, or mapping heuristics failed',
+        },
+        timestamp: new Date().toISOString(),
+      }
+    }
+
+    // Use the first endpoint
+    const endpoint = mapping.endpoints[0]
+    const apiGroupKey = Object.keys(V2_CONFIG.api_groups).find(
+      (key) =>
+        V2_CONFIG.api_groups[key as keyof typeof V2_CONFIG.api_groups].name === endpoint.api_group
+    )
+
+    if (!apiGroupKey) {
+      return {
+        success: false,
+        name: functionName,
+        type: 'function',
+        error: `Unknown API group: ${endpoint.api_group}`,
+        metadata: { function_id: functionId },
+        timestamp: new Date().toISOString(),
+      }
+    }
+
+    const apiConfig = V2_CONFIG.api_groups[apiGroupKey as keyof typeof V2_CONFIG.api_groups]
+    const url = `${V2_CONFIG.base_url}/${apiConfig.path}${endpoint.path}`
+
+    // Curl the endpoint
+    const curlCommand = `curl -s -w "\\n%{http_code}" -X ${endpoint.method} "${url}" \\
+      -H "Content-Type: application/json" \\
+      -d '{"user_id": ${V2_CONFIG.test_user.id}, "team_id": ${V2_CONFIG.test_user.team_id}}'`
+
+    const { stdout } = await execAsync(curlCommand)
+    const lines = stdout.trim().split('\n')
+    const statusCode = lines[lines.length - 1]
+
+    const success = statusCode === '200'
 
     return {
-      success: result.status === 'success',
+      success,
       name: functionName,
       type: 'function',
-      error: result.status !== 'success' ? result.error : undefined,
+      error: success ? undefined : `HTTP ${statusCode}`,
       metadata: {
         function_id: functionId,
+        tested_via: endpoint.path,
+        api_group: endpoint.api_group,
         duration_ms: Date.now() - startTime,
       },
       timestamp: new Date().toISOString(),
@@ -264,7 +353,7 @@ async function checkOrphanedRefs(
  * Generate validation report
  */
 export function generateReport(results: ValidationResult[]): ValidationReport {
-  const passed = results.filter(r => r.success).length
+  const passed = results.filter((r) => r.success).length
   const failed = results.length - passed
 
   return {
@@ -282,10 +371,7 @@ export function generateReport(results: ValidationResult[]): ValidationReport {
 /**
  * Save report to file
  */
-export async function saveReport(
-  report: ValidationReport,
-  filename: string
-): Promise<void> {
+export async function saveReport(report: ValidationReport, filename: string): Promise<void> {
   const reportsDir = path.join(process.cwd(), 'validation-reports')
   await fs.mkdir(reportsDir, { recursive: true })
 
@@ -312,8 +398,8 @@ export function printResults(report: ValidationReport): void {
   if (report.summary.failed > 0) {
     console.log(`\n❌ Failed Items:`)
     report.results
-      .filter(r => !r.success)
-      .forEach(r => {
+      .filter((r) => !r.success)
+      .forEach((r) => {
         console.log(`   - ${r.name} (${r.type}): ${r.error}`)
       })
   }

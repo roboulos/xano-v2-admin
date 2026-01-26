@@ -9,6 +9,11 @@ export default defineConfig({
     hookTimeout: 30000, // 30 second hook timeout
     teardownTimeout: 10000,
     include: ['test/**/*.test.ts'],
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'json', 'html'],
+      exclude: ['node_modules/', '.next/', 'lib/api/generated-*.ts'],
+    },
   },
   resolve: {
     alias: {

@@ -1,0 +1,198 @@
+{
+  "summary": {
+    "total": 17,
+    "passed": 17,
+    "failed": 0,
+    "passRate": 100
+  },
+  "results": [
+    {
+      "success": true,
+      "name": "user",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1250
+      },
+      "timestamp": "2026-01-26T04:45:36.975Z"
+    },
+    {
+      "success": true,
+      "name": "user_credentials",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1557
+      },
+      "timestamp": "2026-01-26T04:45:38.533Z"
+    },
+    {
+      "success": true,
+      "name": "user_settings",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1322
+      },
+      "timestamp": "2026-01-26T04:45:39.855Z"
+    },
+    {
+      "success": true,
+      "name": "user_roles",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1426
+      },
+      "timestamp": "2026-01-26T04:45:41.281Z"
+    },
+    {
+      "success": true,
+      "name": "user_subscriptions",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1531
+      },
+      "timestamp": "2026-01-26T04:45:42.812Z"
+    },
+    {
+      "success": true,
+      "name": "agent",
+      "type": "table",
+      "metadata": {
+        "record_count": 1,
+        "has_data": true,
+        "duration_ms": 1914
+      },
+      "timestamp": "2026-01-26T04:45:44.726Z"
+    },
+    {
+      "success": true,
+      "name": "agent_cap_data",
+      "type": "table",
+      "metadata": {
+        "record_count": 1,
+        "has_data": true,
+        "duration_ms": 2465
+      },
+      "timestamp": "2026-01-26T04:45:47.191Z"
+    },
+    {
+      "success": true,
+      "name": "agent_commission",
+      "type": "table",
+      "metadata": {
+        "record_count": 1,
+        "has_data": true,
+        "duration_ms": 2502
+      },
+      "timestamp": "2026-01-26T04:45:49.693Z"
+    },
+    {
+      "success": true,
+      "name": "agent_hierarchy",
+      "type": "table",
+      "metadata": {
+        "record_count": 1,
+        "has_data": true,
+        "duration_ms": 2027
+      },
+      "timestamp": "2026-01-26T04:45:51.721Z"
+    },
+    {
+      "success": true,
+      "name": "agent_performance",
+      "type": "table",
+      "metadata": {
+        "record_count": 1,
+        "has_data": true,
+        "duration_ms": 2164
+      },
+      "timestamp": "2026-01-26T04:45:53.885Z"
+    },
+    {
+      "success": true,
+      "name": "team",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1450
+      },
+      "timestamp": "2026-01-26T04:45:55.335Z"
+    },
+    {
+      "success": true,
+      "name": "team_members",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1458
+      },
+      "timestamp": "2026-01-26T04:45:56.793Z"
+    },
+    {
+      "success": true,
+      "name": "team_settings",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1307
+      },
+      "timestamp": "2026-01-26T04:45:58.100Z"
+    },
+    {
+      "success": true,
+      "name": "team_director_assignments",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1398
+      },
+      "timestamp": "2026-01-26T04:45:59.498Z"
+    },
+    {
+      "success": true,
+      "name": "team_owners",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1358
+      },
+      "timestamp": "2026-01-26T04:46:00.856Z"
+    },
+    {
+      "success": true,
+      "name": "team_admins",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1411
+      },
+      "timestamp": "2026-01-26T04:46:02.267Z"
+    },
+    {
+      "success": true,
+      "name": "team_admins_permissions",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1828
+      },
+      "timestamp": "2026-01-26T04:46:04.095Z"
+    }
+  ],
+  "duration": 28368
+}

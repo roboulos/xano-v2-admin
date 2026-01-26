@@ -1,0 +1,2145 @@
+{
+  "summary": {
+    "total": 194,
+    "passed": 0,
+    "failed": 194,
+    "passRate": 0
+  },
+  "results": [
+    {
+      "success": false,
+      "name": "Workers/Test-Roster-Minimal",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 11168,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.266Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/analyze_bug_report",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 11162,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.267Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/create_github_issue",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 11155,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.267Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/backfill_team_from_network_member",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 11110,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.267Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/find_team_from_sponsor_chain",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 11109,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.267Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/find_team_for_agent",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 11108,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.267Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Listing Details By Object",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 11094,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.267Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Contributions - Duplicates",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 11093,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.267Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Agent - Sync Commission Configuration",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 11025,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.267Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Generate Audit Record",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 10995,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.267Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Title - Get Settlement Agencies",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 10993,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.267Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Process Pending Contributions to Table",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 10991,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.267Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Sync Pipeline Prospects from FUB Deals",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 10990,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.267Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Chart Transactions - Aggregate",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 10989,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.267Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Title - Upsert Orders",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 10988,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.267Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Title - Populate Closing Disclosures",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 10987,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.267Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/User Roles - Populate from User Data",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 10986,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.267Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Title - Transform Orders",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 10985,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.267Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Get Agent Commission",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 10983,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.267Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Get Cap Data for All Agents",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 10982,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.267Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Populate RevShare Payments",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 10981,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.267Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Account Users - Paginated",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 10972,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.267Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Utility - Batch Process Contributions",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 10969,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.267Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Network - Pull Temp Data Fixed",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 10968,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.267Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Network - Get Downline Fixed",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 10967,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.267Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Get Agent Sponsor Tree v2",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 10962,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.267Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Enrich Team Members from Agent Data",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 10959,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.267Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Run All Linking Functions",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 10955,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.267Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Link Equity Transactions to Transaction",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 10954,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.267Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Link FUB Calls to Users",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 10953,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.267Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Link FUB Calls to People",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 10952,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.267Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Groups",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 10941,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.267Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Get Equity Performance",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 10938,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.267Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Income - Aggregate All Agents",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 10055,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.267Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Income - Calculate Agent Totals",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 10054,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.267Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Income - Aggregate All Sources",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 10051,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.267Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Move Transactions from Staging",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 10038,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.267Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Validate Credentials",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 10034,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.267Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Sync Stages from Deals",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 10033,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.268Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Move Deals to Transaction",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 10031,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.268Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/SkySlope - Move Listings from Staging",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 10027,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.268Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Deals",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 10022,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.268Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Deals - Upsert",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 10021,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.268Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Deals - Transform",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 10020,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.268Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Create Contribution Object",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 10019,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.268Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Text Messages V3",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 9167,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.268Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/System - Contributions",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 9166,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.268Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/AD - Logic Helper",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8316,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.268Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Send Email - Network News Daily",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8315,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.268Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Internal - Log Email",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8313,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.268Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Internal - Log Error",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8312,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.268Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/AD - Get Notifications",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8310,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.268Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/AD - Get Dashboard Data",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8309,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.268Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/AD - Get Activity Log",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8308,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.268Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Transaction Details By Object",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8301,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.268Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Auth - Login",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8300,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.268Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Create Onboarding Job",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8299,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.268Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Onboarding Load Listings",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8298,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.268Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Onboarding Orchestrator",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8297,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.268Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Onboarding Load Transactions",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8296,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.268Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Lambda Coordinator Validate Input",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8295,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.268Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/AD - Upload Team Roster Images to Cloud",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8291,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.268Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/AD - Upload Agent Images to Cloud",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8290,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.268Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Network - Downline Sync",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8285,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.268Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Text Messages By Person ID",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8284,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Network - Get Cap Data",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8283,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Metrics - Transactions by Lifecycle Group",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8282,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/SkySlope - Main Worker",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8281,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Network - Get FrontLine Data",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8280,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Metrics - Get Transaction Counts",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8279,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Outgoing Payments By Agent",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8278,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Outgoing Payments By Tier",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8277,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/AD - CSV Insert Data from Temp Table",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8153,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/AD - Missing Team Roster Avatars",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8152,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/AD - Missing Agent IDs Participants",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8151,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Fix Appointments Missing Created By",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8150,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Delete Lambda Logs",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8149,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/AD - Upload Images to Cloud",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8148,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Process Text Messages Stage",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8147,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Generate Referral Code",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8146,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/AD - Upload Network Images to Cloud",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8145,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/SkySlope - Move Listing from Staging",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8144,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Account Users",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8143,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Stages",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8142,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Refresh Tokens",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8141,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Metrics - Create Snapshot",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8140,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get People URL",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8138,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Map Paid Participants",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8137,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Event By ID",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8136,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Generate User People Data",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8135,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Events Pull People Data",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8134,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Onboarding",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8133,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Add Users To Calls",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8132,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Events Get Name",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8131,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Add Users To Text Messages",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8130,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Text Messages Stage",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8129,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - API Wrapper",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8128,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Register Webhooks",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8127,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Title - Get Daily Orders",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8126,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Title - Get Disbursements",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8125,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Process Webhook Events",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8124,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Title - Get All Orders",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8123,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Process Listing Webhooks",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8122,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Onboarding Process Network Data",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8121,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Network Name Sync",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8120,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Onboarding Process Stage Listings",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8119,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Lambda Coordinator Worker Task",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8118,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/SkySlope - Get Account Users",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8117,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Get Transactions By LifeCycle Group",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8116,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Network - FrontLine by Tier",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8115,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Onboarding Process Transaction Staging",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8114,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Get Listings By LifeCycle Group",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8113,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Get Cap Data",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8112,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Get Listing Counts",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8111,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Get Contributions New",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8110,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Pending RevShare Payments Overview",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8109,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Get Pending Contributions",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8108,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Get Agent Sponsor Tree",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8107,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Get Current RevShare Totals",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8106,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Utility - Slack Webhook",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8105,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Utility - Get Geo State",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8104,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Utility - Add Event To Log",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8103,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Network - Get Network Counts",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8102,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Network - Duplicates Network",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8101,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Get Front Line Agents",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8100,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Get Cap Data by Tier",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8099,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Utility - Get Coordinates",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8098,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Team - Roster Lambda Comparison",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8097,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Metrics - Network Counts",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8096,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Metrics - Listing Counts",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8095,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Team - Roster Counts",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8094,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Metrics - Transaction Counts",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8093,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get All Text Messages",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8092,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get People",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8091,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Events",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8090,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.269Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Webhooks Sync",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8089,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Text Messages Via Phone",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8088,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get People - Upsert",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8087,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Deals - Fetch",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8086,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get People - Transform",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8085,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Text Messages",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8084,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get People - Fetch",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8083,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Utility - Get API Key Data",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8082,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Utility - Truncate Phone",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8081,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Utility - API Wrapper",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8080,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Network - Update From Dump Table",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8079,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Network - Pull Temp Data",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8078,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Real - Transactions Remove Excess",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8077,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Real - Transactions Upsert Batch",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8076,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Real - Transactions Fetch Stage",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8075,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Syncing - Network Downline",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8074,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Onboarding Process Contributions",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8073,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Onboarding Process Pending Contributions",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8072,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Onboarding Process RevShare Totals",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8071,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Onboarding Process Agent Sponsor Tree",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8070,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Onboarding Process Equity",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8069,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Onboarding Process Cap Data",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8068,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Onboarding Appointments Worker",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8067,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Syncing - Team Roster",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8066,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Calls",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8065,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Onboarding Get Appointments",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8064,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Onboarding Process Network Frontline",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8063,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Onboarding Process Network Downline",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8062,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Onboarding Process Contributors",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8061,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Onboarding Load Contributions",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8060,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Network Frontline",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8059,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Network Cap Data",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8058,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Onboarding Process Stage Contributions",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8057,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Contributions",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8056,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Equity",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8055,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Listings Update",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8054,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Listings Sync",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8053,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Transactions Sync",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8052,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Agent Data",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8051,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/SkySlope - Get Listings",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8050,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/SkySlope - Get Auth Session",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8049,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/SkySlope - Create Authentication",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8048,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/SkySlope - Parse Streaming Response",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8047,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/SkySlope - Get Listing Type",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8046,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/SkySlope - Get Transaction Type",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8045,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/SkySlope - Determine Listing Stage",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8044,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/SkySlope - Determine Transaction Stage",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8043,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Metrics - Increment API Count",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8042,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/AD - Send Slack Notification",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8041,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/AD - Create Email Master",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8040,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Appointments",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8039,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/SkySlope - Upsert Listing",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8038,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/SkySlope - Upsert Transaction",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8037,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/AD - Email Network News",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8036,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/SkySlope - Handle Paid Participants",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8035,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Network - Get Downline",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8034,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/SkySlope - Get Listing Data",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8033,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Team Roster Sync",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8032,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/SkySlope - Get Transaction Data",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8031,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T04:47:16.270Z"
+    }
+  ],
+  "duration": 0
+}

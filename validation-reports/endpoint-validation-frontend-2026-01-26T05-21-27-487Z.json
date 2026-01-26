@@ -1,0 +1,2611 @@
+{
+  "summary": {
+    "total": 200,
+    "passed": 0,
+    "failed": 200,
+    "passRate": 0
+  },
+  "results": [
+    {
+      "success": false,
+      "name": "transactions/manual_entry/{id}",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 317,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:29.406Z"
+    },
+    {
+      "success": false,
+      "name": "transactions/by-participant",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 213,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:29.620Z"
+    },
+    {
+      "success": false,
+      "name": "transactions/{id}/coordinates",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 261,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:29.881Z"
+    },
+    {
+      "success": false,
+      "name": "listings/by-participant",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 254,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:30.135Z"
+    },
+    {
+      "success": false,
+      "name": "transactions/manual_entry/{id}",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 321,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:30.456Z"
+    },
+    {
+      "success": false,
+      "name": "listings/{id}/coordinates",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 285,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:30.741Z"
+    },
+    {
+      "success": false,
+      "name": "transactions/manual_entry",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 317,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:31.058Z"
+    },
+    {
+      "success": false,
+      "name": "revenue/by-participant",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 247,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:31.305Z"
+    },
+    {
+      "success": false,
+      "name": "backfill-agent-team-id-v2",
+      "type": "endpoint",
+      "error": "HTTP 405",
+      "metadata": {
+        "status_code": 405,
+        "api_group": "Frontend API v2",
+        "duration_ms": 227,
+        "response_size": 0
+      },
+      "timestamp": "2026-01-26T05:20:31.532Z"
+    },
+    {
+      "success": false,
+      "name": "admin/resync-user",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 300,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:31.832Z"
+    },
+    {
+      "success": false,
+      "name": "leaderboard/computed",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 311,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:32.143Z"
+    },
+    {
+      "success": false,
+      "name": "leads/fub/text_messages/aggregates",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 332,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:32.475Z"
+    },
+    {
+      "success": false,
+      "name": "leads/fub/appointments/aggregates",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 236,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:32.711Z"
+    },
+    {
+      "success": false,
+      "name": "test/aggregate-syntax",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 317,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:33.028Z"
+    },
+    {
+      "success": false,
+      "name": "kpi_goals_list",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 256,
+        "response_size": 774
+      },
+      "timestamp": "2026-01-26T05:20:33.284Z"
+    },
+    {
+      "success": false,
+      "name": "dashboard_sections",
+      "type": "endpoint",
+      "error": "HTTP 405",
+      "metadata": {
+        "status_code": 405,
+        "api_group": "Frontend API v2",
+        "duration_ms": 214,
+        "response_size": 0
+      },
+      "timestamp": "2026-01-26T05:20:33.498Z"
+    },
+    {
+      "success": false,
+      "name": "dashboard_sections",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 327,
+        "response_size": 774
+      },
+      "timestamp": "2026-01-26T05:20:33.825Z"
+    },
+    {
+      "success": false,
+      "name": "favorites_id",
+      "type": "endpoint",
+      "error": "HTTP 405",
+      "metadata": {
+        "status_code": 405,
+        "api_group": "Frontend API v2",
+        "duration_ms": 237,
+        "response_size": 0
+      },
+      "timestamp": "2026-01-26T05:20:34.064Z"
+    },
+    {
+      "success": false,
+      "name": "favorites",
+      "type": "endpoint",
+      "error": "HTTP 405",
+      "metadata": {
+        "status_code": 405,
+        "api_group": "Frontend API v2",
+        "duration_ms": 230,
+        "response_size": 0
+      },
+      "timestamp": "2026-01-26T05:20:34.294Z"
+    },
+    {
+      "success": false,
+      "name": "has_transactions",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 278,
+        "response_size": 774
+      },
+      "timestamp": "2026-01-26T05:20:34.572Z"
+    },
+    {
+      "success": false,
+      "name": "favorites",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 357,
+        "response_size": 774
+      },
+      "timestamp": "2026-01-26T05:20:34.929Z"
+    },
+    {
+      "success": false,
+      "name": "page_builder/config",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 273,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:35.202Z"
+    },
+    {
+      "success": false,
+      "name": "page_builder/filters/reorder",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 238,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:35.440Z"
+    },
+    {
+      "success": false,
+      "name": "page_builder/filters/by-slug",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 218,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:35.658Z"
+    },
+    {
+      "success": false,
+      "name": "page_builder/widget_viewport_layouts/save",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 292,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:35.950Z"
+    },
+    {
+      "success": false,
+      "name": "page_builder/widget_viewport_layouts",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 265,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:36.215Z"
+    },
+    {
+      "success": false,
+      "name": "page_builder/user_filter_preferences/delete",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 244,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:36.459Z"
+    },
+    {
+      "success": false,
+      "name": "page_builder/user_filter_preferences/save",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 234,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:36.693Z"
+    },
+    {
+      "success": false,
+      "name": "page_builder/user_filter_preferences",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 218,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:36.911Z"
+    },
+    {
+      "success": false,
+      "name": "page_builder/filter_options/delete",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 262,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:37.173Z"
+    },
+    {
+      "success": false,
+      "name": "page_builder/filter_options/update",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 217,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:37.391Z"
+    },
+    {
+      "success": false,
+      "name": "page_builder/filter_options/create",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 234,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:37.625Z"
+    },
+    {
+      "success": false,
+      "name": "page_builder/filter_options",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 312,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:37.938Z"
+    },
+    {
+      "success": false,
+      "name": "page_builder/widgets/delete",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 243,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:38.181Z"
+    },
+    {
+      "success": false,
+      "name": "page_builder/widgets/update",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 276,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:38.457Z"
+    },
+    {
+      "success": false,
+      "name": "page_builder/sections/delete",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 274,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:38.731Z"
+    },
+    {
+      "success": false,
+      "name": "page_builder/sections/update",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 226,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:38.957Z"
+    },
+    {
+      "success": false,
+      "name": "page_builder/tabs/delete",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 308,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:39.266Z"
+    },
+    {
+      "success": false,
+      "name": "page_builder/tabs/update",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 398,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:39.664Z"
+    },
+    {
+      "success": false,
+      "name": "page_builder/pages/delete",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 275,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:39.939Z"
+    },
+    {
+      "success": false,
+      "name": "page_builder/pages/update",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 311,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:40.250Z"
+    },
+    {
+      "success": false,
+      "name": "page_builder/filters/delete",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 227,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:40.477Z"
+    },
+    {
+      "success": false,
+      "name": "page_builder/filters/update",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 231,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:40.709Z"
+    },
+    {
+      "success": false,
+      "name": "page_builder/filters",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 274,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:40.983Z"
+    },
+    {
+      "success": false,
+      "name": "page_builder/filters",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 233,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:41.216Z"
+    },
+    {
+      "success": false,
+      "name": "page_builder/configuration",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 296,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:41.512Z"
+    },
+    {
+      "success": false,
+      "name": "page_builder/widgets",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 255,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:41.767Z"
+    },
+    {
+      "success": false,
+      "name": "page_builder/widgets",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 325,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:42.092Z"
+    },
+    {
+      "success": false,
+      "name": "page_builder/sections/reorder",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 331,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:42.423Z"
+    },
+    {
+      "success": false,
+      "name": "page_builder/sections",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 244,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:42.667Z"
+    },
+    {
+      "success": false,
+      "name": "page_builder/sections",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 334,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:43.001Z"
+    },
+    {
+      "success": false,
+      "name": "page_builder/tabs",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 260,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:43.261Z"
+    },
+    {
+      "success": false,
+      "name": "page_builder/tabs",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 285,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:43.546Z"
+    },
+    {
+      "success": false,
+      "name": "page_builder/pages",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 233,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:43.779Z"
+    },
+    {
+      "success": false,
+      "name": "page_builder/pages/by-slug",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 277,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:44.056Z"
+    },
+    {
+      "success": false,
+      "name": "page_builder/pages",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 289,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:44.345Z"
+    },
+    {
+      "success": false,
+      "name": "chart/revenue-by-agent",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 277,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:44.622Z"
+    },
+    {
+      "success": false,
+      "name": "chart/transactions-status",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 324,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:44.946Z"
+    },
+    {
+      "success": false,
+      "name": "chart/revenue-trends",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 320,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:45.266Z"
+    },
+    {
+      "success": false,
+      "name": "chart/network-activity",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 233,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:45.500Z"
+    },
+    {
+      "success": false,
+      "name": "transactions/metrics",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 272,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:45.772Z"
+    },
+    {
+      "success": false,
+      "name": "stripe/checkout",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 318,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:46.090Z"
+    },
+    {
+      "success": false,
+      "name": "stripe/pricing",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 316,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:46.406Z"
+    },
+    {
+      "success": false,
+      "name": "user_dashboard_configuration/batch",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 261,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:46.667Z"
+    },
+    {
+      "success": false,
+      "name": "user_dashboard_configuration/{id}",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 324,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:46.991Z"
+    },
+    {
+      "success": false,
+      "name": "admin",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 337,
+        "response_size": 774
+      },
+      "timestamp": "2026-01-26T05:20:47.328Z"
+    },
+    {
+      "success": false,
+      "name": "leaderboard/transactions",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 372,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:47.700Z"
+    },
+    {
+      "success": false,
+      "name": "user_dashboard_configuration",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 519,
+        "response_size": 774
+      },
+      "timestamp": "2026-01-26T05:20:48.220Z"
+    },
+    {
+      "success": false,
+      "name": "nora/generate",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 385,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:48.606Z"
+    },
+    {
+      "success": false,
+      "name": "nora/conversations/{conversation_id}",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 326,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:48.932Z"
+    },
+    {
+      "success": false,
+      "name": "nora/conversations/{conversation_id}/messages",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 406,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:49.338Z"
+    },
+    {
+      "success": false,
+      "name": "nora/conversations/{conversation_id}",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 363,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:49.707Z"
+    },
+    {
+      "success": false,
+      "name": "nora/conversations",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 393,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:50.100Z"
+    },
+    {
+      "success": false,
+      "name": "nora/conversations",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 364,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:50.464Z"
+    },
+    {
+      "success": false,
+      "name": "stripe/user_subscription",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 243,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:50.707Z"
+    },
+    {
+      "success": false,
+      "name": "update_api_key",
+      "type": "endpoint",
+      "error": "HTTP 405",
+      "metadata": {
+        "status_code": 405,
+        "api_group": "Frontend API v2",
+        "duration_ms": 409,
+        "response_size": 0
+      },
+      "timestamp": "2026-01-26T05:20:51.116Z"
+    },
+    {
+      "success": false,
+      "name": "user_dashboard_configuration/{id}",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 375,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:51.491Z"
+    },
+    {
+      "success": false,
+      "name": "integrations/disconnect",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 257,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:51.748Z"
+    },
+    {
+      "success": false,
+      "name": "team_roster/update_coordinates",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 418,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:52.166Z"
+    },
+    {
+      "success": false,
+      "name": "website/note",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 298,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:52.464Z"
+    },
+    {
+      "success": false,
+      "name": "team_roster/update",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 261,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:52.725Z"
+    },
+    {
+      "success": false,
+      "name": "integrations/code",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 226,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:52.951Z"
+    },
+    {
+      "success": false,
+      "name": "csv/process_batch",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 277,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:53.228Z"
+    },
+    {
+      "success": false,
+      "name": "links",
+      "type": "endpoint",
+      "error": "HTTP 405",
+      "metadata": {
+        "status_code": 405,
+        "api_group": "Frontend API v2",
+        "duration_ms": 217,
+        "response_size": 0
+      },
+      "timestamp": "2026-01-26T05:20:53.445Z"
+    },
+    {
+      "success": false,
+      "name": "csv/configure_mapping/list",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 355,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:53.800Z"
+    },
+    {
+      "success": false,
+      "name": "links",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 301,
+        "response_size": 774
+      },
+      "timestamp": "2026-01-26T05:20:54.101Z"
+    },
+    {
+      "success": false,
+      "name": "csv/validate",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 299,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:54.400Z"
+    },
+    {
+      "success": false,
+      "name": "goals",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 228,
+        "response_size": 774
+      },
+      "timestamp": "2026-01-26T05:20:54.628Z"
+    },
+    {
+      "success": false,
+      "name": "csv/configure_mapping",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 369,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:54.997Z"
+    },
+    {
+      "success": false,
+      "name": "csv/upload",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 250,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:55.247Z"
+    },
+    {
+      "success": false,
+      "name": "transactions/manual_entry",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 283,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:55.530Z"
+    },
+    {
+      "success": false,
+      "name": "website/notifications/admins",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 327,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:55.857Z"
+    },
+    {
+      "success": false,
+      "name": "website/notifications/weekly",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 384,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:56.241Z"
+    },
+    {
+      "success": false,
+      "name": "website/notifications/daily",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 255,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:56.496Z"
+    },
+    {
+      "success": false,
+      "name": "website/notifications/mark-read",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 238,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:56.734Z"
+    },
+    {
+      "success": false,
+      "name": "nora/notifications_summary",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 306,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:57.041Z"
+    },
+    {
+      "success": false,
+      "name": "website/notifications/{notification_id}",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 303,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:57.344Z"
+    },
+    {
+      "success": false,
+      "name": "team_management/details",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 282,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:57.626Z"
+    },
+    {
+      "success": false,
+      "name": "team/remove_logo",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 299,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:57.925Z"
+    },
+    {
+      "success": false,
+      "name": "staff_management/update",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 267,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:58.192Z"
+    },
+    {
+      "success": false,
+      "name": "team/update_logo",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 385,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:58.578Z"
+    },
+    {
+      "success": false,
+      "name": "staff_management/delete",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 326,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:58.904Z"
+    },
+    {
+      "success": false,
+      "name": "team_management/seat",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 332,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:59.236Z"
+    },
+    {
+      "success": false,
+      "name": "team",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 302,
+        "response_size": 774
+      },
+      "timestamp": "2026-01-26T05:20:59.538Z"
+    },
+    {
+      "success": false,
+      "name": "staff_management/invite",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 328,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:20:59.866Z"
+    },
+    {
+      "success": false,
+      "name": "team_management/settings",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 379,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:00.245Z"
+    },
+    {
+      "success": false,
+      "name": "team_management/roster/count",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 266,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:00.511Z"
+    },
+    {
+      "success": false,
+      "name": "network/pipeline/stage_update",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 309,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:00.820Z"
+    },
+    {
+      "success": false,
+      "name": "network/pipeline/stage",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 192,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:01.012Z"
+    },
+    {
+      "success": false,
+      "name": "network/pipeline/card",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 332,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:01.344Z"
+    },
+    {
+      "success": false,
+      "name": "network/unfavorite",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 258,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:01.602Z"
+    },
+    {
+      "success": false,
+      "name": "network/pipeline/edit_card",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 345,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:01.947Z"
+    },
+    {
+      "success": false,
+      "name": "network/last_contacted_date",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 248,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:02.195Z"
+    },
+    {
+      "success": false,
+      "name": "network/frequency",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 319,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:02.514Z"
+    },
+    {
+      "success": false,
+      "name": "network/favorite",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 354,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:02.868Z"
+    },
+    {
+      "success": false,
+      "name": "network/pipeline/new_card",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 286,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:03.154Z"
+    },
+    {
+      "success": false,
+      "name": "network/pipeline/stage",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 249,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:03.403Z"
+    },
+    {
+      "success": false,
+      "name": "network/pipeline/status_changed",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 281,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:03.684Z"
+    },
+    {
+      "success": false,
+      "name": "user_dashboard_sections/reorder",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 261,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:03.945Z"
+    },
+    {
+      "success": false,
+      "name": "user_dashboard_sections/{id}",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 523,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:04.469Z"
+    },
+    {
+      "success": false,
+      "name": "user_dashboard_sections/{id}",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 287,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:04.756Z"
+    },
+    {
+      "success": false,
+      "name": "user_dashboard_sections",
+      "type": "endpoint",
+      "error": "HTTP 405",
+      "metadata": {
+        "status_code": 405,
+        "api_group": "Frontend API v2",
+        "duration_ms": 223,
+        "response_size": 0
+      },
+      "timestamp": "2026-01-26T05:21:04.979Z"
+    },
+    {
+      "success": false,
+      "name": "kpi_goals/save",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 448,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:05.427Z"
+    },
+    {
+      "success": false,
+      "name": "website/note",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 337,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:05.764Z"
+    },
+    {
+      "success": false,
+      "name": "chart_catalog/{chart_catalog_id}",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 270,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:06.034Z"
+    },
+    {
+      "success": false,
+      "name": "kpi_goals/list",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 653,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:06.687Z"
+    },
+    {
+      "success": false,
+      "name": "website/note",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 351,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:07.038Z"
+    },
+    {
+      "success": false,
+      "name": "user_dashboard_sections",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 318,
+        "response_size": 774
+      },
+      "timestamp": "2026-01-26T05:21:07.356Z"
+    },
+    {
+      "success": false,
+      "name": "chart_catalog",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 309,
+        "response_size": 774
+      },
+      "timestamp": "2026-01-26T05:21:07.665Z"
+    },
+    {
+      "success": false,
+      "name": "integrations/url",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 503,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:08.168Z"
+    },
+    {
+      "success": false,
+      "name": "user_dashboard_configuration",
+      "type": "endpoint",
+      "error": "HTTP 405",
+      "metadata": {
+        "status_code": 405,
+        "api_group": "Frontend API v2",
+        "duration_ms": 221,
+        "response_size": 0
+      },
+      "timestamp": "2026-01-26T05:21:08.390Z"
+    },
+    {
+      "success": false,
+      "name": "leads/fub/calls/aggregates",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 326,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:08.716Z"
+    },
+    {
+      "success": false,
+      "name": "leads/fub/calls",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 272,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:08.988Z"
+    },
+    {
+      "success": false,
+      "name": "leads/fub/events/aggregates",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 371,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:09.359Z"
+    },
+    {
+      "success": false,
+      "name": "leads/fub/people/aggregates",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 252,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:09.611Z"
+    },
+    {
+      "success": false,
+      "name": "fub/text_messages",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 275,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:09.886Z"
+    },
+    {
+      "success": false,
+      "name": "fub/appointments",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 254,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:10.140Z"
+    },
+    {
+      "success": false,
+      "name": "leads/fub/events",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 248,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:10.388Z"
+    },
+    {
+      "success": false,
+      "name": "leads/fub/deals/aggregates",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 284,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:10.672Z"
+    },
+    {
+      "success": false,
+      "name": "fub/people",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 400,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:11.072Z"
+    },
+    {
+      "success": false,
+      "name": "fub/events",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 277,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:11.349Z"
+    },
+    {
+      "success": false,
+      "name": "leads/fub/deals",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 265,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:11.614Z"
+    },
+    {
+      "success": false,
+      "name": "leads/fub/people",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 406,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:12.020Z"
+    },
+    {
+      "success": false,
+      "name": "leaderboard/show_stats",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 302,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:12.322Z"
+    },
+    {
+      "success": false,
+      "name": "network/counts",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 278,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:12.600Z"
+    },
+    {
+      "success": false,
+      "name": "revshare_totals",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 296,
+        "response_size": 774
+      },
+      "timestamp": "2026-01-26T05:21:12.896Z"
+    },
+    {
+      "success": false,
+      "name": "transactions/update_effective_team",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 335,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:13.231Z"
+    },
+    {
+      "success": false,
+      "name": "contributions",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 267,
+        "response_size": 774
+      },
+      "timestamp": "2026-01-26T05:21:13.498Z"
+    },
+    {
+      "success": false,
+      "name": "contact_log",
+      "type": "endpoint",
+      "error": "HTTP 405",
+      "metadata": {
+        "status_code": 405,
+        "api_group": "Frontend API v2",
+        "duration_ms": 266,
+        "response_size": 0
+      },
+      "timestamp": "2026-01-26T05:21:13.764Z"
+    },
+    {
+      "success": false,
+      "name": "transactions/participants",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 264,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:14.028Z"
+    },
+    {
+      "success": false,
+      "name": "contact_log",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 292,
+        "response_size": 774
+      },
+      "timestamp": "2026-01-26T05:21:14.320Z"
+    },
+    {
+      "success": false,
+      "name": "network/all",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 271,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:14.591Z"
+    },
+    {
+      "success": false,
+      "name": "listings/all",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 233,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:14.825Z"
+    },
+    {
+      "success": false,
+      "name": "revenue/all",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 291,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:15.116Z"
+    },
+    {
+      "success": false,
+      "name": "staff_management/all",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 379,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:15.495Z"
+    },
+    {
+      "success": false,
+      "name": "transactions/all",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 274,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:15.769Z"
+    },
+    {
+      "success": false,
+      "name": "network/pipeline",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 326,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:16.095Z"
+    },
+    {
+      "success": false,
+      "name": "integrations/connect-rezen",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 299,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:16.394Z"
+    },
+    {
+      "success": false,
+      "name": "listings/count",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 255,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:16.649Z"
+    },
+    {
+      "success": false,
+      "name": "staff_management/admin",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 313,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:16.962Z"
+    },
+    {
+      "success": false,
+      "name": "team_management/mentors_all",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 287,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:17.249Z"
+    },
+    {
+      "success": false,
+      "name": "team_management/directors_all",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 283,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:17.532Z"
+    },
+    {
+      "success": false,
+      "name": "team_management/leaders_all",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 272,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:17.804Z"
+    },
+    {
+      "success": false,
+      "name": "team_management/agents_all",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 276,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:18.080Z"
+    },
+    {
+      "success": false,
+      "name": "user/password",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 243,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:18.323Z"
+    },
+    {
+      "success": false,
+      "name": "staff_management/agents_with_seats",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 331,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:18.654Z"
+    },
+    {
+      "success": false,
+      "name": "transactions/details",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 272,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:18.926Z"
+    },
+    {
+      "success": false,
+      "name": "team_management/roster",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 213,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:19.139Z"
+    },
+    {
+      "success": false,
+      "name": "onboarding/default_team",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 320,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:19.459Z"
+    },
+    {
+      "success": false,
+      "name": "login/slack_error",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 175,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:19.634Z"
+    },
+    {
+      "success": false,
+      "name": "login/team_seat-multi",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 311,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:19.945Z"
+    },
+    {
+      "success": false,
+      "name": "login/team_seat-public",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 245,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:20.190Z"
+    },
+    {
+      "success": false,
+      "name": "transactions/lead_type",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 259,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:20.449Z"
+    },
+    {
+      "success": false,
+      "name": "transactions/lead_source",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 221,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:20.670Z"
+    },
+    {
+      "success": false,
+      "name": "transactions/lead_source_list",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 304,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:20.974Z"
+    },
+    {
+      "success": false,
+      "name": "website/notifications/read",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 312,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:21.286Z"
+    },
+    {
+      "success": false,
+      "name": "website/notifications",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 294,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:21.580Z"
+    },
+    {
+      "success": false,
+      "name": "website/notifications/mark_all_read",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 265,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:21.845Z"
+    },
+    {
+      "success": false,
+      "name": "website/notification_categories",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 246,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:22.092Z"
+    },
+    {
+      "success": false,
+      "name": "website/reset_admin_account",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 206,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:22.298Z"
+    },
+    {
+      "success": false,
+      "name": "website/switch_view",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 307,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:22.606Z"
+    },
+    {
+      "success": false,
+      "name": "website/notifications_count",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 241,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:22.847Z"
+    },
+    {
+      "success": false,
+      "name": "website/raffle",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 224,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:23.071Z"
+    },
+    {
+      "success": false,
+      "name": "team_management/paid_participants",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 250,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:23.321Z"
+    },
+    {
+      "success": false,
+      "name": "team_management/seats",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 237,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:23.558Z"
+    },
+    {
+      "success": false,
+      "name": "team_management/agent_by_id",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 265,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:23.823Z"
+    },
+    {
+      "success": false,
+      "name": "website/contact",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 207,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:24.030Z"
+    },
+    {
+      "success": false,
+      "name": "team_management/hide",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 262,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:24.292Z"
+    },
+    {
+      "success": false,
+      "name": "fub/bulk_add_people",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 280,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:24.572Z"
+    },
+    {
+      "success": false,
+      "name": "team_management/leaders",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 218,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:24.790Z"
+    },
+    {
+      "success": false,
+      "name": "team_management/directors",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 290,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:25.080Z"
+    },
+    {
+      "success": false,
+      "name": "leads/all",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 197,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:25.277Z"
+    },
+    {
+      "success": false,
+      "name": "fub/lambda_worker_logs/id",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 286,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:25.563Z"
+    },
+    {
+      "success": false,
+      "name": "team_management/members",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 198,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:25.762Z"
+    },
+    {
+      "success": false,
+      "name": "fub/lambda_failed_records",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 365,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:26.127Z"
+    },
+    {
+      "success": false,
+      "name": "fub/lambda_worker_logs",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 222,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:26.349Z"
+    },
+    {
+      "success": false,
+      "name": "dashboard/roster_data",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 267,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:26.617Z"
+    },
+    {
+      "success": false,
+      "name": "team_management/count",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 289,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:26.906Z"
+    },
+    {
+      "success": false,
+      "name": "importer/create_token",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 286,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:27.192Z"
+    },
+    {
+      "success": false,
+      "name": "lambda/job_checkpoint",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "Frontend API v2",
+        "duration_ms": 294,
+        "response_size": 44
+      },
+      "timestamp": "2026-01-26T05:21:27.486Z"
+    }
+  ],
+  "duration": 58372
+}

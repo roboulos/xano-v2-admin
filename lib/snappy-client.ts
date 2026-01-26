@@ -10,8 +10,9 @@ import { promisify } from 'util'
 
 const execAsync = promisify(exec)
 
-// Snappy CLI path
-const SNAPPY_PATH = '/Users/sboulos/Desktop/ai_projects/snappy-cli/bin/snappy'
+// Snappy CLI path - configurable via environment variable
+const SNAPPY_PATH =
+  process.env.SNAPPY_CLI_PATH || '/Users/sboulos/Desktop/ai_projects/snappy-cli/bin/snappy'
 
 export interface SnappyConfig {
   instance?: string
@@ -59,10 +60,9 @@ async function execSnappy(tool: string, args: Record<string, any> = {}): Promise
   const argsJson = JSON.stringify(args)
   const command = `${SNAPPY_PATH} exec ${tool} --args '${argsJson}' --json`
 
-
   try {
     const { stdout, stderr } = await execAsync(command, {
-      maxBuffer: 10 * 1024 * 1024 // 10MB buffer for large responses
+      maxBuffer: 10 * 1024 * 1024, // 10MB buffer for large responses
     })
 
     // Extract JSON from snappy's formatted output
@@ -110,18 +110,20 @@ export class SnappyClient {
   // TABLES
   // ============================================================================
 
-  async listTables(options: {
-    search?: string,
-    limit?: number,
-    page?: number
-  } = {}): Promise<{ tables: XanoTable[], total: number }> {
+  async listTables(
+    options: {
+      search?: string
+      limit?: number
+      page?: number
+    } = {}
+  ): Promise<{ tables: XanoTable[]; total: number }> {
     const result = await execSnappy('list_tables', {
       ...this.config,
       ...options,
     })
     return {
       tables: result.tables || [],
-      total: result.total || 0
+      total: result.total || 0,
     }
   }
 
@@ -132,11 +134,14 @@ export class SnappyClient {
     })
   }
 
-  async queryTable(tableName: string, options: {
-    limit?: number,
-    filters?: Record<string, any>,
-    search?: string
-  } = {}): Promise<any> {
+  async queryTable(
+    tableName: string,
+    options: {
+      limit?: number
+      filters?: Record<string, any>
+      search?: string
+    } = {}
+  ): Promise<any> {
     return execSnappy('query_table', {
       ...this.config,
       table_name: tableName,
@@ -148,20 +153,22 @@ export class SnappyClient {
   // FUNCTIONS
   // ============================================================================
 
-  async listFunctions(options: {
-    search?: string,
-    limit?: number,
-    page?: number
-  } = {}): Promise<{ functions: XanoFunction[], total: number }> {
+  async listFunctions(
+    options: {
+      search?: string
+      limit?: number
+      page?: number
+    } = {}
+  ): Promise<{ functions: XanoFunction[]; total: number }> {
     const { limit, ...rest } = options
     const result = await execSnappy('list_functions', {
       ...this.config,
       ...rest,
-      ...(limit && { per_page: limit }),  // Map "limit" to "per_page" for snappy CLI
+      ...(limit && { per_page: limit }), // Map "limit" to "per_page" for snappy CLI
     })
     return {
       functions: result.functions || [],
-      total: result.total || 0
+      total: result.total || 0,
     }
   }
 
@@ -176,19 +183,21 @@ export class SnappyClient {
   // ENDPOINTS
   // ============================================================================
 
-  async listEndpoints(options: {
-    api_group_id?: number,
-    search?: string,
-    limit?: number,
-    page?: number
-  } = {}): Promise<{ endpoints: XanoEndpoint[], total: number }> {
+  async listEndpoints(
+    options: {
+      api_group_id?: number
+      search?: string
+      limit?: number
+      page?: number
+    } = {}
+  ): Promise<{ endpoints: XanoEndpoint[]; total: number }> {
     const result = await execSnappy('list_endpoints', {
       ...this.config,
       ...options,
     })
     return {
       endpoints: result.endpoints || [],
-      total: result.total || 0
+      total: result.total || 0,
     }
   }
 
@@ -203,13 +212,13 @@ export class SnappyClient {
   // API GROUPS
   // ============================================================================
 
-  async listAPIGroups(): Promise<{ api_groups: XanoAPIGroup[], total: number }> {
+  async listAPIGroups(): Promise<{ api_groups: XanoAPIGroup[]; total: number }> {
     const result = await execSnappy('list_api_groups', {
       ...this.config,
     })
     return {
       api_groups: result.api_groups || [],
-      total: result.total || 0
+      total: result.total || 0,
     }
   }
 
@@ -241,19 +250,23 @@ export class SnappyClient {
   // TASKS
   // ============================================================================
 
-  async listTasks(options: {
-    search?: string,
-    limit?: number,
-    page?: number
-  } = {}): Promise<any> {
+  async listTasks(
+    options: {
+      search?: string
+      limit?: number
+      page?: number
+    } = {}
+  ): Promise<any> {
+    const { limit, ...rest } = options
     const result = await execSnappy('list_tasks', {
       ...this.config,
-      ...options,
+      ...rest,
+      ...(limit && { per_page: limit }), // Map "limit" to "per_page" for snappy CLI
     })
     return {
       tasks: result.tasks || [],
       total: result.total || 0,
-      next_page: result.next_page || null
+      next_page: result.next_page || null,
     }
   }
 }

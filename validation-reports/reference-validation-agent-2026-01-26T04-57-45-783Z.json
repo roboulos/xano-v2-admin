@@ -1,0 +1,123 @@
+{
+  "summary": {
+    "total": 8,
+    "passed": 0,
+    "failed": 8,
+    "passRate": 0
+  },
+  "results": [
+    {
+      "success": false,
+      "name": "agent_cap_data.agent_id",
+      "type": "reference",
+      "error": "Failed to check references",
+      "metadata": {
+        "references": "agent.id",
+        "orphan_count": -1,
+        "nullable": false,
+        "cascade_delete": true,
+        "duration_ms": 195
+      },
+      "timestamp": "2026-01-26T04:57:44.441Z"
+    },
+    {
+      "success": false,
+      "name": "agent_commission.agent_id",
+      "type": "reference",
+      "error": "Failed to check references",
+      "metadata": {
+        "references": "agent.id",
+        "orphan_count": -1,
+        "nullable": false,
+        "cascade_delete": true,
+        "duration_ms": 179
+      },
+      "timestamp": "2026-01-26T04:57:44.621Z"
+    },
+    {
+      "success": false,
+      "name": "agent_hierarchy.agent_id",
+      "type": "reference",
+      "error": "Failed to check references",
+      "metadata": {
+        "references": "agent.id",
+        "orphan_count": -1,
+        "nullable": false,
+        "cascade_delete": true,
+        "duration_ms": 174
+      },
+      "timestamp": "2026-01-26T04:57:44.795Z"
+    },
+    {
+      "success": false,
+      "name": "agent_performance.agent_id",
+      "type": "reference",
+      "error": "Failed to check references",
+      "metadata": {
+        "references": "agent.id",
+        "orphan_count": -1,
+        "nullable": false,
+        "cascade_delete": true,
+        "duration_ms": 182
+      },
+      "timestamp": "2026-01-26T04:57:44.977Z"
+    },
+    {
+      "success": false,
+      "name": "user.agent_id",
+      "type": "reference",
+      "error": "Failed to check references",
+      "metadata": {
+        "references": "agent.id",
+        "orphan_count": -1,
+        "nullable": true,
+        "cascade_delete": false,
+        "duration_ms": 170
+      },
+      "timestamp": "2026-01-26T04:57:45.147Z"
+    },
+    {
+      "success": false,
+      "name": "transaction.transaction_owner_agent_id",
+      "type": "reference",
+      "error": "Failed to check references",
+      "metadata": {
+        "references": "agent.id",
+        "orphan_count": -1,
+        "nullable": true,
+        "cascade_delete": false,
+        "duration_ms": 287
+      },
+      "timestamp": "2026-01-26T04:57:45.434Z"
+    },
+    {
+      "success": false,
+      "name": "income.agent_id",
+      "type": "reference",
+      "error": "Failed to check references",
+      "metadata": {
+        "references": "agent.id",
+        "orphan_count": -1,
+        "nullable": false,
+        "cascade_delete": false,
+        "duration_ms": 173
+      },
+      "timestamp": "2026-01-26T04:57:45.607Z"
+    },
+    {
+      "success": false,
+      "name": "contribution.agent_id",
+      "type": "reference",
+      "error": "Failed to check references",
+      "metadata": {
+        "references": "agent.id",
+        "orphan_count": -1,
+        "nullable": false,
+        "cascade_delete": false,
+        "duration_ms": 175
+      },
+      "timestamp": "2026-01-26T04:57:45.782Z"
+    }
+  ],
+  "duration": 1535
+}

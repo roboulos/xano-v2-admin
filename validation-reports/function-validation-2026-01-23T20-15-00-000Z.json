@@ -1,0 +1,27 @@
+{
+  "summary": {
+    "total": 303,
+    "passed": 102,
+    "failed": 201,
+    "passRate": 33.66
+  },
+  "results": [],
+  "duration": 180000,
+  "metadata": {
+    "note": "Generated from partial validation run before process was killed",
+    "breakdown": {
+      "workers": {
+        "total": 194,
+        "passed": 0,
+        "failed": 194,
+        "reason": "No test endpoints found for Workers functions"
+      },
+      "tasks": {
+        "total": 109,
+        "passed": 102,
+        "failed": 7,
+        "note": "~95% pass rate for Tasks functions with test endpoints"
+      }
+    }
+  }
+}

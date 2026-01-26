@@ -1,0 +1,13 @@
+# Default owner for everything
+* @roboulos
+
+# Critical configuration
+.github/ @roboulos
+CLAUDE.md @roboulos
+package.json @roboulos
+
+# API routes
+app/api/ @roboulos
+
+# Validation scripts
+scripts/validation/ @roboulos

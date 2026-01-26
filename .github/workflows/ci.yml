@@ -45,11 +45,10 @@ jobs:
 
       - name: Lint
         run: pnpm lint
-        continue-on-error: true  # Allow lint warnings (603 existing errors)
+        continue-on-error: true # Allow lint warnings (603 existing errors)
 
       - name: Build
         run: pnpm build
 
       - name: Test
         run: pnpm test --run
-        continue-on-error: true  # Tests may require Xano API access

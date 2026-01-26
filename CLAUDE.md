@@ -33,12 +33,14 @@ This is a **"Frontend Reveals Backend"** admin interface that compares the V1 Xa
 ## Xano Workspaces
 
 ### V1 Workspace (Production)
+
 - **Instance:** `xmpx-swi5-tlvy.n7c.xano.io`
 - **Workspace ID:** 1
 - **Tables:** 251 tables
 - **Status:** Production, live data
 
 ### V2 Workspace (Refactored - Normalized)
+
 - **Instance:** `x2nu-xcjc-vhax.agentdashboards.xano.io`
 - **Workspace ID:** 5
 - **Tables:** 193 tables (normalized)
@@ -49,87 +51,102 @@ This is a **"Frontend Reveals Backend"** admin interface that compares the V1 Xa
 ## V1 Tables (251 Tables) - Complete Breakdown
 
 ### Core Tables (48)
+
 Core business entities including users, agents, teams, transactions, listings, participants, network, contributions, and related junction/assignment tables.
 
-| Category | Tables | Examples |
-|----------|--------|----------|
-| Users/Agents | 5 | user, agent, user - 2FA, agent_task_history |
-| Teams | 7 | team, team - roster, team - owners, team - admins, team_admins_permissions |
-| Transactions | 6 | transaction, participant, paid participant, closing disclosure |
-| Listings | 1 | listing |
-| Network | 2 | network, network - change log |
-| Contributions | 4 | contributions, contributors, contributions - pending, revShare totals |
-| Directors/Leaders | 8 | directors, leaders, mentors + assignment tables |
-| Pipeline | 2 | pipeline - prospects, pipeline - stages |
-| Equity | 3 | equity - annual, equity - monthly, equity - transactions |
-| Title | 6 | title - orders, disbursements, events, users |
+| Category          | Tables | Examples                                                                   |
+| ----------------- | ------ | -------------------------------------------------------------------------- |
+| Users/Agents      | 5      | user, agent, user - 2FA, agent_task_history                                |
+| Teams             | 7      | team, team - roster, team - owners, team - admins, team_admins_permissions |
+| Transactions      | 6      | transaction, participant, paid participant, closing disclosure             |
+| Listings          | 1      | listing                                                                    |
+| Network           | 2      | network, network - change log                                              |
+| Contributions     | 4      | contributions, contributors, contributions - pending, revShare totals      |
+| Directors/Leaders | 8      | directors, leaders, mentors + assignment tables                            |
+| Pipeline          | 2      | pipeline - prospects, pipeline - stages                                    |
+| Equity            | 3      | equity - annual, equity - monthly, equity - transactions                   |
+| Title             | 6      | title - orders, disbursements, events, users                               |
 
 ### Aggregation Tables (48)
+
 Pre-computed aggregations for dashboards and analytics.
 
-| Domain | Tables | Examples |
-|--------|--------|----------|
-| Transactions | 7 | agg_transactions_by_month, by_agent, by_stage, by_type, by_geo, by_week, yoy |
-| Revenue | 6 | agg_revenue_by_month, by_agent, by_week, ytd, waterfall, by_deduction_type |
-| Listings | 5 | agg_listings_by_month, by_agent, by_stage, by_property_type, by_dom_bucket |
-| Network | 7 | agg_network_by_month, by_tier, by_status, by_geo, by_week, revshare_by_month |
-| Leads | 5 | agg_leads_by_month, by_agent, by_source, by_stage, conversion_funnel |
-| FUB Activity | 7 | agg_fub_activity_by_month, by_agent, calls_by_direction/outcome, events_by_type/source |
-| AI/NORA | 8 | agg_anomalies_detected, benchmarks, funnel_conversion, pacing_daily, risk_flags |
-| Jobs | 3 | aggregation_jobs, leaderboard_jobs, agg_team_leaderboard |
+| Domain       | Tables | Examples                                                                               |
+| ------------ | ------ | -------------------------------------------------------------------------------------- |
+| Transactions | 7      | agg_transactions_by_month, by_agent, by_stage, by_type, by_geo, by_week, yoy           |
+| Revenue      | 6      | agg_revenue_by_month, by_agent, by_week, ytd, waterfall, by_deduction_type             |
+| Listings     | 5      | agg_listings_by_month, by_agent, by_stage, by_property_type, by_dom_bucket             |
+| Network      | 7      | agg_network_by_month, by_tier, by_status, by_geo, by_week, revshare_by_month           |
+| Leads        | 5      | agg_leads_by_month, by_agent, by_source, by_stage, conversion_funnel                   |
+| FUB Activity | 7      | agg_fub_activity_by_month, by_agent, calls_by_direction/outcome, events_by_type/source |
+| AI/NORA      | 8      | agg_anomalies_detected, benchmarks, funnel_conversion, pacing_daily, risk_flags        |
+| Jobs         | 3      | aggregation_jobs, leaderboard_jobs, agg_team_leaderboard                               |
 
 ### FUB - Follow Up Boss (16)
+
 CRM integration tables for Follow Up Boss.
 
-| Type | Tables |
-|------|--------|
-| Core | FUB - accounts, people, deals, stages, events, users, groups |
-| Activity | FUB - calls, text messages, appointments |
-| Jobs | FUB - sync jobs, onboarding jobs, aggregation_jobs |
-| Staging | appointments staging, text messages staging |
+| Type     | Tables                                                       |
+| -------- | ------------------------------------------------------------ |
+| Core     | FUB - accounts, people, deals, stages, events, users, groups |
+| Activity | FUB - calls, text messages, appointments                     |
+| Jobs     | FUB - sync jobs, onboarding jobs, aggregation_jobs           |
+| Staging  | appointments staging, text messages staging                  |
 
 ### Integration Tables
 
-| Integration | Tables | Notes |
-|-------------|--------|-------|
-| **Rezen** | 7 | sync jobs, onboarding jobs, webhooks, referral codes + staging |
-| **SkySlope** | 3 | sync jobs, listing staging, transaction staging |
-| **DotLoop** | 6 | accounts, contacts, loops, profiles, staging, sync_state |
-| **Lofty** | 4 | accounts, leads, staging, sync_state |
+| Integration  | Tables | Notes                                                          |
+| ------------ | ------ | -------------------------------------------------------------- |
+| **Rezen**    | 7      | sync jobs, onboarding jobs, webhooks, referral codes + staging |
+| **SkySlope** | 3      | sync jobs, listing staging, transaction staging                |
+| **DotLoop**  | 6      | accounts, contacts, loops, profiles, staging, sync_state       |
+| **Lofty**    | 4      | accounts, leads, staging, sync_state                           |
 
 ### Stripe / Billing (8)
+
 Payment and subscription management.
+
 - stripe - pricing, product, subscriptions, subscription packages
 - commission payment, commission plan
 - plan_features, outgoing_payments
 
 ### Page Builder (12)
+
 Dynamic page/dashboard building system.
+
 - pages, page_tabs, page_sections, page_widgets
 - page_filters, filter_options, page_layouts
 - page_chart_assignments, widget_viewport_layouts
 - user_filter_preferences, user_page_layouts, user_dashboard_sections
 
 ### Charts (11)
+
 Visualization configuration.
+
 - chart_catalog, chart_types, chart_libraries, charts, code_chart_catalog
 - chart - transactions, my_dashboard_configuration, kpi_goals
 - luzmo - charts, collections, dashboards
 
 ### AI / NORA (10)
+
 AI-powered analytics features.
+
 - ai_chart_conversations, nora_conversations
 - ai_features_agent_period, ai_features_lead_current, ai_features_pipeline_current
 - user_insights, user_actions, snap_metrics_daily
 - dim_status_mapping, dim_time_periods
 
 ### Lambda Jobs (5)
+
 Background job processing.
+
 - lambda jobs - log, lambda jobs - status, lambda_worker_log
 - lambda_failed_record, api workers
 
 ### Logs & Audit (15)
+
 Logging and audit trails.
+
 - audits, system audit, error logs, event log
 - email - logs, email - master
 - log - contributions, log - network, log - api keys
@@ -138,7 +155,9 @@ Logging and audit trails.
 - deleted_records_audit
 
 ### Configuration (22)
+
 System configuration and reference data.
+
 - api_keys, brokerage, office, global variables
 - permissions, modules, integration
 - state or province, calendar, tags
@@ -149,7 +168,9 @@ System configuration and reference data.
 - notification categories (default, user)
 
 ### Staging / Import (16)
+
 Data import and staging tables.
+
 - CSV_Imports, csv_mapping_templates, manual_csv_upload, temp_csv_data
 - FUB staging: appointments, text messages
 - Rezen staging: contributions (daily, onboarding), listings, network, transactions, pending
@@ -158,6 +179,7 @@ Data import and staging tables.
 - temp_table, transaction_temp
 
 ### Other / Misc (25+)
+
 Various other tables including links, leads, notes, checklists, invitations, mortgages, etc.
 
 ---
@@ -166,23 +188,24 @@ Various other tables including links, leads, notes, checklists, invitations, mor
 
 ### Mapping Types
 
-| Type | Description | Example |
-|------|-------------|---------|
-| **direct** | 1:1 mapping, same name | user → user |
-| **renamed** | 1:1 but different name | roster → team_members |
-| **split** | V1 table → multiple V2 tables | transaction → transaction + financials + history |
-| **merged** | Multiple V1 → single V2 | contributors merged into contribution |
-| **deprecated** | V1 table has no V2 equivalent | fub_notes (merged into contact_log) |
-| **new** | V2 table has no V1 source | agent_cap_data (new feature) |
+| Type           | Description                   | Example                                          |
+| -------------- | ----------------------------- | ------------------------------------------------ |
+| **direct**     | 1:1 mapping, same name        | user → user                                      |
+| **renamed**    | 1:1 but different name        | roster → team_members                            |
+| **split**      | V1 table → multiple V2 tables | transaction → transaction + financials + history |
+| **merged**     | Multiple V1 → single V2       | contributors merged into contribution            |
+| **deprecated** | V1 table has no V2 equivalent | fub_notes (merged into contact_log)              |
+| **new**        | V2 table has no V1 source     | agent_cap_data (new feature)                     |
 
 ### Key Split Mappings
-| V1 Table | V2 Tables | Notes |
-|----------|-----------|-------|
-| user | user, user_credentials, user_settings, user_roles, user_subscriptions | Identity decomposed |
-| agent | agent, agent_cap_data, agent_commission, agent_hierarchy, agent_performance | Profile normalized |
-| transaction | transaction, transaction_financials, transaction_history, transaction_participants, transaction_tags | Fully normalized |
-| listing | listing, listing_history, listing_photos | Media separated |
-| network | network_hierarchy, network_member, network_user_prefs | Decomposed |
+
+| V1 Table    | V2 Tables                                                                                            | Notes               |
+| ----------- | ---------------------------------------------------------------------------------------------------- | ------------------- |
+| user        | user, user_credentials, user_settings, user_roles, user_subscriptions                                | Identity decomposed |
+| agent       | agent, agent_cap_data, agent_commission, agent_hierarchy, agent_performance                          | Profile normalized  |
+| transaction | transaction, transaction_financials, transaction_history, transaction_participants, transaction_tags | Fully normalized    |
+| listing     | listing, listing_history, listing_photos                                                             | Media separated     |
+| network     | network_hierarchy, network_member, network_user_prefs                                                | Decomposed          |
 
 ---
 
@@ -199,6 +222,7 @@ pnpm lint         # Run ESLint
 ## Architecture
 
 ### Tech Stack
+
 - **Frontend:** Next.js 16, React 19, Tailwind CSS 4, ShadCN UI
 - **Data Sources:**
   - V1: `xmpx-swi5-tlvy.n7c.xano.io` (Workspace 1)
@@ -206,6 +230,7 @@ pnpm lint         # Run ESLint
 - **MCP:** Xano MCP for live data fetching
 
 ### File Structure
+
 ```
 app/
 ├── page.tsx                    # Main dashboard with tabs
@@ -249,9 +274,9 @@ components/
 lib/
 ├── api/                        # API client layer
 │   ├── client.ts               # Axios client with auth
-│   ├── generated-types.ts      # Auto-generated types (~8K lines)
-│   ├── generated-hooks.ts      # Auto-generated React Query hooks (~12K lines)
-│   ├── generated-schemas.ts    # Auto-generated Zod schemas (~8.5K lines)
+│   ├── generated-types.ts      # Auto-generated types (21,361 lines)
+│   ├── generated-hooks.ts      # Auto-generated React Query hooks (3,298 lines)
+│   ├── generated-schemas.ts    # Auto-generated Zod schemas (3,915 lines)
 │   └── endpoint-tester.ts      # Endpoint testing utilities
 ├── v1-data.ts                  # V1 workspace data (251 tables)
 ├── v2-data.ts                  # V2 workspace data (193 tables)
@@ -290,12 +315,12 @@ validation-reports/             # Generated validation JSON
 
 Auto-generated code from OpenAPI spec (28,574 lines total):
 
-| Command | Output | Lines |
-|---------|--------|-------|
-| `npm run types:gen` | `lib/api/generated-types.ts` | ~8,000 |
-| `npm run hooks:gen` | `lib/api/generated-hooks.ts` | ~12,000 |
-| `npm run schemas:gen` | `lib/api/generated-schemas.ts` | ~8,500 |
-| `npm run api:gen` | All three | 28,574 |
+| Command               | Output                         | Lines  |
+| --------------------- | ------------------------------ | ------ |
+| `npm run types:gen`   | `lib/api/generated-types.ts`   | 21,361 |
+| `npm run hooks:gen`   | `lib/api/generated-hooks.ts`   | 3,298  |
+| `npm run schemas:gen` | `lib/api/generated-schemas.ts` | 3,915  |
+| `npm run api:gen`     | All three                      | 28,574 |
 
 **When to regenerate:** After any Xano backend changes, run `npm run api:gen`.
 
@@ -317,13 +342,13 @@ npm run validate:all         # Run all 4 validators
 
 ## Key Differences from Demo Sync
 
-| Demo Sync Admin | V1→V2 Migration Admin |
-|-----------------|------------------------|
-| Same workspace | Different workspaces |
-| live vs demo_data | V1 vs V2 schemas |
+| Demo Sync Admin    | V1→V2 Migration Admin |
+| ------------------ | --------------------- |
+| Same workspace     | Different workspaces  |
+| live vs demo_data  | V1 vs V2 schemas      |
 | Exact record match | Structural comparison |
-| Sync action | No sync (read-only) |
-| 33 synced tables | 251 vs 193 tables |
+| Sync action        | No sync (read-only)   |
+| 33 synced tables   | 251 vs 193 tables     |
 
 ---
 
@@ -338,25 +363,25 @@ The frontend makes migration status undeniable. Every table, every count, every 
 
 ## Table Count Summary
 
-| Category | V1 Count |
-|----------|----------|
-| Core | 48 |
-| Aggregation | 48 |
-| FUB | 16 |
-| Rezen | 7 |
-| SkySlope | 3 |
-| DotLoop | 6 |
-| Lofty | 4 |
-| Stripe | 8 |
-| Page Builder | 12 |
-| Charts | 11 |
-| AI/NORA | 10 |
-| Lambda | 5 |
-| Logs | 15 |
-| Config | 22 |
-| Staging | 16 |
-| Other | 20+ |
-| **TOTAL** | **251** |
+| Category     | V1 Count |
+| ------------ | -------- |
+| Core         | 48       |
+| Aggregation  | 48       |
+| FUB          | 16       |
+| Rezen        | 7        |
+| SkySlope     | 3        |
+| DotLoop      | 6        |
+| Lofty        | 4        |
+| Stripe       | 8        |
+| Page Builder | 12       |
+| Charts       | 11       |
+| AI/NORA      | 10       |
+| Lambda       | 5        |
+| Logs         | 15       |
+| Config       | 22       |
+| Staging      | 16       |
+| Other        | 20+      |
+| **TOTAL**    | **251**  |
 
 ---
 
@@ -364,39 +389,37 @@ The frontend makes migration status undeniable. Every table, every count, every 
 
 ### Tab Components (components/machine-2/)
 
-| Tab | File | Purpose |
-|-----|------|---------|
-| **Users** | `users-tab.tsx` | Demo user management (Michael, Sarah, James) |
-| **Onboarding** | `onboarding-tab.tsx` | 6-step data sync using V2 WORKERS endpoints |
-| **Syncing** | `syncing-tab.tsx` | Job queue visualization |
-| **Schema** | `schema-tab.tsx` | V1 vs V2 field comparison |
-| **API Contract** | `api-contract-tab.tsx` | Endpoint documentation & testing |
-| **Index** | `index.tsx` | Main Machine 2.0 view component |
+| Tab                    | File                         | Purpose                   |
+| ---------------------- | ---------------------------- | ------------------------- |
+| **Schema**             | `schema-tab.tsx`             | V1 vs V2 field comparison |
+| **Backend Validation** | `backend-validation-tab.tsx` | Backend validation checks |
 
 ### Onboarding Steps (6 Steps)
 
-| Step | Name | Endpoints | Tables |
-|------|------|-----------|--------|
-| 1 | Team Data | `/test-function-8066-team-roster` | team, team_roster, team_owners, team_admins |
-| 2 | Agent Data | `/test-function-8051-agent-data` | agent, user |
-| 3 | Transactions | `/test-function-8052-txn-sync` | transaction, participant, paid_participant |
-| 4 | Listings | `/test-function-8053-listings-sync`, `/test-function-8054-listings-update` | listing |
-| 5 | Contributions | `/test-function-8056-contributions`, `/test-function-8060-load-contributions` | contribution, income, revshare_totals, contributors |
-| 6 | Network | `/test-function-8062-network-downline`, `/test-function-8070-sponsor-tree` | network, connections |
+| Step | Name          | Endpoints                                                                     | Tables                                              |
+| ---- | ------------- | ----------------------------------------------------------------------------- | --------------------------------------------------- |
+| 1    | Team Data     | `/test-function-8066-team-roster`                                             | team, team_roster, team_owners, team_admins         |
+| 2    | Agent Data    | `/test-function-8051-agent-data`                                              | agent, user                                         |
+| 3    | Transactions  | `/test-function-8052-txn-sync`                                                | transaction, participant, paid_participant          |
+| 4    | Listings      | `/test-function-8053-listings-sync`, `/test-function-8054-listings-update`    | listing                                             |
+| 5    | Contributions | `/test-function-8056-contributions`, `/test-function-8060-load-contributions` | contribution, income, revshare_totals, contributors |
+| 6    | Network       | `/test-function-8062-network-downline`, `/test-function-8070-sponsor-tree`    | network, connections                                |
 
 ### MCP Endpoint Mapping (lib/mcp-endpoints.ts)
 
 **Base URLs:**
+
 ```typescript
 MCP_BASES = {
-  TASKS: "https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:4psV7fp6",
-  WORKERS: "https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:4UsTtl3m",
-  SYSTEM: "https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:LIdBL1AN",
-  SEEDING: "https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:2kCRUYxG",
+  TASKS: 'https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:4psV7fp6',
+  WORKERS: 'https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:4UsTtl3m',
+  SYSTEM: 'https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:LIdBL1AN',
+  SEEDING: 'https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:2kCRUYxG',
 }
 ```
 
 **Helper Functions:**
+
 - `getEndpointsByGroup(group)` - Filter endpoints by API group
 - `getEndpointsNeedingUserId()` - Get endpoints requiring user_id param
 - `getStandaloneEndpoints()` - Get endpoints that run without user_id
@@ -412,6 +435,7 @@ MCP_BASES = {
 **Root Cause:** Inline arrays with variables don't interpolate correctly in XanoScript.
 
 **❌ WRONG - Inline array with variable:**
+
 ```xanoscript
 var $headers {
   value = ["Content-Type: application/json", $api_key_header]
@@ -419,6 +443,7 @@ var $headers {
 ```
 
 **✅ CORRECT - Build array with |push filter:**
+
 ```xanoscript
 var $headers_arr {
   value = []
@@ -430,6 +455,7 @@ var $headers_arr {
 ### Key XanoScript Patterns
 
 #### 1. Header Array Construction
+
 ```xanoscript
 // Build headers dynamically
 var $auth_header {
@@ -443,6 +469,7 @@ var $headers {
 ```
 
 #### 2. Safe Property Access with Defaults
+
 ```xanoscript
 // Use |get filter with default value
 var $agent_id {
@@ -451,6 +478,7 @@ var $agent_id {
 ```
 
 #### 3. Timestamp Formatting
+
 ```xanoscript
 // format_timestamp filter (NOT format_date)
 var $date_str {
@@ -459,6 +487,7 @@ var $date_str {
 ```
 
 #### 4. FP Result Type Pattern
+
 ```xanoscript
 response = {
   success: true
@@ -470,13 +499,13 @@ response = {
 
 ### Common XanoScript Gotchas
 
-| Issue | Wrong | Correct |
-|-------|-------|---------|
-| Inline arrays with vars | `["header", $var]` | `[]|push:"header"|push:$var` |
-| String concatenation | `$a + $b` | `$a|concat:$b` or `$a ~ $b` |
-| Date formatting | `format_date` | `format_timestamp` |
-| Optional inputs | `text name?` | Derive internally, avoid optional |
-| Property access | `$obj.field` on null | `$obj|get:"field":default` |
+| Issue                   | Wrong                | Correct                           |
+| ----------------------- | -------------------- | --------------------------------- | ----------------------- | ---------- |
+| Inline arrays with vars | `["header", $var]`   | `[]                               | push:"header"           | push:$var` |
+| String concatenation    | `$a + $b`            | `$a                               | concat:$b` or `$a ~ $b` |
+| Date formatting         | `format_date`        | `format_timestamp`                |
+| Optional inputs         | `text name?`         | Derive internally, avoid optional |
+| Property access         | `$obj.field` on null | `$obj                             | get:"field":default`    |
 
 ### Debugging XanoScript
 
@@ -492,27 +521,30 @@ response = {
 
 **IMPORTANT:** User 60 (David Keener) is the VERIFIED test user with extensive testing history.
 
-| User | ID | Agent ID | Team ID | Notes |
-|------|-----|----------|---------|-------|
-| David Keener | 60 | 37208 | 1 | PRIMARY test user - see TRIGGER_ENDPOINTS_AUDIT.md |
+| User         | ID  | Agent ID | Team ID | Notes                                              |
+| ------------ | --- | -------- | ------- | -------------------------------------------------- |
+| David Keener | 60  | 37208    | 1       | PRIMARY test user - see TRIGGER_ENDPOINTS_AUDIT.md |
 
 **For Demo Users (v0-demo-sync-admin-interface):**
 
-| User | ID | Email | Type |
-|------|-----|-------|------|
-| Michael Johnson | 7 | michael@demo.agentdashboards.com | Team Owner (Admin) |
-| Sarah Williams | 256 | sarah@demo.agentdashboards.com | Team Member |
-| James Anderson | 133 | james@demo.agentdashboards.com | Network Builder |
+| User            | ID  | Email                            | Type               |
+| --------------- | --- | -------------------------------- | ------------------ |
+| Michael Johnson | 7   | michael@demo.agentdashboards.com | Team Owner (Admin) |
+| Sarah Williams  | 256 | sarah@demo.agentdashboards.com   | Team Member        |
+| James Anderson  | 133 | james@demo.agentdashboards.com   | Network Builder    |
 
 **Password:** `AgentDashboards143!`
 
 ### Testing Audit Reference
+
 Full testing documentation is in the agent_dashboards_2 project:
+
 - **File:** `/Users/sboulos/Desktop/ai_projects/agent_dashboards_2/TRIGGER_ENDPOINTS_AUDIT.md`
 - **Pass Rate:** 32/38 endpoints (84%) with user 60
 - **Working Groups:** FUB (9/9), Metrics (5/5), Network (4/4), Utility (3/3)
 
 ### curl Test Template
+
 ```bash
 # Test any WORKERS endpoint with verified user 60
 curl -s -X POST "https://xmpx-swi5-tlvy.n7c.xano.io/api:4UsTtl3m/ENDPOINT" \
@@ -525,21 +557,17 @@ curl -s -X POST "https://xmpx-swi5-tlvy.n7c.xano.io/api:4UsTtl3m/ENDPOINT" \
 ## File Navigation
 
 ### Main Entry Point
+
 - `app/page.tsx` - Main dashboard with tabs
 
 ### Machine 2.0 Components
-- `components/machine-2/` - All Machine 2.0 tab components
-- `components/machine-2/onboarding-tab.tsx` - **Key file for onboarding sync**
+
+- `components/machine-2/schema-tab.tsx` - V1 vs V2 field comparison
+- `components/machine-2/backend-validation-tab.tsx` - Backend validation checks
 
 ### Data Configuration
+
 - `lib/mcp-endpoints.ts` - **All endpoint mappings and base URLs**
 - `lib/v1-data.ts` - V1 workspace tables (251)
 - `lib/v2-data.ts` - V2 workspace tables (193)
 - `lib/table-mappings.ts` - V1 → V2 mappings
-
-### Other Components
-- `components/tabs/` - Original tab components (functions, tasks, endpoints, timeline)
-- `components/domains/` - Domain cards and task buttons
-- `components/task-control/` - Task control and search
-- `components/hierarchy/` - Hierarchy views
-- `components/triggers/` - Trigger chain visualization

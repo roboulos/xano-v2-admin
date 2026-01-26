@@ -1,0 +1,14 @@
+{
+  "assignee": null,
+  "claim_note": "",
+  "claimed_at": null,
+  "created_at": "2026-01-26T05:52:10.313671Z",
+  "depends_on": [],
+  "epic": "fn-1-2cy",
+  "id": "fn-1-2cy.12",
+  "priority": 12,
+  "spec_path": ".flow/tasks/fn-1-2cy.12.md",
+  "status": "todo",
+  "title": "5.1 Map complete onboarding sequence",
+  "updated_at": "2026-01-26T05:52:10.313875Z"
+}

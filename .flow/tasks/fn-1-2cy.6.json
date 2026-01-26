@@ -1,0 +1,14 @@
+{
+  "assignee": null,
+  "claim_note": "",
+  "claimed_at": null,
+  "created_at": "2026-01-26T05:52:09.466185Z",
+  "depends_on": [],
+  "epic": "fn-1-2cy",
+  "id": "fn-1-2cy.6",
+  "priority": 6,
+  "spec_path": ".flow/tasks/fn-1-2cy.6.md",
+  "status": "todo",
+  "title": "2.1 Document key worker functions by domain",
+  "updated_at": "2026-01-26T05:52:09.466347Z"
+}

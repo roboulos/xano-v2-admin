@@ -1,0 +1,81 @@
+{
+  "summary": {
+    "total": 5,
+    "passed": 0,
+    "failed": 5,
+    "passRate": 0
+  },
+  "results": [
+    {
+      "success": false,
+      "name": "transaction_financials.transaction_id",
+      "type": "reference",
+      "error": "Failed to check references",
+      "metadata": {
+        "references": "transaction.id",
+        "orphan_count": -1,
+        "nullable": false,
+        "cascade_delete": true,
+        "duration_ms": 224
+      },
+      "timestamp": "2026-01-26T05:01:10.729Z"
+    },
+    {
+      "success": false,
+      "name": "transaction_history.transaction_id",
+      "type": "reference",
+      "error": "Failed to check references",
+      "metadata": {
+        "references": "transaction.id",
+        "orphan_count": -1,
+        "nullable": false,
+        "cascade_delete": true,
+        "duration_ms": 192
+      },
+      "timestamp": "2026-01-26T05:01:10.922Z"
+    },
+    {
+      "success": false,
+      "name": "transaction_participants.transaction_id",
+      "type": "reference",
+      "error": "Failed to check references",
+      "metadata": {
+        "references": "transaction.id",
+        "orphan_count": -1,
+        "nullable": false,
+        "cascade_delete": true,
+        "duration_ms": 188
+      },
+      "timestamp": "2026-01-26T05:01:11.110Z"
+    },
+    {
+      "success": false,
+      "name": "transaction_tags.transaction_id",
+      "type": "reference",
+      "error": "Failed to check references",
+      "metadata": {
+        "references": "transaction.id",
+        "orphan_count": -1,
+        "nullable": false,
+        "cascade_delete": true,
+        "duration_ms": 204
+      },
+      "timestamp": "2026-01-26T05:01:11.314Z"
+    },
+    {
+      "success": false,
+      "name": "income.transaction_id",
+      "type": "reference",
+      "error": "Failed to check references",
+      "metadata": {
+        "references": "transaction.id",
+        "orphan_count": -1,
+        "nullable": true,
+        "cascade_delete": false,
+        "duration_ms": 267
+      },
+      "timestamp": "2026-01-26T05:01:11.581Z"
+    }
+  ],
+  "duration": 1075
+}

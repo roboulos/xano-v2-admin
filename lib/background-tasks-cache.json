@@ -1,0 +1,87 @@
+{
+  "tasks": [
+    {
+      "id": 3138,
+      "name": "AD - unregister all webhooks",
+      "type": "xs",
+      "active": true,
+      "schedule": "",
+      "draft": false
+    },
+    {
+      "id": 3134,
+      "name": "Aggregation - Leaderboard Worker",
+      "type": "xs",
+      "active": true,
+      "schedule": "",
+      "draft": false
+    },
+    {
+      "id": 3133,
+      "name": "Aggregation - Monthly Worker",
+      "type": "xs",
+      "active": true,
+      "schedule": "",
+      "draft": false
+    },
+    {
+      "id": 3132,
+      "name": "Aggregation - Daily Scheduler",
+      "type": "xs",
+      "active": true,
+      "schedule": "",
+      "draft": false
+    },
+    {
+      "id": 3123,
+      "name": "Daily Commission Sync",
+      "type": "xs",
+      "active": true,
+      "schedule": "",
+      "draft": false
+    },
+    {
+      "id": 3121,
+      "name": "AD - Run All Linking Functions",
+      "type": "xs",
+      "active": true,
+      "schedule": "",
+      "draft": false
+    },
+    {
+      "id": 2478,
+      "name": "reZEN - Network - Downline Sync v2 V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "",
+      "draft": false
+    },
+    {
+      "id": 2477,
+      "name": "reZEN - Onboarding - Process Pending Contributions V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "",
+      "draft": false
+    },
+    {
+      "id": 2476,
+      "name": "reZEN - Onboarding - Process Stage Contributions V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "",
+      "draft": false
+    },
+    {
+      "id": 2475,
+      "name": "reZEN - Onboarding - Process Stage Listings V3",
+      "type": "xs",
+      "active": true,
+      "schedule": "",
+      "draft": false
+    }
+  ],
+  "total": 10,
+  "last_updated": "2026-01-24T05:38:55.370Z",
+  "note": "Background tasks data from xano-mcp. Snappy CLI's list_tasks is broken (returns 404)."
+}

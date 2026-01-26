@@ -1,0 +1,2141 @@
+{
+  "summary": {
+    "total": 190,
+    "passed": 34,
+    "failed": 156,
+    "passRate": 17.894736842105264
+  },
+  "results": [
+    {
+      "success": false,
+      "name": "Utils/Update FUB Metrics V2",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 10997,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:16:08.707Z"
+    },
+    {
+      "success": true,
+      "name": "Utils/Update FUB Account Metrics",
+      "type": "function",
+      "metadata": {
+        "function_id": 10992,
+        "tested_via": "/update-fub-account-metrics-v2",
+        "api_group": "WORKERS",
+        "duration_ms": 1024
+      },
+      "timestamp": "2026-01-26T05:16:09.732Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Sync Pipeline Prospects from FUB Deals",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 10990,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:16:09.732Z"
+    },
+    {
+      "success": false,
+      "name": "Utils/Link FUB Deals to Users",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 10974,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:16:09.732Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Account Users - Paginated",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 10972,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:16:09.732Z"
+    },
+    {
+      "success": true,
+      "name": "Utils/Backfill FUB Calls Linking",
+      "type": "function",
+      "metadata": {
+        "function_id": 10961,
+        "tested_via": "/backfill-fub-calls-linking",
+        "api_group": "WORKERS",
+        "duration_ms": 7531
+      },
+      "timestamp": "2026-01-26T05:16:17.263Z"
+    },
+    {
+      "success": true,
+      "name": "Utils/Backfill FUB Events Linking",
+      "type": "function",
+      "metadata": {
+        "function_id": 10960,
+        "tested_via": "/backfill-fub-events-linking",
+        "api_group": "WORKERS",
+        "duration_ms": 23646
+      },
+      "timestamp": "2026-01-26T05:16:40.909Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Link FUB Calls to Users",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 10953,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:16:40.909Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Link FUB Calls to People",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 10952,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:16:40.909Z"
+    },
+    {
+      "success": false,
+      "name": "Utils/Link FUB Users to Agents via User",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 10951,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:16:40.909Z"
+    },
+    {
+      "success": false,
+      "name": "Link FUB Calls to People",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 10950,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:16:40.909Z"
+    },
+    {
+      "success": false,
+      "name": "Link FUB Calls to Users",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 10949,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:16:40.909Z"
+    },
+    {
+      "success": false,
+      "name": "Utils/Link FUB Users to Agents by Name",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 10947,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:16:40.909Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Groups",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 10941,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:16:40.910Z"
+    },
+    {
+      "success": false,
+      "name": "Backfill - FUB Calls FK Links",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 10939,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:16:40.910Z"
+    },
+    {
+      "success": false,
+      "name": "Utils/Backfill FUB People Assigned User ID",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 10048,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:16:40.910Z"
+    },
+    {
+      "success": true,
+      "name": "Utils/Backfill FUB People Stage ID",
+      "type": "function",
+      "metadata": {
+        "function_id": 10047,
+        "tested_via": "/backfill-fub-people-stage-id",
+        "api_group": "SYSTEM",
+        "duration_ms": 728
+      },
+      "timestamp": "2026-01-26T05:16:41.638Z"
+    },
+    {
+      "success": true,
+      "name": "Utils/Backfill FUB Users Agent ID",
+      "type": "function",
+      "metadata": {
+        "function_id": 10046,
+        "tested_via": "/backfill-fub-users-agent-id",
+        "api_group": "SYSTEM",
+        "duration_ms": 86311
+      },
+      "timestamp": "2026-01-26T05:18:07.949Z"
+    },
+    {
+      "success": true,
+      "name": "Utils/Backfill FUB Calls People ID",
+      "type": "function",
+      "metadata": {
+        "function_id": 10040,
+        "tested_via": "/backfill-fub-calls-people-id",
+        "api_group": "SYSTEM",
+        "duration_ms": 11989
+      },
+      "timestamp": "2026-01-26T05:18:19.938Z"
+    },
+    {
+      "success": true,
+      "name": "Utils/Backfill FUB Calls Direction",
+      "type": "function",
+      "metadata": {
+        "function_id": 10039,
+        "tested_via": "/backfill-fub-calls-direction",
+        "api_group": "SYSTEM",
+        "duration_ms": 1096
+      },
+      "timestamp": "2026-01-26T05:18:21.034Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Sync Stages from Deals",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 10033,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.034Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Move Deals to Transaction",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 10031,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.034Z"
+    },
+    {
+      "success": false,
+      "name": "Utils/Backfill FUB People Names",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 10030,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.034Z"
+    },
+    {
+      "success": false,
+      "name": "HELPER - Fix FUB Users Account ID",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 10023,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.034Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Deals",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 10022,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.034Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Deals - Upsert",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 10021,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.034Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Deals - Transform",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 10020,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.034Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Text Messages V3",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 9167,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.034Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Lambda Coordinator Validate Input",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8295,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.034Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Text Messages By Person ID",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8284,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.034Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Get Text Messages Stage_0",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8272,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.034Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Fix Appointments Missing Created By_0",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8271,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.034Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Get Account Users_0",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8273,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.034Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Get People URL_0",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8275,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.034Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Add Users To Calls_0",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8276,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.034Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Events Pull People Data_0",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8265,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.034Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Process Text Messages Stage_0",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8270,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.034Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Onboarding_0",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8267,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.034Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Get Deals_0",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8256,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.034Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Generate User People Data_0",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8255,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.034Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Refresh Tokens_0",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8241,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.034Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Get Text Messages Via Phone_0",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8231,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.034Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Get Stages_0",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8243,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.035Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Event By ID_0",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8259,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.035Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Get Calls_0",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8233,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.035Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Delete Lambda Logs_0",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8238,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.035Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Lambda Coordinator Worker Task_0",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8235,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.035Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Events Get Name_0",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8240,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.035Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - API Wrapper_0",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8242,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.035Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Add Users To Text Messages_0",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8246,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.035Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Get People - Fetch_0",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8210,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.035Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Get Text Messages_0",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8213,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.035Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Get People_0",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8214,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.035Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Get People - Upsert_0",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8196,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.035Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Get Appointments_0",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8199,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.035Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Get Events_0",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8200,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.035Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Get People - Transform_0",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8201,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.035Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Webhooks Sync_0",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8202,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.035Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Onboarding Appointments Worker_0",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8184,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.035Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Onboarding Get Appointments_0",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8159,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.035Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Fix Appointments Missing Created By",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8150,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.035Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Delete Lambda Logs",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8149,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.035Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Process Text Messages Stage",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8147,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.035Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Account Users",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8143,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.035Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Stages",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8142,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.035Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Refresh Tokens",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8141,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.035Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get People URL",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8138,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.035Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Event By ID",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8136,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.035Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Generate User People Data",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8135,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.035Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Events Pull People Data",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8134,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.035Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Onboarding",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8133,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.035Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Add Users To Calls",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8132,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.035Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Events Get Name",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8131,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.035Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Add Users To Text Messages",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8130,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.035Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Text Messages Stage",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8129,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.035Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - API Wrapper",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8128,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.035Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Lambda Coordinator Worker Task",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8118,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.035Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get All Text Messages",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8092,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.035Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get People",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8091,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.035Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Events",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8090,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.035Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Webhooks Sync",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8089,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.036Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Text Messages Via Phone",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8088,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.036Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get People - Upsert",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8087,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.036Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Deals - Fetch",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8086,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.036Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get People - Transform",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8085,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.036Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Text Messages",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8084,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.036Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get People - Fetch",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8083,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.036Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Onboarding Appointments Worker",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8067,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.036Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Calls",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8065,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.036Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Onboarding Get Appointments",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8064,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.036Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Appointments",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 8039,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:21.036Z"
+    },
+    {
+      "success": true,
+      "name": "Tasks/FUB - Get Appointments Missing Data",
+      "type": "function",
+      "metadata": {
+        "function_id": 8007,
+        "tested_via": "/fub-get-appointments-missing-data",
+        "api_group": "TASKS",
+        "duration_ms": 335
+      },
+      "timestamp": "2026-01-26T05:18:21.371Z"
+    },
+    {
+      "success": false,
+      "name": "Tasks/FUB - Fix Calls Missing Username",
+      "type": "function",
+      "error": "HTTP 500",
+      "metadata": {
+        "function_id": 8005,
+        "tested_via": "/fub-fix-calls-missing-record-username",
+        "api_group": "TASKS",
+        "duration_ms": 1102
+      },
+      "timestamp": "2026-01-26T05:18:22.473Z"
+    },
+    {
+      "success": true,
+      "name": "Tasks/FUB - Onboarding Calls Worker 4",
+      "type": "function",
+      "metadata": {
+        "function_id": 8001,
+        "tested_via": "/fub-onboarding-appointments-worker",
+        "api_group": "TASKS",
+        "duration_ms": 465
+      },
+      "timestamp": "2026-01-26T05:18:22.938Z"
+    },
+    {
+      "success": true,
+      "name": "Tasks/FUB - Onboarding Calls Worker 3",
+      "type": "function",
+      "metadata": {
+        "function_id": 7997,
+        "tested_via": "/fub-onboarding-appointments-worker",
+        "api_group": "TASKS",
+        "duration_ms": 592
+      },
+      "timestamp": "2026-01-26T05:18:23.530Z"
+    },
+    {
+      "success": true,
+      "name": "Tasks/FUB - Onboarding Calls Worker 2",
+      "type": "function",
+      "metadata": {
+        "function_id": 7994,
+        "tested_via": "/fub-onboarding-appointments-worker",
+        "api_group": "TASKS",
+        "duration_ms": 366
+      },
+      "timestamp": "2026-01-26T05:18:23.896Z"
+    },
+    {
+      "success": true,
+      "name": "Tasks/FUB - Onboarding Appointments from Users",
+      "type": "function",
+      "metadata": {
+        "function_id": 7991,
+        "tested_via": "/fub-onboarding-appointments-from-users",
+        "api_group": "TASKS",
+        "duration_ms": 483
+      },
+      "timestamp": "2026-01-26T05:18:24.380Z"
+    },
+    {
+      "success": true,
+      "name": "Tasks/FUB - Onboarding Deals",
+      "type": "function",
+      "metadata": {
+        "function_id": 7988,
+        "tested_via": "/fub-onboarding-deals-from-people",
+        "api_group": "TASKS",
+        "duration_ms": 293
+      },
+      "timestamp": "2026-01-26T05:18:24.673Z"
+    },
+    {
+      "success": true,
+      "name": "Tasks/FUB - Onboarding Text Messages",
+      "type": "function",
+      "metadata": {
+        "function_id": 7986,
+        "tested_via": "/fub-process-text-messages-from-stage",
+        "api_group": "TASKS",
+        "duration_ms": 372
+      },
+      "timestamp": "2026-01-26T05:18:25.045Z"
+    },
+    {
+      "success": true,
+      "name": "Tasks/FUB - Onboarding Appointments Worker",
+      "type": "function",
+      "metadata": {
+        "function_id": 7984,
+        "tested_via": "/fub-onboarding-appointments-from-users",
+        "api_group": "TASKS",
+        "duration_ms": 550
+      },
+      "timestamp": "2026-01-26T05:18:25.595Z"
+    },
+    {
+      "success": true,
+      "name": "Tasks/FUB - Onboarding Events Worker 1",
+      "type": "function",
+      "metadata": {
+        "function_id": 7982,
+        "tested_via": "/fub-onboarding-appointments-worker",
+        "api_group": "TASKS",
+        "duration_ms": 471
+      },
+      "timestamp": "2026-01-26T05:18:26.066Z"
+    },
+    {
+      "success": true,
+      "name": "Tasks/FUB - Onboarding Calls Worker 1",
+      "type": "function",
+      "metadata": {
+        "function_id": 7979,
+        "tested_via": "/fub-onboarding-appointments-worker",
+        "api_group": "TASKS",
+        "duration_ms": 320
+      },
+      "timestamp": "2026-01-26T05:18:26.387Z"
+    },
+    {
+      "success": true,
+      "name": "Tasks/FUB - Onboarding People Worker 1",
+      "type": "function",
+      "metadata": {
+        "function_id": 7977,
+        "tested_via": "/fub-onboarding-deals-from-people",
+        "api_group": "TASKS",
+        "duration_ms": 324
+      },
+      "timestamp": "2026-01-26T05:18:26.711Z"
+    },
+    {
+      "success": true,
+      "name": "Tasks/FUB - Daily Update Text Messages",
+      "type": "function",
+      "metadata": {
+        "function_id": 7961,
+        "tested_via": "/test-function-7960-daily-update-people",
+        "api_group": "TASKS",
+        "duration_ms": 284
+      },
+      "timestamp": "2026-01-26T05:18:26.995Z"
+    },
+    {
+      "success": true,
+      "name": "Tasks/FUB - Daily Update People",
+      "type": "function",
+      "metadata": {
+        "function_id": 7960,
+        "tested_via": "/test-function-7960-daily-update-people",
+        "api_group": "TASKS",
+        "duration_ms": 1037
+      },
+      "timestamp": "2026-01-26T05:18:28.032Z"
+    },
+    {
+      "success": true,
+      "name": "Tasks/FUB - Daily Update Events",
+      "type": "function",
+      "metadata": {
+        "function_id": 7959,
+        "tested_via": "/test-function-7960-daily-update-people",
+        "api_group": "TASKS",
+        "duration_ms": 830
+      },
+      "timestamp": "2026-01-26T05:18:28.865Z"
+    },
+    {
+      "success": true,
+      "name": "Tasks/FUB - Daily Update Deals",
+      "type": "function",
+      "metadata": {
+        "function_id": 7958,
+        "tested_via": "/test-function-7960-daily-update-people",
+        "api_group": "TASKS",
+        "duration_ms": 516
+      },
+      "timestamp": "2026-01-26T05:18:29.381Z"
+    },
+    {
+      "success": true,
+      "name": "Tasks/FUB - Daily Update Calls",
+      "type": "function",
+      "metadata": {
+        "function_id": 7957,
+        "tested_via": "/test-function-7960-daily-update-people",
+        "api_group": "TASKS",
+        "duration_ms": 504
+      },
+      "timestamp": "2026-01-26T05:18:29.885Z"
+    },
+    {
+      "success": true,
+      "name": "Tasks/FUB - Daily Update Appointments",
+      "type": "function",
+      "metadata": {
+        "function_id": 7956,
+        "tested_via": "/test-function-7960-daily-update-people",
+        "api_group": "TASKS",
+        "duration_ms": 596
+      },
+      "timestamp": "2026-01-26T05:18:30.482Z"
+    },
+    {
+      "success": true,
+      "name": "Tasks/FUB - Process Text Messages Stage",
+      "type": "function",
+      "metadata": {
+        "function_id": 7955,
+        "tested_via": "/rezen-process-stage-contributions",
+        "api_group": "TASKS",
+        "duration_ms": 323
+      },
+      "timestamp": "2026-01-26T05:18:30.805Z"
+    },
+    {
+      "success": true,
+      "name": "Tasks/FUB - Pull Count Records Update Accounts",
+      "type": "function",
+      "metadata": {
+        "function_id": 7954,
+        "tested_via": "/fub-pull-count-records-update-accounts",
+        "api_group": "TASKS",
+        "duration_ms": 331
+      },
+      "timestamp": "2026-01-26T05:18:31.136Z"
+    },
+    {
+      "success": false,
+      "name": "Tasks/FUB - Pull Events With People ID 0",
+      "type": "function",
+      "error": "HTTP 400",
+      "metadata": {
+        "function_id": 7953,
+        "tested_via": "/fub-pull-events-with-people-id-0",
+        "api_group": "TASKS",
+        "duration_ms": 391
+      },
+      "timestamp": "2026-01-26T05:18:31.527Z"
+    },
+    {
+      "success": false,
+      "name": "Tasks/FUB - People URL",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 7952,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:31.527Z"
+    },
+    {
+      "success": true,
+      "name": "Tasks/FUB - Fix People Data in FUB People",
+      "type": "function",
+      "metadata": {
+        "function_id": 7951,
+        "tested_via": "/test-function-7960-daily-update-people",
+        "api_group": "TASKS",
+        "duration_ms": 723
+      },
+      "timestamp": "2026-01-26T05:18:32.250Z"
+    },
+    {
+      "success": false,
+      "name": "Tasks/FUB - Fix People Data in Events",
+      "type": "function",
+      "error": "HTTP 400",
+      "metadata": {
+        "function_id": 7950,
+        "tested_via": "/fub-pull-events-with-people-id-0",
+        "api_group": "TASKS",
+        "duration_ms": 400
+      },
+      "timestamp": "2026-01-26T05:18:32.650Z"
+    },
+    {
+      "success": true,
+      "name": "Tasks/FUB - Fix Appointments Missing Created By",
+      "type": "function",
+      "metadata": {
+        "function_id": 7949,
+        "tested_via": "/fub-get-appointments-missing-data",
+        "api_group": "TASKS",
+        "duration_ms": 303
+      },
+      "timestamp": "2026-01-26T05:18:32.953Z"
+    },
+    {
+      "success": true,
+      "name": "Tasks/FUB - Pull Text Messages From Calling Number",
+      "type": "function",
+      "metadata": {
+        "function_id": 7948,
+        "tested_via": "/fub-process-text-messages-from-stage",
+        "api_group": "TASKS",
+        "duration_ms": 902
+      },
+      "timestamp": "2026-01-26T05:18:33.855Z"
+    },
+    {
+      "success": true,
+      "name": "Tasks/FUB - Import FUB Users ID",
+      "type": "function",
+      "metadata": {
+        "function_id": 7947,
+        "tested_via": "/fub-import-fub-users-id",
+        "api_group": "TASKS",
+        "duration_ms": 619
+      },
+      "timestamp": "2026-01-26T05:18:34.474Z"
+    },
+    {
+      "success": true,
+      "name": "Tasks/FUB - Onboarding Jobs",
+      "type": "function",
+      "metadata": {
+        "function_id": 7946,
+        "tested_via": "/fub-onboarding-jobs",
+        "api_group": "TASKS",
+        "duration_ms": 360
+      },
+      "timestamp": "2026-01-26T05:18:34.834Z"
+    },
+    {
+      "success": true,
+      "name": "Tasks/FUB - Webhook Check",
+      "type": "function",
+      "metadata": {
+        "function_id": 7945,
+        "tested_via": "/fub-webhook-check",
+        "api_group": "TASKS",
+        "duration_ms": 388
+      },
+      "timestamp": "2026-01-26T05:18:35.222Z"
+    },
+    {
+      "success": false,
+      "name": "Tasks/FUB - Get Stages",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 7942,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:35.222Z"
+    },
+    {
+      "success": false,
+      "name": "Tasks/FUB - Get Users",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 7941,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:35.222Z"
+    },
+    {
+      "success": true,
+      "name": "Tasks/FUB - Refresh Tokens",
+      "type": "function",
+      "metadata": {
+        "function_id": 7939,
+        "tested_via": "/fub-refresh-tokens",
+        "api_group": "TASKS",
+        "duration_ms": 539
+      },
+      "timestamp": "2026-01-26T05:18:35.761Z"
+    },
+    {
+      "success": true,
+      "name": "Tasks/FUB - Delete Lambda Logs",
+      "type": "function",
+      "metadata": {
+        "function_id": 7938,
+        "tested_via": "/fub-delete-lambda-logs",
+        "api_group": "TASKS",
+        "duration_ms": 474
+      },
+      "timestamp": "2026-01-26T05:18:36.236Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/fub - Get Appointments Worker V2",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5552,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.236Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Onboarding Get Appointments_V2",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5551,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.236Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB - Get Text Messages and add into stage table",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5547,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.236Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB - get people url",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5508,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.236Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/Get Account Host Name",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5511,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.236Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB - text message by ID",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5492,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.236Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB - text message by ID_0",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5494,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.236Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/[FN]-[FUB]-find_missing_people_from_records",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5505,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.236Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get All Text Messages",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5499,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.236Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB - people by ID",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5502,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.236Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get Text Messages Via Phone Number",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5500,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.236Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB - event by ID",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5498,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.236Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get Calls V2 (Sharad)",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5501,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.236Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/add fub users to calls",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5491,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.236Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB - call by ID",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5493,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.236Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get Events V2",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5483,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.236Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get Calls V2",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5481,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.236Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/add fub users to text messages",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5488,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.236Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get Appointments V2",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5480,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.236Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - people data pull test",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5486,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.236Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get People V2",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5484,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.237Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get Text Messages V2",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5485,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.237Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get Deals V2",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5482,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.237Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB - Onboarding Get Appointments",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5462,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.237Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB - Get Appointments Worker Temp",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5461,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.237Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get Appointments_v1_withName_mapping",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5453,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.237Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB - Get Appointments_v1_0",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5454,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.237Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get Text Messages by PersonId",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5435,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.237Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get Text Messages_0",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5436,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.237Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/remove_done_lambda_cordinator",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5430,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.237Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get Deals_v1",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5444,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.237Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB-Lambda-cordinator-worker-task_v1",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5439,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.237Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get Appointments_v1",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5443,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.237Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/fub_common_task",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5437,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.237Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get Text Messages_v1",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5421,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.237Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Bulk Delete FUB",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5426,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.237Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB-Lambda-cordinator-worker-task",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5428,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.237Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Async Worker_v1",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5425,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.237Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Lambda Coordinator (ASYNC)_v1",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5422,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.237Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Async Worker",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5407,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.237Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB - Onboarding",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5410,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.237Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Unified Lambda",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5405,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.237Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Lambda Coordinator (ASYNC)",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5406,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.237Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Webhooks Sync",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5408,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.237Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get Events - Lambda Checkpoint",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5401,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.237Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/fub_bulk_add_events_7",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5400,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.237Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get Events",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5382,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.237Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get People - Lambda Checkpoint",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5374,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.237Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get Pipeline by Id",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5370,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.237Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get Deals",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5369,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.237Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB - Get People Lambda Full",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5372,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.237Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get People ASYNC",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5351,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.237Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB - Get People Lambda",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5368,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.237Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB - Get People after Created Date",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5349,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.237Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB - Get Person",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5348,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.237Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get People",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5261,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.237Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get Sources",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5262,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.237Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get Text Messages",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5265,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.237Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get All Data",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5271,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.237Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Webhooks",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5272,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.237Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get Appointments",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5264,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.237Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get User Details",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5256,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.237Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get Calls",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5258,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.237Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get Stages",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5259,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.237Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get Me",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5260,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.237Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get Account Users",
+      "type": "function",
+      "error": "No test endpoint found for this function",
+      "metadata": {
+        "function_id": 5257,
+        "note": "Function may not have a callable endpoint, or mapping heuristics failed"
+      },
+      "timestamp": "2026-01-26T05:18:36.237Z"
+    }
+  ],
+  "duration": 147518
+}
