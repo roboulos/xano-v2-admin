@@ -133,6 +133,26 @@ const TABLE_REFERENCES: TableReference[] = [
     cascade_delete: false,
   },
 
+  // User → Brokerage relationship
+  {
+    table: 'user',
+    field: 'brokerage_id',
+    references_table: 'brokerage',
+    references_field: 'id',
+    nullable: true,
+    cascade_delete: false,
+  },
+
+  // User → Team relationship
+  {
+    table: 'user',
+    field: 'team_id',
+    references_table: 'team',
+    references_field: 'id',
+    nullable: true,
+    cascade_delete: false,
+  },
+
   // Transaction decomposition
   {
     table: 'transaction_financials',
@@ -209,6 +229,24 @@ const TABLE_REFERENCES: TableReference[] = [
   {
     table: 'listing',
     field: 'address_id',
+    references_table: 'address',
+    references_field: 'id',
+    nullable: true,
+    cascade_delete: false,
+  },
+
+  // Office → Address relationships
+  {
+    table: 'office',
+    field: 'address_id',
+    references_table: 'address',
+    references_field: 'id',
+    nullable: true,
+    cascade_delete: false,
+  },
+  {
+    table: 'office',
+    field: 'bank_address_id',
     references_table: 'address',
     references_field: 'id',
     nullable: true,
