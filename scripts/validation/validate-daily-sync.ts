@@ -73,6 +73,8 @@ const DAILY_SYNC_STEPS = [
     apiGroup: 'workers' as const,
     tables: ['lambda_jobs_log', 'lambda_jobs_status'],
     requiresUserId: true,
+    userIdParamName: 'ad_user_id', // Uses ad_user_id, NOT user_id
+    additionalParams: { endpoint_type: 'people' }, // Required: people|events|calls|appointments|deals|textMessages
     description: 'FUB lambda job coordinator',
   },
   {
@@ -193,21 +195,30 @@ interface DailySyncReport {
 
 /**
  * Execute curl request to endpoint
+ * @param endpoint - API endpoint path
+ * @param apiGroup - Which API group to use
+ * @param userId - User ID value (or null if not required)
+ * @param userIdParamName - Parameter name for user ID (default: 'user_id')
+ * @param additionalParams - Additional parameters to include in the request
  */
 async function callEndpoint(
   endpoint: string,
   apiGroup: 'tasks' | 'workers' | 'system',
-  userId: number | null
+  userId: number | null,
+  userIdParamName: string = 'user_id',
+  additionalParams: Record<string, string | number | boolean> = {}
 ): Promise<{ response: any; duration: number }> {
   const url = `${V2_CONFIG.base_url}/${V2_CONFIG.api_groups[apiGroup]}${endpoint}`
   const startTime = Date.now()
 
-  let curlCommand: string
+  // Build request body with proper parameter names
+  const body: Record<string, string | number | boolean> = { ...additionalParams }
   if (userId !== null) {
-    curlCommand = `curl -s -X POST "${url}" -H "Content-Type: application/json" -d '{"user_id": ${userId}}'`
-  } else {
-    curlCommand = `curl -s -X POST "${url}" -H "Content-Type: application/json" -d '{}'`
+    body[userIdParamName] = userId
   }
+
+  const bodyJson = JSON.stringify(body)
+  const curlCommand = `curl -s -X POST "${url}" -H "Content-Type: application/json" -d '${bodyJson}'`
 
   try {
     const { stdout, stderr } = await execAsync(curlCommand, {
@@ -368,7 +379,15 @@ async function runDailySyncCycle(): Promise<DailySyncReport> {
 
       try {
         const userId = step.requiresUserId ? V2_CONFIG.test_user.id : null
-        const { response, duration } = await callEndpoint(step.endpoint, step.apiGroup, userId)
+        const userIdParamName = (step as any).userIdParamName || 'user_id'
+        const additionalParams = (step as any).additionalParams || {}
+        const { response, duration } = await callEndpoint(
+          step.endpoint,
+          step.apiGroup,
+          userId,
+          userIdParamName,
+          additionalParams
+        )
         const evaluation = evaluateStepResult(response)
 
         const result: StepResult = {

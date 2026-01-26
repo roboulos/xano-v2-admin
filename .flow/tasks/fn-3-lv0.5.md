@@ -30,10 +30,10 @@ Document how onboarding jobs are created - only 1 exists currently.
 
 ## Done summary
 
-TBD
+Documented the complete onboarding job creation flow including job state machine (New->Started->Complete/Partial/Error), key functions (8299 for create, 7981 for poll/start, 8297 for orchestrate), and added 3 onboarding endpoints to mcp-endpoints.ts. Explains why Network Downline sync SKIPS when no pending jobs exist.
 
 ## Evidence
 
-- Commits:
-- Tests:
+- Commits: 6e9a803a474de3f3c00f7a1f8084eca0f4638548
+- Tests: curl test of onboarding-start-job endpoint confirmed no_jobs response
 - PRs:

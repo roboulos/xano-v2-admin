@@ -30,10 +30,10 @@ Debug why SkySlope Account Users Sync returns null response.
 
 ## Done summary
 
-TBD
+Fixed SkySlope Account Users Sync endpoint returning null. Root cause: Xano endpoint 17495 had empty stack. Fix: Updated endpoint to call function 7966 (Tasks/SkySlope - Account Users Sync Worker 1). Verified with curl - now returns proper FP result type response.
 
 ## Evidence
 
-- Commits:
-- Tests:
+- Commits: b53b41cea085fe6805c50ed5366c0f89f9ff3bbe
+- Tests: curl -s -X POST https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:4psV7fp6/test-skyslope-account-users-sync
 - PRs:
