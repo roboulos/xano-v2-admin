@@ -289,6 +289,35 @@ V2 Equivalent: 2 (partial)
 
 ---
 
+## Gap Fixes Applied (2026-01-26)
+
+### Function Gaps Fixed
+
+| Issue    | Function                                  | Resolution                                                                                                                         |
+| -------- | ----------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| HTTP 404 | Workers/Syncing - Network Downline (8074) | Removed non-existent test endpoint from mcp-endpoints.ts. This is an internal worker - use function 8062 for network sync testing. |
+
+### Table Gaps Status
+
+The 10 missing [v2] tagged tables require Xano MCP access to create:
+
+| Table                     | Status  | Notes                        |
+| ------------------------- | ------- | ---------------------------- |
+| agg_transactions_by_week  | Pending | Requires Xano table creation |
+| agg_revenue_by_week       | Pending | Requires Xano table creation |
+| agg_network_by_week       | Pending | Requires Xano table creation |
+| agg_fub_activity_by_month | Pending | Requires Xano table creation |
+| agg_fub_activity_by_agent | Pending | Requires Xano table creation |
+| agg_calls_by_direction    | Pending | Requires Xano table creation |
+| agg_calls_by_outcome      | Pending | Requires Xano table creation |
+| agg_events_by_type        | Pending | Requires Xano table creation |
+| agg_events_by_source      | Pending | Requires Xano table creation |
+| agg_texts_by_direction    | Pending | Requires Xano table creation |
+
+**Note:** These tables require Xano MCP authorization to create. When MCP is available, use `create_table` tool.
+
+---
+
 ## References
 
 - Source: `020-v1-function-inventory.md` - V1 function baseline

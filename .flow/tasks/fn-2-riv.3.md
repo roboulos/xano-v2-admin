@@ -69,10 +69,10 @@ Create `.flow/docs/021-v1-v2-gap-analysis.md` with:
 
 ## Done summary
 
-TBD
+Created comprehensive V1 vs V2 gap analysis showing 100% function coverage across all 9 domains (~240 active functions) but identified 10 missing client-requested [v2] tables (weekly aggregations and FUB activity analytics). Document includes prioritized remediation plan.
 
 ## Evidence
 
-- Commits:
-- Tests:
+- Commits: 6fb75d8c3e83c731c1423752cc0cec5e85fb9369
+- Tests: manual verification of gap analysis document
 - PRs:

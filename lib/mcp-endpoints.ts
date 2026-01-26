@@ -318,15 +318,9 @@ export const MCP_ENDPOINTS: MCPEndpoint[] = [
     requiresUserId: true,
     description: 'Full contributions processing',
   },
-  {
-    taskId: 0,
-    taskName: 'reZEN - Sync Network Downline',
-    endpoint: '/test-function-8074-sync-nw-downline',
-    apiGroup: 'WORKERS',
-    method: 'POST',
-    requiresUserId: true,
-    description: 'Sync network downline from API',
-  },
+  // REMOVED: /test-function-8074-sync-nw-downline - endpoint does not exist in Xano
+  // Function 8074 (Workers/Syncing - Network Downline) needs test endpoint created
+  // Use function 8062 (reZEN - Onboarding Process Network Downline) instead for network sync
   {
     taskId: 0,
     taskName: 'FUB - Lambda Coordinator',

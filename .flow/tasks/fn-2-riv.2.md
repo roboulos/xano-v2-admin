@@ -62,10 +62,10 @@ Pattern: Weekly breakdowns + FUB activity analytics
 
 ## Done summary
 
-TBD
+Identified 12 V1 tables with [v2] tag (client-requested features). Found 10 missing in V2: 3 weekly aggregations (transactions, revenue, network) and 7 FUB activity analytics tables. Created priority remediation list (P0: FUB Activity by Agent, Weekly Transactions).
 
 ## Evidence
 
-- Commits:
-- Tests:
+- Commits: e2d9995d128e95022153abd0fcd34b7bb29106f3
+- Tests: manual review of lib/v1-data.ts and lib/v2-data.ts
 - PRs:

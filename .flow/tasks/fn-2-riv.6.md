@@ -67,10 +67,10 @@ Reports saved to `validation-reports/`:
 
 ## Done summary
 
-TBD
+Ran comprehensive V2 validation suite with all 4 validators. Results: Tables 100% (223/223), Functions 95.65% testable (22/23), Endpoints 94.17% (194/206), References 81.82% (27/33). Fixed reference validation script to work with snappy-cli. Tables and Functions exceed targets; Endpoints are close to 96% target; References show known data migration issues with orphaned agent/contribution records.
 
 ## Evidence
 
-- Commits:
-- Tests:
+- Commits: 6ff95e1400fb9d01681981d3f3a13a9f19bf8534
+- Tests: npm run validate:tables, npm run validate:functions, npm run validate:endpoints, npm run validate:references
 - PRs:

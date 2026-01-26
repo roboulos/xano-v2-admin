@@ -1,0 +1,398 @@
+{
+  "summary": {
+    "total": 24,
+    "passed": 23,
+    "failed": 1,
+    "untestable": 0,
+    "passRate": 95.83333333333334,
+    "testablePassRate": 95.83333333333334
+  },
+  "results": [
+    {
+      "success": true,
+      "name": "/test-function-8052-txn-sync",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "workers",
+        "method": "POST",
+        "requires_auth": false,
+        "requires_user_id": true,
+        "duration_ms": 1126,
+        "response_size": 214,
+        "response_preview": "{\"success\":true,\"data\":{\"user_id\":60,\"agent_id_raw\":\"1ff98827-d8de-458c-800b-8d7dd47e6f9b\",\"api_key_present\":true,\"transaction_counts\":{\"open\":null},\"timestamp\":\"now\"},\"error\":null,\"step\":\"rezen_trans"
+      },
+      "timestamp": "2026-01-26T13:58:36.765Z"
+    },
+    {
+      "success": true,
+      "name": "/test-function-8053-listings-sync",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "workers",
+        "method": "POST",
+        "requires_auth": false,
+        "requires_user_id": true,
+        "duration_ms": 688,
+        "response_size": 260,
+        "response_preview": "{\"success\":true,\"data\":{\"user_id\":60,\"agent_id\":37208,\"agent_id_raw\":\"1ff98827-d8de-458c-800b-8d7dd47e6f9b\",\"api_key_present\":true,\"sync_job_id\":null,\"listing_counts\":{\"active\":null},\"skipped\":false,\""
+      },
+      "timestamp": "2026-01-26T13:58:37.458Z"
+    },
+    {
+      "success": true,
+      "name": "/test-function-8054-listings-update",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "workers",
+        "method": "POST",
+        "requires_auth": false,
+        "requires_user_id": true,
+        "duration_ms": 618,
+        "response_size": 283,
+        "response_preview": "{\"success\":true,\"data\":{\"user_id\":\"60\",\"agent_id\":37208,\"agent_id_raw\":\"1ff98827-d8de-458c-800b-8d7dd47e6f9b\",\"api_key_present\":true,\"job_id\":null,\"lifecycle_type\":\"OPEN\",\"listing_counts\":{\"active\":nu"
+      },
+      "timestamp": "2026-01-26T13:58:38.076Z"
+    },
+    {
+      "success": true,
+      "name": "/test-function-8055-equity",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "workers",
+        "method": "POST",
+        "requires_auth": false,
+        "requires_user_id": true,
+        "duration_ms": 6175,
+        "response_size": 291,
+        "response_preview": "{\"success\":true,\"data\":{\"sync_job_id\":null,\"user_id\":60,\"agent_id\":37208,\"agent_id_raw\":\"1ff98827-d8de-458c-800b-8d7dd47e6f9b\",\"api_key_present\":true,\"equity_data\":{\"pre_cap_equity\":null,\"elite\":false"
+      },
+      "timestamp": "2026-01-26T13:58:44.252Z"
+    },
+    {
+      "success": true,
+      "name": "/test-function-8056-contributions",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "workers",
+        "method": "POST",
+        "requires_auth": false,
+        "requires_user_id": true,
+        "duration_ms": 5175,
+        "response_size": 268,
+        "response_preview": "{\"success\":true,\"data\":{\"user_id\":60,\"agent_id\":37208,\"agent_id_raw\":\"1ff98827-d8de-458c-800b-8d7dd47e6f9b\",\"api_key_present\":true,\"tier\":1,\"type\":\"\",\"job_id\":null,\"contributions_count\":null,\"skipped\""
+      },
+      "timestamp": "2026-01-26T13:58:49.428Z"
+    },
+    {
+      "success": true,
+      "name": "/test-function-8057-stage-contributions",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "workers",
+        "method": "POST",
+        "requires_auth": false,
+        "requires_user_id": true,
+        "duration_ms": 1003,
+        "response_size": 226,
+        "response_preview": "{\"success\":true,\"data\":{\"user_id\":null,\"batch_processed\":0,\"contributions_added\":0,\"remaining_to_process\":0,\"job_completed\":false,\"no_jobs_found\":true,\"timestamp\":\"now\"},\"error\":null,\"step\":\"rezen_pro"
+      },
+      "timestamp": "2026-01-26T13:58:50.431Z"
+    },
+    {
+      "success": true,
+      "name": "/test-function-8058-network-cap",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "workers",
+        "method": "POST",
+        "requires_auth": false,
+        "requires_user_id": true,
+        "duration_ms": 1694,
+        "response_size": 449,
+        "response_preview": "{\"success\":true,\"data\":{\"user_id\":60,\"agent_id\":37208,\"agent_id_raw\":\"1ff98827-d8de-458c-800b-8d7dd47e6f9b\",\"api_key_present\":true,\"sync_job_id\":null,\"tiers_processed\":5,\"cap_data\":{\"totalNetworkSize\""
+      },
+      "timestamp": "2026-01-26T13:58:52.126Z"
+    },
+    {
+      "success": true,
+      "name": "/test-function-8059-network-frontline",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "workers",
+        "method": "POST",
+        "requires_auth": false,
+        "requires_user_id": true,
+        "duration_ms": 860,
+        "response_size": 273,
+        "response_preview": "{\"success\":false,\"data\":{\"user_id\":60,\"agent_id\":37208,\"agent_id_raw\":\"1ff98827-d8de-458c-800b-8d7dd47e6f9b\",\"api_key_present\":true,\"sync_job_id\":null,\"frontline_count\":0,\"skipped\":false,\"timestamp\":\""
+      },
+      "timestamp": "2026-01-26T13:58:52.986Z"
+    },
+    {
+      "success": true,
+      "name": "/test-function-8060-load-contributions",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "workers",
+        "method": "POST",
+        "requires_auth": false,
+        "requires_user_id": true,
+        "duration_ms": 753,
+        "response_size": 249,
+        "response_preview": "{\"success\":false,\"data\":{\"tier\":0,\"user_id\":\"60\",\"records_inserted\":0,\"timestamp\":\"now\"},\"error\":\"Error loading contributions: name=Exception, code=ERROR_FATAL, message=Unable to locate var: insert_re"
+      },
+      "timestamp": "2026-01-26T13:58:53.739Z"
+    },
+    {
+      "success": true,
+      "name": "/test-function-8061-contributors",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "workers",
+        "method": "POST",
+        "requires_auth": false,
+        "requires_user_id": true,
+        "duration_ms": 1522,
+        "response_size": 147,
+        "response_preview": "{\"success\":true,\"data\":{\"message\":\"No pending contributors jobs found\"},\"error\":\"No pending contributors jobs found\",\"step\":\"process_contributors\"}"
+      },
+      "timestamp": "2026-01-26T13:58:55.262Z"
+    },
+    {
+      "success": true,
+      "name": "/test-function-8062-network-downline",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "workers",
+        "method": "POST",
+        "requires_auth": false,
+        "requires_user_id": true,
+        "duration_ms": 615,
+        "response_size": 229,
+        "response_preview": "{\"success\":false,\"error\":\"No pending onboarding jobs found\",\"step\":\"query_onboarding_job\",\"skipped\":true,\"data\":{\"job_id\":null,\"user_id\":null,\"job_completed\":false,\"remaining_items\":null,\"downline_upd"
+      },
+      "timestamp": "2026-01-26T13:58:55.877Z"
+    },
+    {
+      "success": true,
+      "name": "/test-function-8065-fub-calls",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "workers",
+        "method": "POST",
+        "requires_auth": false,
+        "requires_user_id": true,
+        "duration_ms": 12475,
+        "response_size": 216,
+        "response_preview": "{\"success\":true,\"data\":{\"message\":\"FUB calls synced - WITH UPDATE LOGIC\",\"user_id\":60,\"total_in_fub\":166888,\"calls_fetched\":100,\"calls_processed\":100,\"people_synced\":false,\"timestamp\":\"now\"},\"step\":\"F"
+      },
+      "timestamp": "2026-01-26T13:59:08.352Z"
+    },
+    {
+      "success": true,
+      "name": "/test-rezen-team-roster-sync",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "workers",
+        "method": "POST",
+        "requires_auth": false,
+        "requires_user_id": true,
+        "duration_ms": 842,
+        "response_size": 237,
+        "response_preview": "{\"success\":false,\"data\":{\"team_id\":1,\"members_count\":0,\"leader_id\":\"1ff98827-d8de-458c-800b-8d7dd47e6f9b\"},\"error\":\"Team roster sync failed: Unable to locate var: api_response.response.result.teamMemb"
+      },
+      "timestamp": "2026-01-26T13:59:09.194Z"
+    },
+    {
+      "success": true,
+      "name": "/test-function-8067-onboarding-appointments",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "workers",
+        "method": "POST",
+        "requires_auth": false,
+        "requires_user_id": true,
+        "duration_ms": 721,
+        "response_size": 197,
+        "response_preview": "{\"success\":true,\"data\":{\"message\":\"FUB onboarding appointments processed\",\"appointments_found\":1,\"appointments_processed\":1,\"timestamp\":1769435949893},\"step\":\"FUB - Onboarding Appointments Worker\"}"
+      },
+      "timestamp": "2026-01-26T13:59:09.915Z"
+    },
+    {
+      "success": true,
+      "name": "/test-function-8068-cap-data",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "workers",
+        "method": "POST",
+        "requires_auth": false,
+        "requires_user_id": true,
+        "duration_ms": 447,
+        "response_size": 221,
+        "response_preview": "{\"success\":true,\"error\":\"No pending onboarding jobs found\",\"step\":\"process_cap_data\",\"data\":{\"message\":\"No pending onboarding jobs found\",\"job_id\":null,\"user_id\":null,\"tiers_processed\":0,\"skipped\":tru"
+      },
+      "timestamp": "2026-01-26T13:59:10.362Z"
+    },
+    {
+      "success": true,
+      "name": "/test-function-8069-equity-ob",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "workers",
+        "method": "POST",
+        "requires_auth": false,
+        "requires_user_id": true,
+        "duration_ms": 355,
+        "response_size": 161,
+        "response_preview": "{\"success\":true,\"data\":{\"job_found\":false,\"job_processed\":false,\"message\":\"No pending equity jobs in queue\",\"timestamp\":\"now\"},\"error\":null,\"step\":\"check_queue\"}"
+      },
+      "timestamp": "2026-01-26T13:59:10.718Z"
+    },
+    {
+      "success": true,
+      "name": "/test-function-8070-sponsor-tree",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "workers",
+        "method": "POST",
+        "requires_auth": false,
+        "requires_user_id": true,
+        "duration_ms": 312,
+        "response_size": 158,
+        "response_preview": "{\"success\":true,\"data\":\"```\\n    message     : \\u0022No pending sponsor tree jobs\\u0022\\n    jobs_pending: 0\\n  ```\",\"error\":null,\"step\":\"query_pending_jobs\"}"
+      },
+      "timestamp": "2026-01-26T13:59:11.030Z"
+    },
+    {
+      "success": true,
+      "name": "/test-function-8071-revshare-totals",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "workers",
+        "method": "POST",
+        "requires_auth": false,
+        "requires_user_id": true,
+        "duration_ms": 402,
+        "response_size": 149,
+        "response_preview": "{\"success\":true,\"data\":{\"message\":\"No pending revshare jobs found\",\"job_processed\":false,\"timestamp\":\"now\"},\"error\":null,\"step\":\"query_pending_jobs\"}"
+      },
+      "timestamp": "2026-01-26T13:59:11.432Z"
+    },
+    {
+      "success": true,
+      "name": "/test-function-8072-pending-contributions",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "workers",
+        "method": "POST",
+        "requires_auth": false,
+        "requires_user_id": true,
+        "duration_ms": 552,
+        "response_size": 136,
+        "response_preview": "{\"success\":true,\"data\":{\"message\":\"No pending jobs found\",\"job_found\":false,\"timestamp\":\"now\"},\"error\":null,\"step\":\"check_pending_jobs\"}"
+      },
+      "timestamp": "2026-01-26T13:59:11.984Z"
+    },
+    {
+      "success": true,
+      "name": "/test-function-8073-contributions",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "workers",
+        "method": "POST",
+        "requires_auth": false,
+        "requires_user_id": true,
+        "duration_ms": 472,
+        "response_size": 193,
+        "response_preview": "{\"success\":true,\"data\":{\"message\":\"No pending jobs to process\",\"job_found\":false,\"job_id\":null,\"user_id\":null,\"error_occurred\":false,\"timestamp\":\"now\"},\"error\":null,\"step\":\"query_pending_jobs\"}"
+      },
+      "timestamp": "2026-01-26T13:59:12.456Z"
+    },
+    {
+      "success": false,
+      "name": "/test-function-8074-sync-nw-downline",
+      "type": "endpoint",
+      "error": "HTTP 404",
+      "metadata": {
+        "status_code": 404,
+        "api_group": "workers",
+        "method": "POST",
+        "requires_auth": false,
+        "requires_user_id": true,
+        "duration_ms": 831,
+        "response_size": 44,
+        "response_preview": "{\"code\":\"ERROR_CODE_NOT_FOUND\",\"message\":\"\"}"
+      },
+      "timestamp": "2026-01-26T13:59:13.287Z"
+    },
+    {
+      "success": true,
+      "name": "/test-function-8118-lambda-coordinator",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "workers",
+        "method": "POST",
+        "requires_auth": false,
+        "requires_user_id": true,
+        "duration_ms": 321,
+        "response_size": 225,
+        "response_preview": "{\"success\":false,\"data\":{\"message\":\"No ad_user_id provided - skipping processing\",\"skipped\":true,\"timestamp\":1769435953702},\"error\":\"No ad_user_id provided - skipping processing\",\"step\":\"FUB - Lambda "
+      },
+      "timestamp": "2026-01-26T13:59:13.608Z"
+    },
+    {
+      "success": true,
+      "name": "/test-function-10022-get-deals",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "workers",
+        "method": "POST",
+        "requires_auth": false,
+        "requires_user_id": true,
+        "duration_ms": 763,
+        "response_size": 214,
+        "response_preview": "{\"success\":true,\"message\":\"FUB Get Deals - WITH SYNC ORDER\",\"fetch_status\":false,\"deals_found\":0,\"upsert_status\":true,\"upserted\":0,\"total_deals\":0,\"people_synced\":true,\"users_synced\":true,\"timestamp\":"
+      },
+      "timestamp": "2026-01-26T13:59:14.372Z"
+    },
+    {
+      "success": true,
+      "name": "/test-function-8051-agent-data",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "workers",
+        "method": "POST",
+        "requires_auth": false,
+        "requires_user_id": true,
+        "duration_ms": 832,
+        "response_size": 195,
+        "response_preview": "{\"success\":false,\"data\":{\"user_id\":60,\"agent_id\":37208,\"agent_id_raw\":\"1ff98827-d8de-458c-800b-8d7dd47e6f9b\",\"api_key_present\":true},\"error\":\"Failed to sync agent data\",\"step\":\"rezen_agent_data\"}"
+      },
+      "timestamp": "2026-01-26T13:59:15.204Z"
+    }
+  ],
+  "duration": 39554
+}

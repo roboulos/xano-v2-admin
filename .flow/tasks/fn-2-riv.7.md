@@ -65,10 +65,10 @@ Create `.flow/docs/022-broken-functions.md`:
 
 ## Done summary
 
-TBD
+Analyzed validation results to identify broken functions and data integrity issues. Created comprehensive document at .flow/docs/022-broken-functions.md categorizing 1 runtime error (Network Downline HTTP 404), 6 orphaned reference issues (500+ agent orphans), 171 untestable internal functions by domain, and 22 passing functions with prioritized fix recommendations.
 
 ## Evidence
 
-- Commits:
-- Tests:
+- Commits: 37dc7c6344b527cabdda69c29d5d7a66bf34e6b4
+- Tests: Read validation-reports/function-validation-workers-2026-01-26T14-02-01-966Z.json, Read validation-reports/reference-validation-2026-01-26T14-47-18-284Z.json, Read validation-reports/table-validation-2026-01-26T14-13-12-407Z.json
 - PRs:

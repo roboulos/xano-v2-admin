@@ -1,0 +1,144 @@
+{
+  "summary": {
+    "total": 8,
+    "passed": 5,
+    "failed": 3,
+    "untestable": 0,
+    "passRate": 62.5,
+    "testablePassRate": 62.5
+  },
+  "results": [
+    {
+      "success": false,
+      "name": "/seed/demo-dataset",
+      "type": "endpoint",
+      "error": "HTTP 500",
+      "metadata": {
+        "status_code": 500,
+        "api_group": "seeding",
+        "method": "POST",
+        "requires_auth": false,
+        "requires_user_id": false,
+        "duration_ms": 810,
+        "response_size": 56,
+        "response_preview": "{\"code\":\"ERROR_FATAL\",\"message\":\"Invalid name: mvpw5:0\"}"
+      },
+      "timestamp": "2026-01-26T14:00:54.143Z"
+    },
+    {
+      "success": true,
+      "name": "/seed/user/count",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "seeding",
+        "method": "GET",
+        "requires_auth": false,
+        "requires_user_id": false,
+        "duration_ms": 611,
+        "response_size": 104,
+        "response_preview": "{\"domain\":\"user\",\"tables\":{\"user\":318,\"credentials\":334,\"settings\":326,\"roles\":343,\"subscriptions\":330}}"
+      },
+      "timestamp": "2026-01-26T14:00:54.755Z"
+    },
+    {
+      "success": true,
+      "name": "/seed/agent/count",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "seeding",
+        "method": "GET",
+        "requires_auth": false,
+        "requires_user_id": false,
+        "duration_ms": 986,
+        "response_size": 111,
+        "response_preview": "{\"domain\":\"agent\",\"tables\":{\"agent\":36194,\"cap_data\":6,\"commission\":470,\"performance\":25006,\"hierarchy\":35147}}"
+      },
+      "timestamp": "2026-01-26T14:00:55.741Z"
+    },
+    {
+      "success": true,
+      "name": "/seed/transaction/count",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "seeding",
+        "method": "GET",
+        "requires_auth": false,
+        "requires_user_id": false,
+        "duration_ms": 353,
+        "response_size": 115,
+        "response_preview": "{\"domain\":\"transaction\",\"tables\":{\"transaction\":51835,\"participants\":171,\"financials\":49682,\"history\":78,\"tags\":1}}"
+      },
+      "timestamp": "2026-01-26T14:00:56.094Z"
+    },
+    {
+      "success": false,
+      "name": "/seed/team/count",
+      "type": "endpoint",
+      "error": "HTTP 500",
+      "metadata": {
+        "status_code": 500,
+        "api_group": "seeding",
+        "method": "GET",
+        "requires_auth": false,
+        "requires_user_id": false,
+        "duration_ms": 320,
+        "response_size": 58,
+        "response_preview": "{\"code\":\"ERROR_FATAL\",\"message\":\"Invalid name: mvpw5:365\"}"
+      },
+      "timestamp": "2026-01-26T14:00:56.414Z"
+    },
+    {
+      "success": true,
+      "name": "/seed/network/count",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "seeding",
+        "method": "GET",
+        "requires_auth": false,
+        "requires_user_id": false,
+        "duration_ms": 796,
+        "response_size": 38,
+        "response_preview": "{\"network_tables\":{\"hierarchy\":35147}}"
+      },
+      "timestamp": "2026-01-26T14:00:57.211Z"
+    },
+    {
+      "success": true,
+      "name": "/seed/listing/count",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "seeding",
+        "method": "GET",
+        "requires_auth": false,
+        "requires_user_id": false,
+        "duration_ms": 922,
+        "response_size": 24,
+        "response_preview": "{\"history\":1,\"photos\":1}"
+      },
+      "timestamp": "2026-01-26T14:00:58.133Z"
+    },
+    {
+      "success": false,
+      "name": "/clear/all",
+      "type": "endpoint",
+      "error": "HTTP 400",
+      "metadata": {
+        "status_code": 400,
+        "api_group": "seeding",
+        "method": "POST",
+        "requires_auth": false,
+        "requires_user_id": false,
+        "duration_ms": 594,
+        "response_size": 98,
+        "response_preview": "{\"code\":\"ERROR_CODE_INPUT_ERROR\",\"message\":\"Missing param: confirm\",\"payload\":{\"param\":\"confirm\"}}"
+      },
+      "timestamp": "2026-01-26T14:00:58.727Z"
+    }
+  ],
+  "duration": 5392
+}

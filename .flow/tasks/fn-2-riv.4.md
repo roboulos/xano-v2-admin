@@ -56,10 +56,10 @@ curl -X POST "https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:4UsTtl3m/test-w
 
 ## Done summary
 
-TBD
+Fixed function validation script to properly test Workers/ functions. Added MCP_ENDPOINTS integration for known test endpoints and improved result categorization with "untestable" status for internal functions. Workers validation now shows 95.65% testable pass rate (22/23 testable functions passed, 171 internal functions marked untestable).
 
 ## Evidence
 
-- Commits:
-- Tests:
+- Commits: 7f49dfe83d8a8cdc807a5c2629c09ee7a4fe15c8
+- Tests: npx tsx scripts/validation/validate-functions.ts --api-group=workers
 - PRs:

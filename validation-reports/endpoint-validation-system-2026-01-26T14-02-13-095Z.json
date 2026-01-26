@@ -1,0 +1,123 @@
+{
+  "summary": {
+    "total": 7,
+    "passed": 4,
+    "failed": 3,
+    "untestable": 0,
+    "passRate": 57.14285714285714,
+    "testablePassRate": 57.14285714285714
+  },
+  "results": [
+    {
+      "success": true,
+      "name": "/table-counts",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "system",
+        "method": "GET",
+        "requires_auth": false,
+        "requires_user_id": false,
+        "duration_ms": 1037,
+        "response_size": 260,
+        "response_preview": "{\"core_tables\":{\"agent\":36194,\"listing\":16784,\"transaction\":51835,\"user\":318},\"network_tables\":{\"network_hierarchy\":2,\"network_member\":82688,\"contribution\":515369},\"staging_tables\":{\"rezen_onboarding_"
+      },
+      "timestamp": "2026-01-26T14:01:39.409Z"
+    },
+    {
+      "success": true,
+      "name": "/staging-status",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "system",
+        "method": "GET",
+        "requires_auth": false,
+        "requires_user_id": true,
+        "duration_ms": 952,
+        "response_size": 86,
+        "response_preview": "{\"user_id\":60,\"staging\":{\"listings\":44544,\"transactions\":101598,\"contributions\":5527}}"
+      },
+      "timestamp": "2026-01-26T14:01:40.363Z"
+    },
+    {
+      "success": true,
+      "name": "/onboarding-status",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "system",
+        "method": "GET",
+        "requires_auth": false,
+        "requires_user_id": true,
+        "duration_ms": 371,
+        "response_size": 25,
+        "response_preview": "{\"user_id\":60,\"job\":null}"
+      },
+      "timestamp": "2026-01-26T14:01:40.734Z"
+    },
+    {
+      "success": false,
+      "name": "/staging-unprocessed",
+      "type": "endpoint",
+      "error": "HTTP 400",
+      "metadata": {
+        "status_code": 400,
+        "api_group": "system",
+        "method": "GET",
+        "requires_auth": false,
+        "requires_user_id": false,
+        "duration_ms": 556,
+        "response_size": 98,
+        "response_preview": "{\"code\":\"ERROR_CODE_INPUT_ERROR\",\"message\":\"Missing param: user_id\",\"payload\":{\"param\":\"user_id\"}}"
+      },
+      "timestamp": "2026-01-26T14:01:41.290Z"
+    },
+    {
+      "success": false,
+      "name": "/reset-transaction-errors",
+      "type": "endpoint",
+      "error": "HTTP 400",
+      "metadata": {
+        "status_code": 400,
+        "api_group": "system",
+        "method": "POST",
+        "requires_auth": false,
+        "requires_user_id": true,
+        "duration_ms": 560,
+        "response_size": 104,
+        "response_preview": "{\"code\":\"ERROR_CODE_INPUT_ERROR\",\"message\":\"Missing param: batch_size\",\"payload\":{\"param\":\"batch_size\"}}"
+      },
+      "timestamp": "2026-01-26T14:01:41.850Z"
+    },
+    {
+      "success": true,
+      "name": "/trigger-sponsor-tree",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "system",
+        "method": "POST",
+        "requires_auth": false,
+        "requires_user_id": true,
+        "duration_ms": 1190,
+        "response_size": 166,
+        "response_preview": "{\"success\":true,\"result\":{\"success\":true,\"data\":{\"user_id\":\"60\",\"sponsors_found\":10,\"records_inserted\":0,\"timestamp\":\"now\"},\"error\":null,\"step\":\"rezen_sponsor_tree\"}}"
+      },
+      "timestamp": "2026-01-26T14:01:43.040Z"
+    },
+    {
+      "success": false,
+      "name": "/backfill-all-updated-at",
+      "type": "endpoint",
+      "error": "Command failed: curl -s -w \"\\n%{http_code}\" -X POST \"https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:LIdBL1AN/backfill-all-updated-at\"     -H \"Content-Type: application/json\"     -d '{}'\n",
+      "metadata": {
+        "api_group": "system",
+        "method": "POST",
+        "duration_ms": 30050
+      },
+      "timestamp": "2026-01-26T14:02:13.090Z"
+    }
+  ],
+  "duration": 34716
+}

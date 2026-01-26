@@ -1,0 +1,201 @@
+{
+  "summary": {
+    "total": 12,
+    "passed": 11,
+    "failed": 1,
+    "untestable": 0,
+    "passRate": 91.66666666666666,
+    "testablePassRate": 91.66666666666666
+  },
+  "results": [
+    {
+      "success": true,
+      "name": "/test-task-8022",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "tasks",
+        "method": "POST",
+        "requires_auth": false,
+        "requires_user_id": false,
+        "duration_ms": 1939,
+        "response_size": 127,
+        "response_preview": "{\"success\":true,\"data\":{\"task\":\"reZEN - Remove Duplicates\",\"processed_users\":0,\"total_users\":0},\"step\":\"orchestrator_complete\"}"
+      },
+      "timestamp": "2026-01-26T13:59:29.125Z"
+    },
+    {
+      "success": true,
+      "name": "/test-function-7960-daily-update-people",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "tasks",
+        "method": "POST",
+        "requires_auth": false,
+        "requires_user_id": false,
+        "duration_ms": 602,
+        "response_size": 112,
+        "response_preview": "{\"success\":true,\"message\":\"No pending sync jobs found\",\"task\":\"FUB - Daily Update People\",\"jobs_processed\":null}"
+      },
+      "timestamp": "2026-01-26T13:59:29.729Z"
+    },
+    {
+      "success": false,
+      "name": "/test-task-7977",
+      "type": "endpoint",
+      "error": "Command failed: curl -s -w \"\\n%{http_code}\" -X POST \"https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:4psV7fp6/test-task-7977\"     -H \"Content-Type: application/json\"     -d '{}'\n",
+      "metadata": {
+        "api_group": "tasks",
+        "method": "POST",
+        "duration_ms": 30006
+      },
+      "timestamp": "2026-01-26T13:59:59.735Z"
+    },
+    {
+      "success": true,
+      "name": "/test-task-8023",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "tasks",
+        "method": "POST",
+        "requires_auth": false,
+        "requires_user_id": false,
+        "duration_ms": 774,
+        "response_size": 105,
+        "response_preview": "{\"success\":false,\"error\":\"No agent record found for user\",\"step\":\"get_user_agent\",\"data\":{\"user_id\":224}}"
+      },
+      "timestamp": "2026-01-26T14:00:00.510Z"
+    },
+    {
+      "success": true,
+      "name": "/test-task-8024",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "tasks",
+        "method": "POST",
+        "requires_auth": false,
+        "requires_user_id": false,
+        "duration_ms": 954,
+        "response_size": 105,
+        "response_preview": "{\"success\":false,\"error\":\"No agent record found for user\",\"step\":\"get_user_agent\",\"data\":{\"user_id\":219}}"
+      },
+      "timestamp": "2026-01-26T14:00:01.465Z"
+    },
+    {
+      "success": true,
+      "name": "/test-task-8025",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "tasks",
+        "method": "POST",
+        "requires_auth": false,
+        "requires_user_id": false,
+        "duration_ms": 922,
+        "response_size": 72,
+        "response_preview": "{\"success\":true,\"data\":{\"status\":\"no_jobs\"},\"step\":\"query_pending_jobs\"}"
+      },
+      "timestamp": "2026-01-26T14:00:02.387Z"
+    },
+    {
+      "success": true,
+      "name": "/test-task-8026",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "tasks",
+        "method": "POST",
+        "requires_auth": false,
+        "requires_user_id": false,
+        "duration_ms": 3254,
+        "response_size": 1167,
+        "response_preview": "{\"success\":true,\"data\":{\"user_id\":219,\"frontline_result\":{\"success\":true,\"message\":\"Frontline data update completed for all tiers\",\"user_id\":219,\"tiers_processed\":4,\"async_results\":{\"839de072-259f-420"
+      },
+      "timestamp": "2026-01-26T14:00:05.641Z"
+    },
+    {
+      "success": true,
+      "name": "/test-task-8027",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "tasks",
+        "method": "POST",
+        "requires_auth": false,
+        "requires_user_id": false,
+        "duration_ms": 2879,
+        "response_size": 1167,
+        "response_preview": "{\"success\":true,\"data\":{\"user_id\":224,\"frontline_result\":{\"success\":true,\"message\":\"Frontline data update completed for all tiers\",\"user_id\":224,\"tiers_processed\":4,\"async_results\":{\"b7ed3d16-a7a8-4aa"
+      },
+      "timestamp": "2026-01-26T14:00:08.520Z"
+    },
+    {
+      "success": true,
+      "name": "/test-task-8028",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "tasks",
+        "method": "POST",
+        "requires_auth": false,
+        "requires_user_id": false,
+        "duration_ms": 965,
+        "response_size": 76,
+        "response_preview": "{\"success\":true,\"data\":{\"message\":\"No jobs to process\"},\"step\":\"query_jobs\"}"
+      },
+      "timestamp": "2026-01-26T14:00:09.485Z"
+    },
+    {
+      "success": true,
+      "name": "/test-task-8029",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "tasks",
+        "method": "POST",
+        "requires_auth": false,
+        "requires_user_id": false,
+        "duration_ms": 936,
+        "response_size": 76,
+        "response_preview": "{\"success\":true,\"data\":{\"message\":\"No jobs to process\"},\"step\":\"query_jobs\"}"
+      },
+      "timestamp": "2026-01-26T14:00:10.421Z"
+    },
+    {
+      "success": true,
+      "name": "/test-task-8030",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "tasks",
+        "method": "POST",
+        "requires_auth": false,
+        "requires_user_id": false,
+        "duration_ms": 778,
+        "response_size": 90,
+        "response_preview": "{\"success\":true,\"data\":{\"message\":\"No jobs to process\",\"processed\":0},\"step\":\"query_jobs\"}"
+      },
+      "timestamp": "2026-01-26T14:00:11.199Z"
+    },
+    {
+      "success": true,
+      "name": "/test-skyslope-account-users-sync",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "tasks",
+        "method": "POST",
+        "requires_auth": false,
+        "requires_user_id": false,
+        "duration_ms": 394,
+        "response_size": 4,
+        "response_preview": "null"
+      },
+      "timestamp": "2026-01-26T14:00:11.593Z"
+    }
+  ],
+  "duration": 44403
+}

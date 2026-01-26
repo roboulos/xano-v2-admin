@@ -65,10 +65,10 @@ Fix schema gaps identified during validation, including missing foreign keys, mi
 
 ## Done summary
 
-TBD
+Fixed reference validation script to use table IDs instead of names, removed non-existent table references (team_owners, team_admins, contributors), and added missing FK relationships (user.brokerage_id, user.team_id, office address FKs). Validation now correctly identifies orphaned records (471 total across user-related tables) - these are data migration issues, not schema issues.
 
 ## Evidence
 
-- Commits:
-- Tests:
+- Commits: 47a49a7, 10cc4b6
+- Tests: npx tsx scripts/validation/validate-references.ts --relationship=user
 - PRs:

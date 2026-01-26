@@ -1,0 +1,301 @@
+{
+  "summary": {
+    "total_steps": 11,
+    "passed": 8,
+    "failed": 2,
+    "skipped": 1,
+    "duration_ms": 22118
+  },
+  "integrations": [
+    {
+      "name": "FUB",
+      "total": 5,
+      "passed": 4,
+      "failed": 1,
+      "skipped": 0
+    },
+    {
+      "name": "reZEN",
+      "total": 5,
+      "passed": 4,
+      "failed": 0,
+      "skipped": 1
+    },
+    {
+      "name": "SkySlope",
+      "total": 1,
+      "passed": 0,
+      "failed": 1,
+      "skipped": 0
+    }
+  ],
+  "test_user": {
+    "id": 60,
+    "name": "David Keener",
+    "agent_id": 37208,
+    "team_id": 1
+  },
+  "steps": [
+    {
+      "step": 1,
+      "name": "FUB - Calls Sync",
+      "integration": "FUB",
+      "endpoint": "/test-function-8065-fub-calls",
+      "success": true,
+      "skipped": false,
+      "response": {
+        "success": true,
+        "data": {
+          "message": "FUB calls synced - WITH UPDATE LOGIC",
+          "user_id": 60,
+          "total_in_fub": 166921,
+          "calls_fetched": 100,
+          "calls_processed": 100,
+          "people_synced": false,
+          "timestamp": "now"
+        },
+        "step": "FUB - Get Calls"
+      },
+      "duration_ms": 9179,
+      "timestamp": "2026-01-26T15:11:49.128Z"
+    },
+    {
+      "step": 2,
+      "name": "FUB - Onboarding Appointments",
+      "integration": "FUB",
+      "endpoint": "/test-function-8067-onboarding-appointments",
+      "success": true,
+      "skipped": false,
+      "response": {
+        "success": true,
+        "data": {
+          "message": "FUB onboarding appointments processed",
+          "appointments_found": 1,
+          "appointments_processed": 1,
+          "timestamp": 1769440309660
+        },
+        "step": "FUB - Onboarding Appointments Worker"
+      },
+      "duration_ms": 540,
+      "timestamp": "2026-01-26T15:11:49.703Z"
+    },
+    {
+      "step": 3,
+      "name": "FUB - Get Deals",
+      "integration": "FUB",
+      "endpoint": "/test-function-10022-get-deals",
+      "success": true,
+      "skipped": false,
+      "response": {
+        "success": true,
+        "message": "FUB Get Deals - WITH SYNC ORDER",
+        "fetch_status": false,
+        "deals_found": 0,
+        "upsert_status": true,
+        "upserted": 0,
+        "total_deals": 0,
+        "people_synced": true,
+        "users_synced": true,
+        "timestamp": 1769440310996
+      },
+      "duration_ms": 1209,
+      "timestamp": "2026-01-26T15:11:50.913Z"
+    },
+    {
+      "step": 4,
+      "name": "FUB - Lambda Coordinator",
+      "integration": "FUB",
+      "endpoint": "/test-function-8118-lambda-coordinator",
+      "success": false,
+      "skipped": false,
+      "response": {
+        "success": false,
+        "data": {
+          "message": "No ad_user_id provided - skipping processing",
+          "skipped": true,
+          "timestamp": 1769440311380
+        },
+        "error": "No ad_user_id provided - skipping processing",
+        "step": "FUB - Lambda Coordinator Worker Task"
+      },
+      "error": "No ad_user_id provided - skipping processing",
+      "duration_ms": 532,
+      "timestamp": "2026-01-26T15:11:51.445Z"
+    },
+    {
+      "step": 5,
+      "name": "FUB - Daily Update People",
+      "integration": "FUB",
+      "endpoint": "/test-function-7960-daily-update-people",
+      "success": true,
+      "skipped": false,
+      "response": {
+        "success": true,
+        "message": "No pending sync jobs found",
+        "task": "FUB - Daily Update People",
+        "jobs_processed": null
+      },
+      "duration_ms": 865,
+      "timestamp": "2026-01-26T15:11:52.311Z"
+    },
+    {
+      "step": 6,
+      "name": "reZEN - Transactions Sync",
+      "integration": "reZEN",
+      "endpoint": "/test-function-8052-txn-sync",
+      "success": true,
+      "skipped": false,
+      "response": {
+        "success": true,
+        "data": {
+          "user_id": 60,
+          "agent_id_raw": "1ff98827-d8de-458c-800b-8d7dd47e6f9b",
+          "api_key_present": true,
+          "transaction_counts": {
+            "open": null
+          },
+          "timestamp": "now"
+        },
+        "error": null,
+        "step": "rezen_transactions_sync"
+      },
+      "duration_ms": 1181,
+      "timestamp": "2026-01-26T15:11:53.492Z"
+    },
+    {
+      "step": 7,
+      "name": "reZEN - Listings Sync",
+      "integration": "reZEN",
+      "endpoint": "/test-function-8053-listings-sync",
+      "success": true,
+      "skipped": false,
+      "response": {
+        "success": true,
+        "data": {
+          "user_id": 60,
+          "agent_id": 37208,
+          "agent_id_raw": "1ff98827-d8de-458c-800b-8d7dd47e6f9b",
+          "api_key_present": true,
+          "sync_job_id": null,
+          "listing_counts": {
+            "active": null
+          },
+          "skipped": false,
+          "timestamp": "now"
+        },
+        "error": null,
+        "step": "rezen_listings_sync"
+      },
+      "duration_ms": 1151,
+      "timestamp": "2026-01-26T15:11:54.643Z"
+    },
+    {
+      "step": 8,
+      "name": "reZEN - Contributions",
+      "integration": "reZEN",
+      "endpoint": "/test-function-8056-contributions",
+      "success": true,
+      "skipped": false,
+      "response": {
+        "success": true,
+        "data": {
+          "user_id": 60,
+          "agent_id": 37208,
+          "agent_id_raw": "1ff98827-d8de-458c-800b-8d7dd47e6f9b",
+          "api_key_present": true,
+          "tier": 1,
+          "type": "",
+          "job_id": null,
+          "contributions_count": null,
+          "skipped": false,
+          "timestamp": "now"
+        },
+        "error": null,
+        "step": "rezen_contributions"
+      },
+      "duration_ms": 3867,
+      "timestamp": "2026-01-26T15:11:58.510Z"
+    },
+    {
+      "step": 9,
+      "name": "reZEN - Network Downline",
+      "integration": "reZEN",
+      "endpoint": "/test-function-8062-network-downline",
+      "success": true,
+      "skipped": true,
+      "response": {
+        "success": false,
+        "error": "No pending onboarding jobs found",
+        "step": "query_onboarding_job",
+        "skipped": true,
+        "data": {
+          "job_id": null,
+          "user_id": null,
+          "job_completed": false,
+          "remaining_items": null,
+          "downline_update": null,
+          "timestamp": "now"
+        }
+      },
+      "error": "No pending onboarding jobs found",
+      "duration_ms": 882,
+      "timestamp": "2026-01-26T15:11:59.392Z"
+    },
+    {
+      "step": 10,
+      "name": "reZEN - RevShare Totals",
+      "integration": "reZEN",
+      "endpoint": "/test-function-8071-revshare-totals",
+      "success": true,
+      "skipped": false,
+      "response": {
+        "success": true,
+        "data": {
+          "message": "No pending revshare jobs found",
+          "job_processed": false,
+          "timestamp": "now"
+        },
+        "error": null,
+        "step": "query_pending_jobs"
+      },
+      "duration_ms": 391,
+      "timestamp": "2026-01-26T15:11:59.783Z"
+    },
+    {
+      "step": 11,
+      "name": "SkySlope - Account Users Sync",
+      "integration": "SkySlope",
+      "endpoint": "/test-skyslope-account-users-sync",
+      "success": false,
+      "skipped": false,
+      "response": null,
+      "error": "Null or empty response from endpoint",
+      "duration_ms": 659,
+      "timestamp": "2026-01-26T15:12:00.442Z"
+    }
+  ],
+  "table_counts_before": {
+    "agent": 36200,
+    "listing": 16784,
+    "transaction": 51835,
+    "user": 324,
+    "network_hierarchy": 2,
+    "network_member": 82688,
+    "contribution": 515369,
+    "rezen_onboarding_jobs": 1,
+    "stage_listings": 44688,
+    "stage_transactions": 102843
+  },
+  "table_counts_after": {
+    "agent": 36200,
+    "listing": 16784,
+    "transaction": 51835,
+    "user": 324,
+    "network_hierarchy": 2,
+    "network_member": 82688,
+    "contribution": 515369,
+    "rezen_onboarding_jobs": 1,
+    "stage_listings": 44688,
+    "stage_transactions": 102843
+  }
+}

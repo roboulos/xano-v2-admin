@@ -143,10 +143,10 @@ Each step should return FP Result format:
 
 ## Done summary
 
-Created automated onboarding flow validation script that tests all 6 steps. Test results show 3/6 steps working (Transactions, Listings, Contributions), 2/6 failing with backend XanoScript errors (Team Data, Agent Data), and 1/6 skipped (Network - no pending jobs). Flow completes in 9.68 seconds. Identified specific backend fixes needed for fn-2-riv.12.
+Created automated onboarding flow validation script that tests all 6 onboarding steps end-to-end. Results: 3/6 PASS (Transactions, Listings, Contributions), 2/6 FAIL (Team Data, Agent Data with XanoScript errors), 1/6 SKIP (Network - no pending jobs). Flow completes in 9.68 seconds. Backend fixes documented for fn-2-riv.12.
 
 ## Evidence
 
-- Commits: (pending)
-- Tests: `npm run validate:onboarding`
-- Reports: validation-reports/onboarding-flow-2026-01-26T14-52-47-669Z.json
+- Commits: d6371d9
+- Tests: npm run validate:onboarding
+- PRs:

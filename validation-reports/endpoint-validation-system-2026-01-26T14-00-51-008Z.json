@@ -1,0 +1,125 @@
+{
+  "summary": {
+    "total": 7,
+    "passed": 2,
+    "failed": 5,
+    "untestable": 0,
+    "passRate": 28.57142857142857,
+    "testablePassRate": 28.57142857142857
+  },
+  "results": [
+    {
+      "success": true,
+      "name": "/table-counts",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "system",
+        "method": "GET",
+        "requires_auth": false,
+        "requires_user_id": false,
+        "duration_ms": 989,
+        "response_size": 260,
+        "response_preview": "{\"core_tables\":{\"agent\":36191,\"listing\":16784,\"transaction\":51835,\"user\":315},\"network_tables\":{\"network_hierarchy\":2,\"network_member\":82688,\"contribution\":515369},\"staging_tables\":{\"rezen_onboarding_"
+      },
+      "timestamp": "2026-01-26T14:00:15.903Z"
+    },
+    {
+      "success": false,
+      "name": "/staging-status",
+      "type": "endpoint",
+      "error": "HTTP 400",
+      "metadata": {
+        "status_code": 400,
+        "api_group": "system",
+        "method": "GET",
+        "requires_auth": false,
+        "requires_user_id": true,
+        "duration_ms": 942,
+        "response_size": 98,
+        "response_preview": "{\"code\":\"ERROR_CODE_INPUT_ERROR\",\"message\":\"Missing param: user_id\",\"payload\":{\"param\":\"user_id\"}}"
+      },
+      "timestamp": "2026-01-26T14:00:16.857Z"
+    },
+    {
+      "success": false,
+      "name": "/onboarding-status",
+      "type": "endpoint",
+      "error": "HTTP 400",
+      "metadata": {
+        "status_code": 400,
+        "api_group": "system",
+        "method": "GET",
+        "requires_auth": false,
+        "requires_user_id": true,
+        "duration_ms": 857,
+        "response_size": 98,
+        "response_preview": "{\"code\":\"ERROR_CODE_INPUT_ERROR\",\"message\":\"Missing param: user_id\",\"payload\":{\"param\":\"user_id\"}}"
+      },
+      "timestamp": "2026-01-26T14:00:17.714Z"
+    },
+    {
+      "success": false,
+      "name": "/staging-unprocessed",
+      "type": "endpoint",
+      "error": "HTTP 400",
+      "metadata": {
+        "status_code": 400,
+        "api_group": "system",
+        "method": "GET",
+        "requires_auth": false,
+        "requires_user_id": false,
+        "duration_ms": 1456,
+        "response_size": 98,
+        "response_preview": "{\"code\":\"ERROR_CODE_INPUT_ERROR\",\"message\":\"Missing param: user_id\",\"payload\":{\"param\":\"user_id\"}}"
+      },
+      "timestamp": "2026-01-26T14:00:19.170Z"
+    },
+    {
+      "success": false,
+      "name": "/reset-transaction-errors",
+      "type": "endpoint",
+      "error": "HTTP 400",
+      "metadata": {
+        "status_code": 400,
+        "api_group": "system",
+        "method": "POST",
+        "requires_auth": false,
+        "requires_user_id": true,
+        "duration_ms": 789,
+        "response_size": 104,
+        "response_preview": "{\"code\":\"ERROR_CODE_INPUT_ERROR\",\"message\":\"Missing param: batch_size\",\"payload\":{\"param\":\"batch_size\"}}"
+      },
+      "timestamp": "2026-01-26T14:00:19.959Z"
+    },
+    {
+      "success": true,
+      "name": "/trigger-sponsor-tree",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "system",
+        "method": "POST",
+        "requires_auth": false,
+        "requires_user_id": true,
+        "duration_ms": 1042,
+        "response_size": 166,
+        "response_preview": "{\"success\":true,\"result\":{\"success\":true,\"data\":{\"user_id\":\"60\",\"sponsors_found\":10,\"records_inserted\":0,\"timestamp\":\"now\"},\"error\":null,\"step\":\"rezen_sponsor_tree\"}}"
+      },
+      "timestamp": "2026-01-26T14:00:21.001Z"
+    },
+    {
+      "success": false,
+      "name": "/backfill-all-updated-at",
+      "type": "endpoint",
+      "error": "Command failed: curl -s -w \"\\n%{http_code}\" -X POST \"https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:LIdBL1AN/backfill-all-updated-at\"     -H \"Content-Type: application/json\"     -d '{}'\n",
+      "metadata": {
+        "api_group": "system",
+        "method": "POST",
+        "duration_ms": 30004
+      },
+      "timestamp": "2026-01-26T14:00:51.006Z"
+    }
+  ],
+  "duration": 36079
+}

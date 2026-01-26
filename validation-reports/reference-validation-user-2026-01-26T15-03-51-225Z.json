@@ -1,0 +1,111 @@
+{
+  "summary": {
+    "total": 7,
+    "passed": 0,
+    "failed": 7,
+    "untestable": 0,
+    "passRate": 0,
+    "testablePassRate": 0
+  },
+  "results": [
+    {
+      "success": false,
+      "name": "user_credentials.user_id",
+      "type": "reference",
+      "error": "Found 82 orphaned references. Sample IDs: 34, 35, 36, 37, 38, 39, 40, 41, 42, 43",
+      "metadata": {
+        "references": "user.id",
+        "orphan_count": 82,
+        "nullable": false,
+        "cascade_delete": true,
+        "duration_ms": 105282
+      },
+      "timestamp": "2026-01-26T14:58:20.705Z"
+    },
+    {
+      "success": false,
+      "name": "user_settings.user_id",
+      "type": "reference",
+      "error": "Found 89 orphaned references. Sample IDs: 30, 31, 32, 33, 34, 35, 36, 37, 38, 39",
+      "metadata": {
+        "references": "user.id",
+        "orphan_count": 89,
+        "nullable": false,
+        "cascade_delete": true,
+        "duration_ms": 104392
+      },
+      "timestamp": "2026-01-26T15:00:05.098Z"
+    },
+    {
+      "success": false,
+      "name": "user_roles.user_id",
+      "type": "reference",
+      "error": "Found 23 orphaned references. Sample IDs: 27, 28, 29, 34, 35, 36, 37, 38, 39, 40",
+      "metadata": {
+        "references": "user.id",
+        "orphan_count": 23,
+        "nullable": false,
+        "cascade_delete": true,
+        "duration_ms": 112217
+      },
+      "timestamp": "2026-01-26T15:01:57.315Z"
+    },
+    {
+      "success": false,
+      "name": "user_subscriptions.user_id",
+      "type": "reference",
+      "error": "Found 82 orphaned references. Sample IDs: 23, 24, 25, 26, 27, 28, 29, 30, 31, 32",
+      "metadata": {
+        "references": "user.id",
+        "orphan_count": 82,
+        "nullable": false,
+        "cascade_delete": true,
+        "duration_ms": 104351
+      },
+      "timestamp": "2026-01-26T15:03:41.666Z"
+    },
+    {
+      "success": false,
+      "name": "agent.user_id",
+      "type": "reference",
+      "error": "Found 94 orphaned references. Sample IDs: 470, 471, 472, 473, 474, 475, 476, 477, 478, 479",
+      "metadata": {
+        "references": "user.id",
+        "orphan_count": 94,
+        "nullable": false,
+        "cascade_delete": false,
+        "duration_ms": 4436
+      },
+      "timestamp": "2026-01-26T15:03:46.102Z"
+    },
+    {
+      "success": false,
+      "name": "team_members.user_id",
+      "type": "reference",
+      "error": "Found 100 orphaned references. Sample IDs: 88, 89, 90, 91, 92, 93, 94, 95, 96, 97",
+      "metadata": {
+        "references": "user.id",
+        "orphan_count": 100,
+        "nullable": false,
+        "cascade_delete": false,
+        "duration_ms": 1470
+      },
+      "timestamp": "2026-01-26T15:03:47.572Z"
+    },
+    {
+      "success": false,
+      "name": "network_user_prefs.user_id",
+      "type": "reference",
+      "error": "Found 1 orphaned references. Sample IDs: 9",
+      "metadata": {
+        "references": "user.id",
+        "orphan_count": 1,
+        "nullable": false,
+        "cascade_delete": true,
+        "duration_ms": 3652
+      },
+      "timestamp": "2026-01-26T15:03:51.224Z"
+    }
+  ],
+  "duration": 435800
+}

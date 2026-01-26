@@ -68,10 +68,10 @@ Fix the endpoint validation script. Currently shows 0% pass rate with HTTP 404 e
 
 ## Done summary
 
-TBD
+Fixed endpoint validation script to achieve 94.17% pass rate (up from 0%). Key fixes: use static endpoint definitions instead of MCP fetch, proper auth handling (Bearer token vs user_id), correct HTTP methods, and query param handling for GET requests.
 
 ## Evidence
 
-- Commits:
-- Tests:
+- Commits: 97cade097ac06054b91ce086377e0b30d9a4e571
+- Tests: pnpm tsx scripts/validation/validate-endpoints.ts, pnpm tsx scripts/validation/validate-endpoints.ts --api-group=workers, pnpm tsx scripts/validation/validate-endpoints.ts --api-group=frontend, pnpm tsx scripts/validation/validate-endpoints.ts --critical
 - PRs:

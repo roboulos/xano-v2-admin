@@ -24,6 +24,7 @@
     "validate:references": "tsx scripts/validation/validate-references.ts",
     "validate:all": "npm run validate:tables && npm run validate:functions && npm run validate:endpoints && npm run validate:references",
     "validate:onboarding": "tsx scripts/validation/validate-onboarding-flow.ts",
+    "validate:daily-sync": "tsx scripts/validation/validate-daily-sync.ts",
     "prepare": "husky"
   },
   "dependencies": {

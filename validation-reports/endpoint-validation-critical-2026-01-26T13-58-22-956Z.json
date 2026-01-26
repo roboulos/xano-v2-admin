@@ -1,0 +1,159 @@
+{
+  "summary": {
+    "total": 9,
+    "passed": 7,
+    "failed": 2,
+    "untestable": 0,
+    "passRate": 77.77777777777779,
+    "testablePassRate": 77.77777777777779
+  },
+  "results": [
+    {
+      "success": true,
+      "name": "/backfill-agent-team-id-v2",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "frontend",
+        "method": "POST",
+        "requires_auth": false,
+        "requires_user_id": false,
+        "duration_ms": 859,
+        "response_size": 134,
+        "response_preview": "{\"success\":true,\"batch_size\":500,\"page\":1,\"total_teams\":0,\"updated_from_team_owner\":0,\"total_members\":0,\"updated_from_team_members\":0}"
+      },
+      "timestamp": "2026-01-26T13:58:14.055Z"
+    },
+    {
+      "success": false,
+      "name": "/leaderboard/computed",
+      "type": "endpoint",
+      "error": "HTTP 400",
+      "metadata": {
+        "status_code": 400,
+        "api_group": "frontend",
+        "method": "GET",
+        "requires_auth": false,
+        "requires_user_id": false,
+        "duration_ms": 1302,
+        "response_size": 106,
+        "response_preview": "{\"code\":\"ERROR_CODE_INPUT_ERROR\",\"message\":\"Missing param: time_period\",\"payload\":{\"param\":\"time_period\"}}"
+      },
+      "timestamp": "2026-01-26T13:58:15.358Z"
+    },
+    {
+      "success": true,
+      "name": "/table-counts",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "system",
+        "method": "GET",
+        "requires_auth": false,
+        "requires_user_id": false,
+        "duration_ms": 563,
+        "response_size": 260,
+        "response_preview": "{\"core_tables\":{\"agent\":36191,\"listing\":16784,\"transaction\":51835,\"user\":315},\"network_tables\":{\"network_hierarchy\":2,\"network_member\":82688,\"contribution\":515369},\"staging_tables\":{\"rezen_onboarding_"
+      },
+      "timestamp": "2026-01-26T13:58:15.921Z"
+    },
+    {
+      "success": false,
+      "name": "/staging-unprocessed",
+      "type": "endpoint",
+      "error": "HTTP 400",
+      "metadata": {
+        "status_code": 400,
+        "api_group": "system",
+        "method": "GET",
+        "requires_auth": false,
+        "requires_user_id": false,
+        "duration_ms": 914,
+        "response_size": 98,
+        "response_preview": "{\"code\":\"ERROR_CODE_INPUT_ERROR\",\"message\":\"Missing param: user_id\",\"payload\":{\"param\":\"user_id\"}}"
+      },
+      "timestamp": "2026-01-26T13:58:16.835Z"
+    },
+    {
+      "success": true,
+      "name": "/test-function-8051-agent-data",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "workers",
+        "method": "POST",
+        "requires_auth": false,
+        "requires_user_id": true,
+        "duration_ms": 1265,
+        "response_size": 195,
+        "response_preview": "{\"success\":false,\"data\":{\"user_id\":60,\"agent_id\":37208,\"agent_id_raw\":\"1ff98827-d8de-458c-800b-8d7dd47e6f9b\",\"api_key_present\":true},\"error\":\"Failed to sync agent data\",\"step\":\"rezen_agent_data\"}"
+      },
+      "timestamp": "2026-01-26T13:58:18.100Z"
+    },
+    {
+      "success": true,
+      "name": "/test-function-8052-txn-sync",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "workers",
+        "method": "POST",
+        "requires_auth": false,
+        "requires_user_id": true,
+        "duration_ms": 1536,
+        "response_size": 214,
+        "response_preview": "{\"success\":true,\"data\":{\"user_id\":60,\"agent_id_raw\":\"1ff98827-d8de-458c-800b-8d7dd47e6f9b\",\"api_key_present\":true,\"transaction_counts\":{\"open\":null},\"timestamp\":\"now\"},\"error\":null,\"step\":\"rezen_trans"
+      },
+      "timestamp": "2026-01-26T13:58:19.636Z"
+    },
+    {
+      "success": true,
+      "name": "/test-function-8062-network-downline",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "workers",
+        "method": "POST",
+        "requires_auth": false,
+        "requires_user_id": true,
+        "duration_ms": 1342,
+        "response_size": 229,
+        "response_preview": "{\"success\":false,\"error\":\"No pending onboarding jobs found\",\"step\":\"query_onboarding_job\",\"skipped\":true,\"data\":{\"job_id\":null,\"user_id\":null,\"job_completed\":false,\"remaining_items\":null,\"downline_upd"
+      },
+      "timestamp": "2026-01-26T13:58:20.978Z"
+    },
+    {
+      "success": true,
+      "name": "/seed/user/count",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "seeding",
+        "method": "GET",
+        "requires_auth": false,
+        "requires_user_id": false,
+        "duration_ms": 1604,
+        "response_size": 104,
+        "response_preview": "{\"domain\":\"user\",\"tables\":{\"user\":315,\"credentials\":331,\"settings\":323,\"roles\":340,\"subscriptions\":327}}"
+      },
+      "timestamp": "2026-01-26T13:58:22.582Z"
+    },
+    {
+      "success": true,
+      "name": "/seed/transaction/count",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "seeding",
+        "method": "GET",
+        "requires_auth": false,
+        "requires_user_id": false,
+        "duration_ms": 372,
+        "response_size": 115,
+        "response_preview": "{\"domain\":\"transaction\",\"tables\":{\"transaction\":51835,\"participants\":171,\"financials\":49682,\"history\":78,\"tags\":1}}"
+      },
+      "timestamp": "2026-01-26T13:58:22.955Z"
+    }
+  ],
+  "duration": 9757
+}
