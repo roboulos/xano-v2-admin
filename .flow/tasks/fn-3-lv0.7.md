@@ -37,10 +37,10 @@ Create an alerting system that monitors V2 data pipelines and sends notification
 
 ## Done summary
 
-Created comprehensive pipeline alerting system (scripts/validation/pipeline-alerting.ts) that monitors V2 data pipeline health. The script checks table counts, staging backlog, onboarding jobs, and daily sync health, then sends Slack notifications via the unified webhook API for any critical or warning alerts. Supports dry-run mode for testing and generates JSON reports for CI integration.
+Created comprehensive pipeline alerting system that monitors V2 data pipeline health (staging backlog, daily sync, onboarding jobs) and sends Slack notifications via unified webhook API.
 
 ## Evidence
 
-- Commits: [to be filled]
-- Tests: pnpm tsx scripts/validation/pipeline-alerting.ts --dry-run (executed successfully, detected 2 critical reZEN sync failures)
+- Commits: 4663c80
+- Tests: pnpm tsx scripts/validation/pipeline-alerting.ts --dry-run
 - PRs:
