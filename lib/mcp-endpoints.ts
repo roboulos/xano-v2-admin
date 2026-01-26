@@ -9,6 +9,9 @@
 // - /seed/demo-dataset: 500 error - Xano backend issue (Invalid name: mvpw5:0)
 // - /seed/team/count: 500 error - Xano backend issue (Invalid name: mvpw5:365)
 // - /clear/all: 500 error - Xano backend seeding function issue
+//
+// FIXED (Jan 2026):
+// - /test-skyslope-account-users-sync: Was returning null (empty stack), now calls function 7966
 
 export interface MCPEndpoint {
   taskId: number // Background task ID
@@ -139,7 +142,8 @@ export const MCP_ENDPOINTS: MCPEndpoint[] = [
     apiGroup: 'TASKS',
     method: 'POST',
     requiresUserId: false,
-    description: 'Sync SkySlope account users',
+    description:
+      'Sync SkySlope account users - FIXED Jan 2026: endpoint had empty stack returning null, now calls function 7966',
   },
 
   // ============================================================================

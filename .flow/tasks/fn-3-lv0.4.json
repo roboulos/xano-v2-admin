@@ -1,0 +1,14 @@
+{
+  "assignee": null,
+  "claim_note": "",
+  "claimed_at": null,
+  "created_at": "2026-01-26T17:13:36.596483Z",
+  "depends_on": [],
+  "epic": "fn-3-lv0",
+  "id": "fn-3-lv0.4",
+  "priority": null,
+  "spec_path": ".flow/tasks/fn-3-lv0.4.md",
+  "status": "todo",
+  "title": "Audit background task schedules",
+  "updated_at": "2026-01-26T17:14:23.810730Z"
+}
