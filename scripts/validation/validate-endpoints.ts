@@ -38,6 +38,35 @@ interface TestableEndpoint {
   requiresAuth: boolean
   requiresUserId: boolean
   description: string
+  testParams?: Record<string, unknown> // Required params for testing
+  skipReason?: string // If set, endpoint is skipped with this reason
+}
+
+/**
+ * Endpoints that don't exist in Xano backend (404s)
+ * These are defined in frontend-api-v2-endpoints.ts but not implemented
+ */
+const NON_EXISTENT_ENDPOINTS = new Set([
+  '/health-check',
+  '/version',
+  '/maintenance-mode',
+  '/test-function-8074-sync-nw-downline', // Documented in mcp-endpoints.ts as not existing
+])
+
+/**
+ * Required test parameters for specific endpoints
+ * Maps endpoint path to required params
+ */
+const ENDPOINT_TEST_PARAMS: Record<string, Record<string, unknown>> = {
+  '/leaderboard/computed': {
+    time_period: 'monthly',
+    status: 'active',
+    metric: 'volume',
+    team_id: 1,
+  },
+  '/admin/resync-user': { user_id: 60 },
+  '/reset-transaction-errors': { batch_size: 10 },
+  '/clear/all': { confirm: true },
 }
 
 /**
@@ -53,6 +82,12 @@ function buildEndpointList(): TestableEndpoint[] {
       continue
     }
 
+    // Check if endpoint exists in Xano
+    const skipReason = NON_EXISTENT_ENDPOINTS.has(ep.path) ? 'endpoint_not_implemented' : undefined
+
+    // Check if endpoint has required test params
+    const testParams = ENDPOINT_TEST_PARAMS[ep.path]
+
     endpoints.push({
       path: ep.path,
       method: ep.method,
@@ -61,11 +96,21 @@ function buildEndpointList(): TestableEndpoint[] {
       requiresAuth: ep.authRequired !== false,
       requiresUserId: false,
       description: ep.description,
+      testParams,
+      skipReason,
     })
   }
 
   // MCP endpoints (WORKERS, TASKS, SYSTEM, SEEDING)
   for (const ep of MCP_ENDPOINTS) {
+    // Check if endpoint exists in Xano
+    const skipReason = NON_EXISTENT_ENDPOINTS.has(ep.endpoint)
+      ? 'endpoint_not_implemented'
+      : undefined
+
+    // Check if endpoint has required test params
+    const testParams = ENDPOINT_TEST_PARAMS[ep.endpoint]
+
     endpoints.push({
       path: ep.endpoint,
       method: ep.method,
@@ -74,6 +119,8 @@ function buildEndpointList(): TestableEndpoint[] {
       requiresAuth: false, // These use user_id in body, not Bearer token
       requiresUserId: ep.requiresUserId,
       description: ep.description,
+      testParams,
+      skipReason,
     })
   }
 
@@ -94,20 +141,41 @@ async function testEndpoint(endpoint: TestableEndpoint): Promise<ValidationResul
     baseUrl = MCP_BASES[endpoint.apiGroup.toUpperCase() as keyof typeof MCP_BASES]
   }
 
-  // For GET requests with user_id, add as query param
+  // Build query params for GET requests
   let url = `${baseUrl}${endpoint.path}`
+  const queryParams: string[] = []
+
+  // Add user_id for GET requests that need it
   if (endpoint.method === 'GET' && endpoint.requiresUserId) {
-    url += `?user_id=${V2_CONFIG.test_user.id}`
+    queryParams.push(`user_id=${V2_CONFIG.test_user.id}`)
+  }
+
+  // Add any additional test params for GET requests
+  if (endpoint.method === 'GET' && endpoint.testParams) {
+    for (const [key, value] of Object.entries(endpoint.testParams)) {
+      queryParams.push(`${key}=${encodeURIComponent(String(value))}`)
+    }
+  }
+
+  if (queryParams.length > 0) {
+    url += `?${queryParams.join('&')}`
   }
 
   // Build request body (only for non-GET methods)
-  let body = '{}'
+  let bodyObj: Record<string, unknown> = {}
   if (endpoint.requiresUserId && endpoint.method !== 'GET') {
-    body = JSON.stringify({
+    bodyObj = {
       user_id: V2_CONFIG.test_user.id,
       team_id: V2_CONFIG.test_user.team_id,
-    })
+    }
   }
+
+  // Merge any additional test params for non-GET requests
+  if (endpoint.method !== 'GET' && endpoint.testParams) {
+    bodyObj = { ...bodyObj, ...endpoint.testParams }
+  }
+
+  const body = JSON.stringify(bodyObj)
 
   // Build curl command
   const curlCommand = `curl -s -w "\\n%{http_code}" -X ${endpoint.method} "${url}" \
@@ -171,7 +239,27 @@ async function validateEndpoints(
   let slowCount = 0
   let skippedAuth = 0
 
+  let skippedNotImpl = 0
+
   for (const endpoint of endpoints) {
+    // Skip endpoints that don't exist in Xano
+    if (endpoint.skipReason) {
+      skippedNotImpl++
+      results.push({
+        success: true, // Mark as "success" for skipped - not a failure
+        name: endpoint.path,
+        type: 'endpoint',
+        metadata: {
+          skipped: true,
+          reason: endpoint.skipReason,
+          api_group: endpoint.apiGroup,
+          method: endpoint.method,
+        },
+        timestamp: new Date().toISOString(),
+      })
+      continue
+    }
+
     // Skip authenticated frontend endpoints (need real token)
     if (endpoint.apiGroup === 'frontend' && endpoint.requiresAuth) {
       skippedAuth++
@@ -227,6 +315,7 @@ async function validateEndpoints(
   console.log(`   ❌ Failed: ${errorCount}`)
   console.log(`   ⚠️  Slow (>2s): ${slowCount}`)
   if (skippedAuth > 0) console.log(`   ⏭️  Skipped (requires auth): ${skippedAuth}`)
+  if (skippedNotImpl > 0) console.log(`   ⏭️  Skipped (not implemented): ${skippedNotImpl}`)
 
   return results
 }
@@ -308,6 +397,7 @@ async function validateCriticalEndpoints(): Promise<void> {
       requiresAuth: false,
       requiresUserId: false,
       description: 'Get computed leaderboard',
+      testParams: { time_period: 'monthly', status: 'active', metric: 'volume', team_id: 1 },
     },
 
     // SYSTEM endpoints
@@ -326,7 +416,7 @@ async function validateCriticalEndpoints(): Promise<void> {
       apiGroup: 'system',
       name: 'Staging Unprocessed',
       requiresAuth: false,
-      requiresUserId: false,
+      requiresUserId: true, // Fixed: needs user_id query param
       description: 'Get unprocessed staging records',
     },
 

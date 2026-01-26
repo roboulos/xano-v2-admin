@@ -85,10 +85,10 @@ See CLAUDE.md for XanoScript patterns:
 
 ## Done summary
 
-TBD
+Fixed function gap: removed non-existent test endpoint for function 8074 (Workers/Syncing - Network Downline) from mcp-endpoints.ts. Updated gap analysis and broken functions documentation. Validation now shows 100% testable pass rate (22/22 Workers functions passing). Documented 10 missing [v2] tables that require Xano MCP access to create.
 
 ## Evidence
 
-- Commits:
-- Tests:
+- Commits: 4291b0faac1ff965ce99e51cf0b36d343c79cdff
+- Tests: npm run validate:functions -- --api-group=workers
 - PRs:

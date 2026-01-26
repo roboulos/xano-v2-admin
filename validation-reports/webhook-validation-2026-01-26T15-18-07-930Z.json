@@ -1,0 +1,353 @@
+{
+  "summary": {
+    "total": 22,
+    "passed": 12,
+    "failed": 10,
+    "untestable": 0,
+    "passRate": 54.54545454545454,
+    "testablePassRate": 54.54545454545454
+  },
+  "results": [
+    {
+      "success": true,
+      "name": "/fub/webhook/create",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "UNIFIED",
+        "endpoint_name": "FUB Generic Webhook",
+        "expected_behavior": "accepts_payload",
+        "note": "Accepted payload",
+        "duration_ms": 426,
+        "response_preview": "null"
+      },
+      "timestamp": "2026-01-26T15:17:51.341Z"
+    },
+    {
+      "success": true,
+      "name": "/fub/webhook/appointment_created",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "UNIFIED",
+        "endpoint_name": "FUB Appointment Created",
+        "expected_behavior": "accepts_payload",
+        "note": "Accepted payload",
+        "duration_ms": 528,
+        "response_preview": "null"
+      },
+      "timestamp": "2026-01-26T15:17:51.870Z"
+    },
+    {
+      "success": true,
+      "name": "/fub/webhook/textMessagesCreated",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "UNIFIED",
+        "endpoint_name": "FUB Text Messages Created",
+        "expected_behavior": "accepts_payload",
+        "note": "Accepted payload",
+        "duration_ms": 962,
+        "response_preview": "null"
+      },
+      "timestamp": "2026-01-26T15:17:52.832Z"
+    },
+    {
+      "success": false,
+      "name": "/rezen/webhook/create",
+      "type": "endpoint",
+      "error": "HTTP 500: {\"code\":\"ERROR_FATAL\",\"message\":\"Invalid name: mvpw5:0\"}",
+      "metadata": {
+        "status_code": 500,
+        "api_group": "UNIFIED",
+        "endpoint_name": "reZEN Generic Webhook",
+        "expected_behavior": "accepts_payload",
+        "note": "HTTP 500",
+        "duration_ms": 1141,
+        "response_preview": "{\"code\":\"ERROR_FATAL\",\"message\":\"Invalid name: mvpw5:0\"}"
+      },
+      "timestamp": "2026-01-26T15:17:53.973Z"
+    },
+    {
+      "success": false,
+      "name": "/rezen/webhook/delete",
+      "type": "endpoint",
+      "error": "HTTP 500: {\"code\":\"ERROR_FATAL\",\"message\":\"Invalid name: mvpw5:0\"}",
+      "metadata": {
+        "status_code": 500,
+        "api_group": "UNIFIED",
+        "endpoint_name": "reZEN Webhook Delete",
+        "expected_behavior": "accepts_payload",
+        "note": "HTTP 500",
+        "duration_ms": 464,
+        "response_preview": "{\"code\":\"ERROR_FATAL\",\"message\":\"Invalid name: mvpw5:0\"}"
+      },
+      "timestamp": "2026-01-26T15:17:54.437Z"
+    },
+    {
+      "success": true,
+      "name": "/slack/notification",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "UNIFIED",
+        "endpoint_name": "Slack Notification",
+        "expected_behavior": "accepts_payload",
+        "note": "Accepted payload",
+        "duration_ms": 602,
+        "response_preview": "{\"headers\":[\"HTTP/2 200\",\"date: Mon, 26 Jan 2026 15:17:55 GMT\",\"server: Apache\",\"vary: Accept-Encoding\",\"strict-transport-security: max-age=31536000; includeSubDomains; preload\",\"referrer-policy: no-r"
+      },
+      "timestamp": "2026-01-26T15:17:55.039Z"
+    },
+    {
+      "success": false,
+      "name": "/postmark/webhook",
+      "type": "endpoint",
+      "error": "HTTP 500: {\"code\":\"ERROR_FATAL\",\"message\":\"Unable to locate var: data.Recipient\"}",
+      "metadata": {
+        "status_code": 500,
+        "api_group": "UNIFIED",
+        "endpoint_name": "Postmark Webhook",
+        "expected_behavior": "accepts_payload",
+        "note": "HTTP 500",
+        "duration_ms": 364,
+        "response_preview": "{\"code\":\"ERROR_FATAL\",\"message\":\"Unable to locate var: data.Recipient\"}"
+      },
+      "timestamp": "2026-01-26T15:17:55.404Z"
+    },
+    {
+      "success": true,
+      "name": "/textiful/webhook",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "UNIFIED",
+        "endpoint_name": "Textiful Webhook",
+        "expected_behavior": "accepts_payload",
+        "note": "Accepted payload",
+        "duration_ms": 542,
+        "response_preview": "null"
+      },
+      "timestamp": "2026-01-26T15:17:55.946Z"
+    },
+    {
+      "success": false,
+      "name": "/remlo/webhook/data",
+      "type": "endpoint",
+      "error": "HTTP 500: {\"code\":\"ERROR_FATAL\",\"message\":\"Unable to locate var: data.propertyState\"}",
+      "metadata": {
+        "status_code": 500,
+        "api_group": "UNIFIED",
+        "endpoint_name": "Remlo Data Webhook",
+        "expected_behavior": "accepts_payload",
+        "note": "HTTP 500",
+        "duration_ms": 1296,
+        "response_preview": "{\"code\":\"ERROR_FATAL\",\"message\":\"Unable to locate var: data.propertyState\"}"
+      },
+      "timestamp": "2026-01-26T15:17:57.242Z"
+    },
+    {
+      "success": true,
+      "name": "/otc/webhook/incoming",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "UNIFIED",
+        "endpoint_name": "OTC Incoming Webhook",
+        "expected_behavior": "accepts_payload",
+        "note": "Accepted payload",
+        "duration_ms": 723,
+        "response_preview": "null"
+      },
+      "timestamp": "2026-01-26T15:17:57.965Z"
+    },
+    {
+      "success": true,
+      "name": "/webhook/create",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "FUB",
+        "endpoint_name": "FUB Webhook Create",
+        "expected_behavior": "accepts_payload",
+        "note": "Accepted payload",
+        "duration_ms": 1826,
+        "response_preview": "null"
+      },
+      "timestamp": "2026-01-26T15:17:59.791Z"
+    },
+    {
+      "success": true,
+      "name": "/webhook/appointment_created",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "FUB",
+        "endpoint_name": "FUB Appointment Created",
+        "expected_behavior": "accepts_payload",
+        "note": "Accepted payload",
+        "duration_ms": 773,
+        "response_preview": "null"
+      },
+      "timestamp": "2026-01-26T15:18:00.564Z"
+    },
+    {
+      "success": true,
+      "name": "/webhook/textMessagesCreated",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "FUB",
+        "endpoint_name": "FUB Text Messages Created",
+        "expected_behavior": "accepts_payload",
+        "note": "Accepted payload",
+        "duration_ms": 729,
+        "response_preview": "null"
+      },
+      "timestamp": "2026-01-26T15:18:01.293Z"
+    },
+    {
+      "success": true,
+      "name": "/fub-worker",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "FUB",
+        "endpoint_name": "FUB Worker Trigger",
+        "expected_behavior": "accepts_payload",
+        "note": "Accepted payload",
+        "duration_ms": 913,
+        "response_preview": "{\"result2\":{}}"
+      },
+      "timestamp": "2026-01-26T15:18:02.207Z"
+    },
+    {
+      "success": false,
+      "name": "/webhook/subscription_created",
+      "type": "endpoint",
+      "error": "HTTP 500: {\"code\":\"ERROR_FATAL\",\"message\":\"Ran into an error, please see error log id: 15595\",\"payload\":\"\"}",
+      "metadata": {
+        "status_code": 500,
+        "api_group": "STRIPE",
+        "endpoint_name": "Stripe Subscription Created",
+        "expected_behavior": "requires_signature",
+        "note": "Unexpected status: 500",
+        "duration_ms": 1816,
+        "response_preview": "{\"code\":\"ERROR_FATAL\",\"message\":\"Ran into an error, please see error log id: 15595\",\"payload\":\"\"}"
+      },
+      "timestamp": "2026-01-26T15:18:04.023Z"
+    },
+    {
+      "success": false,
+      "name": "/webhook/subscription_updated",
+      "type": "endpoint",
+      "error": "HTTP 500: {\"code\":\"ERROR_FATAL\",\"message\":\"Unable to locate var: data.data.object.customer\"}",
+      "metadata": {
+        "status_code": 500,
+        "api_group": "STRIPE",
+        "endpoint_name": "Stripe Subscription Updated",
+        "expected_behavior": "requires_signature",
+        "note": "Unexpected status: 500",
+        "duration_ms": 714,
+        "response_preview": "{\"code\":\"ERROR_FATAL\",\"message\":\"Unable to locate var: data.data.object.customer\"}"
+      },
+      "timestamp": "2026-01-26T15:18:04.737Z"
+    },
+    {
+      "success": false,
+      "name": "/webhook/subscription_canceled",
+      "type": "endpoint",
+      "error": "HTTP 500: {\"code\":\"ERROR_FATAL\",\"message\":\"Unable to locate var: data.data.object.customer\"}",
+      "metadata": {
+        "status_code": 500,
+        "api_group": "STRIPE",
+        "endpoint_name": "Stripe Subscription Canceled",
+        "expected_behavior": "requires_signature",
+        "note": "Unexpected status: 500",
+        "duration_ms": 570,
+        "response_preview": "{\"code\":\"ERROR_FATAL\",\"message\":\"Unable to locate var: data.data.object.customer\"}"
+      },
+      "timestamp": "2026-01-26T15:18:05.307Z"
+    },
+    {
+      "success": false,
+      "name": "/webhook/payment_succeeded",
+      "type": "endpoint",
+      "error": "HTTP 500: {\"code\":\"ERROR_FATAL\",\"message\":\"Unable to locate var: data.data.object.billing_details.name\"}",
+      "metadata": {
+        "status_code": 500,
+        "api_group": "STRIPE",
+        "endpoint_name": "Stripe Payment Succeeded",
+        "expected_behavior": "requires_signature",
+        "note": "Unexpected status: 500",
+        "duration_ms": 398,
+        "response_preview": "{\"code\":\"ERROR_FATAL\",\"message\":\"Unable to locate var: data.data.object.billing_details.name\"}"
+      },
+      "timestamp": "2026-01-26T15:18:05.706Z"
+    },
+    {
+      "success": false,
+      "name": "/webhook/payment_failed",
+      "type": "endpoint",
+      "error": "HTTP 500: {\"code\":\"ERROR_FATAL\",\"message\":\"Unable to locate var: data.data.object.customer\"}",
+      "metadata": {
+        "status_code": 500,
+        "api_group": "STRIPE",
+        "endpoint_name": "Stripe Payment Failed",
+        "expected_behavior": "requires_signature",
+        "note": "Unexpected status: 500",
+        "duration_ms": 656,
+        "response_preview": "{\"code\":\"ERROR_FATAL\",\"message\":\"Unable to locate var: data.data.object.customer\"}"
+      },
+      "timestamp": "2026-01-26T15:18:06.363Z"
+    },
+    {
+      "success": true,
+      "name": "/webhook/payment_intent",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "STRIPE",
+        "endpoint_name": "Stripe Payment Intent",
+        "expected_behavior": "requires_signature",
+        "note": "Accepted payload (may not have signature validation)",
+        "duration_ms": 486,
+        "response_preview": "{\"request\":{\"url\":\"https://api.stripe.com/v1/payment_intents\",\"method\":\"POST\",\"headers\":[\"POST /v1/payment_intents HTTP/2\",\"Host: api.stripe.com\",\"Accept-Encoding: gzip, deflate\",\"Authorization: Basic"
+      },
+      "timestamp": "2026-01-26T15:18:06.849Z"
+    },
+    {
+      "success": true,
+      "name": "/webhook/customer_created",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "STRIPE",
+        "endpoint_name": "Stripe Customer Created",
+        "expected_behavior": "requires_signature",
+        "note": "Accepted payload (may not have signature validation)",
+        "duration_ms": 539,
+        "response_preview": "{\"type\":\"customer.created\",\"data\":{\"object\":{\"id\":\"cus_test\",\"email\":\"test@example.com\"}}}"
+      },
+      "timestamp": "2026-01-26T15:18:07.388Z"
+    },
+    {
+      "success": false,
+      "name": "/webhook/session_completed",
+      "type": "endpoint",
+      "error": "HTTP 500: {\"code\":\"ERROR_FATAL\",\"message\":\"Unable to locate var: webhook_data.amount_total\"}",
+      "metadata": {
+        "status_code": 500,
+        "api_group": "STRIPE",
+        "endpoint_name": "Stripe Session Completed",
+        "expected_behavior": "requires_signature",
+        "note": "Unexpected status: 500",
+        "duration_ms": 541,
+        "response_preview": "{\"code\":\"ERROR_FATAL\",\"message\":\"Unable to locate var: webhook_data.amount_total\"}"
+      },
+      "timestamp": "2026-01-26T15:18:07.929Z"
+    }
+  ],
+  "duration": 17009
+}
