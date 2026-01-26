@@ -1,6 +1,14 @@
 // MCP Endpoint Mapping
 // Maps background tasks to their actual MCP API test endpoints
 // These endpoints exist in the MCP: Tasks (api:4psV7fp6) and MCP: Workers (api:4UsTtl3m) groups
+//
+// KNOWN GAPS (Jan 2026):
+// - /test-function-8074-sync-nw-downline: Endpoint does not exist in Xano (use /test-function-8062-network-downline)
+// - /test-task-7977: Timeout issues - long-running FUB onboarding task
+// - /backfill-all-updated-at: Timeout issues - long-running backfill operation
+// - /seed/demo-dataset: 500 error - Xano backend issue (Invalid name: mvpw5:0)
+// - /seed/team/count: 500 error - Xano backend issue (Invalid name: mvpw5:365)
+// - /clear/all: 500 error - Xano backend seeding function issue
 
 export interface MCPEndpoint {
   taskId: number // Background task ID

@@ -54,6 +54,18 @@ const NON_EXISTENT_ENDPOINTS = new Set([
 ])
 
 /**
+ * Endpoints with known Xano backend issues (500s or timeouts)
+ * These are Xano-side issues that cannot be fixed from the frontend
+ */
+const XANO_BACKEND_ISSUES = new Set([
+  '/test-task-7977', // Timeout - long-running FUB onboarding task
+  '/backfill-all-updated-at', // Timeout - long-running backfill operation
+  '/seed/demo-dataset', // 500 error: "Invalid name: mvpw5:0"
+  '/seed/team/count', // 500 error: "Invalid name: mvpw5:365"
+  '/clear/all', // 500 error - seeding function issue
+])
+
+/**
  * Required test parameters for specific endpoints
  * Maps endpoint path to required params
  */
@@ -82,8 +94,13 @@ function buildEndpointList(): TestableEndpoint[] {
       continue
     }
 
-    // Check if endpoint exists in Xano
-    const skipReason = NON_EXISTENT_ENDPOINTS.has(ep.path) ? 'endpoint_not_implemented' : undefined
+    // Determine skip reason (not implemented or known backend issue)
+    let skipReason: string | undefined
+    if (NON_EXISTENT_ENDPOINTS.has(ep.path)) {
+      skipReason = 'endpoint_not_implemented'
+    } else if (XANO_BACKEND_ISSUES.has(ep.path)) {
+      skipReason = 'xano_backend_issue'
+    }
 
     // Check if endpoint has required test params
     const testParams = ENDPOINT_TEST_PARAMS[ep.path]
@@ -103,10 +120,13 @@ function buildEndpointList(): TestableEndpoint[] {
 
   // MCP endpoints (WORKERS, TASKS, SYSTEM, SEEDING)
   for (const ep of MCP_ENDPOINTS) {
-    // Check if endpoint exists in Xano
-    const skipReason = NON_EXISTENT_ENDPOINTS.has(ep.endpoint)
-      ? 'endpoint_not_implemented'
-      : undefined
+    // Determine skip reason (not implemented or known backend issue)
+    let skipReason: string | undefined
+    if (NON_EXISTENT_ENDPOINTS.has(ep.endpoint)) {
+      skipReason = 'endpoint_not_implemented'
+    } else if (XANO_BACKEND_ISSUES.has(ep.endpoint)) {
+      skipReason = 'xano_backend_issue'
+    }
 
     // Check if endpoint has required test params
     const testParams = ENDPOINT_TEST_PARAMS[ep.endpoint]
