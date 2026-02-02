@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { GitCompare, CheckCircle2, Activity, Code, Zap, Columns } from 'lucide-react'
+import { GitCompare, CheckCircle2, Activity, Code, Zap, Columns, BookOpen } from 'lucide-react'
 
 // Tabs
 import { SchemaTab } from '@/components/machine-2/schema-tab'
@@ -10,13 +10,22 @@ import { LiveMigrationStatus } from '@/components/live-migration-status'
 import { FunctionsTab } from '@/components/functions-tab'
 import { BackgroundTasksTab } from '@/components/background-tasks-tab'
 import { ParallelComparisonTab } from '@/components/parallel-comparison-tab'
+import { ArchitectureTab } from '@/components/doc-tabs/architecture-tab'
 
-type ViewMode = 'schema' | 'validation' | 'live' | 'functions' | 'tasks' | 'parallel'
+type ViewMode =
+  | 'schema'
+  | 'validation'
+  | 'live'
+  | 'functions'
+  | 'tasks'
+  | 'parallel'
+  | 'architecture'
 
 export default function Home() {
   const [viewMode, setViewMode] = useState<ViewMode>('live')
 
   const viewModes = [
+    { id: 'architecture' as ViewMode, label: 'Architecture', icon: BookOpen },
     { id: 'live' as ViewMode, label: 'Live Status', icon: Activity },
     { id: 'parallel' as ViewMode, label: 'Parallel Compare', icon: Columns },
     { id: 'functions' as ViewMode, label: 'Functions Deep Dive', icon: Code },
@@ -30,9 +39,9 @@ export default function Home() {
       <div className="container mx-auto py-6 px-4 max-w-7xl">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-2">V1 → V2 Migration Dashboard</h1>
+          <h1 className="text-3xl font-bold mb-2">Xano V2 Admin System</h1>
           <p className="text-muted-foreground">
-            Compare schema changes and validate V2 workspace readiness
+            System documentation, migration tracking, and live verification tools
           </p>
         </div>
 
@@ -56,6 +65,7 @@ export default function Home() {
 
         {/* Content */}
         <div className="mt-6">
+          {viewMode === 'architecture' && <ArchitectureTab />}
           {viewMode === 'live' && <LiveMigrationStatus />}
           {viewMode === 'parallel' && <ParallelComparisonTab />}
           {viewMode === 'functions' && <FunctionsTab />}

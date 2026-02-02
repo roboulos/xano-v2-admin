@@ -1,0 +1,12 @@
+{
+  "id": "fn-4-tkb.6",
+  "epic": "fn-4-tkb",
+  "title": "Phase 2.3: Data Model Reference",
+  "status": "pending",
+  "priority": null,
+  "depends_on": ["fn-4-tkb.5"],
+  "created_at": "2026-02-02T06:00:00Z",
+  "updated_at": "2026-02-02T06:00:00Z",
+  "started_at": null,
+  "completed_at": null
+}
