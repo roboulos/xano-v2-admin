@@ -1,7 +1,16 @@
 'use client'
 
 import { useState } from 'react'
-import { GitCompare, CheckCircle2, Activity, Code, Zap, Columns, BookOpen } from 'lucide-react'
+import {
+  GitCompare,
+  CheckCircle2,
+  Activity,
+  Code,
+  Zap,
+  Columns,
+  BookOpen,
+  Globe,
+} from 'lucide-react'
 
 // Tabs
 import { SchemaTab } from '@/components/machine-2/schema-tab'
@@ -11,6 +20,7 @@ import { FunctionsTab } from '@/components/functions-tab'
 import { BackgroundTasksTab } from '@/components/background-tasks-tab'
 import { ParallelComparisonTab } from '@/components/parallel-comparison-tab'
 import { ArchitectureTab } from '@/components/doc-tabs/architecture-tab'
+import { EndpointCatalogTab } from '@/components/doc-tabs/endpoint-catalog-tab'
 
 type ViewMode =
   | 'schema'
@@ -20,12 +30,14 @@ type ViewMode =
   | 'tasks'
   | 'parallel'
   | 'architecture'
+  | 'endpoints'
 
 export default function Home() {
   const [viewMode, setViewMode] = useState<ViewMode>('live')
 
   const viewModes = [
     { id: 'architecture' as ViewMode, label: 'Architecture', icon: BookOpen },
+    { id: 'endpoints' as ViewMode, label: 'Endpoints', icon: Globe },
     { id: 'live' as ViewMode, label: 'Live Status', icon: Activity },
     { id: 'parallel' as ViewMode, label: 'Parallel Compare', icon: Columns },
     { id: 'functions' as ViewMode, label: 'Functions Deep Dive', icon: Code },
@@ -66,6 +78,7 @@ export default function Home() {
         {/* Content */}
         <div className="mt-6">
           {viewMode === 'architecture' && <ArchitectureTab />}
+          {viewMode === 'endpoints' && <EndpointCatalogTab />}
           {viewMode === 'live' && <LiveMigrationStatus />}
           {viewMode === 'parallel' && <ParallelComparisonTab />}
           {viewMode === 'functions' && <FunctionsTab />}
