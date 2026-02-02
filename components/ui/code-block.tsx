@@ -89,10 +89,27 @@ export function CodeBlock({
 }
 
 // ============================================================================
-// SYNTAX HIGHLIGHTING
+// SYNTAX HIGHLIGHTING WITH XSS PROTECTION
 // ============================================================================
 
+/**
+ * Escapes HTML special characters to prevent XSS
+ */
+function escapeHtml(text: string): string {
+  const map: Record<string, string> = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;',
+  }
+  return text.replace(/[&<>"']/g, (char) => map[char])
+}
+
 function highlightSyntax(code: string, language: string): string {
+  // First escape all HTML special characters to prevent XSS
+  const escaped = escapeHtml(code)
+
   const languagePatterns: Record<string, Array<[RegExp, string]>> = {
     typescript: [
       [
@@ -100,22 +117,22 @@ function highlightSyntax(code: string, language: string): string {
         '<span class="text-blue-400">$1</span>',
       ],
       [/\b(true|false|null|undefined)\b/g, '<span class="text-green-400">$1</span>'],
-      [/"([^"]*)"/g, '<span class="text-amber-300">"$1"</span>'],
-      [/'([^']*)'/g, '<span class="text-amber-300">\'$1\'</span>'],
+      [/&quot;([^&]*)&quot;/g, '<span class="text-amber-300">&quot;$1&quot;</span>'],
+      [/&#039;([^&]*)&#039;/g, '<span class="text-amber-300">&#039;$1&#039;</span>'],
       [/\/\/.*/g, '<span class="text-slate-500">$&</span>'],
       [/\/\*[\s\S]*?\*\//g, '<span class="text-slate-500">$&</span>'],
     ],
     json: [
-      [/"([^"]*)":/g, '<span class="text-blue-400">"$1"</span>:'],
-      [/:\s*"([^"]*)"/g, ': <span class="text-amber-300">"$1"</span>'],
+      [/&quot;([^&]*)&quot;:/g, '<span class="text-blue-400">&quot;$1&quot;</span>:'],
+      [/:\s*&quot;([^&]*)&quot;/g, ': <span class="text-amber-300">&quot;$1&quot;</span>'],
       [/:\s*(true|false|null)/g, ': <span class="text-green-400">$1</span>'],
       [/:\s*(\d+)/g, ': <span class="text-green-400">$1</span>'],
     ],
     javascript: [
       [/\b(const|let|var|function|async|await|class)\b/g, '<span class="text-blue-400">$1</span>'],
       [/\b(true|false|null|undefined)\b/g, '<span class="text-green-400">$1</span>'],
-      [/"([^"]*)"/g, '<span class="text-amber-300">"$1</span>'],
-      [/'([^']*)'/g, '<span class="text-amber-300">\'$1\'</span>'],
+      [/&quot;([^&]*)&quot;/g, '<span class="text-amber-300">&quot;$1&quot;</span>'],
+      [/&#039;([^&]*)&#039;/g, '<span class="text-amber-300">&#039;$1&#039;</span>'],
       [/\/\/.*/g, '<span class="text-slate-500">$&</span>'],
     ],
     bash: [
@@ -124,8 +141,8 @@ function highlightSyntax(code: string, language: string): string {
         /\b(if|then|else|fi|for|while|do|done|function)\b/g,
         '<span class="text-blue-400">$1</span>',
       ],
-      [/"([^"]*)"/g, '<span class="text-amber-300">"$1"</span>'],
-      [/'([^']*)'/g, '<span class="text-amber-300">\'$1\'</span>'],
+      [/&quot;([^&]*)&quot;/g, '<span class="text-amber-300">&quot;$1&quot;</span>'],
+      [/&#039;([^&]*)&#039;/g, '<span class="text-amber-300">&#039;$1&#039;</span>'],
     ],
     sql: [
       [
@@ -133,11 +150,11 @@ function highlightSyntax(code: string, language: string): string {
         '<span class="text-blue-400">$1</span>',
       ],
       [/\b(AND|OR|NOT|IN|EXISTS|BETWEEN)\b/gi, '<span class="text-green-400">$1</span>'],
-      [/'([^']*)'/g, '<span class="text-amber-300">\'$1\'</span>'],
+      [/&#039;([^&]*)&#039;/g, '<span class="text-amber-300">&#039;$1&#039;</span>'],
     ],
   }
 
-  let highlighted = code
+  let highlighted = escaped
   const patterns = languagePatterns[language] || []
 
   for (const [pattern, replacement] of patterns) {
