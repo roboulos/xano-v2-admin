@@ -10,6 +10,7 @@ import {
   Columns,
   BookOpen,
   Globe,
+  Database,
 } from 'lucide-react'
 
 // Tabs
@@ -21,6 +22,7 @@ import { BackgroundTasksTab } from '@/components/background-tasks-tab'
 import { ParallelComparisonTab } from '@/components/parallel-comparison-tab'
 import { ArchitectureTab } from '@/components/doc-tabs/architecture-tab'
 import { EndpointCatalogTab } from '@/components/doc-tabs/endpoint-catalog-tab'
+import { DataModelTab } from '@/components/doc-tabs/data-model-tab'
 
 type ViewMode =
   | 'schema'
@@ -31,6 +33,7 @@ type ViewMode =
   | 'parallel'
   | 'architecture'
   | 'endpoints'
+  | 'data-model'
 
 export default function Home() {
   const [viewMode, setViewMode] = useState<ViewMode>('live')
@@ -38,6 +41,7 @@ export default function Home() {
   const viewModes = [
     { id: 'architecture' as ViewMode, label: 'Architecture', icon: BookOpen },
     { id: 'endpoints' as ViewMode, label: 'Endpoints', icon: Globe },
+    { id: 'data-model' as ViewMode, label: 'Data Model', icon: Database },
     { id: 'live' as ViewMode, label: 'Live Status', icon: Activity },
     { id: 'parallel' as ViewMode, label: 'Parallel Compare', icon: Columns },
     { id: 'functions' as ViewMode, label: 'Functions Deep Dive', icon: Code },
@@ -79,6 +83,7 @@ export default function Home() {
         <div className="mt-6">
           {viewMode === 'architecture' && <ArchitectureTab />}
           {viewMode === 'endpoints' && <EndpointCatalogTab />}
+          {viewMode === 'data-model' && <DataModelTab />}
           {viewMode === 'live' && <LiveMigrationStatus />}
           {viewMode === 'parallel' && <ParallelComparisonTab />}
           {viewMode === 'functions' && <FunctionsTab />}
