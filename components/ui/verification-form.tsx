@@ -130,7 +130,7 @@ export function VerificationForm({
                 id={field.id}
                 type="text"
                 placeholder={field.placeholder}
-                value={values[field.id]}
+                value={String(values[field.id] || '')}
                 onChange={(e) => handleChange(field.id, e.target.value)}
                 disabled={isSubmitting}
                 className={errors[field.id] ? 'border-red-500' : ''}
@@ -141,7 +141,7 @@ export function VerificationForm({
               <textarea
                 id={field.id}
                 placeholder={field.placeholder}
-                value={values[field.id]}
+                value={String(values[field.id] || '')}
                 onChange={(e) => handleChange(field.id, e.target.value)}
                 disabled={isSubmitting}
                 rows={4}
@@ -154,7 +154,7 @@ export function VerificationForm({
             {field.type === 'select' && (
               <select
                 id={field.id}
-                value={values[field.id]}
+                value={String(values[field.id] || '')}
                 onChange={(e) => handleChange(field.id, e.target.value)}
                 disabled={isSubmitting}
                 className={`px-3 py-2 border rounded-lg text-sm ${
@@ -174,8 +174,8 @@ export function VerificationForm({
               <label className="flex items-center gap-2 cursor-pointer">
                 <Checkbox
                   id={field.id}
-                  checked={values[field.id] || false}
-                  onCheckedChange={(checked) => handleChange(field.id, checked)}
+                  checked={Boolean(values[field.id] === true)}
+                  onCheckedChange={(checked) => handleChange(field.id, checked === true)}
                   disabled={isSubmitting}
                 />
                 <span className="text-sm">{field.label}</span>
