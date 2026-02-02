@@ -14,6 +14,9 @@ import {
   Plug,
 } from 'lucide-react'
 
+// UI Components
+import { ErrorBoundary } from '@/components/ui/error-boundary'
+
 // Tabs
 import { SchemaTab } from '@/components/machine-2/schema-tab'
 import { BackendValidationTab } from '@/components/machine-2/backend-validation-tab'
@@ -85,16 +88,36 @@ export default function Home() {
 
         {/* Content */}
         <div className="mt-6">
-          {viewMode === 'architecture' && <ArchitectureTab />}
-          {viewMode === 'endpoints' && <EndpointCatalogTab />}
-          {viewMode === 'data-model' && <DataModelTab />}
-          {viewMode === 'integrations' && <IntegrationGuideTab />}
-          {viewMode === 'live' && <LiveMigrationStatus />}
-          {viewMode === 'parallel' && <ParallelComparisonTab />}
-          {viewMode === 'functions' && <FunctionsTab />}
-          {viewMode === 'tasks' && <BackgroundTasksTab />}
-          {viewMode === 'schema' && <SchemaTab />}
-          {viewMode === 'validation' && <BackendValidationTab />}
+          <ErrorBoundary title="Architecture">
+            {viewMode === 'architecture' && <ArchitectureTab />}
+          </ErrorBoundary>
+          <ErrorBoundary title="Endpoint Catalog">
+            {viewMode === 'endpoints' && <EndpointCatalogTab />}
+          </ErrorBoundary>
+          <ErrorBoundary title="Data Model">
+            {viewMode === 'data-model' && <DataModelTab />}
+          </ErrorBoundary>
+          <ErrorBoundary title="Integration Guide">
+            {viewMode === 'integrations' && <IntegrationGuideTab />}
+          </ErrorBoundary>
+          <ErrorBoundary title="Live Status">
+            {viewMode === 'live' && <LiveMigrationStatus />}
+          </ErrorBoundary>
+          <ErrorBoundary title="Parallel Compare">
+            {viewMode === 'parallel' && <ParallelComparisonTab />}
+          </ErrorBoundary>
+          <ErrorBoundary title="Functions">
+            {viewMode === 'functions' && <FunctionsTab />}
+          </ErrorBoundary>
+          <ErrorBoundary title="Background Tasks">
+            {viewMode === 'tasks' && <BackgroundTasksTab />}
+          </ErrorBoundary>
+          <ErrorBoundary title="Schema Changes">
+            {viewMode === 'schema' && <SchemaTab />}
+          </ErrorBoundary>
+          <ErrorBoundary title="Validation">
+            {viewMode === 'validation' && <BackendValidationTab />}
+          </ErrorBoundary>
         </div>
       </div>
     </div>

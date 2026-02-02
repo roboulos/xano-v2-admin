@@ -3,15 +3,18 @@
 /**
  * Diagram Component
  * Mermaid diagram renderer for system visualizations
+ * Uses singleton loader to prevent race conditions and duplicate script tags
  */
 
 import React, { useEffect, useRef } from 'react'
+import { loadMermaid } from '@/lib/mermaid-loader'
 
 declare global {
   interface Window {
     mermaid?: {
       initialize: (config: Record<string, unknown>) => void
       render: (id: string, code: string) => Promise<{ svg: string }>
+      contentLoaded: () => void
     }
   }
 }
@@ -31,33 +34,32 @@ export function Diagram({ mermaidCode, title, theme = 'dark', className = '' }: 
   useEffect(() => {
     let mounted = true
 
-    // Load Mermaid script
-    if (typeof window !== 'undefined' && !window.mermaid) {
-      const script = document.createElement('script')
-      script.src = 'https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js'
-      script.async = true
-      script.onload = () => {
-        if (mounted) {
-          window.mermaid!.initialize({
+    // Use singleton loader to ensure Mermaid loads exactly once
+    const initializeMermaid = async () => {
+      try {
+        const success = await loadMermaid()
+        if (!success) {
+          if (mounted) {
+            setError('Failed to load Mermaid library')
+          }
+          return
+        }
+
+        if (mounted && window.mermaid) {
+          window.mermaid.initialize({
             startOnLoad: true,
             theme: theme === 'dark' ? 'dark' : 'default',
           })
           setIsLoaded(true)
         }
-      }
-      script.onerror = () => {
+      } catch (err) {
         if (mounted) {
-          setError('Failed to load Mermaid library')
+          setError(err instanceof Error ? err.message : 'Failed to initialize Mermaid')
         }
       }
-      document.body.appendChild(script)
-    } else if (window.mermaid && mounted) {
-      setTimeout(() => {
-        if (mounted) {
-          setIsLoaded(true)
-        }
-      }, 0)
     }
+
+    initializeMermaid()
 
     return () => {
       mounted = false

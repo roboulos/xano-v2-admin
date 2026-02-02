@@ -75,6 +75,46 @@ export function DataTable<T extends Record<string, any>>({
 
   const totalPages = Math.ceil(sorted.length / pageSize)
 
+  // Generate pagination pages with ellipsis (calculated at component level to avoid Hook violation)
+  const paginationPages = useMemo(() => {
+    if (totalPages <= 1) return []
+
+    const pages: (number | string)[] = []
+    const showWindow = 2 // pages to show on each side of current
+    const showEdge = true // show first and last page
+
+    // Always show first page
+    if (showEdge) {
+      pages.push(0)
+    }
+
+    // Calculate range around current page
+    const start = Math.max(1, page - showWindow)
+    const end = Math.min(totalPages - 1, page + showWindow)
+
+    // Add ellipsis before range if needed
+    if (start > 1) {
+      pages.push('ellipsis-start')
+    }
+
+    // Add pages in range
+    for (let i = start; i <= end; i++) {
+      pages.push(i)
+    }
+
+    // Add ellipsis after range if needed
+    if (end < totalPages - 2) {
+      pages.push('ellipsis-end')
+    }
+
+    // Always show last page
+    if (showEdge && totalPages > 1) {
+      pages.push(totalPages - 1)
+    }
+
+    return pages
+  }, [page, totalPages])
+
   const handleSort = (key: keyof T) => {
     if (sortKey === key) {
       setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc')
@@ -167,7 +207,7 @@ export function DataTable<T extends Record<string, any>>({
         </table>
       </div>
 
-      {/* Pagination */}
+      {/* Pagination with Smart Ellipsis */}
       {totalPages > 1 && (
         <div className="flex items-center justify-between text-sm text-muted-foreground">
           <div>
@@ -183,17 +223,28 @@ export function DataTable<T extends Record<string, any>>({
               Previous
             </button>
             <div className="flex items-center gap-1">
-              {Array.from({ length: totalPages }).map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setPage(i)}
-                  className={`px-2 py-1 border rounded ${
-                    page === i ? 'bg-primary text-primary-foreground' : 'hover:bg-muted'
-                  }`}
-                >
-                  {i + 1}
-                </button>
-              ))}
+              {paginationPages.map((p, idx) => {
+                if (typeof p === 'string' && p.startsWith('ellipsis')) {
+                  return (
+                    <div key={`ellipsis-${idx}`} className="px-2 py-1">
+                      ...
+                    </div>
+                  )
+                }
+
+                const pageNum = p as number
+                return (
+                  <button
+                    key={pageNum}
+                    onClick={() => setPage(pageNum)}
+                    className={`px-2 py-1 border rounded ${
+                      page === pageNum ? 'bg-primary text-primary-foreground' : 'hover:bg-muted'
+                    }`}
+                  >
+                    {pageNum + 1}
+                  </button>
+                )
+              })}
             </div>
             <button
               onClick={() => setPage(Math.min(totalPages - 1, page + 1))}
