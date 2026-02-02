@@ -12,6 +12,10 @@ import {
   Globe,
   Database,
   Plug,
+  TrendingUp,
+  AlertTriangle,
+  Layers,
+  AlertCircle,
 } from 'lucide-react'
 
 // UI Components
@@ -28,6 +32,10 @@ import { ArchitectureTab } from '@/components/doc-tabs/architecture-tab'
 import { EndpointCatalogTab } from '@/components/doc-tabs/endpoint-catalog-tab'
 import { DataModelTab } from '@/components/doc-tabs/data-model-tab'
 import { IntegrationGuideTab } from '@/components/doc-tabs/integration-guide-tab'
+import { StatusDashboardTab } from '@/components/migration-tabs/status-dashboard-tab'
+import { GapsTab } from '@/components/migration-tabs/gaps-tab'
+import { ChecklistTab } from '@/components/migration-tabs/checklist-tab'
+import { BlockersTab } from '@/components/migration-tabs/blockers-tab'
 
 type ViewMode =
   | 'schema'
@@ -40,11 +48,19 @@ type ViewMode =
   | 'endpoints'
   | 'data-model'
   | 'integrations'
+  | 'migration-status'
+  | 'gaps'
+  | 'checklist'
+  | 'blockers'
 
 export default function Home() {
   const [viewMode, setViewMode] = useState<ViewMode>('live')
 
   const viewModes = [
+    { id: 'migration-status' as ViewMode, label: 'Migration Status', icon: TrendingUp },
+    { id: 'gaps' as ViewMode, label: 'Gaps & Issues', icon: AlertCircle },
+    { id: 'checklist' as ViewMode, label: 'Checklists', icon: CheckCircle2 },
+    { id: 'blockers' as ViewMode, label: 'Blockers', icon: AlertTriangle },
     { id: 'architecture' as ViewMode, label: 'Architecture', icon: BookOpen },
     { id: 'endpoints' as ViewMode, label: 'Endpoints', icon: Globe },
     { id: 'data-model' as ViewMode, label: 'Data Model', icon: Database },
@@ -54,7 +70,7 @@ export default function Home() {
     { id: 'functions' as ViewMode, label: 'Functions Deep Dive', icon: Code },
     { id: 'tasks' as ViewMode, label: 'Background Tasks', icon: Zap },
     { id: 'schema' as ViewMode, label: 'Schema Changes', icon: GitCompare },
-    { id: 'validation' as ViewMode, label: 'Validation Status', icon: CheckCircle2 },
+    { id: 'validation' as ViewMode, label: 'Validation Status', icon: Layers },
   ]
 
   return (
@@ -88,6 +104,16 @@ export default function Home() {
 
         {/* Content */}
         <div className="mt-6">
+          <ErrorBoundary title="Migration Status">
+            {viewMode === 'migration-status' && <StatusDashboardTab />}
+          </ErrorBoundary>
+          <ErrorBoundary title="Gaps & Issues">{viewMode === 'gaps' && <GapsTab />}</ErrorBoundary>
+          <ErrorBoundary title="Checklists">
+            {viewMode === 'checklist' && <ChecklistTab />}
+          </ErrorBoundary>
+          <ErrorBoundary title="Blockers">
+            {viewMode === 'blockers' && <BlockersTab />}
+          </ErrorBoundary>
           <ErrorBoundary title="Architecture">
             {viewMode === 'architecture' && <ArchitectureTab />}
           </ErrorBoundary>
