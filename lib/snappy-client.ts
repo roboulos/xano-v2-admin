@@ -53,6 +53,91 @@ export interface XanoAPIGroup {
   endpoint_count?: number
 }
 
+// ============================================================================
+// ENHANCED METADATA TYPES
+// ============================================================================
+
+export interface FunctionInput {
+  name: string
+  type: string
+  required: boolean
+  description?: string
+}
+
+export interface FunctionOutput {
+  name: string
+  type: string
+  description?: string
+}
+
+export interface FunctionDetail extends XanoFunction {
+  inputs: FunctionInput[]
+  outputs: FunctionOutput[]
+  xanoscript?: string
+  tags: string[]
+  version?: number
+  created_at?: string
+  updated_at?: string
+}
+
+export interface EndpointParameter {
+  name: string
+  in: 'query' | 'path' | 'body'
+  type: string
+  required: boolean
+  description?: string
+}
+
+export interface EndpointResponse {
+  status: number
+  description: string
+  schema?: Record<string, any>
+}
+
+export interface EndpointDetail extends XanoEndpoint {
+  parameters: EndpointParameter[]
+  responses: Record<string, EndpointResponse>
+  authentication?: string
+  description?: string
+  tags: string[]
+  version?: number
+}
+
+export interface TableField {
+  name: string
+  type: string
+  required: boolean
+  unique?: boolean
+  indexed?: boolean
+  description?: string
+  default_value?: any
+}
+
+export interface TableRelationship {
+  field: string
+  referenced_table: string
+  referenced_field: string
+  cascade_delete?: boolean
+}
+
+export interface TableDetail extends XanoTable {
+  fields: TableField[]
+  relationships: TableRelationship[]
+  indexes?: string[]
+  version?: number
+}
+
+export interface MigrationStatus {
+  id: string
+  name: string
+  type: 'table' | 'endpoint' | 'function' | 'api_group'
+  status: 'pending' | 'in_progress' | 'completed' | 'blocked'
+  v1_id?: number
+  v2_id?: number
+  last_sync?: string
+  notes?: string
+}
+
 /**
  * Execute snappy CLI command and parse JSON output
  */
@@ -267,6 +352,169 @@ export class SnappyClient {
       tasks: result.tasks || [],
       total: result.total || 0,
       next_page: result.next_page || null,
+    }
+  }
+
+  // ============================================================================
+  // ENHANCED METADATA METHODS
+  // ============================================================================
+
+  async getFunctionDetail(functionId: number): Promise<FunctionDetail> {
+    const baseFunc = await this.getFunction(functionId)
+
+    try {
+      const detail = await execSnappy('get_function_detail', {
+        ...this.config,
+        function_id: functionId,
+      })
+
+      return {
+        ...baseFunc,
+        inputs: detail.inputs || [],
+        outputs: detail.outputs || [],
+        xanoscript: detail.xanoscript,
+        tags: detail.tags || [],
+        version: detail.version,
+        created_at: detail.created_at,
+        updated_at: detail.updated_at,
+      }
+    } catch (error) {
+      // Fallback if detailed fetch fails
+      console.warn(`[snappy] get_function_detail failed for ${functionId}, using basic info`)
+      return {
+        ...baseFunc,
+        inputs: [],
+        outputs: [],
+        tags: baseFunc.description ? [baseFunc.description] : [],
+      }
+    }
+  }
+
+  async getEndpointDetail(endpointId: number): Promise<EndpointDetail> {
+    const baseEndpoint = await this.getEndpoint(endpointId)
+
+    try {
+      const detail = await execSnappy('get_endpoint_detail', {
+        ...this.config,
+        endpoint_id: endpointId,
+      })
+
+      return {
+        ...baseEndpoint,
+        parameters: detail.parameters || [],
+        responses: detail.responses || {},
+        authentication: detail.authentication,
+        description: detail.description,
+        tags: detail.tags || [],
+        version: detail.version,
+      }
+    } catch (error) {
+      // Fallback if detailed fetch fails
+      console.warn(`[snappy] get_endpoint_detail failed for ${endpointId}, using basic info`)
+      return {
+        ...baseEndpoint,
+        parameters: [],
+        responses: {},
+        tags: [],
+      }
+    }
+  }
+
+  async getTableDetail(tableId: number): Promise<TableDetail> {
+    const baseTable = await this.getTableSchema(tableId)
+
+    try {
+      const detail = await execSnappy('get_table_detail', {
+        ...this.config,
+        table_id: tableId,
+      })
+
+      return {
+        ...baseTable,
+        fields: detail.fields || [],
+        relationships: detail.relationships || [],
+        indexes: detail.indexes,
+        version: detail.version,
+      }
+    } catch (error) {
+      // Fallback if detailed fetch fails
+      console.warn(`[snappy] get_table_detail failed for ${tableId}, using basic info`)
+      return {
+        ...baseTable,
+        fields: [],
+        relationships: [],
+      }
+    }
+  }
+
+  async getTableRelationships(tableId: number): Promise<TableRelationship[]> {
+    try {
+      const result = await execSnappy('get_table_relationships', {
+        ...this.config,
+        table_id: tableId,
+      })
+      return result.relationships || []
+    } catch (error) {
+      console.warn(`[snappy] get_table_relationships failed for ${tableId}`)
+      return []
+    }
+  }
+
+  async getMigrationStatus(
+    options: {
+      type?: 'table' | 'endpoint' | 'function' | 'api_group'
+      status?: 'pending' | 'in_progress' | 'completed' | 'blocked'
+    } = {}
+  ): Promise<MigrationStatus[]> {
+    try {
+      const result = await execSnappy('get_migration_status', {
+        ...this.config,
+        ...options,
+      })
+      return result.migrations || []
+    } catch (error) {
+      console.warn(`[snappy] get_migration_status failed`)
+      return []
+    }
+  }
+
+  async updateMigrationStatus(
+    itemId: string,
+    status: MigrationStatus['status'],
+    notes?: string
+  ): Promise<MigrationStatus> {
+    const result = await execSnappy('update_migration_status', {
+      ...this.config,
+      item_id: itemId,
+      status,
+      notes,
+    })
+    return result
+  }
+
+  async getAllTableFields(): Promise<Record<number, TableField[]>> {
+    try {
+      const result = await execSnappy('get_all_table_fields', {
+        ...this.config,
+      })
+      return result.table_fields || {}
+    } catch (error) {
+      console.warn(`[snappy] get_all_table_fields failed`)
+      return {}
+    }
+  }
+
+  async getAllRelationships(): Promise<
+    Array<{ table_id: number; relationships: TableRelationship[] }>
+  > {
+    try {
+      const result = await execSnappy('get_all_relationships', {
+        ...this.config,
+      })
+      return result.relationships || []
+    } catch (error) {
+      console.warn(`[snappy] get_all_relationships failed`)
+      return []
     }
   }
 }

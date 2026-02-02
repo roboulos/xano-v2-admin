@@ -3,6 +3,20 @@
  * These pages are not part of the main 2-tab migration dashboard
  */
 
+// Re-export enhanced metadata types from snappy-client
+export type {
+  FunctionInput,
+  FunctionOutput,
+  FunctionDetail,
+  EndpointParameter,
+  EndpointResponse,
+  EndpointDetail,
+  TableField,
+  TableRelationship,
+  TableDetail,
+  MigrationStatus,
+} from './snappy-client'
+
 export type TaskDomain =
   | 'FUB'
   | 'Rezen'
@@ -13,14 +27,14 @@ export type TaskDomain =
   | 'Contributions'
   | 'System'
   | 'Other'
-  | 'ad'  // Legacy domain values
-  | string  // Allow any string for flexibility
+  | 'ad' // Legacy domain values
+  | string // Allow any string for flexibility
 
 export interface BackgroundTask {
   id: number
   name: string
   active?: boolean
-  schedule?: string | { startsOn: string, frequency: number, frequencyLabel: string } | null
+  schedule?: string | { startsOn: string; frequency: number; frequencyLabel: string } | null
   tags?: string[]
   domain: TaskDomain
   callsFunction?: any | null
@@ -30,7 +44,7 @@ export interface BackgroundTask {
   apiGroup?: string
   requiresUserId?: boolean
   description?: string
-  [key: string]: any  // Allow additional properties
+  [key: string]: any // Allow additional properties
 }
 
 export function parseDomainFromName(name: string): TaskDomain {

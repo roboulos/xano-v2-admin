@@ -31,14 +31,10 @@ Create a new Xano endpoint that tests the full data pipeline end-to-end.
 
 ## Done summary
 
-Created `pipeline-health-check` GET endpoint (ID: 18367) in Migration API group 650 (Lrekz_3S) using incremental XanoScript SDK builder workflow. Endpoint returns:
-
-- **Staging counts**: skyslope_listings (34), skyslope_transactions (24), rezen_transactions (102,843), rezen_listings (44,688)
-- **Final table counts**: listing (16,784), transaction (51,835), fub_people (226,839)
-- **Sync state**: FUB, reZEN, SkySlope sync status with entity_type, last_sync_at, status, records_synced
+Created pipeline-health-check GET endpoint (ID 18367) in Migration API group that monitors FUB, reZEN, and SkySlope integrations with staging backlogs, sync timestamps, and onboarding job status. Documented at .flow/docs/060-pipeline-health-check-endpoint.md.
 
 ## Evidence
 
-- Endpoint ID: 18367
-- Tests: `curl -s "https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:Lrekz_3S/pipeline-health-check"`
+- Commits: bdf70bf03d48a669701db196ca2d562435c3e5cb
+- Tests: curl -s https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:Lrekz_3S/pipeline-health-check | jq .
 - PRs:
