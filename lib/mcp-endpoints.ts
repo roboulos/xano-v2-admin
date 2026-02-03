@@ -10,6 +10,9 @@
 // - /seed/team/count: 500 error - Xano backend issue (Invalid name: mvpw5:365)
 // - /clear/all: 500 error - Xano backend seeding function issue
 //
+// KNOWN GAPS (Feb 2026):
+// - /job-queue-status: Returns 404 - Xano function needs to be created in SYSTEM group (api:LIdBL1AN)
+//
 // FIXED (Jan 2026):
 // - /test-skyslope-account-users-sync: Was returning null (empty stack), now calls function 7966
 // - /test-function-8118-lambda-coordinator: Uses `ad_user_id` not `user_id` (ad = Agent Dashboards)
@@ -469,6 +472,16 @@ export const MCP_ENDPOINTS: MCPEndpoint[] = [
     method: 'POST',
     requiresUserId: false,
     description: 'Backfill updated_at timestamps',
+  },
+  {
+    taskId: 0,
+    taskName: 'Job Queue Status',
+    endpoint: '/job-queue-status',
+    apiGroup: 'SYSTEM',
+    method: 'GET',
+    requiresUserId: false,
+    description:
+      'Get job queue depths across all job types. Returns counts by status (pending, processing, complete, error) for each queue. Optional user_id param to filter to specific user. NOTE: Xano function needs to be created - returns 404 currently.',
   },
 
   // ============================================================================

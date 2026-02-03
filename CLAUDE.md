@@ -463,6 +463,53 @@ curl -s -X POST "https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:2kCRUYxG/cle
 # }
 ```
 
+### SYSTEM Endpoints (api:LIdBL1AN)
+
+| Endpoint                    | Method | Params               | Description                                                                                        |
+| --------------------------- | ------ | -------------------- | -------------------------------------------------------------------------------------------------- |
+| `/table-counts`             | GET    | none                 | Get counts for core tables                                                                         |
+| `/staging-status`           | GET    | `user_id`            | Check staging table status for a user                                                              |
+| `/onboarding-status`        | GET    | `user_id`            | Check onboarding job status for a user                                                             |
+| `/staging-unprocessed`      | GET    | `user_id`            | Get unprocessed staging records                                                                    |
+| `/reset-transaction-errors` | POST   | `user_id`            | Reset transaction error flags                                                                      |
+| `/trigger-sponsor-tree`     | POST   | `user_id`            | Trigger sponsor tree rebuild                                                                       |
+| `/backfill-all-updated-at`  | POST   | none                 | Backfill updated_at timestamps                                                                     |
+| `/job-queue-status`         | GET    | `user_id` (optional) | Get job queue depths for all job types. **NOTE: Xano function needs to be created - returns 404.** |
+
+**Job Queue Status - Expected Response (when implemented):**
+
+```json
+{
+  "success": true,
+  "queues": {
+    "onboarding": { "pending": 5, "processing": 2, "complete": 100, "error": 3 },
+    "fub_sync": { "pending": 10, "processing": 1 },
+    "general": { "pending": 0, "processing": 0 }
+  },
+  "total_pending": 15,
+  "oldest_pending_minutes": 45,
+  "tables_checked": ["job_status", "fub_onboarding_jobs", "fub_sync_jobs"],
+  "tables_missing": ["fub_worker_queue", "lambda_job_status"]
+}
+```
+
+**Job Queue Status - Usage (when Xano function is created):**
+
+```bash
+# Get all queue status
+curl -s "https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:LIdBL1AN/job-queue-status"
+
+# Filter to specific user
+curl -s "https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:LIdBL1AN/job-queue-status?user_id=60"
+```
+
+**Implementation TODO:** Create Xano function in SYSTEM API group (api:LIdBL1AN) that:
+
+1. Queries `job_status`, `fub_onboarding_jobs`, `fub_sync_jobs` tables
+2. Aggregates counts by status field
+3. Calculates oldest pending job age
+4. Handles missing tables gracefully (some may not exist in V2)
+
 ---
 
 ## 🔥 XanoScript Hard-Won Lessons (January 2026)
