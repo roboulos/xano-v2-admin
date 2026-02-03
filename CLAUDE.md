@@ -1,6 +1,6 @@
 # CLAUDE.md - V1 to V2 Migration Admin Interface
 
-> **[PROJECT_HISTORY.md](./PROJECT_HISTORY.md)** - Complete 43-day timeline from Dec 5, 2025 to Jan 16, 2026. Covers all workstreams: Frontend (dashboards2.0), V2 Backend Refactor, Demo Sync Admin, and this Migration Admin. Includes what's been built, what remains, and detailed checklists.
+> **[PROJECT_HISTORY.md](./PROJECT_HISTORY.md)** - Complete 61-day timeline from Dec 5, 2025 to Feb 3, 2026. Covers all workstreams: Frontend (dashboards2.0), V2 Backend Refactor, Demo Sync Admin, and this Migration Admin. Includes what's been built, what remains, and detailed checklists.
 
 ---
 
@@ -514,6 +514,62 @@ response = {
 3. **Test with curl** - Verify each change works
 4. **Check null values** - API responses can be null/false on timeout
 5. **Use |get with defaults** - Safe property access
+
+---
+
+## 🚨 V2 API Critical Patterns (February 2026)
+
+### Auth/me Must Return FUB User Account
+
+The V2 `/auth/me` endpoint MUST include `_fub_users_account` in the response for FUB data to work in the frontend.
+
+**Required XanoScript in auth/me:**
+
+```xanoscript
+// Get FUB user account for this user (owner record) - for FUB data access
+db.query fub_users {
+  where = $db.fub_users.user_id == $user.id && $db.fub_users.is_owner == true
+  return = {type: "single"}
+} as $fub_users_account
+
+// Add to user_data response
+$user_data|set:"_fub_users_account":$fub_users_account
+```
+
+**Why it matters:** Frontend SWR hooks check `fubAccountInfo?.fubAccountId` before fetching. Without this data, `shouldFetch = false` and NO FUB API calls are made.
+
+### V2 Aggregate Endpoints Require `view` Parameter
+
+All V2 FUB aggregate endpoints require a `view` parameter:
+
+| Endpoint                        | Required Params                               |
+| ------------------------------- | --------------------------------------------- |
+| `/fub/aggregates/people`        | `fub_account_id`, `view` ("agent" or "admin") |
+| `/fub/aggregates/calls`         | `fub_account_id`, `view`                      |
+| `/fub/aggregates/text-messages` | `fub_account_id`, `view`                      |
+| `/fub/aggregates/email`         | `fub_account_id`, `view`                      |
+| `/fub/aggregates/events`        | `fub_account_id`, `view`                      |
+| `/fub/aggregates/appointments`  | `fub_account_id`, `view`                      |
+
+**Frontend service pattern:**
+
+```typescript
+const params = new URLSearchParams()
+params.append('fub_account_id', String(fubAccountId))
+params.append('view', view) // "agent" or "admin"
+if (fubUserId && fubUserId > 0) {
+  params.append('fub_user_id', String(fubUserId))
+}
+```
+
+### V2 Auth API Group
+
+| Endpoint      | ID    | Purpose                                     |
+| ------------- | ----- | ------------------------------------------- |
+| `/auth/login` | -     | Returns user + `_fub_users_account`         |
+| `/auth/me`    | 12687 | Returns current user + `_fub_users_account` |
+
+**Base URL:** `https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:i6a062_x`
 
 ---
 
