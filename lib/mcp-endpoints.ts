@@ -12,9 +12,12 @@
 //
 // KNOWN GAPS (Feb 2026):
 // - /job-queue-status: Returns 404 - Xano function needs to be created in SYSTEM group (api:LIdBL1AN)
-// - /test-function-8066-team-roster: Returns ERROR_CODE_NOT_FOUND with empty message for valid user
-//   Root cause: Function 8066 fails silently - likely XanoScript inline array bug or null reference
-//   Test: curl -X POST .../api:4UsTtl3m/test-function-8066-team-roster -d '{"user_id": 60}'
+//
+// FIXED (Feb 2026):
+// - /test-function-8066-team-roster: Fixed credentials table (user_credentials→credentials), agent_id source,
+//   safe lambda result access ($lambda_result|get:"error":null). Returns teams_processed count.
+// - /test-function-8062-network-downline: Added skip_job_check param, replaced broken Archive function 5530
+//   with new Worker (Function 11253). Uses V2 schema (network_member table). Processes 100 records/call.
 //
 // FIXED (Jan 2026):
 // - /test-skyslope-account-users-sync: Was returning null (empty stack), now calls function 7966
@@ -264,8 +267,9 @@ export const MCP_ENDPOINTS: MCPEndpoint[] = [
     apiGroup: 'WORKERS',
     method: 'POST',
     requiresUserId: true,
+    additionalParams: { skip_job_check: true },
     description:
-      'BROKEN: Returns "No pending onboarding jobs found" with skipped:true. Function requires an existing onboarding job to run. For standalone testing, add skip_job_check:true param (NOT YET IMPLEMENTED in Xano). See CLAUDE.md WORKERS Endpoints section.',
+      'FIXED Feb 2026: Sync network downline. Use skip_job_check:true for standalone testing. Creates/updates network_member records via new Worker function 11253 (replaced broken Archive 5530). Processes 100 records per call.',
   },
   {
     taskId: 0,
@@ -294,7 +298,7 @@ export const MCP_ENDPOINTS: MCPEndpoint[] = [
     method: 'POST',
     requiresUserId: true,
     description:
-      'BROKEN: Returns ERROR_CODE_NOT_FOUND with empty message for valid users. Invalid user returns "Unable to locate var: user_base.id". Requires Xano fix: likely XanoScript inline array bug or null reference in function stack. See CLAUDE.md WORKERS Endpoints section for fix guidance.',
+      'FIXED Feb 2026: Sync team roster data. Fixed: credentials table lookup (user_credentials→credentials), correct agent_id source from credentials, safe lambda result access. Returns teams_processed count.',
   },
   {
     taskId: 0,

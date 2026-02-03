@@ -512,100 +512,83 @@ curl -s "https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:LIdBL1AN/job-queue-s
 
 ### WORKERS Endpoints (api:4UsTtl3m)
 
-| Endpoint                               | Method | Params    | Status | Description                                                                                           |
-| -------------------------------------- | ------ | --------- | ------ | ----------------------------------------------------------------------------------------------------- |
-| `/test-function-8066-team-roster`      | POST   | `user_id` | BROKEN | Sync team roster data for a user. Function 8066.                                                      |
-| `/test-function-8062-network-downline` | POST   | `user_id` | BROKEN | Sync network downline for a user. Requires existing onboarding job. Use `skip_job_check: true` (TBD). |
-| `/test-rezen-team-roster-sync`         | POST   | `user_id` | OK     | Sync team roster (function #8032). Fixed Jan 2026.                                                    |
-| `/test-function-8051-agent-data`       | POST   | `user_id` | OK     | Get agent profile data from reZEN.                                                                    |
-| `/test-function-8052-txn-sync`         | POST   | `user_id` | OK     | Sync transactions from reZEN API.                                                                     |
+| Endpoint                               | Method | Params                      | Status | Description                                                    |
+| -------------------------------------- | ------ | --------------------------- | ------ | -------------------------------------------------------------- |
+| `/test-function-8066-team-roster`      | POST   | `user_id`                   | ✅ OK  | Sync team roster data. Fixed Feb 2026. Returns teams_processed |
+| `/test-function-8062-network-downline` | POST   | `user_id`, `skip_job_check` | ✅ OK  | Sync network downline. Fixed Feb 2026. 100 records/call        |
+| `/test-rezen-team-roster-sync`         | POST   | `user_id`                   | ✅ OK  | Sync team roster (function #8032). Fixed Jan 2026              |
+| `/test-function-8051-agent-data`       | POST   | `user_id`                   | ✅ OK  | Get agent profile data from reZEN                              |
+| `/test-function-8052-txn-sync`         | POST   | `user_id`                   | ✅ OK  | Sync transactions from reZEN API                               |
 
-**Team Roster Endpoint - Current Error:**
-
-```bash
-# Test with valid user 60
-curl -s -X POST "https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:4UsTtl3m/test-function-8066-team-roster" \
-  -H "Content-Type: application/json" \
-  -d '{"user_id": 60}'
-
-# Returns: {"code":"ERROR_CODE_NOT_FOUND","message":""}
-
-# Test with invalid user
-curl -s -X POST "https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:4UsTtl3m/test-function-8066-team-roster" \
-  -H "Content-Type: application/json" \
-  -d '{"user_id": 999999}'
-
-# Returns: {"code":"ERROR_FATAL","message":"Unable to locate var: user_base.id"}
-```
-
-**Root Cause Analysis:**
-
-1. The `ERROR_CODE_NOT_FOUND` with empty message suggests a precondition check fails silently
-2. The `user_base.id` error for invalid users shows the function does use a `$user_base` variable
-3. Likely causes:
-   - XanoScript inline array bug (see Hard-Won Lessons below)
-   - Null reference when accessing user/team data
-   - Silent error handling swallowing the actual error message
-
-**Xano Fix Required:**
-
-1. Inspect function 8066 stack in Xano console
-2. Look for inline array patterns: `["header", $variable]` - fix with `|push` pattern
-3. Add explicit null checks before accessing `$user_base.id`
-4. Ensure error messages are captured in catch blocks using `$error|get:"message":"Unknown error"`
-5. Test with user 60 (team_id: 1) to verify fix
-
-**Network Downline Endpoint - Current Error:**
+**Team Roster Endpoint (Function 8066) - FIXED Feb 2026:**
 
 ```bash
-# Test with valid user 60
-curl -s -X POST "https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:4UsTtl3m/test-function-8062-network-downline" \
+# Test with user 60
+curl -s -X POST "https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:4UsTtl3m/test-function-8066-team-roster" \
   -H "Content-Type: application/json" \
   -d '{"user_id": 60}'
 
 # Returns:
 # {
-#   "success": false,
-#   "error": "No pending onboarding jobs found",
-#   "step": "query_onboarding_job",
-#   "skipped": true,
-#   "data": {
-#     "job_id": null,
-#     "user_id": null,
-#     "job_completed": false,
-#     "remaining_items": null,
-#     "downline_update": null,
-#     "timestamp": "now"
+#   "success": true,
+#   "function_result": {
+#     "success": true,
+#     "data": {
+#       "message": "Team roster sync completed",
+#       "teams_processed": 4,
+#       "new_agents": 0,
+#       "inactive_agents": 0
+#     }
 #   }
 # }
 ```
 
-**Root Cause:**
+**What Was Fixed (Function 8066):**
 
-- Function 8062 requires an existing onboarding job to run
-- It queries `fub_onboarding_jobs` for pending jobs and skips if none found
-- This is by design for the onboarding workflow, but makes standalone testing difficult
+1. **Function 8097** (Roster Lambda Comparison) - Safe accessor for lambda error field
+   - `$lambda_result.error` → `$lambda_result|get:"error":null`
+2. **Function 8066** (Team Roster Sync) - Multiple issues:
+   - Wrong credentials table (`user_credentials` → `credentials`)
+   - Wrong agent_id source (user.agent_id=1 → credentials.agent_id=37208)
+   - Missing user.agent_id_raw
+   - Wrong lambda result path
+3. **Function 8094** (Roster Counts) - Fixed table name and API domain
+   - `user_credentials` → `credentials` table
+   - `yoda.therealbrokerage.com` → `yenta.therealbrokerage.com`
 
-**Proposed Fix (NOT YET IMPLEMENTED):**
-
-Add `skip_job_check` parameter for standalone testing:
+**Network Downline Endpoint (Function 8062) - FIXED Feb 2026:**
 
 ```bash
-# Test with skip_job_check (once implemented in Xano)
+# Test with skip_job_check for standalone testing
 curl -s -X POST "https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:4UsTtl3m/test-function-8062-network-downline" \
   -H "Content-Type: application/json" \
   -d '{
     "user_id": 60,
     "skip_job_check": true
   }'
+
+# Returns:
+# {
+#   "input_user_id": 60,
+#   "skip_job_check": true,
+#   "function_result": {
+#     "success": true,
+#     "data": {
+#       "processed": 100,
+#       "remaining_items": 1349
+#     }
+#   }
+# }
 ```
 
-**Xano Fix Required:**
+**What Was Fixed (Function 8062):**
 
-1. Add `skip_job_check` boolean input parameter (default: false)
-2. Modify job check logic to bypass when `skip_job_check == true`
-3. Proceed directly to network downline sync
-4. Test with user 60 to verify network data is returned
+1. Added `skip_job_check` and `user_id` parameters for standalone testing
+2. Created **Function 11253** (Workers/Network - Update Downline From Staging) - NEW
+   - Replaced broken Archive function 5530
+   - Uses V2 schema: `network_member` table (not V1 "network" table)
+   - Fixed JOIN syntax issue: removed `table: ""` that caused "missing bind parameter - dbo"
+3. Endpoint 17477 passes skip_job_check (defaults to true for testing)
 
 ---
 
