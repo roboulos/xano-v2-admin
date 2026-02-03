@@ -510,6 +510,51 @@ curl -s "https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:LIdBL1AN/job-queue-s
 3. Calculates oldest pending job age
 4. Handles missing tables gracefully (some may not exist in V2)
 
+### WORKERS Endpoints (api:4UsTtl3m)
+
+| Endpoint                               | Method | Params    | Status | Description                                                                   |
+| -------------------------------------- | ------ | --------- | ------ | ----------------------------------------------------------------------------- |
+| `/test-function-8066-team-roster`      | POST   | `user_id` | BROKEN | Sync team roster data for a user. Function 8066.                              |
+| `/test-function-8062-network-downline` | POST   | `user_id` | BROKEN | Sync network downline for a user. Returns "No pending onboarding jobs found". |
+| `/test-rezen-team-roster-sync`         | POST   | `user_id` | OK     | Sync team roster (function #8032). Fixed Jan 2026.                            |
+| `/test-function-8051-agent-data`       | POST   | `user_id` | OK     | Get agent profile data from reZEN.                                            |
+| `/test-function-8052-txn-sync`         | POST   | `user_id` | OK     | Sync transactions from reZEN API.                                             |
+
+**Team Roster Endpoint - Current Error:**
+
+```bash
+# Test with valid user 60
+curl -s -X POST "https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:4UsTtl3m/test-function-8066-team-roster" \
+  -H "Content-Type: application/json" \
+  -d '{"user_id": 60}'
+
+# Returns: {"code":"ERROR_CODE_NOT_FOUND","message":""}
+
+# Test with invalid user
+curl -s -X POST "https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:4UsTtl3m/test-function-8066-team-roster" \
+  -H "Content-Type: application/json" \
+  -d '{"user_id": 999999}'
+
+# Returns: {"code":"ERROR_FATAL","message":"Unable to locate var: user_base.id"}
+```
+
+**Root Cause Analysis:**
+
+1. The `ERROR_CODE_NOT_FOUND` with empty message suggests a precondition check fails silently
+2. The `user_base.id` error for invalid users shows the function does use a `$user_base` variable
+3. Likely causes:
+   - XanoScript inline array bug (see Hard-Won Lessons below)
+   - Null reference when accessing user/team data
+   - Silent error handling swallowing the actual error message
+
+**Xano Fix Required:**
+
+1. Inspect function 8066 stack in Xano console
+2. Look for inline array patterns: `["header", $variable]` - fix with `|push` pattern
+3. Add explicit null checks before accessing `$user_base.id`
+4. Ensure error messages are captured in catch blocks using `$error|get:"message":"Unknown error"`
+5. Test with user 60 (team_id: 1) to verify fix
+
 ---
 
 ## 🔥 XanoScript Hard-Won Lessons (January 2026)

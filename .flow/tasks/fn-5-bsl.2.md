@@ -128,10 +128,10 @@ curl -s "https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:LIdBL1AN/job-queue-s
 
 ## Done summary
 
-TBD
+Documented /job-queue-status endpoint in mcp-endpoints.ts and added SYSTEM Endpoints section to CLAUDE.md with expected response format and usage. Noted that Xano function needs to be created.
 
 ## Evidence
 
-- Commits:
-- Tests:
+- Commits: 97ab389
+- Tests: pnpm lint
 - PRs:

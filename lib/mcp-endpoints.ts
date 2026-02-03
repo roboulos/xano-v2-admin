@@ -12,6 +12,9 @@
 //
 // KNOWN GAPS (Feb 2026):
 // - /job-queue-status: Returns 404 - Xano function needs to be created in SYSTEM group (api:LIdBL1AN)
+// - /test-function-8066-team-roster: Returns ERROR_CODE_NOT_FOUND with empty message for valid user
+//   Root cause: Function 8066 fails silently - likely XanoScript inline array bug or null reference
+//   Test: curl -X POST .../api:4UsTtl3m/test-function-8066-team-roster -d '{"user_id": 60}'
 //
 // FIXED (Jan 2026):
 // - /test-skyslope-account-users-sync: Was returning null (empty stack), now calls function 7966
@@ -281,6 +284,16 @@ export const MCP_ENDPOINTS: MCPEndpoint[] = [
     requiresUserId: true,
     description:
       'Sync team roster data (calls function #8032) - FIXED Jan 2026: headers now use |push pattern',
+  },
+  {
+    taskId: 8066,
+    taskName: 'reZEN - Team Roster (Function 8066)',
+    endpoint: '/test-function-8066-team-roster',
+    apiGroup: 'WORKERS',
+    method: 'POST',
+    requiresUserId: true,
+    description:
+      'BROKEN: Returns ERROR_CODE_NOT_FOUND with empty message for valid users. Invalid user returns "Unable to locate var: user_base.id". Requires Xano fix: likely XanoScript inline array bug or null reference in function stack. See CLAUDE.md WORKERS Endpoints section for fix guidance.',
   },
   {
     taskId: 0,
