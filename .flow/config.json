@@ -1,13 +1,13 @@
 {
   "memory": {
-    "enabled": false
+    "enabled": true
   },
   "planSync": {
     "crossEpic": false,
-    "enabled": false
+    "enabled": true
   },
   "review": {
-    "backend": null
+    "backend": "codex"
   },
   "review-backend": "codex"
 }

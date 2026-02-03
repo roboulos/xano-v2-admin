@@ -424,3 +424,61 @@
 .animate-shake {
   animation: shake 0.6s ease-in-out;
 }
+
+/* ============================================================
+   CUSTOM SCROLLBAR STYLING - Theme-aware, disappears when not used
+   ============================================================ */
+
+/* Firefox scrollbar */
+* {
+  scrollbar-color: hsl(var(--muted)) transparent;
+  scrollbar-width: thin;
+}
+
+/* WebKit scrollbar (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: hsl(var(--muted));
+  border-radius: 4px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: hsl(var(--muted-foreground));
+  opacity: 1;
+}
+
+/* Show scrollbar on hover or when scrolling */
+.overflow-x-auto:hover::-webkit-scrollbar-thumb,
+.overflow-y-auto:hover::-webkit-scrollbar-thumb {
+  opacity: 0.6;
+}
+
+.overflow-x-auto::-webkit-scrollbar-thumb:hover,
+.overflow-y-auto::-webkit-scrollbar-thumb:hover {
+  opacity: 1;
+}
+
+/* Dark mode adjustments */
+.dark {
+  scrollbar-color: hsl(var(--muted)) transparent;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background-color: hsl(var(--muted));
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background-color: hsl(var(--accent));
+}

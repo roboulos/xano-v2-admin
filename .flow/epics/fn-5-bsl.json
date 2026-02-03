@@ -1,0 +1,13 @@
+{
+  "branch_name": "fn-5-bsl",
+  "created_at": "2026-02-03T14:52:07.750970Z",
+  "depends_on_epics": [],
+  "id": "fn-5-bsl",
+  "next_task": 1,
+  "plan_review_status": "ship",
+  "plan_reviewed_at": "2026-02-03T15:12:13.039815Z",
+  "spec_path": ".flow/specs/fn-5-bsl.md",
+  "status": "open",
+  "title": "V2 Backend Gaps - 4 Remaining Endpoints",
+  "updated_at": "2026-02-03T15:12:13.040032Z"
+}

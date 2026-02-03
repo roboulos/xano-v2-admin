@@ -1,0 +1,99 @@
+{
+  "created_at": "2026-02-03T15:00:50.919923Z",
+  "epic": {
+    "data": {
+      "branch_name": "fn-5-bsl",
+      "created_at": "2026-02-03T14:52:07.750970Z",
+      "depends_on_epics": [],
+      "id": "fn-5-bsl",
+      "next_task": 1,
+      "plan_review_status": "unknown",
+      "plan_reviewed_at": null,
+      "spec_path": ".flow/specs/fn-5-bsl.md",
+      "status": "open",
+      "title": "V2 Backend Gaps - 4 Remaining Endpoints",
+      "updated_at": "2026-02-03T14:52:07.753611Z"
+    },
+    "spec": "# fn-5-bsl: V2 Backend Gaps - 4 Remaining Endpoints\n\n## Problem\n\n4 backend endpoints block V2 launch readiness:\n\n| # | Endpoint | API Group | Issue |\n|---|----------|-----------|-------|\n| 1 | `/clear-user-data` | SEEDING | Returns HTTP 405 |\n| 2 | `/job-queue-status` | SYSTEM | Returns HTTP 404 |\n| 3 | `/test-function-8066-team-roster` | WORKERS | Returns `success: false` with empty error |\n| 4 | `/test-function-8062-network-downline` | WORKERS | Returns \"No pending onboarding jobs found\" |\n\n## Acceptance Criteria\n\n- [ ] `/clear-user-data` - POST clears all V2 data for given user_id, returns deletion counts\n- [ ] `/job-queue-status` - GET returns queue depths for all job types\n- [ ] `/test-function-8066-team-roster` - Returns `success: true` with team roster data for user 60\n- [ ] `/test-function-8062-network-downline` - Returns `success: true` with network data for user 60\n\n## Key Context\n\n### V2 Workspace\n- Instance: `x2nu-xcjc-vhax.agentdashboards.xano.io`\n- Workspace ID: 5\n\n### API Base URLs (lib/mcp-endpoints.ts:18-23)\n```typescript\nSEEDING: 'https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:2kCRUYxG'\nSYSTEM: 'https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:LIdBL1AN'\nWORKERS: 'https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:4UsTtl3m'\n```\n\n### XanoScript Pattern for Arrays\n```xanoscript\n// WRONG - inline array with variable\nvar $headers { value = [\"header\", $var] }\n\n// CORRECT - use |push filter\nvar $headers { value = []|push:\"header\"|push:$var }\n```\n\n### Test User\n- User ID: 60 (David Keener)\n- Agent ID: 37208\n- Team ID: 1\n\n## Quick commands\n```bash\n# Test clear-user-data\ncurl -s -X POST \"https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:2kCRUYxG/clear-user-data\" \\\n  -H \"Content-Type: application/json\" -d '{\"user_id\": 60}'\n\n# Test job-queue-status\ncurl -s \"https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:LIdBL1AN/job-queue-status\"\n\n# Test team-roster\ncurl -s -X POST \"https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:4UsTtl3m/test-function-8066-team-roster\" \\\n  -H \"Content-Type: application/json\" -d '{\"user_id\": 60}'\n\n# Test network-downline\ncurl -s -X POST \"https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:4UsTtl3m/test-function-8062-network-downline\" \\\n  -H \"Content-Type: application/json\" -d '{\"user_id\": 60}'\n```\n\n## Dependencies\n\n- Depends on: fn-2 (Master Migration Epic)\n- Parent epic: 001-V2-LAUNCH-CRITICAL-PATH\n"
+  },
+  "epic_id": "fn-5-bsl",
+  "schema_version": 2,
+  "tasks": [
+    {
+      "data": {
+        "assignee": null,
+        "claim_note": "",
+        "claimed_at": null,
+        "created_at": "2026-02-03T14:52:57.941414Z",
+        "depends_on": [],
+        "epic": "fn-5-bsl",
+        "id": "fn-5-bsl.1",
+        "priority": 1,
+        "spec_path": ".flow/tasks/fn-5-bsl.1.md",
+        "status": "todo",
+        "title": "Fix /clear-user-data endpoint (SEEDING)",
+        "updated_at": "2026-02-03T14:52:57.941603Z"
+      },
+      "id": "fn-5-bsl.1",
+      "runtime": null,
+      "spec": "# fn-5-bsl.1 Fix /clear-user-data endpoint (SEEDING)\n\n## Description\n\nEndpoint exists (API ID: 18033) but returns HTTP 405. Need to fix the function to accept POST requests and clear V2 data for a given user_id.\n\n**Tables to clear** (in FK order):\n- agent_performance, agent_hierarchy, agent_commission, agent_cap_data\n- transaction_participants, transaction_financials, transaction_history, transaction\n- listing_history, listing_photos, listing\n- contribution, income, revshare_totals\n- network_member, network_hierarchy\n- fub_people, fub_calls, fub_events, fub_deals\n- job_status, fub_onboarding_jobs, fub_sync_jobs\n\n## Acceptance\n\n- [ ] POST `/clear-user-data` with `{\"user_id\": 60}` returns 200\n- [ ] Response includes counts of deleted records per table\n- [ ] User record preserved (only associated data cleared)\n- [ ] Re-running onboarding after clear succeeds\n\n## Context\n\n**URL:** `https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:2kCRUYxG/clear-user-data`\n\n```bash\ncurl -s -X POST \"https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:2kCRUYxG/clear-user-data\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"user_id\": 60}'\n```\n\n## Done summary\nTBD\n\n## Evidence\n- Commits:\n- Tests:\n- PRs:\n"
+    },
+    {
+      "data": {
+        "assignee": null,
+        "claim_note": "",
+        "claimed_at": null,
+        "created_at": "2026-02-03T14:52:58.133065Z",
+        "depends_on": [],
+        "epic": "fn-5-bsl",
+        "id": "fn-5-bsl.2",
+        "priority": 2,
+        "spec_path": ".flow/tasks/fn-5-bsl.2.md",
+        "status": "todo",
+        "title": "Create /job-queue-status endpoint (SYSTEM)",
+        "updated_at": "2026-02-03T14:52:58.133377Z"
+      },
+      "id": "fn-5-bsl.2",
+      "runtime": null,
+      "spec": "# fn-5-bsl.2 Create /job-queue-status endpoint (SYSTEM)\n\n## Description\n\nEndpoint returns 404 - needs to be created. Should provide visibility into job queue depths across all job types.\n\n**Tables to query:**\n- `job_status` - General job tracking\n- `fub_onboarding_jobs` - FUB onboarding queue\n- `fub_sync_jobs` - FUB sync queue\n- `fub_worker_queue` - FUB worker queue\n- `lambda_job_status` - Lambda jobs (if exists)\n\n## Acceptance\n\n- [ ] GET `/job-queue-status` returns 200\n- [ ] Response format:\n```json\n{\n  \"queues\": {\n    \"onboarding\": { \"pending\": N, \"processing\": N, \"complete\": N, \"error\": N },\n    \"fub_sync\": { \"pending\": N, \"processing\": N },\n    \"general\": { \"pending\": N, \"processing\": N }\n  },\n  \"total_pending\": N,\n  \"oldest_pending_minutes\": N\n}\n```\n- [ ] Optional `user_id` param filters to that user's jobs\n\n## Context\n\n**URL:** `https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:LIdBL1AN/job-queue-status`\n\n```bash\ncurl -s \"https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:LIdBL1AN/job-queue-status\"\n```\n\n## Done summary\nTBD\n\n## Evidence\n- Commits:\n- Tests:\n- PRs:\n"
+    },
+    {
+      "data": {
+        "assignee": null,
+        "claim_note": "",
+        "claimed_at": null,
+        "created_at": "2026-02-03T14:52:58.289886Z",
+        "depends_on": [],
+        "epic": "fn-5-bsl",
+        "id": "fn-5-bsl.3",
+        "priority": 3,
+        "spec_path": ".flow/tasks/fn-5-bsl.3.md",
+        "status": "todo",
+        "title": "Fix /test-function-8066-team-roster (WORKERS)",
+        "updated_at": "2026-02-03T14:52:58.290100Z"
+      },
+      "id": "fn-5-bsl.3",
+      "runtime": null,
+      "spec": "# fn-5-bsl.3 Fix /test-function-8066-team-roster (WORKERS)\n\n## Description\n\nFunction returns `success: false` with empty error message. Root cause likely XanoScript inline array pattern bug.\n\n**Suspected issue:** Function uses `[\"header\", $variable]` inline array syntax which doesn't interpolate correctly.\n\n**Fix pattern:**\n```xanoscript\n// WRONG\nvar $headers { value = [\"Content-Type: application/json\", $api_key_header] }\n\n// CORRECT\nvar $headers { value = []|push:\"Content-Type: application/json\"|push:$api_key_header }\n```\n\n## Acceptance\n\n- [ ] POST with `{\"user_id\": 60}` returns `success: true`\n- [ ] Response includes team roster data (members array)\n- [ ] Error messages properly captured if failure occurs\n\n## Context\n\n**Function ID:** 8066\n**URL:** `https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:4UsTtl3m/test-function-8066-team-roster`\n\n```bash\ncurl -s -X POST \"https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:4UsTtl3m/test-function-8066-team-roster\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"user_id\": 60}'\n```\n\n**Test user:**\n- User ID: 60, Team ID: 1\n\n## Done summary\nTBD\n\n## Evidence\n- Commits:\n- Tests:\n- PRs:\n"
+    },
+    {
+      "data": {
+        "assignee": null,
+        "claim_note": "",
+        "claimed_at": null,
+        "created_at": "2026-02-03T14:52:58.464954Z",
+        "depends_on": [],
+        "epic": "fn-5-bsl",
+        "id": "fn-5-bsl.4",
+        "priority": 4,
+        "spec_path": ".flow/tasks/fn-5-bsl.4.md",
+        "status": "todo",
+        "title": "Fix /test-function-8062-network-downline (WORKERS)",
+        "updated_at": "2026-02-03T14:52:58.465148Z"
+      },
+      "id": "fn-5-bsl.4",
+      "runtime": null,
+      "spec": "# fn-5-bsl.4 Fix /test-function-8062-network-downline (WORKERS)\n\n## Description\n\nFunction returns `\"No pending onboarding jobs found\"` - it requires an existing onboarding job to run. Need either:\n1. Add `skip_job_check` parameter for standalone testing, OR\n2. Document that `/trigger-rezen-create-onboarding-job` must be called first\n\n**Additional issue:** EXECUTION_TRACKER mentions \"duplicate variable declarations\" - need to change `var` to `var.update` where variables are redeclared.\n\n## Acceptance\n\n- [ ] POST with `{\"user_id\": 60}` returns `success: true` (or `skipped: true` with reason)\n- [ ] Network hierarchy data populated in V2 tables\n- [ ] Function works standalone OR documentation clarifies prerequisite\n\n## Context\n\n**Function ID:** 8062\n**URL:** `https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:4UsTtl3m/test-function-8062-network-downline`\n\n```bash\n# Direct call (currently fails)\ncurl -s -X POST \"https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:4UsTtl3m/test-function-8062-network-downline\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"user_id\": 60}'\n\n# May need prerequisite job creation first:\ncurl -s -X POST \"https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:4UsTtl3m/trigger-rezen-create-onboarding-job\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"user_id\": 60}'\n```\n\n**Test user:**\n- User ID: 60, Agent ID: 37208\n\n## Done summary\nTBD\n\n## Evidence\n- Commits:\n- Tests:\n- PRs:\n"
+    }
+  ]
+}

@@ -84,22 +84,24 @@ export default function Home() {
           </p>
         </div>
 
-        {/* 2-Tab Navigation */}
-        <div className="flex items-center gap-2 p-1 bg-muted/50 rounded-lg mb-6 w-fit">
-          {viewModes.map((mode) => (
-            <button
-              key={mode.id}
-              onClick={() => setViewMode(mode.id)}
-              className={`flex items-center gap-2 px-6 py-3 rounded-md text-sm font-medium transition-all ${
-                viewMode === mode.id
-                  ? 'bg-background shadow-sm text-foreground'
-                  : 'text-muted-foreground hover:text-foreground hover:bg-background/50'
-              }`}
-            >
-              <mode.icon className="h-4 w-4" />
-              {mode.label}
-            </button>
-          ))}
+        {/* Tab Navigation */}
+        <div className="overflow-x-auto overflow-y-hidden -mx-4 px-4 mb-6">
+          <div className="flex items-center gap-2 p-1 bg-muted/50 rounded-lg w-fit">
+            {viewModes.map((mode) => (
+              <button
+                key={mode.id}
+                onClick={() => setViewMode(mode.id)}
+                className={`flex items-center gap-2 px-6 py-3 rounded-md text-sm font-medium transition-all ${
+                  viewMode === mode.id
+                    ? 'bg-background shadow-sm text-foreground'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-background/50'
+                }`}
+              >
+                <mode.icon className="h-4 w-4" />
+                {mode.label}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Content */}

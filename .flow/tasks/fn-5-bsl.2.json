@@ -1,0 +1,14 @@
+{
+  "assignee": null,
+  "claim_note": "",
+  "claimed_at": null,
+  "created_at": "2026-02-03T14:52:58.133065Z",
+  "depends_on": [],
+  "epic": "fn-5-bsl",
+  "id": "fn-5-bsl.2",
+  "priority": 2,
+  "spec_path": ".flow/tasks/fn-5-bsl.2.md",
+  "status": "todo",
+  "title": "Create /job-queue-status endpoint (SYSTEM)",
+  "updated_at": "2026-02-03T14:52:58.133377Z"
+}
