@@ -1,0 +1,13 @@
+{
+  "branch_name": "fn-6-1dg",
+  "created_at": "2026-02-03T18:59:58.826728Z",
+  "depends_on_epics": [],
+  "id": "fn-6-1dg",
+  "next_task": 1,
+  "plan_review_status": "unknown",
+  "plan_reviewed_at": null,
+  "spec_path": ".flow/specs/fn-6-1dg.md",
+  "status": "open",
+  "title": "Fix V2 Backend Xano Functions",
+  "updated_at": "2026-02-03T18:59:58.826935Z"
+}
