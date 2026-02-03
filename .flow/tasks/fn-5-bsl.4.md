@@ -130,10 +130,10 @@ curl -s -X POST "https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:4UsTtl3m/tes
 
 ## Done summary
 
-TBD
+Documented /test-function-8062-network-downline endpoint current state: returns "No pending onboarding jobs found" with skipped:true. Updated mcp-endpoints.ts with taskId 8062 and detailed description. Added curl examples and proposed skip_job_check parameter to CLAUDE.md.
 
 ## Evidence
 
-- Commits:
-- Tests:
+- Commits: 45503a1b64699d1e7e518e707db6aabbd1f9894b
+- Tests: curl -s -X POST endpoint with user_id: 60 - verified returns 'No pending onboarding jobs found', curl -s -X POST endpoint with skip_job_check: true - verified param not implemented yet
 - PRs:
