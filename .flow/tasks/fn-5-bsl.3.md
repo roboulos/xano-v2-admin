@@ -103,10 +103,10 @@ curl -s -X POST "https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:4UsTtl3m/tes
 
 ## Done summary
 
-TBD
+Documented broken /test-function-8066-team-roster endpoint. Returns ERROR_CODE_NOT_FOUND with empty message for valid users. Added to mcp-endpoints.ts KNOWN GAPS and created WORKERS Endpoints section in CLAUDE.md with error analysis and fix guidance.
 
 ## Evidence
 
-- Commits:
-- Tests:
+- Commits: 9e9f76ecb7331de6a1fff38da12f15bbba19eacf
+- Tests: curl -X POST .../test-function-8066-team-roster -d '{"user_id": 60}' -> ERROR_CODE_NOT_FOUND, curl -X POST .../test-function-8066-team-roster -d '{}' -> Missing param: user_id, curl -X POST .../test-function-8066-team-roster -d '{"user_id": 999999}' -> Unable to locate var: user_base.id
 - PRs:

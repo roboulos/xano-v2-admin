@@ -512,13 +512,13 @@ curl -s "https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:LIdBL1AN/job-queue-s
 
 ### WORKERS Endpoints (api:4UsTtl3m)
 
-| Endpoint                               | Method | Params    | Status | Description                                                                   |
-| -------------------------------------- | ------ | --------- | ------ | ----------------------------------------------------------------------------- |
-| `/test-function-8066-team-roster`      | POST   | `user_id` | BROKEN | Sync team roster data for a user. Function 8066.                              |
-| `/test-function-8062-network-downline` | POST   | `user_id` | BROKEN | Sync network downline for a user. Returns "No pending onboarding jobs found". |
-| `/test-rezen-team-roster-sync`         | POST   | `user_id` | OK     | Sync team roster (function #8032). Fixed Jan 2026.                            |
-| `/test-function-8051-agent-data`       | POST   | `user_id` | OK     | Get agent profile data from reZEN.                                            |
-| `/test-function-8052-txn-sync`         | POST   | `user_id` | OK     | Sync transactions from reZEN API.                                             |
+| Endpoint                               | Method | Params    | Status | Description                                                                                           |
+| -------------------------------------- | ------ | --------- | ------ | ----------------------------------------------------------------------------------------------------- |
+| `/test-function-8066-team-roster`      | POST   | `user_id` | BROKEN | Sync team roster data for a user. Function 8066.                                                      |
+| `/test-function-8062-network-downline` | POST   | `user_id` | BROKEN | Sync network downline for a user. Requires existing onboarding job. Use `skip_job_check: true` (TBD). |
+| `/test-rezen-team-roster-sync`         | POST   | `user_id` | OK     | Sync team roster (function #8032). Fixed Jan 2026.                                                    |
+| `/test-function-8051-agent-data`       | POST   | `user_id` | OK     | Get agent profile data from reZEN.                                                                    |
+| `/test-function-8052-txn-sync`         | POST   | `user_id` | OK     | Sync transactions from reZEN API.                                                                     |
 
 **Team Roster Endpoint - Current Error:**
 
@@ -554,6 +554,58 @@ curl -s -X POST "https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:4UsTtl3m/tes
 3. Add explicit null checks before accessing `$user_base.id`
 4. Ensure error messages are captured in catch blocks using `$error|get:"message":"Unknown error"`
 5. Test with user 60 (team_id: 1) to verify fix
+
+**Network Downline Endpoint - Current Error:**
+
+```bash
+# Test with valid user 60
+curl -s -X POST "https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:4UsTtl3m/test-function-8062-network-downline" \
+  -H "Content-Type: application/json" \
+  -d '{"user_id": 60}'
+
+# Returns:
+# {
+#   "success": false,
+#   "error": "No pending onboarding jobs found",
+#   "step": "query_onboarding_job",
+#   "skipped": true,
+#   "data": {
+#     "job_id": null,
+#     "user_id": null,
+#     "job_completed": false,
+#     "remaining_items": null,
+#     "downline_update": null,
+#     "timestamp": "now"
+#   }
+# }
+```
+
+**Root Cause:**
+
+- Function 8062 requires an existing onboarding job to run
+- It queries `fub_onboarding_jobs` for pending jobs and skips if none found
+- This is by design for the onboarding workflow, but makes standalone testing difficult
+
+**Proposed Fix (NOT YET IMPLEMENTED):**
+
+Add `skip_job_check` parameter for standalone testing:
+
+```bash
+# Test with skip_job_check (once implemented in Xano)
+curl -s -X POST "https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:4UsTtl3m/test-function-8062-network-downline" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "user_id": 60,
+    "skip_job_check": true
+  }'
+```
+
+**Xano Fix Required:**
+
+1. Add `skip_job_check` boolean input parameter (default: false)
+2. Modify job check logic to bypass when `skip_job_check == true`
+3. Proceed directly to network downline sync
+4. Test with user 60 to verify network data is returned
 
 ---
 

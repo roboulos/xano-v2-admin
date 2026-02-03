@@ -258,13 +258,14 @@ export const MCP_ENDPOINTS: MCPEndpoint[] = [
     description: 'Process contributor records',
   },
   {
-    taskId: 0,
+    taskId: 8062,
     taskName: 'reZEN - Network Downline',
     endpoint: '/test-function-8062-network-downline',
     apiGroup: 'WORKERS',
     method: 'POST',
     requiresUserId: true,
-    description: 'Sync network downline for a user',
+    description:
+      'BROKEN: Returns "No pending onboarding jobs found" with skipped:true. Function requires an existing onboarding job to run. For standalone testing, add skip_job_check:true param (NOT YET IMPLEMENTED in Xano). See CLAUDE.md WORKERS Endpoints section.',
   },
   {
     taskId: 0,
