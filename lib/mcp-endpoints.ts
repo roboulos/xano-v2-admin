@@ -475,6 +475,17 @@ export const MCP_ENDPOINTS: MCPEndpoint[] = [
   // SEEDING GROUP (api:2kCRUYxG) - Test Data
   // ============================================================================
   {
+    taskId: 18033,
+    taskName: 'Clear User Data',
+    endpoint: '/clear-user-data',
+    apiGroup: 'SEEDING',
+    method: 'POST',
+    requiresUserId: true,
+    additionalParams: { confirm: true },
+    description:
+      'Clear all V2 data for a user (for fresh onboarding). Requires confirm:true. Preserves user and agent records. Clears: FUB data (people, calls, events, appointments, deals), job records, transactions, listings, contributions, network data. Returns deletion counts per table.',
+  },
+  {
     taskId: 0,
     taskName: 'Seed Demo Dataset',
     endpoint: '/seed/demo-dataset',

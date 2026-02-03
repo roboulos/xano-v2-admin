@@ -424,6 +424,45 @@ MCP_BASES = {
 - `getEndpointsNeedingUserId()` - Get endpoints requiring user_id param
 - `getStandaloneEndpoints()` - Get endpoints that run without user_id
 
+### SEEDING Endpoints (api:2kCRUYxG)
+
+| Endpoint                  | Method | Params                     | Description                                                                                                                                                                                                       |
+| ------------------------- | ------ | -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `/clear-user-data`        | POST   | `user_id`, `confirm: true` | Clear all V2 data for a user (for fresh onboarding). Preserves `user` and `agent` records. Clears: FUB data, job records, transactions, listings, contributions, network data. Returns deletion counts per table. |
+| `/seed/demo-dataset`      | POST   | none                       | Seed demo data for testing                                                                                                                                                                                        |
+| `/seed/user/count`        | GET    | none                       | Get seeded user counts                                                                                                                                                                                            |
+| `/seed/agent/count`       | GET    | none                       | Get seeded agent counts                                                                                                                                                                                           |
+| `/seed/transaction/count` | GET    | none                       | Get seeded transaction counts                                                                                                                                                                                     |
+| `/seed/team/count`        | GET    | none                       | Get seeded team counts                                                                                                                                                                                            |
+| `/seed/network/count`     | GET    | none                       | Get seeded network counts                                                                                                                                                                                         |
+| `/seed/listing/count`     | GET    | none                       | Get seeded listing counts                                                                                                                                                                                         |
+| `/clear/all`              | POST   | none                       | Clear all seeded data (DANGEROUS)                                                                                                                                                                                 |
+
+**Clear User Data - Usage:**
+
+```bash
+# Clear all data for user 60 (requires confirm: true for safety)
+curl -s -X POST "https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:2kCRUYxG/clear-user-data" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "user_id": 60,
+    "confirm": true
+  }'
+
+# Expected response:
+# {
+#   "success": true,
+#   "user_id": 60,
+#   "deleted": {
+#     "rezen_sync_jobs": 1,
+#     "fub_sync_jobs": 2,
+#     "job_status": 8838,
+#     ...
+#   },
+#   "message": "User data cleared for fresh onboarding"
+# }
+```
+
 ---
 
 ## 🔥 XanoScript Hard-Won Lessons (January 2026)
@@ -627,3 +666,31 @@ curl -s -X POST "https://xmpx-swi5-tlvy.n7c.xano.io/api:4UsTtl3m/ENDPOINT" \
 - `lib/v1-data.ts` - V1 workspace tables (251)
 - `lib/v2-data.ts` - V2 workspace tables (193)
 - `lib/table-mappings.ts` - V1 → V2 mappings
+
+<!-- BEGIN FLOW-NEXT -->
+
+## Flow-Next
+
+This project uses Flow-Next for task tracking. Use `.flow/bin/flowctl` instead of markdown TODOs or TodoWrite.
+
+**Quick commands:**
+
+```bash
+.flow/bin/flowctl list                # List all epics + tasks
+.flow/bin/flowctl epics               # List all epics
+.flow/bin/flowctl tasks --epic fn-N   # List tasks for epic
+.flow/bin/flowctl ready --epic fn-N   # What's ready
+.flow/bin/flowctl show fn-N.M         # View task
+.flow/bin/flowctl start fn-N.M        # Claim task
+.flow/bin/flowctl done fn-N.M --summary-file s.md --evidence-json e.json
+```
+
+**Rules:**
+
+- Use `.flow/bin/flowctl` for ALL task tracking
+- Do NOT create markdown TODOs or use TodoWrite
+- Re-anchor (re-read spec + status) before every task
+
+**More info:** `.flow/bin/flowctl --help` or read `.flow/usage.md`
+
+<!-- END FLOW-NEXT -->
