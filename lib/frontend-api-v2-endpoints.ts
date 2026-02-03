@@ -8,6 +8,12 @@
 // - /version: Not implemented in Xano (404)
 // - /maintenance-mode: Not implemented in Xano (404)
 // These endpoints are defined here for documentation but not yet implemented in the V2 backend.
+//
+// CRITICAL FIX (Feb 2026):
+// - All FUB aggregate endpoints REQUIRE `view` parameter ("agent" or "admin")
+// - Without `view`, endpoints return 400 Bad Request
+// - Required params: fub_account_id, view
+// - Optional params: fub_user_id (for user-scoped data)
 
 export type EndpointStatus = 'pending' | 'running' | 'success' | 'error'
 
@@ -74,10 +80,11 @@ export const ALL_FRONTEND_ENDPOINTS: FrontendEndpoint[] = [
     path: '/leads/fub/text_messages/aggregates',
     method: 'GET',
     authRequired: 664,
-    tags: [],
+    tags: ['fub', 'aggregate'],
     category: 'fub',
     status: 'pending',
-    description: 'FUB text messages aggregates',
+    testParams: 'fub_account_id=4&view=agent',
+    description: 'FUB text messages aggregates. REQUIRES: fub_account_id, view (agent|admin)',
     lastModified: '2025-12-23 05:27:09+0000',
   },
   {
@@ -86,10 +93,11 @@ export const ALL_FRONTEND_ENDPOINTS: FrontendEndpoint[] = [
     path: '/leads/fub/appointments/aggregates',
     method: 'GET',
     authRequired: 664,
-    tags: [],
+    tags: ['fub', 'aggregate'],
     category: 'fub',
     status: 'pending',
-    description: 'FUB appointments aggregates',
+    testParams: 'fub_account_id=4&view=agent',
+    description: 'FUB appointments aggregates. REQUIRES: fub_account_id, view (agent|admin)',
     lastModified: '2025-12-23 05:26:58+0000',
   },
   {
@@ -458,10 +466,11 @@ export const ALL_FRONTEND_ENDPOINTS: FrontendEndpoint[] = [
     path: '/leads/fub/deals/aggregates',
     method: 'GET',
     authRequired: 664,
-    tags: [],
+    tags: ['fub', 'aggregate'],
     category: 'fub',
     status: 'pending',
-    description: 'FUB deals aggregates',
+    testParams: 'fub_account_id=4&view=agent',
+    description: 'FUB deals aggregates. REQUIRES: fub_account_id, view (agent|admin)',
     lastModified: '2025-12-21 08:08:18+0000',
   },
   {
@@ -470,10 +479,11 @@ export const ALL_FRONTEND_ENDPOINTS: FrontendEndpoint[] = [
     path: '/leads/fub/calls/aggregates',
     method: 'GET',
     authRequired: 664,
-    tags: [],
+    tags: ['fub', 'aggregate'],
     category: 'fub',
     status: 'pending',
-    description: 'FUB calls aggregates',
+    testParams: 'fub_account_id=4&view=agent',
+    description: 'FUB calls aggregates. REQUIRES: fub_account_id, view (agent|admin)',
     lastModified: '2025-12-21 08:07:01+0000',
   },
   {
@@ -482,10 +492,11 @@ export const ALL_FRONTEND_ENDPOINTS: FrontendEndpoint[] = [
     path: '/leads/fub/events/aggregates',
     method: 'GET',
     authRequired: 664,
-    tags: [],
+    tags: ['fub', 'aggregate'],
     category: 'fub',
     status: 'pending',
-    description: 'FUB events aggregates',
+    testParams: 'fub_account_id=4&view=agent',
+    description: 'FUB events aggregates. REQUIRES: fub_account_id, view (agent|admin)',
     lastModified: '2025-12-21 08:05:39+0000',
   },
   {
@@ -494,10 +505,11 @@ export const ALL_FRONTEND_ENDPOINTS: FrontendEndpoint[] = [
     path: '/leads/fub/people/aggregates',
     method: 'GET',
     authRequired: 664,
-    tags: [],
+    tags: ['fub', 'aggregate'],
     category: 'fub',
     status: 'pending',
-    description: 'FUB people aggregates',
+    testParams: 'fub_account_id=4&view=agent',
+    description: 'FUB people aggregates. REQUIRES: fub_account_id, view (agent|admin)',
     lastModified: '2025-12-21 08:04:17+0000',
   },
   {

@@ -24,9 +24,10 @@ export interface MCPEndpoint {
   taskId: number // Background task ID
   taskName: string // Human-readable name
   endpoint: string // Actual MCP endpoint path
-  apiGroup: 'TASKS' | 'WORKERS' | 'SYSTEM' | 'SEEDING'
+  apiGroup: 'TASKS' | 'WORKERS' | 'SYSTEM' | 'SEEDING' | 'AUTH' | 'FRONTEND'
   method: 'GET' | 'POST'
   requiresUserId: boolean // Does this endpoint need user_id param?
+  requiresAuth?: boolean // Does this endpoint need Authorization header?
   userIdParamName?: string // Custom param name if not 'user_id' (e.g., 'ad_user_id')
   additionalParams?: Record<string, string | number | boolean> // Additional required params
   description: string // What this endpoint does
@@ -38,6 +39,8 @@ export const MCP_BASES = {
   WORKERS: 'https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:4UsTtl3m',
   SYSTEM: 'https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:LIdBL1AN',
   SEEDING: 'https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:2kCRUYxG',
+  AUTH: 'https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:i6a062_x', // API Group 519
+  FRONTEND: 'https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:pe1wjL5I', // API Group 515
 } as const
 
 // Known working MCP endpoints (discovered via curl testing)
@@ -542,6 +545,54 @@ export const MCP_ENDPOINTS: MCPEndpoint[] = [
     method: 'POST',
     requiresUserId: false,
     description: 'Clear all seeded data (DANGEROUS)',
+  },
+
+  // ============================================================================
+  // AUTH GROUP (api:i6a062_x) - Authentication endpoints
+  // CRITICAL: These endpoints must return _fub_users_account for FUB data to work
+  // ============================================================================
+  {
+    taskId: 0,
+    taskName: 'Auth - Login',
+    endpoint: '/auth/login',
+    apiGroup: 'AUTH',
+    method: 'POST',
+    requiresUserId: false,
+    requiresAuth: false,
+    additionalParams: { email: 'string', password: 'string' },
+    description:
+      'Login and get auth token. Returns user object with _fub_users_account addon for FUB data access.',
+  },
+  {
+    taskId: 12687,
+    taskName: 'Auth - Me',
+    endpoint: '/auth/me',
+    apiGroup: 'AUTH',
+    method: 'GET',
+    requiresUserId: false,
+    requiresAuth: true,
+    description:
+      'Get current authenticated user. CRITICAL: Must include _fub_users_account in response for FUB data to work in frontend.',
+  },
+  {
+    taskId: 0,
+    taskName: 'Auth - Logout',
+    endpoint: '/auth/logout',
+    apiGroup: 'AUTH',
+    method: 'POST',
+    requiresUserId: false,
+    requiresAuth: true,
+    description: 'Logout and invalidate auth token.',
+  },
+  {
+    taskId: 0,
+    taskName: 'Auth - Refresh Token',
+    endpoint: '/auth/refresh',
+    apiGroup: 'AUTH',
+    method: 'POST',
+    requiresUserId: false,
+    requiresAuth: true,
+    description: 'Refresh authentication token.',
   },
 ]
 
