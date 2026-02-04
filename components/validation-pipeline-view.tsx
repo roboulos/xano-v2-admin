@@ -5,8 +5,20 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Progress } from '@/components/ui/progress'
-import { AlertCircle, CheckCircle, Clock, Play, Database, Code, Globe, Link as LinkIcon, RefreshCw } from 'lucide-react'
-import { Alert, AlertDescription } from '@/components/ui/alert'
+import {
+  AlertCircle,
+  CheckCircle,
+  Clock,
+  Play,
+  Database,
+  Code,
+  Globe,
+  Link as LinkIcon,
+  RefreshCw,
+  Download,
+} from 'lucide-react'
+import { AlertBanner } from '@/components/ui/alert-banner'
+import { LoadingState } from '@/components/ui/loading-state'
 import { ExportDropdown } from '@/components/export-dropdown'
 import { exportSummaryToPDF } from '@/lib/exporters'
 import { formatRelativeTime } from '@/lib/utils'
@@ -37,7 +49,12 @@ const ICON_MAP = {
   link: LinkIcon,
 }
 
-function StageCard({ stage, status, result, onRun }: {
+function StageCard({
+  stage,
+  status,
+  result,
+  onRun,
+}: {
   stage: ValidationStage
   status: PipelineStatus
   result?: StageResult
@@ -47,12 +64,15 @@ function StageCard({ stage, status, result, onRun }: {
 
   const isRunning = status.running && status.currentStage === stage.id
   const isComplete = status.completedStages.includes(stage.id)
-  const canRun = !status.running && stage.dependencies.every(dep => status.completedStages.includes(dep))
+  const canRun =
+    !status.running && stage.dependencies.every((dep) => status.completedStages.includes(dep))
 
   const getStatusBadge = () => {
     if (isRunning) return <Badge className="bg-blue-500">Running</Badge>
-    if (isComplete && result?.meetsSuccessCriteria) return <Badge className="bg-green-500">✓ Passed</Badge>
-    if (isComplete && !result?.meetsSuccessCriteria) return <Badge className="bg-red-500">✗ Failed</Badge>
+    if (isComplete && result?.meetsSuccessCriteria)
+      return <Badge className="bg-green-500">✓ Passed</Badge>
+    if (isComplete && !result?.meetsSuccessCriteria)
+      return <Badge className="bg-red-500">✗ Failed</Badge>
     if (canRun) return <Badge variant="outline">Ready</Badge>
     return <Badge variant="secondary">Waiting</Badge>
   }
@@ -64,7 +84,15 @@ function StageCard({ stage, status, result, onRun }: {
   }
 
   return (
-    <Card className={isRunning ? 'border-blue-500' : isComplete && result?.meetsSuccessCriteria ? 'border-green-500' : ''}>
+    <Card
+      className={
+        isRunning
+          ? 'border-blue-500'
+          : isComplete && result?.meetsSuccessCriteria
+            ? 'border-green-500'
+            : ''
+      }
+    >
       <CardHeader>
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-3">
@@ -82,7 +110,9 @@ function StageCard({ stage, status, result, onRun }: {
         <div className="grid grid-cols-3 gap-4">
           <div>
             <div className="text-sm text-muted-foreground">Total</div>
-            <div className="text-2xl font-bold">{result?.report?.summary?.total || stage.metrics.total}</div>
+            <div className="text-2xl font-bold">
+              {result?.report?.summary?.total || stage.metrics.total}
+            </div>
           </div>
           <div>
             <div className="text-sm text-muted-foreground">Target</div>
@@ -99,7 +129,10 @@ function StageCard({ stage, status, result, onRun }: {
           <div>
             <div className="flex justify-between text-sm mb-2">
               <span>Progress</span>
-              <span>{result.report.summary.passed}/{result.report.summary.total} ({result.report.summary.passRate}%)</span>
+              <span>
+                {result.report.summary.passed}/{result.report.summary.total} (
+                {result.report.summary.passRate}%)
+              </span>
             </div>
             <Progress value={getProgress()} className="h-2" />
           </div>
@@ -119,8 +152,11 @@ function StageCard({ stage, status, result, onRun }: {
             <div>
               <span className="font-semibold">Dependencies:</span>
               <div className="flex gap-2 mt-1">
-                {stage.dependencies.map(dep => (
-                  <Badge key={dep} variant={status.completedStages.includes(dep) ? 'default' : 'secondary'}>
+                {stage.dependencies.map((dep) => (
+                  <Badge
+                    key={dep}
+                    variant={status.completedStages.includes(dep) ? 'default' : 'secondary'}
+                  >
                     {status.completedStages.includes(dep) ? '✓' : '○'} {dep}
                   </Badge>
                 ))}
@@ -139,24 +175,19 @@ function StageCard({ stage, status, result, onRun }: {
         {result?.duration && (
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <Clock className="h-4 w-4" />
-            <span>Duration: {Math.round(result.duration / 1000)}s (est. {stage.estimatedDuration}s)</span>
+            <span>
+              Duration: {Math.round(result.duration / 1000)}s (est. {stage.estimatedDuration}s)
+            </span>
           </div>
         )}
 
         {/* Error */}
         {result?.error && (
-          <Alert variant="destructive">
-            <AlertCircle className="h-4 w-4" />
-            <AlertDescription>{result.error}</AlertDescription>
-          </Alert>
+          <AlertBanner variant="critical" title="Validation Error" description={result.error} />
         )}
 
         {/* Actions */}
-        <Button
-          onClick={onRun}
-          disabled={!canRun || isRunning}
-          className="w-full"
-        >
+        <Button onClick={onRun} disabled={!canRun || isRunning} className="w-full">
           {isRunning ? 'Running...' : isComplete ? 'Re-run' : 'Run Validation'}
         </Button>
       </CardContent>
@@ -205,7 +236,7 @@ export function ValidationPipelineView() {
           }
         })
 
-        setStatus(prev => ({
+        setStatus((prev) => ({
           ...prev,
           results: newResults,
           completedStages: Object.keys(newResults),
@@ -224,7 +255,7 @@ export function ValidationPipelineView() {
       const response = await fetch('/api/validation/status')
       const data = await response.json()
 
-      setStatus(prev => ({
+      setStatus((prev) => ({
         ...prev,
         running: data.running,
         currentStage: data.currentStage,
@@ -236,7 +267,7 @@ export function ValidationPipelineView() {
 
   const runStage = async (stageId: string) => {
     try {
-      setStatus(prev => ({ ...prev, running: true, currentStage: stageId }))
+      setStatus((prev) => ({ ...prev, running: true, currentStage: stageId }))
 
       const response = await fetch('/api/validation/run', {
         method: 'POST',
@@ -259,13 +290,13 @@ export function ValidationPipelineView() {
       setTimeout(() => clearInterval(pollInterval), 300000)
     } catch (error: any) {
       alert(`Failed to run stage: ${error.message}`)
-      setStatus(prev => ({ ...prev, running: false, currentStage: undefined }))
+      setStatus((prev) => ({ ...prev, running: false, currentStage: undefined }))
     }
   }
 
   const runFullPipeline = async () => {
     try {
-      setStatus(prev => ({ ...prev, running: true }))
+      setStatus((prev) => ({ ...prev, running: true }))
 
       const response = await fetch('/api/validation/run', {
         method: 'POST',
@@ -288,7 +319,7 @@ export function ValidationPipelineView() {
       setTimeout(() => clearInterval(pollInterval), 1800000)
     } catch (error: any) {
       alert(`Failed to run pipeline: ${error.message}`)
-      setStatus(prev => ({ ...prev, running: false }))
+      setStatus((prev) => ({ ...prev, running: false }))
     }
   }
 
@@ -310,103 +341,108 @@ export function ValidationPipelineView() {
   if (loading || !config) {
     return (
       <div className="flex items-center justify-center h-96">
-        <div className="text-center">
-          <div className="text-lg font-semibold">Loading validation pipeline...</div>
-        </div>
+        <LoadingState size="lg" message="Loading validation pipeline..." />
       </div>
     )
   }
 
-  const overallScore = config.stages.reduce((acc, stage) => {
-    const result = status.results[stage.id]
-    if (result?.report?.summary) {
-      return acc + result.report.summary.passRate
-    }
-    return acc
-  }, 0) / config.stages.length
+  const overallScore =
+    config.stages.reduce((acc, stage) => {
+      const result = status.results[stage.id]
+      if (result?.report?.summary) {
+        return acc + result.report.summary.passRate
+      }
+      return acc
+    }, 0) / config.stages.length
 
-  const meetsCriteria = overallScore >= config.overallSuccessCriteria.minimumScore &&
-    config.overallSuccessCriteria.criticalStagesMustPass.every(id =>
-      status.results[id]?.meetsSuccessCriteria
+  const meetsCriteria =
+    overallScore >= config.overallSuccessCriteria.minimumScore &&
+    config.overallSuccessCriteria.criticalStagesMustPass.every(
+      (id) => status.results[id]?.meetsSuccessCriteria
     )
 
   return (
     <div className="space-y-6">
-      {/* Header with Timestamp and Refresh */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold">{config.name}</h1>
-          <p className="text-muted-foreground mt-2">{config.description}</p>
-          <p className="text-sm text-muted-foreground mt-1">
-            Last updated: {formatRelativeTime(lastUpdated)}
-          </p>
-        </div>
-        <div className="flex gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => {
-              fetchReports()
-              checkStatus()
-            }}
-            disabled={loading || status.running}
-          >
-            <RefreshCw className={`h-4 w-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
-            Refresh
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => {
-              const sections = [
-                {
-                  title: 'Overall Score',
-                  content: [
-                    `Score: ${overallScore.toFixed(1)}%`,
-                    `Minimum Required: ${config.overallSuccessCriteria.minimumScore}%`,
-                    `Status: ${meetsCriteria ? 'Production Ready' : 'Not Ready'}`,
-                  ],
-                },
-                {
-                  title: 'Business Context',
-                  content: [
-                    `Purpose: ${config.businessContext.purpose}`,
-                    `Timeline: ${config.businessContext.timeline}`,
-                    `Stakeholders: ${config.businessContext.stakeholders.join(', ')}`,
-                    `Risks: ${config.businessContext.risks.join('; ')}`,
-                  ],
-                },
-                ...config.stages.map(stage => {
-                  const result = status.results[stage.id]
-                  return {
-                    title: `Stage: ${stage.name}`,
+      {/* Page Header */}
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-2xl font-bold mb-1">{config.name}</h2>
+            <p className="text-muted-foreground">{config.description}</p>
+            <p className="text-sm text-muted-foreground mt-1">
+              Last updated: {formatRelativeTime(lastUpdated)}
+            </p>
+          </div>
+          <div className="flex gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                fetchReports()
+                checkStatus()
+              }}
+              disabled={loading || status.running}
+            >
+              <RefreshCw className={`h-4 w-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
+              Refresh
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                const sections = [
+                  {
+                    title: 'Overall Score',
                     content: [
-                      `Status: ${result ? (result.meetsSuccessCriteria ? 'Passed' : 'Failed') : 'Not Run'}`,
-                      `Business Value: ${stage.businessValue}`,
-                      `Success Criteria: ${stage.successCriteria}`,
-                      result?.report ? `Progress: ${result.report.summary.passRate}%` : '',
-                      result?.report ? `Passed: ${result.report.summary.passed}/${result.report.summary.total}` : '',
-                      result?.duration ? `Duration: ${Math.round(result.duration / 1000)}s` : '',
-                    ].filter(Boolean),
-                  }
-                }),
-              ]
+                      `Score: ${overallScore.toFixed(1)}%`,
+                      `Minimum Required: ${config.overallSuccessCriteria.minimumScore}%`,
+                      `Status: ${meetsCriteria ? 'Production Ready' : 'Not Ready'}`,
+                    ],
+                  },
+                  {
+                    title: 'Business Context',
+                    content: [
+                      `Purpose: ${config.businessContext.purpose}`,
+                      `Timeline: ${config.businessContext.timeline}`,
+                      `Stakeholders: ${config.businessContext.stakeholders.join(', ')}`,
+                      `Risks: ${config.businessContext.risks.join('; ')}`,
+                    ],
+                  },
+                  ...config.stages.map((stage) => {
+                    const result = status.results[stage.id]
+                    return {
+                      title: `Stage: ${stage.name}`,
+                      content: [
+                        `Status: ${result ? (result.meetsSuccessCriteria ? 'Passed' : 'Failed') : 'Not Run'}`,
+                        `Business Value: ${stage.businessValue}`,
+                        `Success Criteria: ${stage.successCriteria}`,
+                        result?.report ? `Progress: ${result.report.summary.passRate}%` : '',
+                        result?.report
+                          ? `Passed: ${result.report.summary.passed}/${result.report.summary.total}`
+                          : '',
+                        result?.duration ? `Duration: ${Math.round(result.duration / 1000)}s` : '',
+                      ].filter(Boolean),
+                    }
+                  }),
+                ]
 
-              exportSummaryToPDF(
-                sections,
-                `validation-pipeline-report_${new Date().toISOString().slice(0, 10)}.pdf`,
-                config.name,
-                {
-                  title: config.name,
-                  timestamp: new Date(),
-                  totalRecords: config.stages.length,
-                }
-              )
-            }}
-            disabled={loading || !config}
-          >
-            Export PDF Report
-          </Button>
+                exportSummaryToPDF(
+                  sections,
+                  `validation-pipeline-report_${new Date().toISOString().slice(0, 10)}.pdf`,
+                  config.name,
+                  {
+                    title: config.name,
+                    timestamp: new Date(),
+                    totalRecords: config.stages.length,
+                  }
+                )
+              }}
+              disabled={loading || !config}
+            >
+              <Download className="h-4 w-4 mr-2" />
+              Export PDF
+            </Button>
+          </div>
         </div>
       </div>
 
@@ -436,11 +472,7 @@ export function ValidationPipelineView() {
           <Progress value={overallScore} className="h-3" />
 
           <div className="mt-4 flex gap-4">
-            <Button
-              onClick={runFullPipeline}
-              disabled={status.running}
-              size="lg"
-            >
+            <Button onClick={runFullPipeline} disabled={status.running} size="lg">
               <Play className="h-4 w-4 mr-2" />
               Run Full Pipeline
             </Button>
@@ -461,7 +493,7 @@ export function ValidationPipelineView() {
           <div>
             <span className="font-semibold">Stakeholders:</span>
             <ul className="list-disc list-inside text-muted-foreground mt-1">
-              {config.businessContext.stakeholders.map(s => (
+              {config.businessContext.stakeholders.map((s) => (
                 <li key={s}>{s}</li>
               ))}
             </ul>
@@ -469,7 +501,7 @@ export function ValidationPipelineView() {
           <div>
             <span className="font-semibold">Risks:</span>
             <ul className="list-disc list-inside text-muted-foreground mt-1">
-              {config.businessContext.risks.map(r => (
+              {config.businessContext.risks.map((r) => (
                 <li key={r}>{r}</li>
               ))}
             </ul>
@@ -487,12 +519,8 @@ export function ValidationPipelineView() {
         {config.stages.map((stage, index) => (
           <div key={stage.id}>
             <div className="flex items-center gap-2 mb-2">
-              <div className="text-sm font-semibold text-muted-foreground">
-                Stage {index + 1}
-              </div>
-              {stage.criticalPath && (
-                <Badge variant="destructive">Critical Path</Badge>
-              )}
+              <div className="text-sm font-semibold text-muted-foreground">Stage {index + 1}</div>
+              {stage.criticalPath && <Badge variant="destructive">Critical Path</Badge>}
             </div>
             <StageCard
               stage={stage}

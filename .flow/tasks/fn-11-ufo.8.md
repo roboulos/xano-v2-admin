@@ -43,10 +43,10 @@ This is a 1759-line monolith. Do NOT split it (separate epic). Focus on styling 
 
 ## Done summary
 
-TBD
+Polished live-migration-status.tsx styling by replacing HTML details elements with ShadCN Collapsible components, adding proper PageHeader pattern, standardizing buttons with ShadCN Button, using shared LoadingState and AlertBanner components for consistent loading/error states, and standardizing Card padding with p-6 spacing tokens.
 
 ## Evidence
 
-- Commits:
-- Tests:
+- Commits: a72e70193aace440af1278f93ef3ed64057072df
+- Tests: pnpm build
 - PRs:
