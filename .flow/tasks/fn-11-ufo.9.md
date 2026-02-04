@@ -44,10 +44,10 @@ Apply shared components and consistent patterns to machine 2.0 tabs (schema, bac
 
 ## Done summary
 
-TBD
+Polished machine 2.0 tabs (schema-tab and backend-validation) to use shared components. Added AlertBanner for info notes in schema-tab, LoadingState for the validation pipeline, and consistent page header patterns.
 
 ## Evidence
 
-- Commits:
-- Tests:
+- Commits: de1eacae15ae72575eb02aa98f2df4f34760d150
+- Tests: pnpm build
 - PRs:
