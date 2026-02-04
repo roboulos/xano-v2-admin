@@ -16,6 +16,7 @@ import {
   AlertTriangle,
   Layers,
   AlertCircle,
+  Sparkles,
 } from 'lucide-react'
 
 // UI Components
@@ -36,6 +37,7 @@ import { StatusDashboardTab } from '@/components/migration-tabs/status-dashboard
 import { GapsTab } from '@/components/migration-tabs/gaps-tab'
 import { ChecklistTab } from '@/components/migration-tabs/checklist-tab'
 import { BlockersTab } from '@/components/migration-tabs/blockers-tab'
+import { TransformationStoryTab } from '@/components/transformation-story-tab'
 
 type ViewMode =
   | 'schema'
@@ -52,11 +54,13 @@ type ViewMode =
   | 'gaps'
   | 'checklist'
   | 'blockers'
+  | 'transformation'
 
 export default function Home() {
-  const [viewMode, setViewMode] = useState<ViewMode>('live')
+  const [viewMode, setViewMode] = useState<ViewMode>('transformation')
 
   const viewModes = [
+    { id: 'transformation' as ViewMode, label: 'Transformation Story', icon: Sparkles },
     { id: 'migration-status' as ViewMode, label: 'Migration Status', icon: TrendingUp },
     { id: 'gaps' as ViewMode, label: 'Gaps & Issues', icon: AlertCircle },
     { id: 'checklist' as ViewMode, label: 'Checklists', icon: CheckCircle2 },
@@ -106,6 +110,9 @@ export default function Home() {
 
         {/* Content */}
         <div className="mt-6">
+          <ErrorBoundary title="Transformation Story">
+            {viewMode === 'transformation' && <TransformationStoryTab />}
+          </ErrorBoundary>
           <ErrorBoundary title="Migration Status">
             {viewMode === 'migration-status' && <StatusDashboardTab />}
           </ErrorBoundary>

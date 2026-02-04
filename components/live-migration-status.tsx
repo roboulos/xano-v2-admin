@@ -17,6 +17,9 @@ import {
   AlertTriangle,
   Play,
   Code,
+  ArrowUp,
+  ArrowDown,
+  Clock,
 } from 'lucide-react'
 import { formatRelativeTime } from '@/lib/utils'
 import { useState } from 'react'
@@ -30,6 +33,7 @@ export function LiveMigrationStatus() {
   const [integrityExpanded, setIntegrityExpanded] = useState(false)
   const [selectedEndpoint, setSelectedEndpoint] = useState<MCPEndpoint | null>(null)
   const [endpointDetailsExpanded, setEndpointDetailsExpanded] = useState(false)
+  const [syncLastUpdated, setSyncLastUpdated] = useState<Date | null>(null)
 
   const { data, error, isLoading, mutate } = useSWR('/api/migration/status', fetcher, {
     refreshInterval: 10000, // Refresh every 10 seconds
@@ -50,11 +54,35 @@ export function LiveMigrationStatus() {
   // Fetch background tasks count
   const {
     data: tasksData,
-    error: tasksError,
+    error: _tasksError,
     isLoading: tasksLoading,
     mutate: mutateTasks,
   } = useSWR('/api/v2/background-tasks?page=1&limit=1', fetcher, {
     refreshInterval: 30000,
+    revalidateOnFocus: true,
+  })
+
+  // Fetch entity-by-entity sync status from the sync endpoint
+  const syncFetcher = async () => {
+    const res = await fetch(
+      'https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:20LTQtIX/sync-v1-to-v2-direct',
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+      }
+    )
+    const data = await res.json()
+    setSyncLastUpdated(new Date())
+    return data
+  }
+
+  const {
+    data: syncData,
+    error: syncError,
+    isLoading: syncLoading,
+    mutate: mutateSync,
+  } = useSWR('sync-entity-counts', syncFetcher, {
+    refreshInterval: 10000, // Refresh every 10 seconds
     revalidateOnFocus: true,
   })
 
@@ -113,7 +141,7 @@ export function LiveMigrationStatus() {
     )
   }
 
-  const { v1, v2, comparison, migration_score, timestamp } = data
+  const { v1, v2, comparison: _comparison, migration_score, timestamp } = data
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -148,11 +176,12 @@ export function LiveMigrationStatus() {
               mutate()
               mutateCounts()
               mutateTasks()
+              mutateSync()
               if (integrityExpanded) {
                 mutateIntegrity()
               }
             }}
-            disabled={isLoading || countsLoading || tasksLoading || integrityLoading}
+            disabled={isLoading || countsLoading || tasksLoading || syncLoading || integrityLoading}
             className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <RefreshCw
@@ -1008,6 +1037,198 @@ export function LiveMigrationStatus() {
         </CardContent>
       </Card>
 
+      {/* Entity-by-Entity Sync Status with Delta Indicators */}
+      <Card className="border-2 border-emerald-200 bg-emerald-50/30">
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <div>
+              <CardTitle className="flex items-center gap-2">
+                <Activity className="h-5 w-5" />
+                Entity Sync Status
+              </CardTitle>
+              <CardDescription>Real-time V1 → V2 sync status with delta indicators</CardDescription>
+            </div>
+            <div className="flex items-center gap-3">
+              {syncLastUpdated && (
+                <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                  <Clock className="h-3 w-3" />
+                  Last synced: {syncLastUpdated.toLocaleTimeString()}
+                </div>
+              )}
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => mutateSync()}
+                disabled={syncLoading}
+              >
+                <RefreshCw className={`h-4 w-4 ${syncLoading ? 'animate-spin' : ''}`} />
+              </Button>
+            </div>
+          </div>
+        </CardHeader>
+        <CardContent>
+          {syncLoading && !syncData ? (
+            <div className="flex items-center justify-center py-8">
+              <Loader2 className="h-8 w-8 animate-spin text-emerald-600" />
+              <span className="ml-3 text-lg text-muted-foreground">Fetching sync status...</span>
+            </div>
+          ) : syncError ? (
+            <div className="text-center py-8">
+              <p className="text-destructive font-semibold">Error loading sync status</p>
+              <p className="text-sm text-muted-foreground mt-2">
+                {syncError?.message || 'Unknown error'}
+              </p>
+            </div>
+          ) : syncData?.entity_counts ? (
+            <div className="space-y-4">
+              {/* Legend */}
+              <div className="flex items-center gap-4 text-xs text-muted-foreground pb-2 border-b">
+                <div className="flex items-center gap-1">
+                  <div className="w-3 h-3 bg-green-500 rounded-full" />
+                  <span>100% Match</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <div className="w-3 h-3 bg-emerald-400 rounded-full" />
+                  <span>≥99%</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <div className="w-3 h-3 bg-yellow-500 rounded-full" />
+                  <span>95-99%</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <div className="w-3 h-3 bg-red-500 rounded-full" />
+                  <span>&lt;95% (Critical)</span>
+                </div>
+              </div>
+
+              {/* Entity Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+                {syncData.entity_counts.map(
+                  (entity: { entity: string; v1: number; v2: number }) => {
+                    const ratio = entity.v1 > 0 ? (entity.v2 / entity.v1) * 100 : 0
+                    const delta = entity.v2 - entity.v1
+                    const deltaPercent =
+                      entity.v1 > 0 ? Math.abs(((entity.v2 - entity.v1) / entity.v1) * 100) : 0
+
+                    // Determine status color and indicator
+                    let statusColor = 'bg-green-500'
+                    let bgColor = 'bg-green-500/5 border-green-500/20'
+                    let textColor = 'text-green-600'
+
+                    if (ratio >= 100) {
+                      statusColor = 'bg-green-500'
+                      bgColor = 'bg-green-500/5 border-green-500/20'
+                      textColor = 'text-green-600'
+                    } else if (ratio >= 99) {
+                      statusColor = 'bg-emerald-400'
+                      bgColor = 'bg-emerald-500/5 border-emerald-500/20'
+                      textColor = 'text-emerald-600'
+                    } else if (ratio >= 95) {
+                      statusColor = 'bg-yellow-500'
+                      bgColor = 'bg-yellow-500/5 border-yellow-500/20'
+                      textColor = 'text-yellow-600'
+                    } else {
+                      statusColor = 'bg-red-500'
+                      bgColor = 'bg-red-500/5 border-red-500/20'
+                      textColor = 'text-red-600'
+                    }
+
+                    // Critical gap alert
+                    const isCritical = ratio < 95
+
+                    return (
+                      <div
+                        key={entity.entity}
+                        className={`p-4 rounded-lg border-2 transition-all ${bgColor} ${isCritical ? 'ring-2 ring-red-500/50 ring-offset-2' : ''}`}
+                      >
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="font-semibold capitalize text-foreground">
+                            {entity.entity}
+                          </span>
+                          <div className={`w-3 h-3 rounded-full ${statusColor}`} />
+                        </div>
+
+                        {/* Percentage with delta arrow */}
+                        <div className="flex items-baseline gap-2">
+                          <span className={`text-2xl font-bold ${textColor}`}>
+                            {ratio.toFixed(1)}%
+                          </span>
+                          {delta !== 0 && (
+                            <div
+                              className={`flex items-center text-sm ${delta > 0 ? 'text-green-600' : 'text-amber-600'}`}
+                            >
+                              {delta > 0 ? (
+                                <ArrowUp className="h-3 w-3" />
+                              ) : (
+                                <ArrowDown className="h-3 w-3" />
+                              )}
+                              <span className="ml-0.5">{deltaPercent.toFixed(1)}%</span>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Record counts */}
+                        <div className="text-xs text-muted-foreground mt-2 space-y-0.5">
+                          <div className="flex justify-between">
+                            <span>V1:</span>
+                            <span className="font-mono">{entity.v1.toLocaleString()}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>V2:</span>
+                            <span className="font-mono">{entity.v2.toLocaleString()}</span>
+                          </div>
+                          {delta !== 0 && (
+                            <div
+                              className={`flex justify-between ${delta > 0 ? 'text-green-600' : 'text-amber-600'}`}
+                            >
+                              <span>Δ:</span>
+                              <span className="font-mono">
+                                {delta > 0 ? '+' : ''}
+                                {delta.toLocaleString()}
+                              </span>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Critical Alert */}
+                        {isCritical && (
+                          <div className="mt-3 p-2 bg-red-100 rounded text-xs text-red-700 flex items-center gap-1">
+                            <AlertCircle className="h-3 w-3 flex-shrink-0" />
+                            <span>Critical gap ({(100 - ratio).toFixed(1)}% behind)</span>
+                          </div>
+                        )}
+                      </div>
+                    )
+                  }
+                )}
+              </div>
+
+              {/* Summary */}
+              <div className="mt-4 p-3 bg-muted/50 rounded-lg">
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-muted-foreground">Total Sync Progress:</span>
+                  <span className="font-semibold">
+                    {(() => {
+                      const totals = syncData.entity_counts.reduce(
+                        (acc: { v1: number; v2: number }, e: { v1: number; v2: number }) => ({
+                          v1: acc.v1 + e.v1,
+                          v2: acc.v2 + e.v2,
+                        }),
+                        { v1: 0, v2: 0 }
+                      )
+                      const overallRatio = totals.v1 > 0 ? (totals.v2 / totals.v1) * 100 : 0
+                      return `${overallRatio.toFixed(2)}% (${totals.v2.toLocaleString()} / ${totals.v1.toLocaleString()} records)`
+                    })()}
+                  </span>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="text-center py-8 text-muted-foreground">No sync data available</div>
+          )}
+        </CardContent>
+      </Card>
+
       {/* V1 vs V2 Comparison Grid */}
       <div className="grid grid-cols-3 gap-4">
         {/* Tables */}
@@ -1171,14 +1392,24 @@ export function LiveMigrationStatus() {
                           </div>
                           <div className="text-amber-700 space-y-1">
                             {integrityData.data.checks
-                              .filter((c: any) => c.orphanedRecords > 0)
+                              .filter((c: { orphanedRecords: number }) => c.orphanedRecords > 0)
                               .slice(0, 3)
-                              .map((check: any, idx: number) => (
-                                <div key={idx}>
-                                  {check.tableName}.{check.fieldName} → {check.referencedTable} (
-                                  {check.orphanedRecords} orphans)
-                                </div>
-                              ))}
+                              .map(
+                                (
+                                  check: {
+                                    tableName: string
+                                    fieldName: string
+                                    referencedTable: string
+                                    orphanedRecords: number
+                                  },
+                                  idx: number
+                                ) => (
+                                  <div key={idx}>
+                                    {check.tableName}.{check.fieldName} → {check.referencedTable} (
+                                    {check.orphanedRecords} orphans)
+                                  </div>
+                                )
+                              )}
                           </div>
                         </div>
                       )}

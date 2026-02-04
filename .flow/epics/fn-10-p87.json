@@ -1,0 +1,13 @@
+{
+  "branch_name": "fn-10-p87",
+  "created_at": "2026-02-04T17:42:13.702797Z",
+  "depends_on_epics": ["fn-2-riv", "fn-4-tkb"],
+  "id": "fn-10-p87",
+  "next_task": 1,
+  "plan_review_status": "ship",
+  "plan_reviewed_at": "2026-02-04T18:03:28.172694Z",
+  "spec_path": ".flow/specs/fn-10-p87.md",
+  "status": "open",
+  "title": "V1/V2 Sync Fix + Trust-Building Admin Dashboard",
+  "updated_at": "2026-02-04T18:05:45.686628Z"
+}

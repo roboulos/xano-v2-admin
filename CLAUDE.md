@@ -739,6 +739,34 @@ if (fubUserId && fubUserId > 0) {
 
 ---
 
+## V1/V2 Sync Monitoring
+
+> See [V2_SYNC_PIPELINE_GUIDE.md](./V2_SYNC_PIPELINE_GUIDE.md) for detailed documentation.
+
+### Quick Status Check
+
+```bash
+curl -s -X POST "https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:20LTQtIX/sync-v1-to-v2-direct" \
+  -H "Content-Type: application/json" | python3 -m json.tool
+```
+
+### Current Sync Status (2026-02-04)
+
+| Entity       | V1 Count | V2 Count | Status   |
+| ------------ | -------- | -------- | -------- |
+| Users        | 335      | 335      | ✅ 100%  |
+| Agents       | 37,041   | 37,041   | ✅ 100%  |
+| Transactions | 55,023   | 55,038   | ✅ 100%  |
+| Participants | 702,072  | 701,551  | ✅ 99.9% |
+| Network      | 86,618   | 86,628   | ✅ 100%  |
+
+### Key Files
+
+- **Field Mapping**: `.flow/V1_V2_FIELD_MAPPING.json`
+- **Sync Endpoint**: ID 18569 `api:20LTQtIX/sync-v1-to-v2-direct`
+
+---
+
 ## Quick Reference: Verified Test User
 
 **IMPORTANT:** User 60 (David Keener) is the VERIFIED test user with extensive testing history.

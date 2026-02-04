@@ -1,0 +1,307 @@
+{
+  "discovery_date": "2026-02-04",
+  "v1_workspace": {
+    "instance": "xmpx-swi5-tlvy.n7c.xano.io",
+    "workspace_id": 1,
+    "table_prefix": "mvpw1_"
+  },
+  "v2_workspace": {
+    "instance": "x2nu-xcjc-vhax.agentdashboards.xano.io",
+    "workspace_id": 5,
+    "table_prefix": "mvpw5_"
+  },
+  "v1_tables": {
+    "user": { "table_id": 41, "pg_table": "mvpw1_41", "field_count": 111 },
+    "agent": { "table_id": 36, "pg_table": "mvpw1_36", "field_count": 132 },
+    "transaction": { "table_id": 34, "pg_table": "mvpw1_34", "field_count": 119 },
+    "participant": { "table_id": 39, "pg_table": "mvpw1_39", "field_count": 30 },
+    "network": { "table_id": 48, "pg_table": "mvpw1_48", "field_count": 57 }
+  },
+  "v2_tables": {
+    "user": { "table_id": 664, "pg_table": "mvpw5_664" },
+    "user_credentials": { "table_id": 665, "pg_table": "mvpw5_665" },
+    "user_subscriptions": { "table_id": 666, "pg_table": "mvpw5_666" },
+    "user_settings": { "table_id": 667, "pg_table": "mvpw5_667" },
+    "user_roles": { "table_id": 668, "pg_table": "mvpw5_668" },
+    "agent": { "table_id": 670, "pg_table": "mvpw5_670" },
+    "agent_cap_data": { "table_id": 671, "pg_table": "mvpw5_671" },
+    "agent_commission": { "table_id": 672, "pg_table": "mvpw5_672" },
+    "agent_performance": { "table_id": 673, "pg_table": "mvpw5_673" },
+    "agent_hierarchy": { "table_id": 674, "pg_table": "mvpw5_674" },
+    "transaction": { "table_id": 675, "pg_table": "mvpw5_675" },
+    "network_member": { "table_id": 698, "pg_table": "mvpw5_698" },
+    "network_hierarchy": { "table_id": 684, "pg_table": "mvpw5_684" }
+  },
+  "user_domain": {
+    "v1_table": "mvpw1_41",
+    "v2_tables": ["mvpw5_664", "mvpw5_665", "mvpw5_666", "mvpw5_667", "mvpw5_668"],
+    "mappings": {
+      "user_credentials (665)": {
+        "user_id": { "v1_field": "id", "cast": "none" },
+        "password": { "v1_field": "password", "cast": "text" },
+        "api_key": { "v1_field": "api_key", "cast": "text" },
+        "api_key_confirmed": { "v1_field": "api_key_confirmed", "cast": "boolean" },
+        "account_confirmed": { "v1_field": "account_confirmed", "cast": "boolean" },
+        "magic_link": { "v1_field": "magic_link", "cast": "json" },
+        "confirmation_code": { "v1_field": "confirmation_code", "cast": "integer" },
+        "confirmed": { "v1_field": "confirmed", "cast": "boolean" }
+      },
+      "user_subscriptions (666)": {
+        "user_id": { "v1_field": "id", "cast": "none" },
+        "subscription_type": { "v1_field": "subscription_type", "cast": "text" },
+        "paid": { "v1_field": "paid", "cast": "boolean" },
+        "payment_complete": { "v1_field": "payment_complete", "cast": "boolean" },
+        "stripe_product_id": { "v1_field": "stripe_product_id", "cast": "integer" },
+        "stripe_price_id": { "v1_field": "stripe_price_id", "cast": "integer" },
+        "subscription_packages_id": { "v1_field": "subscription_packages_id", "cast": "integer" }
+      },
+      "user_settings (667)": {
+        "user_id": { "v1_field": "id", "cast": "none" },
+        "view": { "v1_field": "view", "cast": "text" },
+        "daily_dash_transactions": { "v1_field": "dailyDash_transactions", "cast": "boolean" },
+        "daily_dash_listings": { "v1_field": "dailyDash_listings", "cast": "boolean" },
+        "daily_dash_revenue": { "v1_field": "dailyDash_revenue", "cast": "boolean" },
+        "network_news_daily": { "v1_field": "network_news_daily", "cast": "boolean" },
+        "network_news_weekly": { "v1_field": "network_news_weekly", "cast": "boolean" },
+        "listing_refresh": { "v1_field": "listing_refresh", "cast": "boolean" }
+      },
+      "user_roles (668)": {
+        "user_id": { "v1_field": "id", "cast": "none" },
+        "role": { "v1_field": "role", "cast": "text" },
+        "account_type": { "v1_field": "account_type", "cast": "text" },
+        "is_agent": { "v1_field": "is_agent", "cast": "boolean" },
+        "is_account_admin": { "v1_field": "is_account_admin", "cast": "boolean" },
+        "is_individual": { "v1_field": "is_individual", "cast": "boolean" },
+        "is_on_team": { "v1_field": "is_on_team", "cast": "boolean" },
+        "is_team_owner": { "v1_field": "is_team_owner", "cast": "boolean" },
+        "is_director": { "v1_field": "is_director", "cast": "boolean" },
+        "is_leader": { "v1_field": "is_leader", "cast": "boolean" },
+        "is_mentor": { "v1_field": "is_mentor", "cast": "boolean" },
+        "director_id": { "v1_field": "director_id", "cast": "integer" },
+        "leader_id": { "v1_field": "leader_id", "cast": "integer" },
+        "mentor_id": { "v1_field": "mentor_id", "cast": "integer" },
+        "team_id": { "v1_field": "team_id", "cast": "integer" }
+      }
+    }
+  },
+  "agent_domain": {
+    "v1_table": "mvpw1_36",
+    "v2_tables": ["mvpw5_670", "mvpw5_671", "mvpw5_672", "mvpw5_673", "mvpw5_674"],
+    "mappings": {
+      "agent (670)": {
+        "id": { "v1_field": "id", "cast": "none" },
+        "display_name": { "v1_field": "display_name", "cast": "text" },
+        "first_name": { "v1_field": "first_name", "cast": "text" },
+        "last_name": { "v1_field": "last_name", "cast": "text" },
+        "email": { "v1_field": "email", "cast": "text" },
+        "phone": { "v1_field": "phone", "cast": "text" },
+        "agent_id_raw": { "v1_field": "agent_id_raw", "cast": "text" },
+        "agent_status": { "v1_field": "agent_status", "cast": "text" },
+        "type": { "v1_field": "type", "cast": "text" },
+        "title": { "v1_field": "title", "cast": "text" },
+        "avatar": { "v1_field": "avatar", "cast": "text" },
+        "birthdate": { "v1_field": "birthdate", "cast": "text" },
+        "join_date": { "v1_field": "joinDate", "cast": "date" },
+        "anniversary_date": { "v1_field": "anniversary_date", "cast": "date" },
+        "real_agent": { "v1_field": "real_agent", "cast": "boolean" },
+        "active_on_team": { "v1_field": "active_on_team", "cast": "boolean" },
+        "is_demo": { "v1_field": "is_demo", "cast": "boolean" },
+        "source": { "v1_field": "source", "cast": "text" },
+        "brokerage_id": { "v1_field": "brokerage_id", "cast": "integer" },
+        "team_id": { "v1_field": "team_id", "cast": "integer" },
+        "api_key": { "v1_field": "api_key", "cast": "text" },
+        "user_id": { "v1_field": "user_id", "cast": "integer" }
+      },
+      "agent_cap_data (671)": {
+        "agent_id": { "v1_field": "id", "cast": "none" },
+        "team_cap": { "v1_field": "team_cap", "cast": "decimal" },
+        "team_cap_paid": { "v1_field": "team_cap_paid", "cast": "decimal" },
+        "brokerage_cap": { "v1_field": "brokerage_cap", "cast": "decimal" },
+        "brokerage_cap_paid": { "v1_field": "brokerage_cap_paid", "cast": "decimal" },
+        "annual_cap": { "v1_field": "annualCap", "cast": "integer" },
+        "group_team_cap": { "v1_field": "groupTeamCap", "cast": "integer" },
+        "capped": { "v1_field": "capped", "cast": "boolean" },
+        "unlocked": { "v1_field": "unlocked", "cast": "boolean" },
+        "capped_at": { "v1_field": "cappedAt", "cast": "timestamp" },
+        "next_anniversary": { "v1_field": "nextAnniversaryDate", "cast": "timestamp" },
+        "sponsor_producing_grace_period_end": {
+          "v1_field": "sponsorProducingGracePeriodEnd",
+          "cast": "timestamp"
+        },
+        "deferred_cap_end_date": { "v1_field": "deferredCapEndDat", "cast": "timestamp" },
+        "grace_period_end": { "v1_field": "gracePeriodEnd", "cast": "timestamp" }
+      },
+      "agent_commission (672)": {
+        "agent_id": { "v1_field": "id", "cast": "none" },
+        "leader_split": { "v1_field": "leaderSplit", "cast": "integer" },
+        "member_commission_split": { "v1_field": "memberCommissionSplit", "cast": "integer" },
+        "pre_cap_fee": { "v1_field": "preCapFee", "cast": "decimal" },
+        "post_cap_fee": { "v1_field": "postCapFee", "cast": "decimal" },
+        "pre_cap_real_commission_split": {
+          "v1_field": "preCapRealCommissionSplit",
+          "cast": "integer"
+        },
+        "pays_leader_split": { "v1_field": "paysLeaderSplit", "cast": "boolean" },
+        "normal_team_lead_annual_cap": { "v1_field": "normalTeamLeadAnnualCap", "cast": "integer" }
+      },
+      "agent_performance (673)": {
+        "agent_id": { "v1_field": "id", "cast": "none" },
+        "all_transactions_count": { "v1_field": "all_transactions_count", "cast": "integer" },
+        "pending_transaction_count": { "v1_field": "pending_transaction_count", "cast": "integer" },
+        "closed_transaction_count": { "v1_field": "closed_transaction_count", "cast": "integer" },
+        "terminated_transaction_count": {
+          "v1_field": "terminated_transaction_count",
+          "cast": "integer"
+        },
+        "all_listing_count": { "v1_field": "all_listing_count", "cast": "integer" },
+        "active_listing_count": { "v1_field": "active_listing_count", "cast": "integer" },
+        "under_contract_listing_count": {
+          "v1_field": "under_contract_listing_count",
+          "cast": "integer"
+        },
+        "terminated_listing_count": { "v1_field": "terminated_listing_count", "cast": "integer" },
+        "size_of_network": { "v1_field": "sizeOfNetwork", "cast": "integer" },
+        "elite": { "v1_field": "elite", "cast": "boolean" }
+      },
+      "agent_hierarchy (674)": {
+        "agent_id": { "v1_field": "id", "cast": "none" },
+        "sponsor_agent_id": { "v1_field": "sponsorId", "cast": "integer" },
+        "is_director": {
+          "v1_field": "director",
+          "cast": "boolean",
+          "notes": "V1 has 'director' as object/boolean"
+        },
+        "is_leader": {
+          "v1_field": "leader",
+          "cast": "boolean",
+          "notes": "V1 has 'leader' as object/boolean"
+        },
+        "is_mentor": {
+          "v1_field": "mentor",
+          "cast": "boolean",
+          "notes": "V1 has 'mentor' as object/boolean"
+        },
+        "needs_mentorship": { "v1_field": "needsMentorship", "cast": "boolean" },
+        "director_id": { "v1_field": "director_id", "cast": "integer" },
+        "leader_id": { "v1_field": "leader_id", "cast": "integer" },
+        "mentor_id": { "v1_field": "mentor_id", "cast": "integer" }
+      }
+    }
+  },
+  "network_domain": {
+    "v1_table": "mvpw1_48",
+    "v2_tables": ["mvpw5_698", "mvpw5_684"],
+    "mappings": {
+      "network_member (698)": {
+        "id": { "v1_field": "id", "cast": "none" },
+        "user_id": { "v1_field": "user_id", "cast": "integer" },
+        "agent_id": { "v1_field": "agent_id", "cast": "integer" },
+        "downline_agent_id": { "v1_field": "downline_agent_id", "cast": "integer" },
+        "sponsoring_agent_id": { "v1_field": "sponsoring_agent_id", "cast": "integer" },
+        "status": { "v1_field": "status", "cast": "text" },
+        "tier": { "v1_field": "tier", "cast": "text" },
+        "sponsor_split": { "v1_field": "sponsor_split", "cast": "decimal" },
+        "unlocking": { "v1_field": "unlocking", "cast": "boolean" },
+        "unlocking_expiry": { "v1_field": "unlockingExpiryDate", "cast": "date" },
+        "network_size": { "v1_field": "network_size", "cast": "integer" },
+        "capped": { "v1_field": "capped", "cast": "boolean" },
+        "cap_amount": { "v1_field": "capAmount", "cast": "decimal" },
+        "cap_amount_paid": { "v1_field": "capAmountPaid", "cast": "decimal" },
+        "left_network": { "v1_field": "left_network", "cast": "boolean" },
+        "total_contribution": { "v1_field": "total_contribution", "cast": "decimal" },
+        "contact_frequency": { "v1_field": "contact_frequency", "cast": "text" },
+        "last_contacted_date": { "v1_field": "last_contacted_date", "cast": "timestamp" },
+        "sponsorship_type": { "v1_field": "sponsorship_type", "cast": "text" },
+        "anniversary_date": { "v1_field": "anniversary_date", "cast": "date" },
+        "broker_join_date": { "v1_field": "broker_joinDate", "cast": "date" },
+        "broker_terminated_date": { "v1_field": "broker_terminatedDate", "cast": "date" }
+      },
+      "network_hierarchy (684)": {
+        "notes": "V1 does not have explicit hierarchy - needs to be derived from sponsor relationships",
+        "ancestor_agent_id": { "v1_field": "sponsoring_agent_id", "cast": "integer" },
+        "descendant_agent_id": { "v1_field": "downline_agent_id", "cast": "integer" },
+        "depth": { "v1_field": null, "cast": "integer", "notes": "Calculate from tier" },
+        "path_json": { "v1_field": null, "cast": "json", "notes": "Build from sponsor chain" }
+      }
+    }
+  },
+  "transaction_domain": {
+    "v1_table": "mvpw1_34",
+    "v2_tables": ["mvpw5_675"],
+    "mappings": {
+      "transaction (675)": {
+        "id": { "v1_field": "id", "cast": "none" },
+        "status": { "v1_field": "stage", "cast": "text" },
+        "transaction_type": { "v1_field": "transactionType", "cast": "text" },
+        "contract_date": { "v1_field": "contractAcceptanceDate", "cast": "timestamp" },
+        "closing_date": { "v1_field": "closedAt", "cast": "timestamp" },
+        "listing_date": { "v1_field": "listingDate", "cast": "timestamp" },
+        "sale_price": { "v1_field": "price", "cast": "decimal" },
+        "transaction_id_raw": { "v1_field": "transaction_id_raw", "cast": "text" },
+        "rezen_code": { "v1_field": "code", "cast": "text" },
+        "stage": { "v1_field": "stage", "cast": "text" },
+        "property_type": { "v1_field": "propertyType", "cast": "text" },
+        "mls_num": { "v1_field": "mlsNumber", "cast": "text" },
+        "team_id_raw": { "v1_field": "team_id_raw", "cast": "text" },
+        "lifecycle_state": { "v1_field": "lifecycle_state", "cast": "text" },
+        "gross_commission": { "v1_field": "grossCommission_amount", "cast": "decimal" },
+        "net_payout": { "v1_field": "myNetPayout", "cast": "decimal" },
+        "terminated": { "v1_field": "terminated", "cast": "boolean" },
+        "closed": { "v1_field": "closed", "cast": "boolean" },
+        "firm_date": { "v1_field": "firmDate", "cast": "date" },
+        "transaction_owner_name": { "v1_field": "transaction_owner_name", "cast": "text" },
+        "transaction_owner_email": { "v1_field": "transaction_owner_email", "cast": "text" },
+        "transaction_owner_agent_id": {
+          "v1_field": "transaction_owner_agent_id",
+          "cast": "integer"
+        },
+        "team_owner_agent_id": { "v1_field": "team_owner_agent_id", "cast": "integer" },
+        "listing_id": { "v1_field": "listing_id", "cast": "integer" },
+        "team_id": { "v1_field": "team_id", "cast": "integer" },
+        "office_id": { "v1_field": "office_id", "cast": "integer" },
+        "representation": { "v1_field": "transaction_owner_representation", "cast": "text" }
+      }
+    }
+  },
+  "participant_domain": {
+    "v1_table": "mvpw1_39",
+    "notes": "Participant maps to transaction_participants in V2 - need to discover V2 table ID",
+    "v1_fields": [
+      "id",
+      "demo",
+      "agent_id",
+      "lastName",
+      "created_at",
+      "phone",
+      "transaction_id",
+      "participant_id",
+      "paidbyReal",
+      "stage",
+      "firstName",
+      "role",
+      "user_id",
+      "transaction_address",
+      "updatedAt",
+      "listing_id",
+      "is_listing",
+      "full_name",
+      "company",
+      "createdAt",
+      "is_transaction",
+      "address",
+      "agent_id_raw",
+      "transaction_id_raw",
+      "last_updatedAt",
+      "agent_name",
+      "status",
+      "email",
+      "external",
+      "office_address"
+    ]
+  },
+  "sql_patterns": {
+    "jsonb_extraction": "v1.xdo->>'field_name'",
+    "jsonb_with_cast": "(v1.xdo->>'field_name')::type",
+    "example_insert": "INSERT INTO mvpw5_665 (user_id, api_key) SELECT id, xdo->>'api_key' FROM mvpw1_41 WHERE id NOT IN (SELECT user_id FROM mvpw5_665) ON CONFLICT DO NOTHING"
+  }
+}
