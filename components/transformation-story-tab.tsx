@@ -13,11 +13,15 @@ import {
   TrendingUp,
   RefreshCw,
   CheckCircle2,
+  AlertTriangle,
+  Download,
 } from 'lucide-react'
 import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
+import { AlertBanner } from '@/components/ui/alert-banner'
+import { LoadingState } from '@/components/ui/loading-state'
 import { getV1Stats } from '@/lib/v1-data'
 import { TABLES_DATA } from '@/lib/v2-data'
 
@@ -149,8 +153,66 @@ export function TransformationStoryTab() {
   const splitCount = 5 // user, agent, team, network, transaction
   const normalizedTables = 14 // All the split target tables
 
+  // Check for sync warnings (entities not at 100%)
+  const syncWarnings = syncData.filter((entity) => {
+    const ratio = entity.v1 > 0 ? (entity.v2 / entity.v1) * 100 : 0
+    return ratio < 99
+  })
+
+  // Export transformation data
+  const handleExport = () => {
+    const exportData = {
+      timestamp: new Date().toISOString(),
+      v1_tables: v1Stats.total,
+      v2_tables: v2TableCount,
+      transformations: TRANSFORMATION_EXAMPLES,
+      sync_status: syncData,
+      benefits: NORMALIZATION_BENEFITS.map((b) => ({ title: b.title, description: b.description })),
+    }
+    const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `transformation-story-${new Date().toISOString().split('T')[0]}.json`
+    a.click()
+    URL.revokeObjectURL(url)
+  }
+
   return (
     <div className="space-y-8">
+      {/* Page Header */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-2xl font-bold flex items-center gap-2">
+            <Layers className="h-6 w-6" />
+            V1 to V2 Transformation Story
+          </h2>
+          <p className="text-sm text-muted-foreground mt-1">
+            How 251 JSONB tables became 193 normalized, typed tables
+          </p>
+        </div>
+        <div className="flex gap-2">
+          <Button variant="outline" size="sm" onClick={() => mutate()} disabled={loading}>
+            <RefreshCw className={`h-4 w-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
+            Refresh
+          </Button>
+          <Button variant="outline" size="sm" onClick={handleExport}>
+            <Download className="h-4 w-4 mr-2" />
+            Export
+          </Button>
+        </div>
+      </div>
+
+      {/* Sync Warning Alert */}
+      {syncWarnings.length > 0 && (
+        <AlertBanner
+          variant="warning"
+          title={`${syncWarnings.length} Entit${syncWarnings.length > 1 ? 'ies' : 'y'} Not Fully Synced`}
+          description={`The following entities are below 99% sync: ${syncWarnings.map((e) => e.entity).join(', ')}`}
+          icon={AlertTriangle}
+        />
+      )}
+
       {/* Hero Section - The Big Numbers */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <Card className="p-6 bg-gradient-to-br from-orange-500/10 to-orange-600/5 border-orange-500/20">
@@ -243,8 +305,14 @@ export function TransformationStoryTab() {
             })}
           </div>
         ) : (
-          <div className="text-center py-8 text-muted-foreground">
-            {loading ? 'Loading sync status...' : 'Click Refresh to load sync status'}
+          <div className="py-8">
+            {loading ? (
+              <LoadingState message="Loading sync status..." size="md" />
+            ) : (
+              <div className="text-center text-muted-foreground">
+                Click Refresh to load sync status
+              </div>
+            )}
           </div>
         )}
       </Card>

@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import { useState, useEffect } from 'react'
 import useSWR from 'swr'
@@ -6,19 +6,33 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/com
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Loader2, Search, Code, FolderTree, RefreshCw, Play, CheckCircle2, XCircle, Clock, Archive } from 'lucide-react'
+import {
+  Loader2,
+  Search,
+  Code,
+  FolderTree,
+  RefreshCw,
+  Play,
+  CheckCircle2,
+  XCircle,
+  Clock,
+  Archive,
+} from 'lucide-react'
 import { FunctionCodeModal } from '@/components/function-code-modal'
 import { ExportDropdown } from '@/components/export-dropdown'
+import { AlertBanner } from '@/components/ui/alert-banner'
+import { EmptyState } from '@/components/ui/empty-state'
+import { LoadingState } from '@/components/ui/loading-state'
 import { formatRelativeTime } from '@/lib/utils'
 import {
   getTestResults,
   saveTestResult,
   saveTestResults,
   getTestStats,
-  FunctionTestResult
+  FunctionTestResult,
 } from '@/lib/test-results-storage'
 
-const fetcher = (url: string) => fetch(url).then(r => r.json())
+const fetcher = (url: string) => fetch(url).then((r) => r.json())
 
 interface Function {
   id: number
@@ -32,18 +46,19 @@ interface Function {
   created: string
 }
 
+// Category badge colors mapping
 const CATEGORY_COLORS: Record<string, string> = {
-  'Workers': 'bg-blue-100 text-blue-800',
-  'Tasks': 'bg-purple-100 text-purple-800',
-  'Utils': 'bg-green-100 text-green-800',
-  'Archive': 'bg-gray-100 text-gray-800',
-  'FUB': 'bg-orange-100 text-orange-800',
-  'reZEN': 'bg-pink-100 text-pink-800',
-  'SkySlope': 'bg-yellow-100 text-yellow-800',
-  'DotLoop': 'bg-indigo-100 text-indigo-800',
-  'Lofty': 'bg-red-100 text-red-800',
+  Workers: 'bg-blue-100 text-blue-800',
+  Tasks: 'bg-purple-100 text-purple-800',
+  Utils: 'bg-green-100 text-green-800',
+  Archive: 'bg-gray-100 text-gray-800',
+  FUB: 'bg-orange-100 text-orange-800',
+  reZEN: 'bg-pink-100 text-pink-800',
+  SkySlope: 'bg-yellow-100 text-yellow-800',
+  DotLoop: 'bg-indigo-100 text-indigo-800',
+  Lofty: 'bg-red-100 text-red-800',
   'Title/Qualia': 'bg-teal-100 text-teal-800',
-  'Other': 'bg-slate-100 text-slate-800',
+  Other: 'bg-slate-100 text-slate-800',
 }
 
 export function FunctionsTab() {
@@ -51,7 +66,9 @@ export function FunctionsTab() {
   const [searchQuery, setSearchQuery] = useState('')
   const [page, setPage] = useState(1)
   const [hideArchive, setHideArchive] = useState(true) // Hide Archive by default
-  const [selectedFunction, setSelectedFunction] = useState<{ id: number, name: string } | null>(null)
+  const [selectedFunction, setSelectedFunction] = useState<{ id: number; name: string } | null>(
+    null
+  )
   const [testResults, setTestResults] = useState<Record<number, FunctionTestResult>>({})
   const [testingFunction, setTestingFunction] = useState<number | null>(null)
   const [testingAll, setTestingAll] = useState(false)
@@ -67,14 +84,10 @@ export function FunctionsTab() {
     return `/api/v2/functions?${params.toString()}`
   }
 
-  const { data, error, isLoading, mutate } = useSWR(
-    buildApiUrl(),
-    fetcher,
-    {
-      refreshInterval: 0, // Don't auto-refresh
-      revalidateOnFocus: false,
-    }
-  )
+  const { data, error, isLoading, mutate } = useSWR(buildApiUrl(), fetcher, {
+    refreshInterval: 0, // Don't auto-refresh
+    revalidateOnFocus: false,
+  })
 
   // Load test results from localStorage on mount
   useEffect(() => {
@@ -82,12 +95,14 @@ export function FunctionsTab() {
   }, [])
 
   // Apply client-side search (category filtering is done server-side)
-  const filteredFunctions = data?.functions?.filter((func: Function) => {
-    const matchesSearch = !searchQuery ||
-      func.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      func.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()))
-    return matchesSearch
-  }) || []
+  const filteredFunctions =
+    data?.functions?.filter((func: Function) => {
+      const matchesSearch =
+        !searchQuery ||
+        func.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        func.tags.some((tag) => tag.toLowerCase().includes(searchQuery.toLowerCase()))
+      return matchesSearch
+    }) || []
 
   // Reset page when filters change
   const handleCategoryChange = (category: string | null) => {
@@ -107,7 +122,7 @@ export function FunctionsTab() {
       const response = await fetch(`/api/v2/functions/${functionId}/test`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ testParams: { user_id: 60 } })
+        body: JSON.stringify({ testParams: { user_id: 60 } }),
       })
       const result = await response.json()
       saveTestResult(result)
@@ -128,7 +143,7 @@ export function FunctionsTab() {
       const response = await fetch('/api/v2/functions/test-all', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ functionIds, testParams: { user_id: 60 } })
+        body: JSON.stringify({ functionIds, testParams: { user_id: 60 } }),
       })
       const result = await response.json()
       if (result.success && result.results) {
@@ -146,7 +161,11 @@ export function FunctionsTab() {
   const getStatusBadge = (functionId: number) => {
     const result = testResults[functionId]
     if (!result) {
-      return <Badge variant="outline" className="text-xs">Not Tested</Badge>
+      return (
+        <Badge variant="outline" className="text-xs">
+          Not Tested
+        </Badge>
+      )
     }
 
     if (result.status === 'passed') {
@@ -187,30 +206,25 @@ export function FunctionsTab() {
 
   return (
     <div className="space-y-6">
-      {/* Header with Timestamp and Refresh */}
+      {/* Page Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold">V2 Functions</h2>
+          <h2 className="text-2xl font-bold flex items-center gap-2">
+            <FolderTree className="h-6 w-6" />
+            V2 Functions
+          </h2>
+          <p className="text-sm text-muted-foreground mt-1">
+            Browse and test V2 workspace functions by category
+          </p>
           {data?.timestamp && (
-            <p className="text-sm text-muted-foreground">
+            <p className="text-xs text-muted-foreground mt-1">
               Last updated: {formatRelativeTime(data.timestamp)}
-            </p>
-          )}
-          {data?.totalAll && (
-            <p className="text-sm text-muted-foreground mt-1">
-              Showing {data.total} of {data.totalAll} total functions
-              {hideArchive && <span> (Archive hidden)</span>}
-            </p>
-          )}
-          {testStats.total > 0 && (
-            <p className="text-sm text-muted-foreground mt-1">
-              Test Results: {testStats.passed} passed, {testStats.failed} failed, {testStats.simulated} simulated ({testStats.pass_rate}% pass rate)
             </p>
           )}
         </div>
         <div className="flex gap-2">
           <Button
-            variant={hideArchive ? "outline" : "default"}
+            variant={hideArchive ? 'outline' : 'default'}
             size="sm"
             onClick={handleArchiveToggle}
           >
@@ -225,12 +239,7 @@ export function FunctionsTab() {
             <Play className={`h-4 w-4 mr-2 ${testingAll ? 'animate-spin' : ''}`} />
             Test All Visible ({filteredFunctions.length})
           </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => mutate()}
-            disabled={isLoading}
-          >
+          <Button variant="outline" size="sm" onClick={() => mutate()} disabled={isLoading}>
             <RefreshCw className={`h-4 w-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
             Refresh
           </Button>
@@ -259,10 +268,33 @@ export function FunctionsTab() {
         </div>
       </div>
 
+      {/* Alert Banner for Test Failures */}
+      {testStats.failed > 0 && (
+        <AlertBanner
+          variant="warning"
+          title={`${testStats.failed} Function${testStats.failed > 1 ? 's' : ''} Failing`}
+          description={`${testStats.failed} of ${testStats.total} tested functions are failing. Review and fix before deployment.`}
+        />
+      )}
+
+      {/* Summary Stats */}
+      {data?.totalAll && (
+        <div className="text-sm text-muted-foreground">
+          Showing {data.total} of {data.totalAll} total functions
+          {hideArchive && <span> (Archive hidden)</span>}
+          {testStats.total > 0 && (
+            <span className="ml-2">
+              | Test Results: {testStats.passed} passed, {testStats.failed} failed,{' '}
+              {testStats.simulated} simulated ({testStats.pass_rate}% pass rate)
+            </span>
+          )}
+        </div>
+      )}
+
       {/* Summary Cards */}
       {data?.summary && (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
-          {data.summary.map((cat: { category: string, count: number }) => {
+          {data.summary.map((cat: { category: string; count: number }) => {
             // Skip Archive category if it's hidden (it won't be in the filtered data anyway)
             if (hideArchive && cat.category === 'Archive') {
               return null
@@ -274,15 +306,18 @@ export function FunctionsTab() {
                 className={`cursor-pointer transition-all hover:shadow-md ${
                   selectedCategory === cat.category ? 'ring-2 ring-primary' : ''
                 }`}
-                onClick={() => handleCategoryChange(
-                  selectedCategory === cat.category ? null : cat.category
-                )}
+                onClick={() =>
+                  handleCategoryChange(selectedCategory === cat.category ? null : cat.category)
+                }
               >
                 <CardContent className="p-4">
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center justify-between">
                       <p className="text-sm text-muted-foreground truncate">{cat.category}</p>
-                      <Badge className={CATEGORY_COLORS[cat.category] || CATEGORY_COLORS.Other} variant="secondary">
+                      <Badge
+                        className={CATEGORY_COLORS[cat.category] || CATEGORY_COLORS.Other}
+                        variant="secondary"
+                      >
                         {cat.count}
                       </Badge>
                     </div>
@@ -309,11 +344,7 @@ export function FunctionsTab() {
               />
             </div>
             {selectedCategory && (
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => handleCategoryChange(null)}
-              >
+              <Button variant="outline" size="sm" onClick={() => handleCategoryChange(null)}>
                 Clear Filter
               </Button>
             )}
@@ -342,13 +373,19 @@ export function FunctionsTab() {
         <CardContent>
           <div className="space-y-2">
             {isLoading ? (
-              <div className="flex items-center justify-center py-12">
-                <Loader2 className="h-8 w-8 animate-spin text-primary" />
+              <div className="py-12">
+                <LoadingState message="Loading functions..." size="lg" />
               </div>
             ) : filteredFunctions.length === 0 ? (
-              <div className="text-center py-12 text-muted-foreground">
-                No functions found matching your criteria
-              </div>
+              <EmptyState
+                icon={Code}
+                title="No functions found"
+                description={
+                  searchQuery || selectedCategory
+                    ? 'Try adjusting your search or filters'
+                    : 'No functions available in this workspace'
+                }
+              />
             ) : (
               filteredFunctions.map((func: Function) => {
                 const testResult = testResults[func.id]
@@ -363,9 +400,7 @@ export function FunctionsTab() {
                             ) : (
                               <Code className="h-4 w-4 text-muted-foreground shrink-0" />
                             )}
-                            <h3 className="font-mono text-sm font-medium truncate">
-                              {func.name}
-                            </h3>
+                            <h3 className="font-mono text-sm font-medium truncate">{func.name}</h3>
                             <Badge variant="outline" className="shrink-0">
                               {func.type}
                             </Badge>
@@ -380,7 +415,9 @@ export function FunctionsTab() {
                             </div>
                           )}
                           <div className="flex flex-wrap gap-1 mb-2">
-                            <Badge className={CATEGORY_COLORS[func.category] || CATEGORY_COLORS.Other}>
+                            <Badge
+                              className={CATEGORY_COLORS[func.category] || CATEGORY_COLORS.Other}
+                            >
                               {func.category}
                             </Badge>
                             {func.tags.slice(0, 3).map((tag, i) => (
@@ -398,7 +435,8 @@ export function FunctionsTab() {
                             <p>Modified: {new Date(func.last_modified).toLocaleDateString()}</p>
                             {testResult && (
                               <p>
-                                Last tested: {formatRelativeTime(testResult.tested_at)} ({testResult.execution_time_ms}ms)
+                                Last tested: {formatRelativeTime(testResult.tested_at)} (
+                                {testResult.execution_time_ms}ms)
                               </p>
                             )}
                           </div>
@@ -441,7 +479,7 @@ export function FunctionsTab() {
                 variant="outline"
                 size="sm"
                 disabled={page === 1}
-                onClick={() => setPage(p => p - 1)}
+                onClick={() => setPage((p) => p - 1)}
               >
                 Previous
               </Button>
@@ -452,7 +490,7 @@ export function FunctionsTab() {
                 variant="outline"
                 size="sm"
                 disabled={page >= Math.ceil(data.total / 50)}
-                onClick={() => setPage(p => p + 1)}
+                onClick={() => setPage((p) => p + 1)}
               >
                 Next
               </Button>

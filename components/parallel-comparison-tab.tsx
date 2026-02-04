@@ -11,7 +11,6 @@ import {
   CheckCircle2,
   XCircle,
   AlertTriangle,
-  ArrowRight,
   Clock,
   Database,
   GitCompare,
@@ -20,6 +19,8 @@ import {
   ChevronRight,
   RefreshCw,
 } from 'lucide-react'
+import { AlertBanner } from '@/components/ui/alert-banner'
+import { MetricCard } from '@/components/ui/metric-card'
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json())
 
@@ -209,32 +210,40 @@ export function ParallelComparisonTab() {
         </div>
       </div>
 
-      {/* Summary Stats */}
-      <div className="grid grid-cols-4 gap-4">
-        <Card>
-          <CardContent className="pt-6">
-            <div className="text-2xl font-bold">{endpoints.length}</div>
-            <p className="text-sm text-muted-foreground">Comparable Endpoints</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="pt-6">
-            <div className="text-2xl font-bold">{completedCount}</div>
-            <p className="text-sm text-muted-foreground">Tested</p>
-          </CardContent>
-        </Card>
-        <Card className={matchCount > 0 ? 'border-green-200 bg-green-50' : ''}>
-          <CardContent className="pt-6">
-            <div className="text-2xl font-bold text-green-600">{matchCount}</div>
-            <p className="text-sm text-muted-foreground">Full Match</p>
-          </CardContent>
-        </Card>
-        <Card className={completedCount - matchCount > 0 ? 'border-amber-200 bg-amber-50' : ''}>
-          <CardContent className="pt-6">
-            <div className="text-2xl font-bold text-amber-600">{completedCount - matchCount}</div>
-            <p className="text-sm text-muted-foreground">Differences</p>
-          </CardContent>
-        </Card>
+      {/* Alert Banner for Significant Mismatches */}
+      {completedCount > 0 && completedCount - matchCount > 0 && (
+        <AlertBanner
+          variant={completedCount - matchCount > 3 ? 'critical' : 'warning'}
+          title={`${completedCount - matchCount} Endpoint${completedCount - matchCount > 1 ? 's' : ''} with Differences`}
+          description="Review the mismatched endpoints below to ensure V2 returns equivalent data to V1."
+          icon={AlertTriangle}
+        />
+      )}
+
+      {/* Summary Stats using MetricCard */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <MetricCard
+          title="Comparable Endpoints"
+          value={endpoints.length}
+          icon={<GitCompare className="h-5 w-5" />}
+        />
+        <MetricCard
+          title="Tested"
+          value={completedCount}
+          subtitle={`${completedCount > 0 ? Math.round((completedCount / endpoints.length) * 100) : 0}% coverage`}
+        />
+        <MetricCard
+          title="Full Match"
+          value={matchCount}
+          icon={<CheckCircle2 className="h-5 w-5 text-green-500" />}
+          highlight={matchCount > 0}
+        />
+        <MetricCard
+          title="Differences"
+          value={completedCount - matchCount}
+          icon={<AlertTriangle className="h-5 w-5 text-amber-500" />}
+          className={completedCount - matchCount > 0 ? 'border-amber-200 bg-amber-50' : ''}
+        />
       </div>
 
       {/* Test User Info */}

@@ -1,13 +1,26 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import useSWR from 'swr'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Loader2, Search, Clock, ExternalLink, Play, Pause, RefreshCw } from 'lucide-react'
+import {
+  Loader2,
+  Search,
+  Clock,
+  ExternalLink,
+  Play,
+  Pause,
+  RefreshCw,
+  AlertTriangle,
+} from 'lucide-react'
 import { ExportDropdown } from '@/components/export-dropdown'
+import { AlertBanner } from '@/components/ui/alert-banner'
+import { EmptyState } from '@/components/ui/empty-state'
+import { LoadingState } from '@/components/ui/loading-state'
+import { MetricCard } from '@/components/ui/metric-card'
 import { formatRelativeTime } from '@/lib/utils'
 
 const fetcher = (url: string) => fetch(url).then((r) => r.json())
@@ -38,6 +51,18 @@ export function BackgroundTasksTab() {
 
   const filteredTasks = data?.tasks || []
 
+  // Calculate task metrics
+  const taskMetrics = useMemo(() => {
+    const tasks = data?.tasks || []
+    const active = tasks.filter((t: BackgroundTask) => t.active).length
+    const inactive = tasks.filter((t: BackgroundTask) => !t.active).length
+    const drafts = tasks.filter((t: BackgroundTask) => t.draft).length
+    return { total: tasks.length, active, inactive, drafts }
+  }, [data?.tasks])
+
+  // Check for inactive critical tasks (tasks that should be running but aren't)
+  const inactiveCount = taskMetrics.inactive
+
   if (error) {
     return (
       <Card className="border-red-200">
@@ -50,12 +75,18 @@ export function BackgroundTasksTab() {
 
   return (
     <div className="space-y-6">
-      {/* Header with Timestamp and Refresh */}
+      {/* Page Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold">Background Tasks</h2>
+          <h2 className="text-2xl font-bold flex items-center gap-2">
+            <Clock className="h-6 w-6" />
+            Background Tasks
+          </h2>
+          <p className="text-sm text-muted-foreground mt-1">
+            Scheduled Xano tasks for automated data processing and sync jobs
+          </p>
           {data?.timestamp && (
-            <p className="text-sm text-muted-foreground">
+            <p className="text-xs text-muted-foreground mt-1">
               Last updated: {formatRelativeTime(data.timestamp)}
             </p>
           )}
@@ -88,25 +119,36 @@ export function BackgroundTasksTab() {
         </div>
       </div>
 
-      {/* Summary Card */}
-      <Card>
-        <CardContent className="p-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h3 className="text-2xl font-bold">{data?.total || 0}</h3>
-              <p className="text-sm text-muted-foreground">
-                Scheduled Background Tasks (Xano Tasks)
-              </p>
-              {data?.cache_updated && (
-                <p className="text-xs text-muted-foreground mt-1">
-                  Cache updated: {new Date(data.cache_updated).toLocaleString()}
-                </p>
-              )}
-            </div>
-            <Clock className="h-8 w-8 text-primary" />
-          </div>
-        </CardContent>
-      </Card>
+      {/* Alert Banner for Inactive Tasks */}
+      {inactiveCount > 0 && (
+        <AlertBanner
+          variant="info"
+          title={`${inactiveCount} Task${inactiveCount > 1 ? 's' : ''} Inactive`}
+          description="Some scheduled tasks are currently disabled. Review if they should be activated."
+          icon={AlertTriangle}
+        />
+      )}
+
+      {/* Metric Summary Cards */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <MetricCard
+          title="Total Tasks"
+          value={taskMetrics.total}
+          icon={<Clock className="h-5 w-5" />}
+        />
+        <MetricCard
+          title="Active"
+          value={taskMetrics.active}
+          icon={<Play className="h-5 w-5" />}
+          highlight={taskMetrics.active > 0}
+        />
+        <MetricCard
+          title="Inactive"
+          value={taskMetrics.inactive}
+          icon={<Pause className="h-5 w-5" />}
+        />
+        <MetricCard title="Drafts" value={taskMetrics.drafts} subtitle="Not published" />
+      </div>
 
       {/* Search */}
       <Card>
@@ -141,13 +183,19 @@ export function BackgroundTasksTab() {
         <CardContent>
           <div className="space-y-2">
             {isLoading ? (
-              <div className="flex items-center justify-center py-12">
-                <Loader2 className="h-8 w-8 animate-spin text-primary" />
+              <div className="py-12">
+                <LoadingState message="Loading background tasks..." size="lg" />
               </div>
             ) : filteredTasks.length === 0 ? (
-              <div className="text-center py-12 text-muted-foreground">
-                No background tasks found{searchQuery && ` matching "${searchQuery}"`}
-              </div>
+              <EmptyState
+                icon={Clock}
+                title="No background tasks found"
+                description={
+                  searchQuery
+                    ? `No tasks matching "${searchQuery}"`
+                    : 'No scheduled tasks in this workspace'
+                }
+              />
             ) : (
               filteredTasks.map((task: BackgroundTask) => (
                 <Card key={task.id} className="hover:shadow-md transition-shadow">

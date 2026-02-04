@@ -42,10 +42,10 @@ Apply shared components and consistent patterns to doc tabs (data-model, integra
 
 ## Done summary
 
-TBD
+Polished data-model-tab.tsx and integration-guide-tab.tsx with consistent PageHeader (h2 + description), MetricCard for statistics, EmptyState for empty sections, and shared Badge components. Applied consistent Card structure and spacing patterns following architecture-tab.tsx reference.
 
 ## Evidence
 
-- Commits:
-- Tests:
+- Commits: 8ff488c4c716e7ebaef6fff6f3d0808525220939
+- Tests: pnpm build
 - PRs:
