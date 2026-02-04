@@ -47,10 +47,10 @@ Extract from:
 
 ## Done summary
 
-TBD
+Extracted 5 duplicate Badge components (SeverityBadge, SimpleStatusBadge, PriorityBadge, CategoryBadge, MethodBadge) to /components/ui/ and updated blockers-tab, gaps-tab, checklist-tab, and endpoint-catalog-tab to import from shared components.
 
 ## Evidence
 
-- Commits:
-- Tests:
+- Commits: 256d1c51bf652166318d34e5338b4192cabe4723
+- Tests: pnpm build
 - PRs:

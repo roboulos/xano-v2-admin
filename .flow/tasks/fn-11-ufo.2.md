@@ -36,10 +36,10 @@ Follow existing Card component pattern from `components/ui/card.tsx`.
 
 ## Done summary
 
-TBD
+Extracted MetricCard and ProgressBar components from status-dashboard-tab.tsx into shared /components/ui/ files. Updated both status-dashboard-tab.tsx and checklist-tab.tsx to use the new shared components with proper TypeScript types and color threshold logic.
 
 ## Evidence
 
-- Commits:
-- Tests:
+- Commits: 5bb419924ad12f1af1e763ce4856285efb029548
+- Tests: pnpm build
 - PRs:
