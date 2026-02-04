@@ -1,0 +1,1885 @@
+{
+  "summary": {
+    "total": 155,
+    "passed": 155,
+    "failed": 0,
+    "untestable": 0,
+    "passRate": 100,
+    "testablePassRate": 100
+  },
+  "results": [
+    {
+      "success": true,
+      "name": "/backfill-agent-team-id-v2",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "frontend",
+        "method": "POST",
+        "requires_auth": false,
+        "requires_user_id": false,
+        "duration_ms": 672,
+        "response_size": 134,
+        "response_preview": "{\"success\":true,\"batch_size\":500,\"page\":1,\"total_teams\":0,\"updated_from_team_owner\":0,\"total_members\":0,\"updated_from_team_members\":0}"
+      },
+      "timestamp": "2026-02-04T03:33:39.770Z"
+    },
+    {
+      "success": true,
+      "name": "/admin/resync-user",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "frontend",
+        "method": "POST",
+        "requires_auth": false,
+        "requires_user_id": false,
+        "duration_ms": 276,
+        "response_size": 77,
+        "response_preview": "{\"payload\":\"No onboarding job found for this user\",\"statement\":\"Throw Error\"}"
+      },
+      "timestamp": "2026-02-04T03:33:40.047Z"
+    },
+    {
+      "success": true,
+      "name": "/leaderboard/computed",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "frontend",
+        "method": "GET",
+        "requires_auth": false,
+        "requires_user_id": false,
+        "duration_ms": 3532,
+        "response_size": 623,
+        "response_preview": "{\"success\":true,\"transaction_count\":807,\"agent_count\":12,\"leaderboard\":[{\"id\":1387,\"name\":\"Lonna Hallmark\",\"units\":1,\"volume\":335000,\"gci\":8375},{\"id\":932,\"name\":\"Chris Hill\",\"units\":1,\"volume\":447500"
+      },
+      "timestamp": "2026-02-04T03:33:43.579Z"
+    },
+    {
+      "success": true,
+      "name": "/leads/fub/text_messages/aggregates",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.579Z"
+    },
+    {
+      "success": true,
+      "name": "/leads/fub/appointments/aggregates",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.579Z"
+    },
+    {
+      "success": true,
+      "name": "/test/aggregate-syntax",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.579Z"
+    },
+    {
+      "success": true,
+      "name": "/kpi_goals_list",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.579Z"
+    },
+    {
+      "success": true,
+      "name": "/dashboard_sections",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "POST"
+      },
+      "timestamp": "2026-02-04T03:33:43.579Z"
+    },
+    {
+      "success": true,
+      "name": "/dashboard_sections",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.579Z"
+    },
+    {
+      "success": true,
+      "name": "/favorites",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "POST"
+      },
+      "timestamp": "2026-02-04T03:33:43.579Z"
+    },
+    {
+      "success": true,
+      "name": "/has_transactions",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.579Z"
+    },
+    {
+      "success": true,
+      "name": "/favorites",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.579Z"
+    },
+    {
+      "success": true,
+      "name": "/kpi_goals",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "PATCH"
+      },
+      "timestamp": "2026-02-04T03:33:43.579Z"
+    },
+    {
+      "success": true,
+      "name": "/kpi_goals",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "DELETE"
+      },
+      "timestamp": "2026-02-04T03:33:43.579Z"
+    },
+    {
+      "success": true,
+      "name": "/kpi_goals",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "POST"
+      },
+      "timestamp": "2026-02-04T03:33:43.579Z"
+    },
+    {
+      "success": true,
+      "name": "/kpi_goals",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.579Z"
+    },
+    {
+      "success": true,
+      "name": "/notification-preferences",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.579Z"
+    },
+    {
+      "success": true,
+      "name": "/notification-preferences",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "PATCH"
+      },
+      "timestamp": "2026-02-04T03:33:43.579Z"
+    },
+    {
+      "success": true,
+      "name": "/unread-count",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.579Z"
+    },
+    {
+      "success": true,
+      "name": "/mark-all-read",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "POST"
+      },
+      "timestamp": "2026-02-04T03:33:43.579Z"
+    },
+    {
+      "success": true,
+      "name": "/notifications",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.579Z"
+    },
+    {
+      "success": true,
+      "name": "/notifications",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "POST"
+      },
+      "timestamp": "2026-02-04T03:33:43.579Z"
+    },
+    {
+      "success": true,
+      "name": "/chart-catalog",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.579Z"
+    },
+    {
+      "success": true,
+      "name": "/revenue/agent-summary",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.579Z"
+    },
+    {
+      "success": true,
+      "name": "/revenue/monthly",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.579Z"
+    },
+    {
+      "success": true,
+      "name": "/revenue/total",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.579Z"
+    },
+    {
+      "success": true,
+      "name": "/rezen/roster-sync-status",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.579Z"
+    },
+    {
+      "success": true,
+      "name": "/rezen/roster-sync",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "POST"
+      },
+      "timestamp": "2026-02-04T03:33:43.579Z"
+    },
+    {
+      "success": true,
+      "name": "/rezen/roster",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.579Z"
+    },
+    {
+      "success": true,
+      "name": "/rezen/connection-status",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.579Z"
+    },
+    {
+      "success": true,
+      "name": "/rezen/disconnect",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "POST"
+      },
+      "timestamp": "2026-02-04T03:33:43.579Z"
+    },
+    {
+      "success": true,
+      "name": "/rezen/connect",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "POST"
+      },
+      "timestamp": "2026-02-04T03:33:43.579Z"
+    },
+    {
+      "success": true,
+      "name": "/leads/fub/deals/aggregates",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.579Z"
+    },
+    {
+      "success": true,
+      "name": "/leads/fub/calls/aggregates",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.579Z"
+    },
+    {
+      "success": true,
+      "name": "/leads/fub/events/aggregates",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.579Z"
+    },
+    {
+      "success": true,
+      "name": "/leads/fub/people/aggregates",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.579Z"
+    },
+    {
+      "success": true,
+      "name": "/leads/fub/deals",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.579Z"
+    },
+    {
+      "success": true,
+      "name": "/leads/fub/texts",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.579Z"
+    },
+    {
+      "success": true,
+      "name": "/leads/fub/calls",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.579Z"
+    },
+    {
+      "success": true,
+      "name": "/leads/fub/appointments",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.579Z"
+    },
+    {
+      "success": true,
+      "name": "/leads/fub/people",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.579Z"
+    },
+    {
+      "success": true,
+      "name": "/leads/fub/connection-status",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.579Z"
+    },
+    {
+      "success": true,
+      "name": "/leads/fub/disconnect",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "POST"
+      },
+      "timestamp": "2026-02-04T03:33:43.579Z"
+    },
+    {
+      "success": true,
+      "name": "/leads/fub/connect",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "POST"
+      },
+      "timestamp": "2026-02-04T03:33:43.579Z"
+    },
+    {
+      "success": true,
+      "name": "/network/roster",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.579Z"
+    },
+    {
+      "success": true,
+      "name": "/network/downline",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.579Z"
+    },
+    {
+      "success": true,
+      "name": "/network/summary",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.579Z"
+    },
+    {
+      "success": true,
+      "name": "/team/roster",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.579Z"
+    },
+    {
+      "success": true,
+      "name": "/team/admins",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.579Z"
+    },
+    {
+      "success": true,
+      "name": "/team/summary",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.579Z"
+    },
+    {
+      "success": true,
+      "name": "/transactions/all",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.579Z"
+    },
+    {
+      "success": true,
+      "name": "/listings/all",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.579Z"
+    },
+    {
+      "success": true,
+      "name": "/dashboard/insights",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.579Z"
+    },
+    {
+      "success": true,
+      "name": "/user/profile",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.579Z"
+    },
+    {
+      "success": true,
+      "name": "/user/settings",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "PATCH"
+      },
+      "timestamp": "2026-02-04T03:33:43.579Z"
+    },
+    {
+      "success": true,
+      "name": "/user/password",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "PATCH"
+      },
+      "timestamp": "2026-02-04T03:33:43.579Z"
+    },
+    {
+      "success": true,
+      "name": "/user/avatar",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "POST"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/analytics/kpis",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/analytics/trends",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/analytics/comparisons",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/reports/revenue",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/reports/transactions",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/reports/listings",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/reports/team",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/reports/network",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/integrations/list",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/integrations/skyslope/connect",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "POST"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/integrations/skyslope/status",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/integrations/dotloop/connect",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "POST"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/integrations/dotloop/status",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/integrations/lofty/connect",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "POST"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/integrations/lofty/status",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/search/agents",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/search/transactions",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/search/listings",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/admin/users",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/admin/users",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "POST"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/admin/settings",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/admin/settings",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "PATCH"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/admin/logs",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/charts/config",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/charts/config",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "POST"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/pages/layout",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/pages/layout",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "PATCH"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/widgets/available",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/widgets/active",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/widgets/active",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "POST"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/ai/coaching",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "POST"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/ai/insights",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/ai/recommendations",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/leaderboard",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/compensation/summary",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/compensation/details",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/revshare/summary",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/revshare/details",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/equity/summary",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/equity/details",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/payments/history",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/payments/pending",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/transactions",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "POST"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/listings",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "POST"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/roster",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "POST"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/agents",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/team/stats",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/network/stats",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/transactions/stats",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/listings/stats",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/revenue/stats",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/goals/list",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/goals",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "POST"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/tasks/list",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/tasks",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "POST"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/calendar/events",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/calendar/events",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "POST"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/documents/list",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/documents/upload",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "POST"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/templates/list",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/contacts/list",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/contacts",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "POST"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/metrics/cap",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/metrics/production",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/metrics/team-performance",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/metrics/network-growth",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/metrics/revenue-breakdown",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/pipeline/stages",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/pipeline/prospects",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/pipeline/prospects",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "POST"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/subscriptions/current",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/subscriptions/history",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/subscriptions/upgrade",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "POST"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/subscriptions/cancel",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "POST"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/billing/invoices",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/billing/payment-methods",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/billing/payment-methods",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "POST"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/activity-feed",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/activity-feed/mark-read",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "POST"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/messages/inbox",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/messages/sent",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/messages",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "POST"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/exports/transactions",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "POST"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/exports/listings",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "POST"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/exports/roster",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "POST"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/exports/network",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "POST"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/exports/revenue",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "POST"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/imports/transactions",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "POST"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/imports/listings",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "POST"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/imports/roster",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "POST"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/audit-log",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/health-check",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "endpoint_not_implemented",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/version",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "endpoint_not_implemented",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/features",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/maintenance-mode",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "endpoint_not_implemented",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/webhooks/list",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/webhooks",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "POST"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    },
+    {
+      "success": true,
+      "name": "/api-keys",
+      "type": "endpoint",
+      "metadata": {
+        "skipped": true,
+        "reason": "requires_authentication",
+        "api_group": "frontend",
+        "method": "GET"
+      },
+      "timestamp": "2026-02-04T03:33:43.580Z"
+    }
+  ],
+  "duration": 4480
+}

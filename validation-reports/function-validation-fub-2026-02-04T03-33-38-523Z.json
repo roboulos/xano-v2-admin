@@ -1,0 +1,2296 @@
+{
+  "summary": {
+    "total": 190,
+    "passed": 38,
+    "failed": 3,
+    "untestable": 149,
+    "passRate": 20,
+    "testablePassRate": 92.6829268292683
+  },
+  "results": [
+    {
+      "success": false,
+      "name": "Utils/Update FUB Metrics V2",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 10997,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:31:52.289Z"
+    },
+    {
+      "success": true,
+      "name": "Utils/Update FUB Account Metrics",
+      "type": "function",
+      "metadata": {
+        "function_id": 10992,
+        "tested_via": "/update-fub-account-metrics-v2",
+        "api_group": "WORKERS",
+        "duration_ms": 489
+      },
+      "timestamp": "2026-02-04T03:31:52.779Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Sync Pipeline Prospects from FUB Deals",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 10990,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:31:52.779Z"
+    },
+    {
+      "success": false,
+      "name": "Utils/Link FUB Deals to Users",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 10974,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:31:52.779Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Account Users - Paginated",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 10972,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:31:52.779Z"
+    },
+    {
+      "success": true,
+      "name": "Utils/Backfill FUB Calls Linking",
+      "type": "function",
+      "metadata": {
+        "function_id": 10961,
+        "tested_via": "/backfill-fub-calls-linking",
+        "api_group": "WORKERS",
+        "duration_ms": 13175
+      },
+      "timestamp": "2026-02-04T03:32:05.954Z"
+    },
+    {
+      "success": true,
+      "name": "Utils/Backfill FUB Events Linking",
+      "type": "function",
+      "metadata": {
+        "function_id": 10960,
+        "tested_via": "/backfill-fub-events-linking",
+        "api_group": "WORKERS",
+        "duration_ms": 20432
+      },
+      "timestamp": "2026-02-04T03:32:26.386Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Link FUB Calls to Users",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 10953,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:32:26.386Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Link FUB Calls to People",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 10952,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:32:26.386Z"
+    },
+    {
+      "success": false,
+      "name": "Utils/Link FUB Users to Agents via User",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 10951,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:32:26.386Z"
+    },
+    {
+      "success": false,
+      "name": "Link FUB Calls to People",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 10950,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:32:26.386Z"
+    },
+    {
+      "success": false,
+      "name": "Link FUB Calls to Users",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 10949,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:32:26.386Z"
+    },
+    {
+      "success": false,
+      "name": "Utils/Link FUB Users to Agents by Name",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 10947,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:32:26.386Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Groups",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 10941,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:32:26.386Z"
+    },
+    {
+      "success": false,
+      "name": "Backfill - FUB Calls FK Links",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 10939,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:32:26.386Z"
+    },
+    {
+      "success": false,
+      "name": "Utils/Backfill FUB People Assigned User ID",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 10048,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:32:26.386Z"
+    },
+    {
+      "success": true,
+      "name": "Utils/Backfill FUB People Stage ID",
+      "type": "function",
+      "metadata": {
+        "function_id": 10047,
+        "tested_via": "/backfill-fub-people-stage-id",
+        "api_group": "SYSTEM",
+        "duration_ms": 458
+      },
+      "timestamp": "2026-02-04T03:32:26.844Z"
+    },
+    {
+      "success": true,
+      "name": "Utils/Backfill FUB Users Agent ID",
+      "type": "function",
+      "metadata": {
+        "function_id": 10046,
+        "tested_via": "/backfill-fub-users-agent-id",
+        "api_group": "SYSTEM",
+        "duration_ms": 35269
+      },
+      "timestamp": "2026-02-04T03:33:02.113Z"
+    },
+    {
+      "success": true,
+      "name": "Utils/Backfill FUB Calls People ID",
+      "type": "function",
+      "metadata": {
+        "function_id": 10040,
+        "tested_via": "/backfill-fub-calls-people-id",
+        "api_group": "SYSTEM",
+        "duration_ms": 13374
+      },
+      "timestamp": "2026-02-04T03:33:15.487Z"
+    },
+    {
+      "success": true,
+      "name": "Utils/Backfill FUB Calls Direction",
+      "type": "function",
+      "metadata": {
+        "function_id": 10039,
+        "tested_via": "/backfill-fub-calls-direction",
+        "api_group": "SYSTEM",
+        "duration_ms": 662
+      },
+      "timestamp": "2026-02-04T03:33:16.150Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Sync Stages from Deals",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 10033,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:16.150Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Move Deals to Transaction",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 10031,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:16.157Z"
+    },
+    {
+      "success": false,
+      "name": "Utils/Backfill FUB People Names",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 10030,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:16.157Z"
+    },
+    {
+      "success": false,
+      "name": "HELPER - Fix FUB Users Account ID",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 10023,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:16.157Z"
+    },
+    {
+      "success": true,
+      "name": "Workers/FUB - Get Deals",
+      "type": "function",
+      "metadata": {
+        "function_id": 10022,
+        "tested_via": "/test-function-10022-get-deals",
+        "api_group": "WORKERS",
+        "duration_ms": 757
+      },
+      "timestamp": "2026-02-04T03:33:16.914Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Deals - Upsert",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 10021,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:16.915Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Deals - Transform",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 10020,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:16.915Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Text Messages V3",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 9167,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:16.915Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Lambda Coordinator Validate Input",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8295,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:16.915Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Text Messages By Person ID",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8284,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:16.915Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Get Text Messages Stage_0",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8272,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:16.915Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Fix Appointments Missing Created By_0",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8271,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:16.915Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Get Account Users_0",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8273,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:16.915Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Get People URL_0",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8275,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:16.915Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Add Users To Calls_0",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8276,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:16.915Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Events Pull People Data_0",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8265,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:16.915Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Process Text Messages Stage_0",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8270,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:16.915Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Onboarding_0",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8267,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:16.915Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Get Deals_0",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8256,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:16.915Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Generate User People Data_0",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8255,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:16.915Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Refresh Tokens_0",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8241,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:16.915Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Get Text Messages Via Phone_0",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8231,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:16.915Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Get Stages_0",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8243,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:16.915Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Event By ID_0",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8259,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:16.915Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Get Calls_0",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8233,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:16.915Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Delete Lambda Logs_0",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8238,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:16.915Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Lambda Coordinator Worker Task_0",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8235,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:16.915Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Events Get Name_0",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8240,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:16.915Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - API Wrapper_0",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8242,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:16.915Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Add Users To Text Messages_0",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8246,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:16.915Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Get People - Fetch_0",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8210,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:16.915Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Get Text Messages_0",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8213,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:16.915Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Get People_0",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8214,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:16.915Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Get People - Upsert_0",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8196,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:16.915Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Get Appointments_0",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8199,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:16.915Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Get Events_0",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8200,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:16.915Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Get People - Transform_0",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8201,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:16.915Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Webhooks Sync_0",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8202,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:16.915Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Onboarding Appointments Worker_0",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8184,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:16.915Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Backup/FUB - Onboarding Get Appointments_0",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8159,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:16.915Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Fix Appointments Missing Created By",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8150,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:16.915Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Delete Lambda Logs",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8149,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:16.915Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Process Text Messages Stage",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8147,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:16.915Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Account Users",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8143,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:16.915Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Stages",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8142,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:16.915Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Refresh Tokens",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8141,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:16.915Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get People URL",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8138,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:16.915Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Event By ID",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8136,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:16.915Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Generate User People Data",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8135,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:16.915Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Events Pull People Data",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8134,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:16.915Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Onboarding",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8133,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:16.915Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Add Users To Calls",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8132,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:16.915Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Events Get Name",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8131,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:16.915Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Add Users To Text Messages",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8130,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:16.915Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Text Messages Stage",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8129,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:16.916Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - API Wrapper",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8128,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:16.916Z"
+    },
+    {
+      "success": true,
+      "name": "Workers/FUB - Lambda Coordinator Worker Task",
+      "type": "function",
+      "metadata": {
+        "function_id": 8118,
+        "tested_via": "/test-function-8118-lambda-coordinator",
+        "api_group": "WORKERS",
+        "duration_ms": 375
+      },
+      "timestamp": "2026-02-04T03:33:17.291Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get All Text Messages",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8092,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:17.291Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get People",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8091,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:17.291Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Events",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8090,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:17.291Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Webhooks Sync",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8089,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:17.291Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Text Messages Via Phone",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8088,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:17.291Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get People - Upsert",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8087,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:17.291Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Deals - Fetch",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8086,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:17.291Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get People - Transform",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8085,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:17.291Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Text Messages",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8084,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:17.291Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get People - Fetch",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8083,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:17.291Z"
+    },
+    {
+      "success": true,
+      "name": "Workers/FUB - Onboarding Appointments Worker",
+      "type": "function",
+      "metadata": {
+        "function_id": 8067,
+        "tested_via": "/test-function-8067-onboarding-appointments",
+        "api_group": "WORKERS",
+        "duration_ms": 287
+      },
+      "timestamp": "2026-02-04T03:33:17.578Z"
+    },
+    {
+      "success": true,
+      "name": "Workers/FUB - Get Calls",
+      "type": "function",
+      "metadata": {
+        "function_id": 8065,
+        "tested_via": "/test-function-8065-fub-calls",
+        "api_group": "WORKERS",
+        "duration_ms": 8430
+      },
+      "timestamp": "2026-02-04T03:33:26.008Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Onboarding Get Appointments",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8064,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:26.008Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Appointments",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8039,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:26.008Z"
+    },
+    {
+      "success": true,
+      "name": "Tasks/FUB - Get Appointments Missing Data",
+      "type": "function",
+      "metadata": {
+        "function_id": 8007,
+        "tested_via": "/fub-get-appointments-missing-data",
+        "api_group": "TASKS",
+        "duration_ms": 376
+      },
+      "timestamp": "2026-02-04T03:33:26.384Z"
+    },
+    {
+      "success": false,
+      "name": "Tasks/FUB - Fix Calls Missing Username",
+      "type": "function",
+      "error": "HTTP 500",
+      "metadata": {
+        "function_id": 8005,
+        "tested_via": "/fub-fix-calls-missing-record-username",
+        "api_group": "TASKS",
+        "duration_ms": 498
+      },
+      "timestamp": "2026-02-04T03:33:26.882Z"
+    },
+    {
+      "success": true,
+      "name": "Tasks/FUB - Onboarding Calls Worker 4",
+      "type": "function",
+      "metadata": {
+        "function_id": 8001,
+        "tested_via": "/fub-onboarding-appointments-worker",
+        "api_group": "TASKS",
+        "duration_ms": 592
+      },
+      "timestamp": "2026-02-04T03:33:27.474Z"
+    },
+    {
+      "success": true,
+      "name": "Tasks/FUB - Onboarding Calls Worker 3",
+      "type": "function",
+      "metadata": {
+        "function_id": 7997,
+        "tested_via": "/fub-onboarding-appointments-worker",
+        "api_group": "TASKS",
+        "duration_ms": 362
+      },
+      "timestamp": "2026-02-04T03:33:27.836Z"
+    },
+    {
+      "success": true,
+      "name": "Tasks/FUB - Onboarding Calls Worker 2",
+      "type": "function",
+      "metadata": {
+        "function_id": 7994,
+        "tested_via": "/fub-onboarding-appointments-worker",
+        "api_group": "TASKS",
+        "duration_ms": 254
+      },
+      "timestamp": "2026-02-04T03:33:28.090Z"
+    },
+    {
+      "success": true,
+      "name": "Tasks/FUB - Onboarding Appointments from Users",
+      "type": "function",
+      "metadata": {
+        "function_id": 7991,
+        "tested_via": "/fub-onboarding-appointments-from-users",
+        "api_group": "TASKS",
+        "duration_ms": 572
+      },
+      "timestamp": "2026-02-04T03:33:28.663Z"
+    },
+    {
+      "success": true,
+      "name": "Tasks/FUB - Onboarding Deals",
+      "type": "function",
+      "metadata": {
+        "function_id": 7988,
+        "tested_via": "/fub-onboarding-deals-from-people",
+        "api_group": "TASKS",
+        "duration_ms": 364
+      },
+      "timestamp": "2026-02-04T03:33:29.027Z"
+    },
+    {
+      "success": true,
+      "name": "Tasks/FUB - Onboarding Text Messages",
+      "type": "function",
+      "metadata": {
+        "function_id": 7986,
+        "tested_via": "/fub-process-text-messages-from-stage",
+        "api_group": "TASKS",
+        "duration_ms": 318
+      },
+      "timestamp": "2026-02-04T03:33:29.345Z"
+    },
+    {
+      "success": true,
+      "name": "Tasks/FUB - Onboarding Appointments Worker",
+      "type": "function",
+      "metadata": {
+        "function_id": 7984,
+        "tested_via": "/fub-onboarding-appointments-from-users",
+        "api_group": "TASKS",
+        "duration_ms": 422
+      },
+      "timestamp": "2026-02-04T03:33:29.767Z"
+    },
+    {
+      "success": true,
+      "name": "Tasks/FUB - Onboarding Events Worker 1",
+      "type": "function",
+      "metadata": {
+        "function_id": 7982,
+        "tested_via": "/fub-onboarding-appointments-worker",
+        "api_group": "TASKS",
+        "duration_ms": 1141
+      },
+      "timestamp": "2026-02-04T03:33:30.908Z"
+    },
+    {
+      "success": true,
+      "name": "Tasks/FUB - Onboarding Calls Worker 1",
+      "type": "function",
+      "metadata": {
+        "function_id": 7979,
+        "tested_via": "/fub-onboarding-appointments-worker",
+        "api_group": "TASKS",
+        "duration_ms": 360
+      },
+      "timestamp": "2026-02-04T03:33:31.269Z"
+    },
+    {
+      "success": true,
+      "name": "Tasks/FUB - Onboarding People Worker 1",
+      "type": "function",
+      "metadata": {
+        "function_id": 7977,
+        "tested_via": "/fub-onboarding-deals-from-people",
+        "api_group": "TASKS",
+        "duration_ms": 246
+      },
+      "timestamp": "2026-02-04T03:33:31.515Z"
+    },
+    {
+      "success": true,
+      "name": "Tasks/FUB - Daily Update Text Messages",
+      "type": "function",
+      "metadata": {
+        "function_id": 7961,
+        "tested_via": "/test-function-7960-daily-update-people",
+        "api_group": "TASKS",
+        "duration_ms": 321
+      },
+      "timestamp": "2026-02-04T03:33:31.836Z"
+    },
+    {
+      "success": true,
+      "name": "Tasks/FUB - Daily Update People",
+      "type": "function",
+      "metadata": {
+        "function_id": 7960,
+        "tested_via": "/test-function-7960-daily-update-people",
+        "api_group": "TASKS",
+        "duration_ms": 322
+      },
+      "timestamp": "2026-02-04T03:33:32.158Z"
+    },
+    {
+      "success": true,
+      "name": "Tasks/FUB - Daily Update Events",
+      "type": "function",
+      "metadata": {
+        "function_id": 7959,
+        "tested_via": "/test-function-7960-daily-update-people",
+        "api_group": "TASKS",
+        "duration_ms": 318
+      },
+      "timestamp": "2026-02-04T03:33:32.476Z"
+    },
+    {
+      "success": true,
+      "name": "Tasks/FUB - Daily Update Deals",
+      "type": "function",
+      "metadata": {
+        "function_id": 7958,
+        "tested_via": "/test-function-7960-daily-update-people",
+        "api_group": "TASKS",
+        "duration_ms": 400
+      },
+      "timestamp": "2026-02-04T03:33:32.876Z"
+    },
+    {
+      "success": true,
+      "name": "Tasks/FUB - Daily Update Calls",
+      "type": "function",
+      "metadata": {
+        "function_id": 7957,
+        "tested_via": "/test-function-7960-daily-update-people",
+        "api_group": "TASKS",
+        "duration_ms": 397
+      },
+      "timestamp": "2026-02-04T03:33:33.273Z"
+    },
+    {
+      "success": true,
+      "name": "Tasks/FUB - Daily Update Appointments",
+      "type": "function",
+      "metadata": {
+        "function_id": 7956,
+        "tested_via": "/test-function-7960-daily-update-people",
+        "api_group": "TASKS",
+        "duration_ms": 308
+      },
+      "timestamp": "2026-02-04T03:33:33.581Z"
+    },
+    {
+      "success": true,
+      "name": "Tasks/FUB - Process Text Messages Stage",
+      "type": "function",
+      "metadata": {
+        "function_id": 7955,
+        "tested_via": "/rezen-process-stage-contributions",
+        "api_group": "TASKS",
+        "duration_ms": 300
+      },
+      "timestamp": "2026-02-04T03:33:33.881Z"
+    },
+    {
+      "success": true,
+      "name": "Tasks/FUB - Pull Count Records Update Accounts",
+      "type": "function",
+      "metadata": {
+        "function_id": 7954,
+        "tested_via": "/fub-pull-count-records-update-accounts",
+        "api_group": "TASKS",
+        "duration_ms": 277
+      },
+      "timestamp": "2026-02-04T03:33:34.158Z"
+    },
+    {
+      "success": false,
+      "name": "Tasks/FUB - Pull Events With People ID 0",
+      "type": "function",
+      "error": "HTTP 400",
+      "metadata": {
+        "function_id": 7953,
+        "tested_via": "/fub-pull-events-with-people-id-0",
+        "api_group": "TASKS",
+        "duration_ms": 480
+      },
+      "timestamp": "2026-02-04T03:33:34.638Z"
+    },
+    {
+      "success": false,
+      "name": "Tasks/FUB - People URL",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 7952,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:34.638Z"
+    },
+    {
+      "success": true,
+      "name": "Tasks/FUB - Fix People Data in FUB People",
+      "type": "function",
+      "metadata": {
+        "function_id": 7951,
+        "tested_via": "/test-function-7960-daily-update-people",
+        "api_group": "TASKS",
+        "duration_ms": 677
+      },
+      "timestamp": "2026-02-04T03:33:35.315Z"
+    },
+    {
+      "success": false,
+      "name": "Tasks/FUB - Fix People Data in Events",
+      "type": "function",
+      "error": "HTTP 400",
+      "metadata": {
+        "function_id": 7950,
+        "tested_via": "/fub-pull-events-with-people-id-0",
+        "api_group": "TASKS",
+        "duration_ms": 674
+      },
+      "timestamp": "2026-02-04T03:33:35.989Z"
+    },
+    {
+      "success": true,
+      "name": "Tasks/FUB - Fix Appointments Missing Created By",
+      "type": "function",
+      "metadata": {
+        "function_id": 7949,
+        "tested_via": "/fub-get-appointments-missing-data",
+        "api_group": "TASKS",
+        "duration_ms": 297
+      },
+      "timestamp": "2026-02-04T03:33:36.287Z"
+    },
+    {
+      "success": true,
+      "name": "Tasks/FUB - Pull Text Messages From Calling Number",
+      "type": "function",
+      "metadata": {
+        "function_id": 7948,
+        "tested_via": "/fub-process-text-messages-from-stage",
+        "api_group": "TASKS",
+        "duration_ms": 406
+      },
+      "timestamp": "2026-02-04T03:33:36.693Z"
+    },
+    {
+      "success": true,
+      "name": "Tasks/FUB - Import FUB Users ID",
+      "type": "function",
+      "metadata": {
+        "function_id": 7947,
+        "tested_via": "/fub-import-fub-users-id",
+        "api_group": "TASKS",
+        "duration_ms": 243
+      },
+      "timestamp": "2026-02-04T03:33:36.936Z"
+    },
+    {
+      "success": true,
+      "name": "Tasks/FUB - Onboarding Jobs",
+      "type": "function",
+      "metadata": {
+        "function_id": 7946,
+        "tested_via": "/fub-onboarding-jobs",
+        "api_group": "TASKS",
+        "duration_ms": 290
+      },
+      "timestamp": "2026-02-04T03:33:37.226Z"
+    },
+    {
+      "success": true,
+      "name": "Tasks/FUB - Webhook Check",
+      "type": "function",
+      "metadata": {
+        "function_id": 7945,
+        "tested_via": "/fub-webhook-check",
+        "api_group": "TASKS",
+        "duration_ms": 630
+      },
+      "timestamp": "2026-02-04T03:33:37.856Z"
+    },
+    {
+      "success": false,
+      "name": "Tasks/FUB - Get Stages",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 7942,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:37.856Z"
+    },
+    {
+      "success": false,
+      "name": "Tasks/FUB - Get Users",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 7941,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:37.856Z"
+    },
+    {
+      "success": true,
+      "name": "Tasks/FUB - Refresh Tokens",
+      "type": "function",
+      "metadata": {
+        "function_id": 7939,
+        "tested_via": "/fub-refresh-tokens",
+        "api_group": "TASKS",
+        "duration_ms": 280
+      },
+      "timestamp": "2026-02-04T03:33:38.136Z"
+    },
+    {
+      "success": true,
+      "name": "Tasks/FUB - Delete Lambda Logs",
+      "type": "function",
+      "metadata": {
+        "function_id": 7938,
+        "tested_via": "/fub-delete-lambda-logs",
+        "api_group": "TASKS",
+        "duration_ms": 385
+      },
+      "timestamp": "2026-02-04T03:33:38.521Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/fub - Get Appointments Worker V2",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5552,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.521Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Onboarding Get Appointments_V2",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5551,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.521Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB - Get Text Messages and add into stage table",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5547,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.521Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB - get people url",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5508,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.521Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/Get Account Host Name",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5511,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.521Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB - text message by ID_0",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5494,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.521Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get Text Messages Via Phone Number",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5500,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.521Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/[FN]-[FUB]-find_missing_people_from_records",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5505,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.521Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get All Text Messages",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5499,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.521Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB - people by ID",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5502,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.521Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB - text message by ID",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5492,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.521Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB - event by ID",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5498,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.521Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get Calls V2 (Sharad)",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5501,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.521Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/add fub users to calls",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5491,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.521Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB - call by ID",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5493,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.521Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get Events V2",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5483,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.521Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get Calls V2",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5481,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.521Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/add fub users to text messages",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5488,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.521Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get Appointments V2",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5480,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.521Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - people data pull test",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5486,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.521Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get People V2",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5484,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.521Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get Text Messages V2",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5485,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.521Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get Deals V2",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5482,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.521Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB - Onboarding Get Appointments",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5462,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.522Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB - Get Appointments Worker Temp",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5461,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.522Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get Appointments_v1_withName_mapping",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5453,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.522Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB - Get Appointments_v1_0",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5454,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.522Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get Text Messages by PersonId",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5435,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.522Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get Text Messages_0",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5436,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.522Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/remove_done_lambda_cordinator",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5430,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.522Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get Deals_v1",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5444,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.522Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB-Lambda-cordinator-worker-task_v1",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5439,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.522Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get Appointments_v1",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5443,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.522Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/fub_common_task",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5437,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.522Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get Text Messages_v1",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5421,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.522Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/Bulk Delete FUB",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5426,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.522Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB-Lambda-cordinator-worker-task",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5428,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.522Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Async Worker_v1",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5425,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.522Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Lambda Coordinator (ASYNC)_v1",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5422,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.522Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Async Worker",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5407,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.522Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB - Onboarding",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5410,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.522Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Unified Lambda",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5405,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.522Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Lambda Coordinator (ASYNC)",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5406,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.522Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Webhooks Sync",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5408,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.522Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get Events - Lambda Checkpoint",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5401,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.522Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/fub_bulk_add_events_7",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5400,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.522Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get Events",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5382,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.522Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get People - Lambda Checkpoint",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5374,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.522Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get Pipeline by Id",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5370,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.522Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get Deals",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5369,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.522Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB - Get People Lambda Full",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5372,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.522Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get People ASYNC",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5351,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.522Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB - Get People Lambda",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5368,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.522Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB - Get People after Created Date",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5349,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.522Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB - Get Person",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5348,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.522Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get People",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5261,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.522Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get Sources",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5262,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.522Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get Text Messages",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5265,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.522Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get All Data",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5271,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.522Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Webhooks",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5272,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.522Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get Appointments",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5264,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.522Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get User Details",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5256,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.522Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get Calls",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5258,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.522Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get Stages",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5259,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.522Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get Me",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5260,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.522Z"
+    },
+    {
+      "success": false,
+      "name": "Archive/FUB/FUB - Get Account Users",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 5257,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:33:38.522Z"
+    }
+  ],
+  "duration": 106218
+}

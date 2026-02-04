@@ -1,0 +1,157 @@
+{
+  "summary": {
+    "total": 9,
+    "passed": 9,
+    "failed": 0,
+    "untestable": 0,
+    "passRate": 100,
+    "testablePassRate": 100
+  },
+  "results": [
+    {
+      "success": true,
+      "name": "/backfill-agent-team-id-v2",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "frontend",
+        "method": "POST",
+        "requires_auth": false,
+        "requires_user_id": false,
+        "duration_ms": 345,
+        "response_size": 134,
+        "response_preview": "{\"success\":true,\"batch_size\":500,\"page\":1,\"total_teams\":0,\"updated_from_team_owner\":0,\"total_members\":0,\"updated_from_team_members\":0}"
+      },
+      "timestamp": "2026-02-04T03:33:44.415Z"
+    },
+    {
+      "success": true,
+      "name": "/leaderboard/computed",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "frontend",
+        "method": "GET",
+        "requires_auth": false,
+        "requires_user_id": false,
+        "duration_ms": 4136,
+        "response_size": 623,
+        "response_preview": "{\"success\":true,\"transaction_count\":807,\"agent_count\":12,\"leaderboard\":[{\"id\":1387,\"name\":\"Lonna Hallmark\",\"units\":1,\"volume\":335000,\"gci\":8375},{\"id\":932,\"name\":\"Chris Hill\",\"units\":1,\"volume\":447500"
+      },
+      "timestamp": "2026-02-04T03:33:48.552Z"
+    },
+    {
+      "success": true,
+      "name": "/table-counts",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "system",
+        "method": "GET",
+        "requires_auth": false,
+        "requires_user_id": false,
+        "duration_ms": 690,
+        "response_size": 260,
+        "response_preview": "{\"core_tables\":{\"agent\":36213,\"listing\":16785,\"transaction\":51836,\"user\":330},\"network_tables\":{\"network_hierarchy\":2,\"network_member\":83203,\"contribution\":515369},\"staging_tables\":{\"rezen_onboarding_"
+      },
+      "timestamp": "2026-02-04T03:33:49.242Z"
+    },
+    {
+      "success": true,
+      "name": "/staging-unprocessed",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "system",
+        "method": "GET",
+        "requires_auth": false,
+        "requires_user_id": true,
+        "duration_ms": 317,
+        "response_size": 68,
+        "response_preview": "{\"user_id\":60,\"unprocessed\":{\"listings\":48588,\"transactions\":75015}}"
+      },
+      "timestamp": "2026-02-04T03:33:49.559Z"
+    },
+    {
+      "success": true,
+      "name": "/test-function-8051-agent-data",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "workers",
+        "method": "POST",
+        "requires_auth": false,
+        "requires_user_id": true,
+        "duration_ms": 476,
+        "response_size": 157,
+        "response_preview": "{\"success\":false,\"data\":{\"user_id\":60,\"agent_id\":1,\"agent_id_raw\":null,\"api_key_present\":true},\"error\":\"Failed to sync agent data\",\"step\":\"rezen_agent_data\"}"
+      },
+      "timestamp": "2026-02-04T03:33:50.035Z"
+    },
+    {
+      "success": true,
+      "name": "/test-function-8052-txn-sync",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "workers",
+        "method": "POST",
+        "requires_auth": false,
+        "requires_user_id": true,
+        "duration_ms": 597,
+        "response_size": 214,
+        "response_preview": "{\"success\":true,\"data\":{\"user_id\":60,\"agent_id_raw\":\"1ff98827-d8de-458c-800b-8d7dd47e6f9b\",\"api_key_present\":true,\"transaction_counts\":{\"open\":null},\"timestamp\":\"now\"},\"error\":null,\"step\":\"rezen_trans"
+      },
+      "timestamp": "2026-02-04T03:33:50.632Z"
+    },
+    {
+      "success": true,
+      "name": "/test-function-8062-network-downline",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "workers",
+        "method": "POST",
+        "requires_auth": false,
+        "requires_user_id": true,
+        "duration_ms": 4588,
+        "response_size": 330,
+        "response_preview": "{\"input_user_id\":60,\"skip_job_check\":true,\"function_result\":{\"success\":true,\"error\":null,\"step\":\"count_remaining\",\"skipped\":false,\"skip_job_check\":true,\"data\":{\"job_id\":\"direct_test\",\"user_id\":60,\"job"
+      },
+      "timestamp": "2026-02-04T03:33:55.220Z"
+    },
+    {
+      "success": true,
+      "name": "/seed/user/count",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "seeding",
+        "method": "GET",
+        "requires_auth": false,
+        "requires_user_id": false,
+        "duration_ms": 507,
+        "response_size": 104,
+        "response_preview": "{\"domain\":\"user\",\"tables\":{\"user\":330,\"credentials\":346,\"settings\":338,\"roles\":357,\"subscriptions\":342}}"
+      },
+      "timestamp": "2026-02-04T03:33:55.728Z"
+    },
+    {
+      "success": true,
+      "name": "/seed/transaction/count",
+      "type": "endpoint",
+      "metadata": {
+        "status_code": 200,
+        "api_group": "seeding",
+        "method": "GET",
+        "requires_auth": false,
+        "requires_user_id": false,
+        "duration_ms": 455,
+        "response_size": 115,
+        "response_preview": "{\"domain\":\"transaction\",\"tables\":{\"transaction\":51836,\"participants\":171,\"financials\":49684,\"history\":78,\"tags\":1}}"
+      },
+      "timestamp": "2026-02-04T03:33:56.183Z"
+    }
+  ],
+  "duration": 12111
+}

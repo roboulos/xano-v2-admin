@@ -1,0 +1,2377 @@
+{
+  "summary": {
+    "total": 197,
+    "passed": 23,
+    "failed": 0,
+    "untestable": 174,
+    "passRate": 11.6751269035533,
+    "testablePassRate": 100
+  },
+  "results": [
+    {
+      "success": false,
+      "name": "Workers/Test - Network Member Query",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 11255,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:36.533Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Network - Update Downline From Staging",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 11253,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:36.535Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Debug - User Roles Query",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 11252,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:36.535Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Test-Roster-Minimal",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 11168,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:36.535Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/analyze_bug_report",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 11162,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:36.535Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/create_github_issue",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 11155,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:36.535Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/backfill_team_from_network_member",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 11110,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:36.535Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/find_team_from_sponsor_chain",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 11109,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:36.535Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/find_team_for_agent",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 11108,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:36.535Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Listing Details By Object",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 11094,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:36.535Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Contributions - Duplicates",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 11093,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:36.535Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Agent - Sync Commission Configuration",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 11025,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:36.535Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Generate Audit Record",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 10995,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:36.535Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Title - Get Settlement Agencies",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 10993,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:36.535Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Process Pending Contributions to Table",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 10991,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:36.535Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Sync Pipeline Prospects from FUB Deals",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 10990,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:36.535Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Chart Transactions - Aggregate",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 10989,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:36.535Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Title - Upsert Orders",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 10988,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:36.535Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Title - Populate Closing Disclosures",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 10987,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:36.535Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/User Roles - Populate from User Data",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 10986,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:36.535Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Title - Transform Orders",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 10985,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:36.535Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Get Agent Commission",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 10983,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:36.535Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Get Cap Data for All Agents",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 10982,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:36.535Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Populate RevShare Payments",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 10981,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:36.535Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Account Users - Paginated",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 10972,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:36.535Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Utility - Batch Process Contributions",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 10969,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:36.535Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Network - Pull Temp Data Fixed",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 10968,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:36.535Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Network - Get Downline Fixed",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 10967,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:36.535Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Get Agent Sponsor Tree v2",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 10962,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:36.535Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Enrich Team Members from Agent Data",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 10959,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:36.535Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Run All Linking Functions",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 10955,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:36.535Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Link Equity Transactions to Transaction",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 10954,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:36.535Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Link FUB Calls to Users",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 10953,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:36.535Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Link FUB Calls to People",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 10952,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:36.535Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Groups",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 10941,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:36.535Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Get Equity Performance",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 10938,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:36.535Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Income - Aggregate All Agents",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 10055,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:36.535Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Income - Calculate Agent Totals",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 10054,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:36.536Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Income - Aggregate All Sources",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 10051,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:36.536Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Move Transactions from Staging",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 10038,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:36.536Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Validate Credentials",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 10034,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:36.536Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Sync Stages from Deals",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 10033,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:36.536Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Move Deals to Transaction",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 10031,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:36.536Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/SkySlope - Move Listings from Staging",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 10027,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:36.536Z"
+    },
+    {
+      "success": true,
+      "name": "Workers/FUB - Get Deals",
+      "type": "function",
+      "metadata": {
+        "function_id": 10022,
+        "tested_via": "/test-function-10022-get-deals",
+        "api_group": "WORKERS",
+        "duration_ms": 929
+      },
+      "timestamp": "2026-02-04T03:21:37.465Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Deals - Upsert",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 10021,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.467Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Deals - Transform",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 10020,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.467Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Create Contribution Object",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 10019,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.467Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Text Messages V3",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 9167,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.468Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/System - Contributions",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 9166,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.468Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/AD - Logic Helper",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8316,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.468Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Send Email - Network News Daily",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8315,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.468Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Internal - Log Email",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8313,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.468Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Internal - Log Error",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8312,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.468Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/AD - Get Notifications",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8310,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.468Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/AD - Get Dashboard Data",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8309,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.468Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/AD - Get Activity Log",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8308,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.468Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Transaction Details By Object",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8301,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.468Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Auth - Login",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8300,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.468Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Create Onboarding Job",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8299,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.468Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Onboarding Load Listings",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8298,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.468Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Onboarding Orchestrator",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8297,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.468Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Onboarding Load Transactions",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8296,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.468Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Lambda Coordinator Validate Input",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8295,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.468Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/AD - Upload Team Roster Images to Cloud",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8291,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.468Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/AD - Upload Agent Images to Cloud",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8290,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.468Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Network - Downline Sync",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8285,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.469Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Text Messages By Person ID",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8284,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.470Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Network - Get Cap Data",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8283,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.470Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Metrics - Transactions by Lifecycle Group",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8282,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.470Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/SkySlope - Main Worker",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8281,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.470Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Network - Get FrontLine Data",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8280,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.470Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Metrics - Get Transaction Counts",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8279,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.470Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Outgoing Payments By Agent",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8278,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.470Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Outgoing Payments By Tier",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8277,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.470Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/AD - CSV Insert Data from Temp Table",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8153,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.470Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/AD - Missing Team Roster Avatars",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8152,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.470Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/AD - Missing Agent IDs Participants",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8151,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.470Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Fix Appointments Missing Created By",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8150,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.470Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Delete Lambda Logs",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8149,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.470Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/AD - Upload Images to Cloud",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8148,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.470Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Process Text Messages Stage",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8147,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.470Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Generate Referral Code",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8146,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.470Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/AD - Upload Network Images to Cloud",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8145,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.470Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/SkySlope - Move Listing from Staging",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8144,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.470Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Account Users",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8143,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.470Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Stages",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8142,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.470Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Refresh Tokens",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8141,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.470Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Metrics - Create Snapshot",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8140,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.470Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get People URL",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8138,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.470Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Map Paid Participants",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8137,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.470Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Event By ID",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8136,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.470Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Generate User People Data",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8135,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.470Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Events Pull People Data",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8134,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.470Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Onboarding",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8133,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.471Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Add Users To Calls",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8132,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.471Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Events Get Name",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8131,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.471Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Add Users To Text Messages",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8130,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.471Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Text Messages Stage",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8129,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.471Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - API Wrapper",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8128,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.471Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Register Webhooks",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8127,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.471Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Title - Get Daily Orders",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8126,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.471Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Title - Get Disbursements",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8125,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.471Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Process Webhook Events",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8124,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.471Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Title - Get All Orders",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8123,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.471Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Process Listing Webhooks",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8122,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.471Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Onboarding Process Network Data",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8121,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.471Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Network Name Sync",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8120,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.471Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Onboarding Process Stage Listings",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8119,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.471Z"
+    },
+    {
+      "success": true,
+      "name": "Workers/FUB - Lambda Coordinator Worker Task",
+      "type": "function",
+      "metadata": {
+        "function_id": 8118,
+        "tested_via": "/test-function-8118-lambda-coordinator",
+        "api_group": "WORKERS",
+        "duration_ms": 353
+      },
+      "timestamp": "2026-02-04T03:21:37.824Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/SkySlope - Get Account Users",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8117,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.824Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Get Transactions By LifeCycle Group",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8116,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.824Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Network - FrontLine by Tier",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8115,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.824Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Onboarding Process Transaction Staging",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8114,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.824Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Get Listings By LifeCycle Group",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8113,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.824Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Get Cap Data",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8112,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.824Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Get Listing Counts",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8111,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.824Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Get Contributions New",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8110,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.824Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Pending RevShare Payments Overview",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8109,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.824Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Get Pending Contributions",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8108,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.824Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Get Agent Sponsor Tree",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8107,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.824Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Get Current RevShare Totals",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8106,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.824Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Utility - Slack Webhook",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8105,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.824Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Utility - Get Geo State",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8104,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.824Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Utility - Add Event To Log",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8103,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.824Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Network - Get Network Counts",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8102,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.824Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Network - Duplicates Network",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8101,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.824Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Get Front Line Agents",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8100,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.824Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Get Cap Data by Tier",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8099,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.824Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Utility - Get Coordinates",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8098,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.824Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Team - Roster Lambda Comparison",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8097,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.824Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Metrics - Network Counts",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8096,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.824Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Metrics - Listing Counts",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8095,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.824Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Team - Roster Counts",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8094,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.824Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Metrics - Transaction Counts",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8093,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.824Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get All Text Messages",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8092,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.824Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get People",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8091,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.824Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Events",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8090,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.824Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Webhooks Sync",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8089,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.824Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Text Messages Via Phone",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8088,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.824Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get People - Upsert",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8087,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.824Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Deals - Fetch",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8086,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.824Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get People - Transform",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8085,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.824Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Text Messages",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8084,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.824Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get People - Fetch",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8083,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.824Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Utility - Get API Key Data",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8082,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.824Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Utility - Truncate Phone",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8081,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.824Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Utility - API Wrapper",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8080,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.824Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Network - Update From Dump Table",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8079,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.824Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Network - Pull Temp Data",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8078,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.824Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Real - Transactions Remove Excess",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8077,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.824Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Real - Transactions Upsert Batch",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8076,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.824Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Real - Transactions Fetch Stage",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8075,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.824Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Syncing - Network Downline",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8074,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:21:37.824Z"
+    },
+    {
+      "success": true,
+      "name": "Workers/reZEN - Onboarding Process Contributions",
+      "type": "function",
+      "metadata": {
+        "function_id": 8073,
+        "tested_via": "/test-function-8073-contributions",
+        "api_group": "WORKERS",
+        "duration_ms": 638
+      },
+      "timestamp": "2026-02-04T03:21:38.462Z"
+    },
+    {
+      "success": true,
+      "name": "Workers/reZEN - Onboarding Process Pending Contributions",
+      "type": "function",
+      "metadata": {
+        "function_id": 8072,
+        "tested_via": "/test-function-8072-pending-contributions",
+        "api_group": "WORKERS",
+        "duration_ms": 569
+      },
+      "timestamp": "2026-02-04T03:21:39.031Z"
+    },
+    {
+      "success": true,
+      "name": "Workers/reZEN - Onboarding Process RevShare Totals",
+      "type": "function",
+      "metadata": {
+        "function_id": 8071,
+        "tested_via": "/test-function-8071-revshare-totals",
+        "api_group": "WORKERS",
+        "duration_ms": 429
+      },
+      "timestamp": "2026-02-04T03:21:39.460Z"
+    },
+    {
+      "success": true,
+      "name": "Workers/reZEN - Onboarding Process Agent Sponsor Tree",
+      "type": "function",
+      "metadata": {
+        "function_id": 8070,
+        "tested_via": "/test-function-8070-sponsor-tree",
+        "api_group": "WORKERS",
+        "duration_ms": 666
+      },
+      "timestamp": "2026-02-04T03:21:40.126Z"
+    },
+    {
+      "success": true,
+      "name": "Workers/reZEN - Onboarding Process Equity",
+      "type": "function",
+      "metadata": {
+        "function_id": 8069,
+        "tested_via": "/test-function-8069-equity-ob",
+        "api_group": "WORKERS",
+        "duration_ms": 610
+      },
+      "timestamp": "2026-02-04T03:21:40.736Z"
+    },
+    {
+      "success": true,
+      "name": "Workers/reZEN - Onboarding Process Cap Data",
+      "type": "function",
+      "metadata": {
+        "function_id": 8068,
+        "tested_via": "/test-function-8068-cap-data",
+        "api_group": "WORKERS",
+        "duration_ms": 277
+      },
+      "timestamp": "2026-02-04T03:21:41.013Z"
+    },
+    {
+      "success": true,
+      "name": "Workers/FUB - Onboarding Appointments Worker",
+      "type": "function",
+      "metadata": {
+        "function_id": 8067,
+        "tested_via": "/test-function-8067-onboarding-appointments",
+        "api_group": "WORKERS",
+        "duration_ms": 570
+      },
+      "timestamp": "2026-02-04T03:21:41.583Z"
+    },
+    {
+      "success": true,
+      "name": "Workers/Syncing - Team Roster",
+      "type": "function",
+      "metadata": {
+        "function_id": 8066,
+        "tested_via": "/test-function-8066-team-roster",
+        "api_group": "WORKERS",
+        "duration_ms": 12755
+      },
+      "timestamp": "2026-02-04T03:21:54.338Z"
+    },
+    {
+      "success": true,
+      "name": "Workers/FUB - Get Calls",
+      "type": "function",
+      "metadata": {
+        "function_id": 8065,
+        "tested_via": "/test-function-8065-fub-calls",
+        "api_group": "WORKERS",
+        "duration_ms": 8095
+      },
+      "timestamp": "2026-02-04T03:22:02.433Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Onboarding Get Appointments",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8064,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:22:02.433Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Onboarding Process Network Frontline",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8063,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:22:02.433Z"
+    },
+    {
+      "success": true,
+      "name": "Workers/reZEN - Onboarding Process Network Downline",
+      "type": "function",
+      "metadata": {
+        "function_id": 8062,
+        "tested_via": "/test-function-8062-network-downline",
+        "api_group": "WORKERS",
+        "duration_ms": 5435
+      },
+      "timestamp": "2026-02-04T03:22:07.868Z"
+    },
+    {
+      "success": true,
+      "name": "Workers/reZEN - Onboarding Process Contributors",
+      "type": "function",
+      "metadata": {
+        "function_id": 8061,
+        "tested_via": "/test-function-8061-contributors",
+        "api_group": "WORKERS",
+        "duration_ms": 430
+      },
+      "timestamp": "2026-02-04T03:22:08.298Z"
+    },
+    {
+      "success": true,
+      "name": "Workers/reZEN - Onboarding Load Contributions",
+      "type": "function",
+      "metadata": {
+        "function_id": 8060,
+        "tested_via": "/test-function-8060-load-contributions",
+        "api_group": "WORKERS",
+        "duration_ms": 495
+      },
+      "timestamp": "2026-02-04T03:22:08.793Z"
+    },
+    {
+      "success": true,
+      "name": "Workers/reZEN - Network Frontline",
+      "type": "function",
+      "metadata": {
+        "function_id": 8059,
+        "tested_via": "/test-function-8059-network-frontline",
+        "api_group": "WORKERS",
+        "duration_ms": 273
+      },
+      "timestamp": "2026-02-04T03:22:09.066Z"
+    },
+    {
+      "success": true,
+      "name": "Workers/reZEN - Network Cap Data",
+      "type": "function",
+      "metadata": {
+        "function_id": 8058,
+        "tested_via": "/test-function-8058-network-cap",
+        "api_group": "WORKERS",
+        "duration_ms": 312
+      },
+      "timestamp": "2026-02-04T03:22:09.378Z"
+    },
+    {
+      "success": true,
+      "name": "Workers/reZEN - Onboarding Process Stage Contributions",
+      "type": "function",
+      "metadata": {
+        "function_id": 8057,
+        "tested_via": "/test-function-8057-stage-contributions",
+        "api_group": "WORKERS",
+        "duration_ms": 416
+      },
+      "timestamp": "2026-02-04T03:22:09.794Z"
+    },
+    {
+      "success": true,
+      "name": "Workers/reZEN - Contributions",
+      "type": "function",
+      "metadata": {
+        "function_id": 8056,
+        "tested_via": "/test-function-8056-contributions",
+        "api_group": "WORKERS",
+        "duration_ms": 419
+      },
+      "timestamp": "2026-02-04T03:22:10.213Z"
+    },
+    {
+      "success": true,
+      "name": "Workers/reZEN - Equity",
+      "type": "function",
+      "metadata": {
+        "function_id": 8055,
+        "tested_via": "/test-function-8055-equity",
+        "api_group": "WORKERS",
+        "duration_ms": 322
+      },
+      "timestamp": "2026-02-04T03:22:10.535Z"
+    },
+    {
+      "success": true,
+      "name": "Workers/reZEN - Listings Update",
+      "type": "function",
+      "metadata": {
+        "function_id": 8054,
+        "tested_via": "/test-function-8054-listings-update",
+        "api_group": "WORKERS",
+        "duration_ms": 303
+      },
+      "timestamp": "2026-02-04T03:22:10.838Z"
+    },
+    {
+      "success": true,
+      "name": "Workers/reZEN - Listings Sync",
+      "type": "function",
+      "metadata": {
+        "function_id": 8053,
+        "tested_via": "/test-function-8053-listings-sync",
+        "api_group": "WORKERS",
+        "duration_ms": 257
+      },
+      "timestamp": "2026-02-04T03:22:11.095Z"
+    },
+    {
+      "success": true,
+      "name": "Workers/reZEN - Transactions Sync",
+      "type": "function",
+      "metadata": {
+        "function_id": 8052,
+        "tested_via": "/test-function-8052-txn-sync",
+        "api_group": "WORKERS",
+        "duration_ms": 709
+      },
+      "timestamp": "2026-02-04T03:22:11.804Z"
+    },
+    {
+      "success": true,
+      "name": "Workers/reZEN - Agent Data",
+      "type": "function",
+      "metadata": {
+        "function_id": 8051,
+        "tested_via": "/test-function-8051-agent-data",
+        "api_group": "WORKERS",
+        "duration_ms": 308
+      },
+      "timestamp": "2026-02-04T03:22:12.112Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/SkySlope - Get Listings",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8050,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:22:12.112Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/SkySlope - Get Auth Session",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8049,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:22:12.112Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/SkySlope - Create Authentication",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8048,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:22:12.112Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/SkySlope - Parse Streaming Response",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8047,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:22:12.112Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/SkySlope - Get Listing Type",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8046,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:22:12.112Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/SkySlope - Get Transaction Type",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8045,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:22:12.112Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/SkySlope - Determine Listing Stage",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8044,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:22:12.112Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/SkySlope - Determine Transaction Stage",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8043,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:22:12.112Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Metrics - Increment API Count",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8042,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:22:12.112Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/AD - Send Slack Notification",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8041,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:22:12.112Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/AD - Create Email Master",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8040,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:22:12.112Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/FUB - Get Appointments",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8039,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:22:12.112Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/SkySlope - Upsert Listing",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8038,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:22:12.112Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/SkySlope - Upsert Transaction",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8037,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:22:12.112Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/AD - Email Network News",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8036,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:22:12.112Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/SkySlope - Handle Paid Participants",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8035,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:22:12.112Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/Network - Get Downline",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8034,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:22:12.112Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/SkySlope - Get Listing Data",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8033,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:22:12.112Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/reZEN - Team Roster Sync",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8032,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:22:12.112Z"
+    },
+    {
+      "success": false,
+      "name": "Workers/SkySlope - Get Transaction Data",
+      "type": "function",
+      "error": "No test endpoint available",
+      "metadata": {
+        "function_id": 8031,
+        "status": "untestable",
+        "note": "Internal function without public test endpoint. Verify manually if needed."
+      },
+      "timestamp": "2026-02-04T03:22:12.112Z"
+    }
+  ],
+  "duration": 35570
+}

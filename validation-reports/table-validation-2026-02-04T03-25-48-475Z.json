@@ -1,0 +1,2466 @@
+{
+  "summary": {
+    "total": 223,
+    "passed": 223,
+    "failed": 0,
+    "untestable": 0,
+    "passRate": 100,
+    "testablePassRate": 100
+  },
+  "results": [
+    {
+      "success": true,
+      "name": "user",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1044
+      },
+      "timestamp": "2026-02-04T03:20:59.844Z"
+    },
+    {
+      "success": true,
+      "name": "user_credentials",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1032
+      },
+      "timestamp": "2026-02-04T03:21:00.876Z"
+    },
+    {
+      "success": true,
+      "name": "user_settings",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 975
+      },
+      "timestamp": "2026-02-04T03:21:01.851Z"
+    },
+    {
+      "success": true,
+      "name": "user_roles",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1027
+      },
+      "timestamp": "2026-02-04T03:21:02.878Z"
+    },
+    {
+      "success": true,
+      "name": "user_subscriptions",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1015
+      },
+      "timestamp": "2026-02-04T03:21:03.893Z"
+    },
+    {
+      "success": true,
+      "name": "agent",
+      "type": "table",
+      "metadata": {
+        "record_count": 1,
+        "has_data": true,
+        "duration_ms": 1680
+      },
+      "timestamp": "2026-02-04T03:21:05.574Z"
+    },
+    {
+      "success": true,
+      "name": "agent_cap_data",
+      "type": "table",
+      "metadata": {
+        "record_count": 1,
+        "has_data": true,
+        "duration_ms": 1492
+      },
+      "timestamp": "2026-02-04T03:21:07.066Z"
+    },
+    {
+      "success": true,
+      "name": "agent_commission",
+      "type": "table",
+      "metadata": {
+        "record_count": 1,
+        "has_data": true,
+        "duration_ms": 1509
+      },
+      "timestamp": "2026-02-04T03:21:08.575Z"
+    },
+    {
+      "success": true,
+      "name": "agent_hierarchy",
+      "type": "table",
+      "metadata": {
+        "record_count": 1,
+        "has_data": true,
+        "duration_ms": 1671
+      },
+      "timestamp": "2026-02-04T03:21:10.246Z"
+    },
+    {
+      "success": true,
+      "name": "agent_performance",
+      "type": "table",
+      "metadata": {
+        "record_count": 1,
+        "has_data": true,
+        "duration_ms": 1697
+      },
+      "timestamp": "2026-02-04T03:21:11.943Z"
+    },
+    {
+      "success": true,
+      "name": "team",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1391
+      },
+      "timestamp": "2026-02-04T03:21:13.334Z"
+    },
+    {
+      "success": true,
+      "name": "team_members",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 979
+      },
+      "timestamp": "2026-02-04T03:21:14.313Z"
+    },
+    {
+      "success": true,
+      "name": "team_settings",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1006
+      },
+      "timestamp": "2026-02-04T03:21:15.319Z"
+    },
+    {
+      "success": true,
+      "name": "team_director_assignments",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1026
+      },
+      "timestamp": "2026-02-04T03:21:16.345Z"
+    },
+    {
+      "success": true,
+      "name": "team_owners",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 968
+      },
+      "timestamp": "2026-02-04T03:21:17.313Z"
+    },
+    {
+      "success": true,
+      "name": "team_admins",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1124
+      },
+      "timestamp": "2026-02-04T03:21:18.437Z"
+    },
+    {
+      "success": true,
+      "name": "team_admins_permissions",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 966
+      },
+      "timestamp": "2026-02-04T03:21:19.403Z"
+    },
+    {
+      "success": true,
+      "name": "transaction",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1049
+      },
+      "timestamp": "2026-02-04T03:21:20.452Z"
+    },
+    {
+      "success": true,
+      "name": "transaction_financials",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 940
+      },
+      "timestamp": "2026-02-04T03:21:21.392Z"
+    },
+    {
+      "success": true,
+      "name": "transaction_history",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1016
+      },
+      "timestamp": "2026-02-04T03:21:22.408Z"
+    },
+    {
+      "success": true,
+      "name": "transaction_participants",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1151
+      },
+      "timestamp": "2026-02-04T03:21:23.560Z"
+    },
+    {
+      "success": true,
+      "name": "transaction_tags",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 977
+      },
+      "timestamp": "2026-02-04T03:21:24.537Z"
+    },
+    {
+      "success": true,
+      "name": "participant",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1041
+      },
+      "timestamp": "2026-02-04T03:21:25.578Z"
+    },
+    {
+      "success": true,
+      "name": "paid_participant",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1102
+      },
+      "timestamp": "2026-02-04T03:21:26.680Z"
+    },
+    {
+      "success": true,
+      "name": "closing_disclosure",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1006
+      },
+      "timestamp": "2026-02-04T03:21:27.686Z"
+    },
+    {
+      "success": true,
+      "name": "listing",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1004
+      },
+      "timestamp": "2026-02-04T03:21:28.690Z"
+    },
+    {
+      "success": true,
+      "name": "listing_history",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1004
+      },
+      "timestamp": "2026-02-04T03:21:29.694Z"
+    },
+    {
+      "success": true,
+      "name": "listing_photos",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1182
+      },
+      "timestamp": "2026-02-04T03:21:30.876Z"
+    },
+    {
+      "success": true,
+      "name": "income",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1044
+      },
+      "timestamp": "2026-02-04T03:21:31.920Z"
+    },
+    {
+      "success": true,
+      "name": "contribution",
+      "type": "table",
+      "metadata": {
+        "record_count": 1,
+        "has_data": true,
+        "duration_ms": 1641
+      },
+      "timestamp": "2026-02-04T03:21:33.561Z"
+    },
+    {
+      "success": true,
+      "name": "contributors",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1009
+      },
+      "timestamp": "2026-02-04T03:21:34.570Z"
+    },
+    {
+      "success": true,
+      "name": "contributions_pending",
+      "type": "table",
+      "metadata": {
+        "record_count": 1,
+        "has_data": true,
+        "duration_ms": 1653
+      },
+      "timestamp": "2026-02-04T03:21:36.223Z"
+    },
+    {
+      "success": true,
+      "name": "revshare_totals",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1025
+      },
+      "timestamp": "2026-02-04T03:21:37.248Z"
+    },
+    {
+      "success": true,
+      "name": "equity_annual",
+      "type": "table",
+      "metadata": {
+        "record_count": 1,
+        "has_data": true,
+        "duration_ms": 1526
+      },
+      "timestamp": "2026-02-04T03:21:38.774Z"
+    },
+    {
+      "success": true,
+      "name": "equity_monthly",
+      "type": "table",
+      "metadata": {
+        "record_count": 1,
+        "has_data": true,
+        "duration_ms": 1516
+      },
+      "timestamp": "2026-02-04T03:21:40.290Z"
+    },
+    {
+      "success": true,
+      "name": "equity_transactions",
+      "type": "table",
+      "metadata": {
+        "record_count": 1,
+        "has_data": true,
+        "duration_ms": 1534
+      },
+      "timestamp": "2026-02-04T03:21:41.824Z"
+    },
+    {
+      "success": true,
+      "name": "network",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1203
+      },
+      "timestamp": "2026-02-04T03:21:43.027Z"
+    },
+    {
+      "success": true,
+      "name": "network_hierarchy",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1255
+      },
+      "timestamp": "2026-02-04T03:21:44.283Z"
+    },
+    {
+      "success": true,
+      "name": "network_member",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1044
+      },
+      "timestamp": "2026-02-04T03:21:45.327Z"
+    },
+    {
+      "success": true,
+      "name": "network_user_prefs",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 995
+      },
+      "timestamp": "2026-02-04T03:21:46.322Z"
+    },
+    {
+      "success": true,
+      "name": "network_change_log",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1019
+      },
+      "timestamp": "2026-02-04T03:21:47.341Z"
+    },
+    {
+      "success": true,
+      "name": "sponsor_tree",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1012
+      },
+      "timestamp": "2026-02-04T03:21:48.353Z"
+    },
+    {
+      "success": true,
+      "name": "connections",
+      "type": "table",
+      "metadata": {
+        "record_count": 1,
+        "has_data": true,
+        "duration_ms": 1933
+      },
+      "timestamp": "2026-02-04T03:21:50.286Z"
+    },
+    {
+      "success": true,
+      "name": "fub_accounts",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1014
+      },
+      "timestamp": "2026-02-04T03:21:51.300Z"
+    },
+    {
+      "success": true,
+      "name": "fub_people",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1033
+      },
+      "timestamp": "2026-02-04T03:21:52.333Z"
+    },
+    {
+      "success": true,
+      "name": "fub_deals",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 2002
+      },
+      "timestamp": "2026-02-04T03:21:54.335Z"
+    },
+    {
+      "success": true,
+      "name": "fub_stages",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1029
+      },
+      "timestamp": "2026-02-04T03:21:55.364Z"
+    },
+    {
+      "success": true,
+      "name": "fub_events",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1103
+      },
+      "timestamp": "2026-02-04T03:21:56.467Z"
+    },
+    {
+      "success": true,
+      "name": "fub_users",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1141
+      },
+      "timestamp": "2026-02-04T03:21:57.608Z"
+    },
+    {
+      "success": true,
+      "name": "fub_groups",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1048
+      },
+      "timestamp": "2026-02-04T03:21:58.656Z"
+    },
+    {
+      "success": true,
+      "name": "fub_calls",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 951
+      },
+      "timestamp": "2026-02-04T03:21:59.607Z"
+    },
+    {
+      "success": true,
+      "name": "fub_text_messages",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1002
+      },
+      "timestamp": "2026-02-04T03:22:00.609Z"
+    },
+    {
+      "success": true,
+      "name": "fub_appointments",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1117
+      },
+      "timestamp": "2026-02-04T03:22:01.726Z"
+    },
+    {
+      "success": true,
+      "name": "fub_sync_jobs",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1103
+      },
+      "timestamp": "2026-02-04T03:22:02.829Z"
+    },
+    {
+      "success": true,
+      "name": "fub_onboarding_jobs",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1066
+      },
+      "timestamp": "2026-02-04T03:22:03.895Z"
+    },
+    {
+      "success": true,
+      "name": "fub_aggregation_jobs",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1033
+      },
+      "timestamp": "2026-02-04T03:22:04.928Z"
+    },
+    {
+      "success": true,
+      "name": "fub_appointments_staging",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1023
+      },
+      "timestamp": "2026-02-04T03:22:05.951Z"
+    },
+    {
+      "success": true,
+      "name": "rezen_sync_jobs",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1118
+      },
+      "timestamp": "2026-02-04T03:22:07.069Z"
+    },
+    {
+      "success": true,
+      "name": "rezen_onboarding_jobs",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1095
+      },
+      "timestamp": "2026-02-04T03:22:08.164Z"
+    },
+    {
+      "success": true,
+      "name": "rezen_webhooks",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1016
+      },
+      "timestamp": "2026-02-04T03:22:09.180Z"
+    },
+    {
+      "success": true,
+      "name": "rezen_referral_codes",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1033
+      },
+      "timestamp": "2026-02-04T03:22:10.213Z"
+    },
+    {
+      "success": true,
+      "name": "rezen_contributions_staging",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1024
+      },
+      "timestamp": "2026-02-04T03:22:11.237Z"
+    },
+    {
+      "success": true,
+      "name": "rezen_listings_staging",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1039
+      },
+      "timestamp": "2026-02-04T03:22:12.276Z"
+    },
+    {
+      "success": true,
+      "name": "rezen_network_staging",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1257
+      },
+      "timestamp": "2026-02-04T03:22:13.533Z"
+    },
+    {
+      "success": true,
+      "name": "skyslope_sync_jobs",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1132
+      },
+      "timestamp": "2026-02-04T03:22:14.665Z"
+    },
+    {
+      "success": true,
+      "name": "skyslope_listing_staging",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1049
+      },
+      "timestamp": "2026-02-04T03:22:15.714Z"
+    },
+    {
+      "success": true,
+      "name": "skyslope_transaction_staging",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1093
+      },
+      "timestamp": "2026-02-04T03:22:16.808Z"
+    },
+    {
+      "success": true,
+      "name": "dotloop_accounts",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1681
+      },
+      "timestamp": "2026-02-04T03:22:18.489Z"
+    },
+    {
+      "success": true,
+      "name": "dotloop_contacts",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1637
+      },
+      "timestamp": "2026-02-04T03:22:20.126Z"
+    },
+    {
+      "success": true,
+      "name": "dotloop_loops",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1759
+      },
+      "timestamp": "2026-02-04T03:22:21.885Z"
+    },
+    {
+      "success": true,
+      "name": "dotloop_profiles",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1738
+      },
+      "timestamp": "2026-02-04T03:22:23.623Z"
+    },
+    {
+      "success": true,
+      "name": "dotloop_staging",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 2096
+      },
+      "timestamp": "2026-02-04T03:22:25.720Z"
+    },
+    {
+      "success": true,
+      "name": "dotloop_sync_state",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1651
+      },
+      "timestamp": "2026-02-04T03:22:27.371Z"
+    },
+    {
+      "success": true,
+      "name": "lofty_accounts",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1047
+      },
+      "timestamp": "2026-02-04T03:22:28.418Z"
+    },
+    {
+      "success": true,
+      "name": "lofty_leads",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1113
+      },
+      "timestamp": "2026-02-04T03:22:29.531Z"
+    },
+    {
+      "success": true,
+      "name": "lofty_staging",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1276
+      },
+      "timestamp": "2026-02-04T03:22:30.807Z"
+    },
+    {
+      "success": true,
+      "name": "lofty_sync_state",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 995
+      },
+      "timestamp": "2026-02-04T03:22:31.802Z"
+    },
+    {
+      "success": true,
+      "name": "audit_log",
+      "type": "table",
+      "metadata": {
+        "record_count": 1,
+        "has_data": true,
+        "duration_ms": 1646
+      },
+      "timestamp": "2026-02-04T03:22:33.448Z"
+    },
+    {
+      "success": true,
+      "name": "system_audit",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 992
+      },
+      "timestamp": "2026-02-04T03:22:34.440Z"
+    },
+    {
+      "success": true,
+      "name": "error_logs",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1187
+      },
+      "timestamp": "2026-02-04T03:22:35.627Z"
+    },
+    {
+      "success": true,
+      "name": "event_log",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1002
+      },
+      "timestamp": "2026-02-04T03:22:36.629Z"
+    },
+    {
+      "success": true,
+      "name": "job_status",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1039
+      },
+      "timestamp": "2026-02-04T03:22:37.668Z"
+    },
+    {
+      "success": true,
+      "name": "lambda_jobs_log",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1281
+      },
+      "timestamp": "2026-02-04T03:22:38.949Z"
+    },
+    {
+      "success": true,
+      "name": "lambda_jobs_status",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1208
+      },
+      "timestamp": "2026-02-04T03:22:40.157Z"
+    },
+    {
+      "success": true,
+      "name": "lambda_worker_log",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1350
+      },
+      "timestamp": "2026-02-04T03:22:41.508Z"
+    },
+    {
+      "success": true,
+      "name": "lambda_failed_record",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1420
+      },
+      "timestamp": "2026-02-04T03:22:42.928Z"
+    },
+    {
+      "success": true,
+      "name": "api_workers",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1003
+      },
+      "timestamp": "2026-02-04T03:22:43.931Z"
+    },
+    {
+      "success": true,
+      "name": "notification",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1056
+      },
+      "timestamp": "2026-02-04T03:22:44.987Z"
+    },
+    {
+      "success": true,
+      "name": "brokerage",
+      "type": "table",
+      "metadata": {
+        "record_count": 1,
+        "has_data": true,
+        "duration_ms": 1766
+      },
+      "timestamp": "2026-02-04T03:22:46.753Z"
+    },
+    {
+      "success": true,
+      "name": "office",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1171
+      },
+      "timestamp": "2026-02-04T03:22:47.924Z"
+    },
+    {
+      "success": true,
+      "name": "global_variables",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1010
+      },
+      "timestamp": "2026-02-04T03:22:48.934Z"
+    },
+    {
+      "success": true,
+      "name": "permissions",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1017
+      },
+      "timestamp": "2026-02-04T03:22:49.951Z"
+    },
+    {
+      "success": true,
+      "name": "modules",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1268
+      },
+      "timestamp": "2026-02-04T03:22:51.219Z"
+    },
+    {
+      "success": true,
+      "name": "integration",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1021
+      },
+      "timestamp": "2026-02-04T03:22:52.241Z"
+    },
+    {
+      "success": true,
+      "name": "state_or_province",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1042
+      },
+      "timestamp": "2026-02-04T03:22:53.283Z"
+    },
+    {
+      "success": true,
+      "name": "calendar",
+      "type": "table",
+      "metadata": {
+        "record_count": 1,
+        "has_data": true,
+        "duration_ms": 1626
+      },
+      "timestamp": "2026-02-04T03:22:54.909Z"
+    },
+    {
+      "success": true,
+      "name": "tags",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1024
+      },
+      "timestamp": "2026-02-04T03:22:55.933Z"
+    },
+    {
+      "success": true,
+      "name": "revshare_plan",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1305
+      },
+      "timestamp": "2026-02-04T03:22:57.238Z"
+    },
+    {
+      "success": true,
+      "name": "dashboard_templates",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1035
+      },
+      "timestamp": "2026-02-04T03:22:58.273Z"
+    },
+    {
+      "success": true,
+      "name": "report_templates",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1062
+      },
+      "timestamp": "2026-02-04T03:22:59.335Z"
+    },
+    {
+      "success": true,
+      "name": "address",
+      "type": "table",
+      "metadata": {
+        "record_count": 1,
+        "has_data": true,
+        "duration_ms": 1747
+      },
+      "timestamp": "2026-02-04T03:23:01.082Z"
+    },
+    {
+      "success": true,
+      "name": "agent_rezen",
+      "type": "table",
+      "metadata": {
+        "record_count": 1,
+        "has_data": true,
+        "duration_ms": 2092
+      },
+      "timestamp": "2026-02-04T03:23:03.174Z"
+    },
+    {
+      "success": true,
+      "name": "agent_task_history",
+      "type": "table",
+      "metadata": {
+        "record_count": 1,
+        "has_data": true,
+        "duration_ms": 1524
+      },
+      "timestamp": "2026-02-04T03:23:04.698Z"
+    },
+    {
+      "success": true,
+      "name": "agg_agent_monthly",
+      "type": "table",
+      "metadata": {
+        "record_count": 1,
+        "has_data": true,
+        "duration_ms": 1809
+      },
+      "timestamp": "2026-02-04T03:23:06.507Z"
+    },
+    {
+      "success": true,
+      "name": "agg_leaderboard",
+      "type": "table",
+      "metadata": {
+        "record_count": 1,
+        "has_data": true,
+        "duration_ms": 1624
+      },
+      "timestamp": "2026-02-04T03:23:08.131Z"
+    },
+    {
+      "success": true,
+      "name": "audits",
+      "type": "table",
+      "metadata": {
+        "record_count": 1,
+        "has_data": true,
+        "duration_ms": 1734
+      },
+      "timestamp": "2026-02-04T03:23:09.865Z"
+    },
+    {
+      "success": true,
+      "name": "chart_catalog",
+      "type": "table",
+      "metadata": {
+        "record_count": 1,
+        "has_data": true,
+        "duration_ms": 1784
+      },
+      "timestamp": "2026-02-04T03:23:11.649Z"
+    },
+    {
+      "success": true,
+      "name": "chart_libraries",
+      "type": "table",
+      "metadata": {
+        "record_count": 1,
+        "has_data": true,
+        "duration_ms": 1554
+      },
+      "timestamp": "2026-02-04T03:23:13.203Z"
+    },
+    {
+      "success": true,
+      "name": "chart_transactions",
+      "type": "table",
+      "metadata": {
+        "record_count": 1,
+        "has_data": true,
+        "duration_ms": 1700
+      },
+      "timestamp": "2026-02-04T03:23:14.903Z"
+    },
+    {
+      "success": true,
+      "name": "chart_types",
+      "type": "table",
+      "metadata": {
+        "record_count": 1,
+        "has_data": true,
+        "duration_ms": 1539
+      },
+      "timestamp": "2026-02-04T03:23:16.442Z"
+    },
+    {
+      "success": true,
+      "name": "checklist_data",
+      "type": "table",
+      "metadata": {
+        "record_count": 1,
+        "has_data": true,
+        "duration_ms": 1803
+      },
+      "timestamp": "2026-02-04T03:23:18.245Z"
+    },
+    {
+      "success": true,
+      "name": "checklist_items",
+      "type": "table",
+      "metadata": {
+        "record_count": 1,
+        "has_data": true,
+        "duration_ms": 1981
+      },
+      "timestamp": "2026-02-04T03:23:20.226Z"
+    },
+    {
+      "success": true,
+      "name": "checklists",
+      "type": "table",
+      "metadata": {
+        "record_count": 1,
+        "has_data": true,
+        "duration_ms": 2616
+      },
+      "timestamp": "2026-02-04T03:23:22.842Z"
+    },
+    {
+      "success": true,
+      "name": "closing disclosure",
+      "type": "table",
+      "metadata": {
+        "record_count": 1,
+        "has_data": true,
+        "duration_ms": 1749
+      },
+      "timestamp": "2026-02-04T03:23:24.591Z"
+    },
+    {
+      "success": true,
+      "name": "commission payment",
+      "type": "table",
+      "metadata": {
+        "record_count": 1,
+        "has_data": true,
+        "duration_ms": 2200
+      },
+      "timestamp": "2026-02-04T03:23:26.793Z"
+    },
+    {
+      "success": true,
+      "name": "commission plans",
+      "type": "table",
+      "metadata": {
+        "record_count": 1,
+        "has_data": true,
+        "duration_ms": 2059
+      },
+      "timestamp": "2026-02-04T03:23:28.853Z"
+    },
+    {
+      "success": true,
+      "name": "contact_log",
+      "type": "table",
+      "metadata": {
+        "record_count": 1,
+        "has_data": true,
+        "duration_ms": 1741
+      },
+      "timestamp": "2026-02-04T03:23:30.594Z"
+    },
+    {
+      "success": true,
+      "name": "contribution_tiers",
+      "type": "table",
+      "metadata": {
+        "record_count": 1,
+        "has_data": true,
+        "duration_ms": 1660
+      },
+      "timestamp": "2026-02-04T03:23:32.254Z"
+    },
+    {
+      "success": true,
+      "name": "credentials",
+      "type": "table",
+      "metadata": {
+        "record_count": 1,
+        "has_data": true,
+        "duration_ms": 1564
+      },
+      "timestamp": "2026-02-04T03:23:33.818Z"
+    },
+    {
+      "success": true,
+      "name": "csv_mapping_config",
+      "type": "table",
+      "metadata": {
+        "record_count": 1,
+        "has_data": true,
+        "duration_ms": 1729
+      },
+      "timestamp": "2026-02-04T03:23:35.547Z"
+    },
+    {
+      "success": true,
+      "name": "deduction items",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1792
+      },
+      "timestamp": "2026-02-04T03:23:37.341Z"
+    },
+    {
+      "success": true,
+      "name": "director",
+      "type": "table",
+      "metadata": {
+        "record_count": 1,
+        "has_data": true,
+        "duration_ms": 2079
+      },
+      "timestamp": "2026-02-04T03:23:39.420Z"
+    },
+    {
+      "success": true,
+      "name": "domestic partnership",
+      "type": "table",
+      "metadata": {
+        "record_count": 1,
+        "has_data": true,
+        "duration_ms": 1928
+      },
+      "timestamp": "2026-02-04T03:23:41.348Z"
+    },
+    {
+      "success": true,
+      "name": "domestic_partnership_members",
+      "type": "table",
+      "metadata": {
+        "record_count": 1,
+        "has_data": true,
+        "duration_ms": 1715
+      },
+      "timestamp": "2026-02-04T03:23:43.063Z"
+    },
+    {
+      "success": true,
+      "name": "email_logs",
+      "type": "table",
+      "metadata": {
+        "record_count": 1,
+        "has_data": true,
+        "duration_ms": 2125
+      },
+      "timestamp": "2026-02-04T03:23:45.188Z"
+    },
+    {
+      "success": true,
+      "name": "email_master",
+      "type": "table",
+      "metadata": {
+        "record_count": 1,
+        "has_data": true,
+        "duration_ms": 1630
+      },
+      "timestamp": "2026-02-04T03:23:46.818Z"
+    },
+    {
+      "success": true,
+      "name": "error logs",
+      "type": "table",
+      "metadata": {
+        "record_count": 1,
+        "has_data": true,
+        "duration_ms": 1709
+      },
+      "timestamp": "2026-02-04T03:23:48.528Z"
+    },
+    {
+      "success": true,
+      "name": "event log",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1037
+      },
+      "timestamp": "2026-02-04T03:23:49.565Z"
+    },
+    {
+      "success": true,
+      "name": "feedback",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1062
+      },
+      "timestamp": "2026-02-04T03:23:50.627Z"
+    },
+    {
+      "success": true,
+      "name": "frontline_stats",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1057
+      },
+      "timestamp": "2026-02-04T03:23:51.685Z"
+    },
+    {
+      "success": true,
+      "name": "fub_sync_state",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1072
+      },
+      "timestamp": "2026-02-04T03:23:52.757Z"
+    },
+    {
+      "success": true,
+      "name": "fub_worker_queue",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1246
+      },
+      "timestamp": "2026-02-04T03:23:54.003Z"
+    },
+    {
+      "success": true,
+      "name": "integrations",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1281
+      },
+      "timestamp": "2026-02-04T03:23:55.284Z"
+    },
+    {
+      "success": true,
+      "name": "invitations",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1148
+      },
+      "timestamp": "2026-02-04T03:23:56.432Z"
+    },
+    {
+      "success": true,
+      "name": "kpi_goals",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1260
+      },
+      "timestamp": "2026-02-04T03:23:57.692Z"
+    },
+    {
+      "success": true,
+      "name": "lambda_failed_records",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1028
+      },
+      "timestamp": "2026-02-04T03:23:58.720Z"
+    },
+    {
+      "success": true,
+      "name": "lambda_job_logs",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1177
+      },
+      "timestamp": "2026-02-04T03:23:59.897Z"
+    },
+    {
+      "success": true,
+      "name": "lambda_job_status",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1031
+      },
+      "timestamp": "2026-02-04T03:24:00.928Z"
+    },
+    {
+      "success": true,
+      "name": "lambda_worker_logs",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1084
+      },
+      "timestamp": "2026-02-04T03:24:02.013Z"
+    },
+    {
+      "success": true,
+      "name": "leader",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 981
+      },
+      "timestamp": "2026-02-04T03:24:02.995Z"
+    },
+    {
+      "success": true,
+      "name": "leads",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 2348
+      },
+      "timestamp": "2026-02-04T03:24:05.343Z"
+    },
+    {
+      "success": true,
+      "name": "📋 leads_messages",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1765
+      },
+      "timestamp": "2026-02-04T03:24:07.108Z"
+    },
+    {
+      "success": true,
+      "name": "lead_source_defaults",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1063
+      },
+      "timestamp": "2026-02-04T03:24:08.171Z"
+    },
+    {
+      "success": true,
+      "name": "lead_source_user",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1530
+      },
+      "timestamp": "2026-02-04T03:24:09.701Z"
+    },
+    {
+      "success": true,
+      "name": "ledger_items",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1204
+      },
+      "timestamp": "2026-02-04T03:24:10.905Z"
+    },
+    {
+      "success": true,
+      "name": "lifecycle_groups",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 2929
+      },
+      "timestamp": "2026-02-04T03:24:13.834Z"
+    },
+    {
+      "success": true,
+      "name": "log_api_keys",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1249
+      },
+      "timestamp": "2026-02-04T03:24:15.083Z"
+    },
+    {
+      "success": true,
+      "name": "log_contributions",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1466
+      },
+      "timestamp": "2026-02-04T03:24:16.549Z"
+    },
+    {
+      "success": true,
+      "name": "log_network",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 989
+      },
+      "timestamp": "2026-02-04T03:24:17.538Z"
+    },
+    {
+      "success": true,
+      "name": "luzmo_charts",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1034
+      },
+      "timestamp": "2026-02-04T03:24:18.572Z"
+    },
+    {
+      "success": true,
+      "name": "luzmo_collections",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1831
+      },
+      "timestamp": "2026-02-04T03:24:20.403Z"
+    },
+    {
+      "success": true,
+      "name": "luzmo_dashboards",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1135
+      },
+      "timestamp": "2026-02-04T03:24:21.538Z"
+    },
+    {
+      "success": true,
+      "name": "mentor",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1538
+      },
+      "timestamp": "2026-02-04T03:24:23.076Z"
+    },
+    {
+      "success": true,
+      "name": "metrics_snapshots",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1755
+      },
+      "timestamp": "2026-02-04T03:24:24.832Z"
+    },
+    {
+      "success": true,
+      "name": "mortgages",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1336
+      },
+      "timestamp": "2026-02-04T03:24:26.168Z"
+    },
+    {
+      "success": true,
+      "name": "nora_conversations",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1225
+      },
+      "timestamp": "2026-02-04T03:24:27.393Z"
+    },
+    {
+      "success": true,
+      "name": "notes",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1177
+      },
+      "timestamp": "2026-02-04T03:24:28.570Z"
+    },
+    {
+      "success": true,
+      "name": "notification_defaults",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1176
+      },
+      "timestamp": "2026-02-04T03:24:29.746Z"
+    },
+    {
+      "success": true,
+      "name": "notification_items",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1033
+      },
+      "timestamp": "2026-02-04T03:24:30.779Z"
+    },
+    {
+      "success": true,
+      "name": "notification_user_prefs",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1026
+      },
+      "timestamp": "2026-02-04T03:24:31.805Z"
+    },
+    {
+      "success": true,
+      "name": "outgoing_payments",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1024
+      },
+      "timestamp": "2026-02-04T03:24:32.829Z"
+    },
+    {
+      "success": true,
+      "name": "page_filter_options",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1198
+      },
+      "timestamp": "2026-02-04T03:24:34.028Z"
+    },
+    {
+      "success": true,
+      "name": "page_filters",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1089
+      },
+      "timestamp": "2026-02-04T03:24:35.117Z"
+    },
+    {
+      "success": true,
+      "name": "pages",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1073
+      },
+      "timestamp": "2026-02-04T03:24:36.190Z"
+    },
+    {
+      "success": true,
+      "name": "page_sections",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1089
+      },
+      "timestamp": "2026-02-04T03:24:37.279Z"
+    },
+    {
+      "success": true,
+      "name": "page_tabs",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1098
+      },
+      "timestamp": "2026-02-04T03:24:38.377Z"
+    },
+    {
+      "success": true,
+      "name": "page_widgets",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 979
+      },
+      "timestamp": "2026-02-04T03:24:39.356Z"
+    },
+    {
+      "success": true,
+      "name": "participant_paid",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1132
+      },
+      "timestamp": "2026-02-04T03:24:40.488Z"
+    },
+    {
+      "success": true,
+      "name": "pipeline_prospect_defaults",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1061
+      },
+      "timestamp": "2026-02-04T03:24:41.549Z"
+    },
+    {
+      "success": true,
+      "name": "pipeline_prospects",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1430
+      },
+      "timestamp": "2026-02-04T03:24:42.979Z"
+    },
+    {
+      "success": true,
+      "name": "pipeline_stage_defaults",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1318
+      },
+      "timestamp": "2026-02-04T03:24:44.297Z"
+    },
+    {
+      "success": true,
+      "name": "pipeline_stages",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1260
+      },
+      "timestamp": "2026-02-04T03:24:45.557Z"
+    },
+    {
+      "success": true,
+      "name": "revshare_payment",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1110
+      },
+      "timestamp": "2026-02-04T03:24:46.667Z"
+    },
+    {
+      "success": true,
+      "name": "revshare_payments",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1597
+      },
+      "timestamp": "2026-02-04T03:24:48.264Z"
+    },
+    {
+      "success": true,
+      "name": "revshare_plans",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1404
+      },
+      "timestamp": "2026-02-04T03:24:49.668Z"
+    },
+    {
+      "success": true,
+      "name": "rezen_process_webhook",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1228
+      },
+      "timestamp": "2026-02-04T03:24:50.896Z"
+    },
+    {
+      "success": true,
+      "name": "rezen_referral_code",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1394
+      },
+      "timestamp": "2026-02-04T03:24:52.290Z"
+    },
+    {
+      "success": true,
+      "name": "rezen_sync_jobs_logs",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1001
+      },
+      "timestamp": "2026-02-04T03:24:53.291Z"
+    },
+    {
+      "success": true,
+      "name": "rezen_sync_state",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1443
+      },
+      "timestamp": "2026-02-04T03:24:54.734Z"
+    },
+    {
+      "success": true,
+      "name": "rezen_webhooks_registered",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1024
+      },
+      "timestamp": "2026-02-04T03:24:55.758Z"
+    },
+    {
+      "success": true,
+      "name": "skyslope_connection",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1032
+      },
+      "timestamp": "2026-02-04T03:24:56.790Z"
+    },
+    {
+      "success": true,
+      "name": "skyslope_sync_state",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1298
+      },
+      "timestamp": "2026-02-04T03:24:58.088Z"
+    },
+    {
+      "success": true,
+      "name": "👥 staff",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1393
+      },
+      "timestamp": "2026-02-04T03:24:59.481Z"
+    },
+    {
+      "success": true,
+      "name": "stage_appointments_fub_onboarding",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1083
+      },
+      "timestamp": "2026-02-04T03:25:00.564Z"
+    },
+    {
+      "success": true,
+      "name": "stage_contributions_rezen_daily_sync",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1069
+      },
+      "timestamp": "2026-02-04T03:25:01.633Z"
+    },
+    {
+      "success": true,
+      "name": "stage_contributions_rezen_onboarding",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1422
+      },
+      "timestamp": "2026-02-04T03:25:03.055Z"
+    },
+    {
+      "success": true,
+      "name": "stage_csv_import",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1060
+      },
+      "timestamp": "2026-02-04T03:25:04.115Z"
+    },
+    {
+      "success": true,
+      "name": "stage_listing_skyslope",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1631
+      },
+      "timestamp": "2026-02-04T03:25:05.746Z"
+    },
+    {
+      "success": true,
+      "name": "stage_listings_rezen_onboarding",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1229
+      },
+      "timestamp": "2026-02-04T03:25:06.975Z"
+    },
+    {
+      "success": true,
+      "name": "stage_network_downline_rezen_onboarding",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 999
+      },
+      "timestamp": "2026-02-04T03:25:07.974Z"
+    },
+    {
+      "success": true,
+      "name": "stage_pending_contribution_rezen",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1058
+      },
+      "timestamp": "2026-02-04T03:25:09.032Z"
+    },
+    {
+      "success": true,
+      "name": "stage_text_messages_fub_onboarding",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 978
+      },
+      "timestamp": "2026-02-04T03:25:10.010Z"
+    },
+    {
+      "success": true,
+      "name": "stage_transactions_rezen_onboarding",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1193
+      },
+      "timestamp": "2026-02-04T03:25:11.203Z"
+    },
+    {
+      "success": true,
+      "name": "stage_transactions_skyslope",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1186
+      },
+      "timestamp": "2026-02-04T03:25:12.389Z"
+    },
+    {
+      "success": true,
+      "name": "state_province",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1147
+      },
+      "timestamp": "2026-02-04T03:25:13.536Z"
+    },
+    {
+      "success": true,
+      "name": "stripe_events",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1389
+      },
+      "timestamp": "2026-02-04T03:25:14.925Z"
+    },
+    {
+      "success": true,
+      "name": "stripe_pricing",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1181
+      },
+      "timestamp": "2026-02-04T03:25:16.106Z"
+    },
+    {
+      "success": true,
+      "name": "stripe_product",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1318
+      },
+      "timestamp": "2026-02-04T03:25:17.425Z"
+    },
+    {
+      "success": true,
+      "name": "stripe_subscription_packages",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1145
+      },
+      "timestamp": "2026-02-04T03:25:18.570Z"
+    },
+    {
+      "success": true,
+      "name": "stripe_subscriptions",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1186
+      },
+      "timestamp": "2026-02-04T03:25:19.756Z"
+    },
+    {
+      "success": true,
+      "name": "stripe_sync_state",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1611
+      },
+      "timestamp": "2026-02-04T03:25:21.367Z"
+    },
+    {
+      "success": true,
+      "name": "team_leader_assignments",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 2665
+      },
+      "timestamp": "2026-02-04T03:25:24.032Z"
+    },
+    {
+      "success": true,
+      "name": "team_links",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1048
+      },
+      "timestamp": "2026-02-04T03:25:25.080Z"
+    },
+    {
+      "success": true,
+      "name": "team_mentor_assignments",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1145
+      },
+      "timestamp": "2026-02-04T03:25:26.225Z"
+    },
+    {
+      "success": true,
+      "name": "title_agencies",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1262
+      },
+      "timestamp": "2026-02-04T03:25:27.487Z"
+    },
+    {
+      "success": true,
+      "name": "title_closing_items",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 999
+      },
+      "timestamp": "2026-02-04T03:25:28.486Z"
+    },
+    {
+      "success": true,
+      "name": "title_disbursements",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1088
+      },
+      "timestamp": "2026-02-04T03:25:29.574Z"
+    },
+    {
+      "success": true,
+      "name": "title_events",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1257
+      },
+      "timestamp": "2026-02-04T03:25:30.831Z"
+    },
+    {
+      "success": true,
+      "name": "title_orders",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1009
+      },
+      "timestamp": "2026-02-04T03:25:31.840Z"
+    },
+    {
+      "success": true,
+      "name": "title_users",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1075
+      },
+      "timestamp": "2026-02-04T03:25:32.915Z"
+    },
+    {
+      "success": true,
+      "name": "user_2fa",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1010
+      },
+      "timestamp": "2026-02-04T03:25:33.925Z"
+    },
+    {
+      "success": true,
+      "name": "user_dashboard_configuration",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1402
+      },
+      "timestamp": "2026-02-04T03:25:35.327Z"
+    },
+    {
+      "success": true,
+      "name": "user_dashboard_sections",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1144
+      },
+      "timestamp": "2026-02-04T03:25:36.471Z"
+    },
+    {
+      "success": true,
+      "name": "user_filter_preferences",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1286
+      },
+      "timestamp": "2026-02-04T03:25:37.757Z"
+    },
+    {
+      "success": true,
+      "name": "user_links",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1312
+      },
+      "timestamp": "2026-02-04T03:25:39.069Z"
+    },
+    {
+      "success": true,
+      "name": "user_onboarding",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1551
+      },
+      "timestamp": "2026-02-04T03:25:40.620Z"
+    },
+    {
+      "success": true,
+      "name": "user_preferences",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1648
+      },
+      "timestamp": "2026-02-04T03:25:42.268Z"
+    },
+    {
+      "success": true,
+      "name": "user_rezen",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 966
+      },
+      "timestamp": "2026-02-04T03:25:43.234Z"
+    },
+    {
+      "success": true,
+      "name": "user_task_history",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1091
+      },
+      "timestamp": "2026-02-04T03:25:44.325Z"
+    },
+    {
+      "success": true,
+      "name": "waitlist",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1052
+      },
+      "timestamp": "2026-02-04T03:25:45.377Z"
+    },
+    {
+      "success": true,
+      "name": "webhook_events",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 974
+      },
+      "timestamp": "2026-02-04T03:25:46.351Z"
+    },
+    {
+      "success": true,
+      "name": "website_contacts",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1090
+      },
+      "timestamp": "2026-02-04T03:25:47.441Z"
+    },
+    {
+      "success": true,
+      "name": "widget_viewport_layouts",
+      "type": "table",
+      "metadata": {
+        "record_count": 0,
+        "has_data": false,
+        "duration_ms": 1034
+      },
+      "timestamp": "2026-02-04T03:25:48.475Z"
+    }
+  ],
+  "duration": 289656
+}

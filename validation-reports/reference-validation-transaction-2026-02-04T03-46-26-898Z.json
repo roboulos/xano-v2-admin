@@ -1,0 +1,83 @@
+{
+  "summary": {
+    "total": 5,
+    "passed": 0,
+    "failed": 5,
+    "untestable": 0,
+    "passRate": 0,
+    "testablePassRate": 0
+  },
+  "results": [
+    {
+      "success": false,
+      "name": "transaction_financials.transaction_id",
+      "type": "reference",
+      "error": "Found 100 orphaned references. Sample IDs: 33, 34, 35, 36, 37, 38, 39, 40, 41, 42",
+      "metadata": {
+        "references": "transaction.id",
+        "orphan_count": 100,
+        "nullable": false,
+        "cascade_delete": true,
+        "duration_ms": 103843
+      },
+      "timestamp": "2026-02-04T03:42:35.603Z"
+    },
+    {
+      "success": false,
+      "name": "transaction_history.transaction_id",
+      "type": "reference",
+      "error": "Found 30 orphaned references. Sample IDs: 49, 50, 51, 52, 53, 54, 55, 56, 57, 58",
+      "metadata": {
+        "references": "transaction.id",
+        "orphan_count": 30,
+        "nullable": false,
+        "cascade_delete": true,
+        "duration_ms": 50079
+      },
+      "timestamp": "2026-02-04T03:43:25.684Z"
+    },
+    {
+      "success": false,
+      "name": "transaction_participants.transaction_id",
+      "type": "reference",
+      "error": "Found 100 orphaned references. Sample IDs: 37, 38, 39, 40, 41, 42, 43, 44, 45, 46",
+      "metadata": {
+        "references": "transaction.id",
+        "orphan_count": 100,
+        "nullable": false,
+        "cascade_delete": true,
+        "duration_ms": 111089
+      },
+      "timestamp": "2026-02-04T03:45:16.773Z"
+    },
+    {
+      "success": false,
+      "name": "transaction_tags.transaction_id",
+      "type": "reference",
+      "error": "Found 1 orphaned references. Sample IDs: 52",
+      "metadata": {
+        "references": "transaction.id",
+        "orphan_count": 1,
+        "nullable": false,
+        "cascade_delete": true,
+        "duration_ms": 1406
+      },
+      "timestamp": "2026-02-04T03:45:18.179Z"
+    },
+    {
+      "success": false,
+      "name": "income.transaction_id",
+      "type": "reference",
+      "error": "Found 52 orphaned references. Sample IDs: 2, 3, 4, 5, 7, 8, 9, 10, 11, 12",
+      "metadata": {
+        "references": "transaction.id",
+        "orphan_count": 52,
+        "nullable": true,
+        "cascade_delete": false,
+        "duration_ms": 68717
+      },
+      "timestamp": "2026-02-04T03:46:26.896Z"
+    }
+  ],
+  "duration": 335134
+}

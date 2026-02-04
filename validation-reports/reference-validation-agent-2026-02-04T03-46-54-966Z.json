@@ -1,0 +1,124 @@
+{
+  "summary": {
+    "total": 8,
+    "passed": 1,
+    "failed": 7,
+    "untestable": 0,
+    "passRate": 12.5,
+    "testablePassRate": 12.5
+  },
+  "results": [
+    {
+      "success": false,
+      "name": "agent_cap_data.agent_id",
+      "type": "reference",
+      "error": "Found 2 orphaned references. Sample IDs: 62, 63",
+      "metadata": {
+        "references": "agent.id",
+        "orphan_count": 2,
+        "nullable": false,
+        "cascade_delete": true,
+        "duration_ms": 16995
+      },
+      "timestamp": "2026-02-04T03:39:08.511Z"
+    },
+    {
+      "success": false,
+      "name": "agent_commission.agent_id",
+      "type": "reference",
+      "error": "Found 99 orphaned references. Sample IDs: 38, 39, 40, 41, 42, 43, 44, 45, 46, 47",
+      "metadata": {
+        "references": "agent.id",
+        "orphan_count": 99,
+        "nullable": false,
+        "cascade_delete": true,
+        "duration_ms": 94322
+      },
+      "timestamp": "2026-02-04T03:40:42.834Z"
+    },
+    {
+      "success": false,
+      "name": "agent_hierarchy.agent_id",
+      "type": "reference",
+      "error": "Found 12 orphaned references. Sample IDs: 47, 48, 49, 50, 51, 52, 53, 54, 55, 56",
+      "metadata": {
+        "references": "agent.id",
+        "orphan_count": 12,
+        "nullable": false,
+        "cascade_delete": true,
+        "duration_ms": 66314
+      },
+      "timestamp": "2026-02-04T03:41:49.148Z"
+    },
+    {
+      "success": false,
+      "name": "agent_performance.agent_id",
+      "type": "reference",
+      "error": "Found 95 orphaned references. Sample IDs: 38, 39, 40, 41, 42, 43, 44, 45, 46, 47",
+      "metadata": {
+        "references": "agent.id",
+        "orphan_count": 95,
+        "nullable": false,
+        "cascade_delete": true,
+        "duration_ms": 99355
+      },
+      "timestamp": "2026-02-04T03:43:28.503Z"
+    },
+    {
+      "success": false,
+      "name": "user.agent_id",
+      "type": "reference",
+      "error": "Found 10 orphaned references. Sample IDs: 60, 63, 64, 65, 66, 67, 68, 69, 70, 71",
+      "metadata": {
+        "references": "agent.id",
+        "orphan_count": 10,
+        "nullable": true,
+        "cascade_delete": false,
+        "duration_ms": 62554
+      },
+      "timestamp": "2026-02-04T03:44:31.057Z"
+    },
+    {
+      "success": false,
+      "name": "transaction.transaction_owner_agent_id",
+      "type": "reference",
+      "error": "Found 1 orphaned references. Sample IDs: 48671",
+      "metadata": {
+        "references": "agent.id",
+        "orphan_count": 1,
+        "nullable": true,
+        "cascade_delete": false,
+        "duration_ms": 65213
+      },
+      "timestamp": "2026-02-04T03:45:36.270Z"
+    },
+    {
+      "success": false,
+      "name": "income.agent_id",
+      "type": "reference",
+      "error": "Found 95 orphaned references. Sample IDs: 6, 7, 8, 9, 10, 11, 12, 13, 14, 15",
+      "metadata": {
+        "references": "agent.id",
+        "orphan_count": 95,
+        "nullable": false,
+        "cascade_delete": false,
+        "duration_ms": 76454
+      },
+      "timestamp": "2026-02-04T03:46:52.724Z"
+    },
+    {
+      "success": true,
+      "name": "contribution.agent_id",
+      "type": "reference",
+      "metadata": {
+        "references": "agent.id",
+        "orphan_count": 0,
+        "nullable": false,
+        "cascade_delete": false,
+        "duration_ms": 2240
+      },
+      "timestamp": "2026-02-04T03:46:54.965Z"
+    }
+  ],
+  "duration": 483447
+}
