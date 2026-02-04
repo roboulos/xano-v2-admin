@@ -77,9 +77,12 @@ export function StatusDashboardTab() {
       <div className="space-y-4">
         <div className="flex items-start justify-between">
           <div>
-            <h2 className="text-2xl font-bold mb-1">Migration Progress Dashboard</h2>
+            <h2 className="text-2xl font-bold mb-1">Project Phase Tracker</h2>
             <p className="text-muted-foreground">
-              Track overall progress, timeline, and risks across all migration phases
+              Track project delivery phases: planning, testing, documentation (not data migration)
+            </p>
+            <p className="text-xs text-emerald-600 mt-1">
+              📊 Data migration is ~100% complete — see Transformation Story tab for details
             </p>
           </div>
           <Button

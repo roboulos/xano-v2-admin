@@ -61,7 +61,7 @@ export default function Home() {
 
   const viewModes = [
     { id: 'transformation' as ViewMode, label: 'Transformation Story', icon: Sparkles },
-    { id: 'migration-status' as ViewMode, label: 'Migration Status', icon: TrendingUp },
+    { id: 'migration-status' as ViewMode, label: 'Phase Tracker', icon: TrendingUp },
     { id: 'gaps' as ViewMode, label: 'Gaps & Issues', icon: AlertCircle },
     { id: 'checklist' as ViewMode, label: 'Checklists', icon: CheckCircle2 },
     { id: 'blockers' as ViewMode, label: 'Blockers', icon: AlertTriangle },

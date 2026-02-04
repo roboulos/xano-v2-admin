@@ -168,9 +168,9 @@ export function LiveMigrationStatus() {
       <div className="space-y-4">
         <div className="flex items-start justify-between">
           <div>
-            <h2 className="text-2xl font-bold mb-1">Live Migration Status</h2>
+            <h2 className="text-2xl font-bold mb-1">V2 System Health Dashboard</h2>
             <p className="text-muted-foreground">
-              Real-time V1 to V2 migration progress with validation health metrics
+              Backend architecture status, data migration progress, and validation health
             </p>
             <p className="text-xs text-muted-foreground mt-1">
               Last updated: {formatRelativeTime(timestamp)}
@@ -230,15 +230,15 @@ export function LiveMigrationStatus() {
                   {
                     title: 'V2 Tables',
                     content: [
-                      `Total: ${v2.tables.count} tables`,
-                      `Schema: Normalized from V1's 251 tables`,
-                      `Record Migration: ${countsData?.success ? countsData.comparison.percentage + '%' : 'Loading...'}`,
+                      `Total: ${v2.tables.count} tables (normalized from V1's 251 tables)`,
+                      `V1 Records: ${countsData?.success ? countsData.v1.total_records.toLocaleString() : 'Loading...'}`,
+                      `V2 Records: ${countsData?.success ? countsData.v2.total_records.toLocaleString() : 'Loading...'}`,
+                      `Note: Different schemas - direct comparison not meaningful`,
                     ],
                   },
                   {
-                    title: 'Technical Metrics',
+                    title: 'Validation Pass Rates',
                     content: [
-                      `Overall Score: ${migration_score.overall}%`,
                       `Tables: ${migration_score.tables}%`,
                       `Functions: ${migration_score.functions}% (understates reality due to mapping gap)`,
                       `Endpoints: ${migration_score.endpoints}%`,
@@ -447,24 +447,24 @@ export function LiveMigrationStatus() {
         </CardContent>
       </Card>
 
-      {/* Migration Score Card - SECONDARY */}
+      {/* Validation Score Card - SECONDARY (measures test pass rates, not data migration) */}
       <Collapsible open={migrationScoreOpen} onOpenChange={setMigrationScoreOpen}>
         <CollapsibleTrigger asChild>
-          <Card className="border-2 hover:border-blue-400 transition-colors cursor-pointer">
+          <Card className="border hover:border-blue-400 transition-colors cursor-pointer">
             <CardHeader>
               <div className="flex items-center justify-between">
                 <div>
-                  <CardTitle className="flex items-center gap-2">
-                    Migration Score (Technical Metrics)
+                  <CardTitle className="flex items-center gap-2 text-base">
+                    Validation Pass Rates
                     <ChevronDown
                       className={`h-4 w-4 text-muted-foreground transition-transform ${migrationScoreOpen ? 'rotate-180' : ''}`}
                     />
                   </CardTitle>
                   <CardDescription>
-                    Aggregate metrics - see architecture card above for real health status
+                    Test pass rates for tables, functions, endpoints (not data migration)
                   </CardDescription>
                 </div>
-                <Badge className={getStatusColor(migration_score.status)}>
+                <Badge className={getStatusColor(migration_score.status)} variant="outline">
                   {migration_score.status.replace('_', ' ')}
                 </Badge>
               </div>
@@ -1004,15 +1004,16 @@ export function LiveMigrationStatus() {
         </CollapsibleContent>
       </Collapsible>
 
-      {/* Record Count Comparison Card */}
-      <Card className="border-2 border-blue-200 bg-blue-50/50">
+      {/* Raw Record Counts - Informational Only */}
+      <Card className="border border-muted">
         <CardHeader className="p-6">
-          <CardTitle className="flex items-center gap-2">
+          <CardTitle className="flex items-center gap-2 text-base">
             <Database className="h-5 w-5" />
-            Live Record Count Comparison
+            Raw Database Counts
           </CardTitle>
           <CardDescription>
-            Real-time record counts from both workspaces via snappy CLI
+            Total records across all tables (V1: {countsData?.v1?.table_count || 251} tables, V2:{' '}
+            {countsData?.v2?.table_count || 193} tables)
           </CardDescription>
         </CardHeader>
         <CardContent className="p-6 pt-0">
@@ -1027,50 +1028,49 @@ export function LiveMigrationStatus() {
               description={countsError?.message || countsData?.error || 'Unknown error'}
             />
           ) : (
-            <div className="grid grid-cols-3 gap-6">
-              <div className="text-center">
-                <div className="text-sm text-muted-foreground mb-2">V1 (Production)</div>
-                <div className="text-3xl font-bold text-blue-600">
-                  {countsData.v1.total_records.toLocaleString()}
-                </div>
-                <div className="text-xs text-muted-foreground mt-1">records</div>
-              </div>
-              <div className="flex items-center justify-center">
-                <div className="text-center">
-                  <div className="text-sm text-muted-foreground mb-2">Migration Status</div>
-                  <div
-                    className={`text-5xl font-bold ${countsData.comparison.percentage >= 95 ? 'text-green-600' : 'text-yellow-600'}`}
-                  >
-                    {countsData.comparison.percentage}%
+            <>
+              <div className="grid grid-cols-2 gap-6 mb-4">
+                <div className="text-center p-4 bg-orange-50 rounded-lg border border-orange-200">
+                  <div className="text-sm font-medium text-orange-700 mb-2">V1 Production</div>
+                  <div className="text-2xl font-bold text-orange-600">
+                    {countsData.v1.total_records.toLocaleString()}
                   </div>
-                  <Badge className={getStatusColor(countsData.comparison.status)} variant="outline">
-                    {countsData.comparison.status.replace('_', ' ')}
-                  </Badge>
+                  <div className="text-xs text-muted-foreground mt-1">
+                    records across {countsData.v1.table_count} tables
+                  </div>
+                </div>
+                <div className="text-center p-4 bg-green-50 rounded-lg border border-green-200">
+                  <div className="text-sm font-medium text-green-700 mb-2">V2 Normalized</div>
+                  <div className="text-2xl font-bold text-green-600">
+                    {countsData.v2.total_records.toLocaleString()}
+                  </div>
+                  <div className="text-xs text-muted-foreground mt-1">
+                    records across {countsData.v2.table_count} tables
+                  </div>
                 </div>
               </div>
-              <div className="text-center">
-                <div className="text-sm text-muted-foreground mb-2">V2 (Normalized)</div>
-                <div className="text-3xl font-bold text-green-600">
-                  {countsData.v2.total_records.toLocaleString()}
-                </div>
-                <div className="text-xs text-muted-foreground mt-1">records</div>
+              <div className="text-xs text-muted-foreground bg-muted/50 p-3 rounded-lg">
+                <strong>Note:</strong> V1 and V2 have different schemas (251 vs 193 tables). V2 is
+                normalized - many V1 tables were merged, deprecated, or restructured. Direct record
+                count comparison is not meaningful. See Entity Sync below for actual migration
+                status.
               </div>
-            </div>
+            </>
           )}
         </CardContent>
       </Card>
 
-      {/* Entity-by-Entity Sync Status with Delta Indicators */}
-      <Card className="border-2 border-emerald-200 bg-emerald-50/30">
+      {/* DATA MIGRATION STATUS - Primary Indicator */}
+      <Card className="border-4 border-emerald-500 bg-gradient-to-br from-emerald-50 to-green-50">
         <CardHeader className="p-6">
           <div className="flex items-center justify-between">
             <div>
-              <CardTitle className="flex items-center gap-2">
-                <Activity className="h-5 w-5" />
-                Entity Sync Status
+              <CardTitle className="text-2xl flex items-center gap-2">
+                <CheckCircle2 className="h-6 w-6 text-emerald-600" />
+                Data Migration Status
               </CardTitle>
-              <CardDescription>
-                Real-time V1 &rarr; V2 sync status with delta indicators
+              <CardDescription className="text-base">
+                Core business entities synced from V1 to V2 (live comparison)
               </CardDescription>
             </div>
             <div className="flex items-center gap-3">
@@ -1104,6 +1104,39 @@ export function LiveMigrationStatus() {
             />
           ) : syncData?.entity_counts ? (
             <div className="space-y-4">
+              {/* Overall Summary */}
+              {(() => {
+                const entities = syncData.entity_counts as {
+                  entity: string
+                  v1: number
+                  v2: number
+                }[]
+                const totalV1 = entities.reduce((sum, e) => sum + e.v1, 0)
+                const totalV2 = entities.reduce((sum, e) => sum + e.v2, 0)
+                const overallPercent = totalV1 > 0 ? (totalV2 / totalV1) * 100 : 0
+                const allHealthy = entities.every((e) => (e.v1 > 0 ? (e.v2 / e.v1) * 100 : 0) >= 99)
+
+                return (
+                  <div className="flex items-center justify-between p-4 bg-white rounded-lg border-2 border-emerald-300 mb-4">
+                    <div className="flex items-center gap-4">
+                      <div className="text-5xl font-bold text-emerald-600">
+                        {overallPercent.toFixed(1)}%
+                      </div>
+                      <div>
+                        <div className="font-semibold text-lg">Core Business Data Migrated</div>
+                        <div className="text-sm text-muted-foreground">
+                          {totalV2.toLocaleString()} / {totalV1.toLocaleString()} records across{' '}
+                          {entities.length} entity types
+                        </div>
+                      </div>
+                    </div>
+                    <Badge className={allHealthy ? 'bg-emerald-600' : 'bg-yellow-600'}>
+                      {allHealthy ? '✅ Healthy' : '⚠️ Review Needed'}
+                    </Badge>
+                  </div>
+                )
+              })()}
+
               {/* Legend */}
               <div className="flex items-center gap-4 text-xs text-muted-foreground pb-2 border-b">
                 <div className="flex items-center gap-1">
