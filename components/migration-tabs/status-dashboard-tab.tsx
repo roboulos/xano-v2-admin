@@ -1,7 +1,7 @@
 'use client'
 
-import { useMemo } from 'react'
-import { AlertTriangle, CheckCircle2, Clock, AlertCircle, Target } from 'lucide-react'
+import { useMemo, useState, useCallback } from 'react'
+import { AlertTriangle, CheckCircle2, Clock, AlertCircle, Target, RefreshCw } from 'lucide-react'
 import {
   getMockMigrationData,
   calculateOverallProgress,
@@ -13,8 +13,22 @@ import {
 import { Card } from '@/components/ui/card'
 import { MetricCard } from '@/components/ui/metric-card'
 import { ProgressBar } from '@/components/ui/progress-bar'
+import { AlertBanner } from '@/components/ui/alert-banner'
+import { Button } from '@/components/ui/button'
 
 export function StatusDashboardTab() {
+  const [refreshKey, setRefreshKey] = useState(0)
+  const [isRefreshing, setIsRefreshing] = useState(false)
+
+  const handleRefresh = useCallback(() => {
+    setIsRefreshing(true)
+    // Simulate refresh delay
+    setTimeout(() => {
+      setRefreshKey((prev) => prev + 1)
+      setIsRefreshing(false)
+    }, 500)
+  }, [])
+
   const { phases, risks } = getMockMigrationData()
 
   const metrics = useMemo(() => {
@@ -61,12 +75,40 @@ export function StatusDashboardTab() {
     <div className="space-y-6">
       {/* Header Section */}
       <div className="space-y-4">
-        <div>
-          <h2 className="text-2xl font-bold mb-1">Migration Progress Dashboard</h2>
-          <p className="text-muted-foreground">
-            Track overall progress, timeline, and risks across all migration phases
-          </p>
+        <div className="flex items-start justify-between">
+          <div>
+            <h2 className="text-2xl font-bold mb-1">Migration Progress Dashboard</h2>
+            <p className="text-muted-foreground">
+              Track overall progress, timeline, and risks across all migration phases
+            </p>
+          </div>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleRefresh}
+            disabled={isRefreshing}
+            className="flex-shrink-0"
+          >
+            <RefreshCw className={`h-4 w-4 ${isRefreshing ? 'animate-spin' : ''}`} />
+            Refresh
+          </Button>
         </div>
+
+        {/* Critical Status Alert */}
+        {metrics.overallProgress < 50 && (
+          <AlertBanner
+            variant="warning"
+            title="Migration Progress Below 50%"
+            description={`Overall progress is at ${metrics.overallProgress}%. Consider allocating additional resources to meet timeline targets.`}
+          />
+        )}
+        {metrics.riskSummary.critical > 0 && (
+          <AlertBanner
+            variant="critical"
+            title={`${metrics.riskSummary.critical} Critical Risk(s) Identified`}
+            description="Immediate attention required to prevent project delays"
+          />
+        )}
 
         {/* Key Metrics Row */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">

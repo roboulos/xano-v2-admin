@@ -45,10 +45,10 @@ Create reusable AlertBanner, LoadingState, and EmptyState components for consist
 
 ## Done summary
 
-TBD
+Created three new shared UI components: AlertBanner (critical/warning/info/success variants with dark mode), LoadingState (Loader2 spinner with sm/md/lg sizes), and EmptyState (centered layout with icon, title, description). All follow existing cva/cn patterns and export TypeScript types.
 
 ## Evidence
 
-- Commits:
-- Tests:
+- Commits: 16812786d45839fe2095f5fc975047c98af55b99
+- Tests: pnpm build
 - PRs:

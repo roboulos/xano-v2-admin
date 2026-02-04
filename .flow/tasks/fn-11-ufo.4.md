@@ -39,10 +39,10 @@ Document which Tailwind classes map to which use cases.
 
 ## Done summary
 
-TBD
+Added 5 spacing tokens to globals.css :root section with comprehensive documentation. Tokens map to common Tailwind classes (space-y-6, space-y-4, p-6, p-4, gap-2) and cover section spacing, content spacing, card padding, compact card padding, and inline element gaps.
 
 ## Evidence
 
-- Commits:
-- Tests:
+- Commits: cd092b107363f276bdab8091c474c9188f167437
+- Tests: pnpm build
 - PRs:

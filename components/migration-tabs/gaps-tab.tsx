@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useMemo } from 'react'
-import { AlertTriangle, AlertCircle, CheckCircle2, Database } from 'lucide-react'
+import { AlertTriangle, AlertCircle, CheckCircle2, Database, Download } from 'lucide-react'
 import {
   getDataGaps,
   getEndpointGaps,
@@ -17,6 +17,8 @@ import { Card } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { SeverityBadge } from '@/components/ui/severity-badge'
 import { SimpleStatusBadge } from '@/components/ui/status-badge'
+import { AlertBanner } from '@/components/ui/alert-banner'
+import { Button } from '@/components/ui/button'
 
 type GapTab = 'data' | 'endpoints' | 'schema' | 'integrity'
 
@@ -215,6 +217,15 @@ export function GapsTab() {
           </p>
         </div>
 
+        {/* Critical Gaps Alert */}
+        {criticalCount > 0 && (
+          <AlertBanner
+            variant="critical"
+            title={`${criticalCount} Critical Gap(s) Require Attention`}
+            description="Critical gaps may block migration progress. Review and prioritize resolution."
+          />
+        )}
+
         {/* Summary Metrics */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
           <Card className={`p-3 ${criticalCount > 0 ? 'border-red-200 bg-red-50' : ''}`}>
@@ -338,9 +349,10 @@ export function GapsTab() {
               Generate a comprehensive gap analysis report for stakeholders
             </p>
           </div>
-          <button className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-sm font-medium">
+          <Button>
+            <Download className="h-4 w-4" />
             Export Report
-          </button>
+          </Button>
         </div>
       </Card>
     </div>

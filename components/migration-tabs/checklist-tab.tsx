@@ -17,6 +17,7 @@ import { Card } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { PriorityBadge } from '@/components/ui/priority-badge'
 import { ProgressBar } from '@/components/ui/progress-bar'
+import { AlertBanner } from '@/components/ui/alert-banner'
 
 function ChecklistItemRow({
   item,
@@ -225,6 +226,16 @@ export function ChecklistTab() {
             Phase-based tracking with critical path visualization and sign-off workflow
           </p>
         </div>
+
+        {/* Blocked Items Alert */}
+        {blockedItems.length > 0 && (
+          <AlertBanner
+            variant="warning"
+            title={`${blockedItems.length} Item(s) Currently Blocked`}
+            description="These items are waiting for dependencies to be resolved before they can proceed."
+            icon={Lock}
+          />
+        )}
 
         {/* Summary */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
