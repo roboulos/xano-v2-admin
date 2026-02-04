@@ -1,0 +1,14 @@
+{
+  "assignee": null,
+  "claim_note": "",
+  "claimed_at": null,
+  "created_at": "2026-02-03T22:44:15.370846Z",
+  "depends_on": ["fn-7-wlv.4", "fn-7-wlv.5", "fn-7-wlv.6"],
+  "epic": "fn-7-wlv",
+  "id": "fn-7-wlv.11",
+  "priority": null,
+  "spec_path": ".flow/tasks/fn-7-wlv.11.md",
+  "status": "todo",
+  "title": "Full build verification - all 3 repos pass build+lint+typecheck",
+  "updated_at": "2026-02-03T22:44:15.371064Z"
+}

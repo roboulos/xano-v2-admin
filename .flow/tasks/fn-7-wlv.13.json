@@ -1,0 +1,14 @@
+{
+  "assignee": null,
+  "claim_note": "",
+  "claimed_at": null,
+  "created_at": "2026-02-03T22:44:15.649682Z",
+  "depends_on": ["fn-7-wlv.11", "fn-7-wlv.12"],
+  "epic": "fn-7-wlv",
+  "id": "fn-7-wlv.13",
+  "priority": null,
+  "spec_path": ".flow/tasks/fn-7-wlv.13.md",
+  "status": "todo",
+  "title": "Cross-repository integration test - both admin apps + frontend",
+  "updated_at": "2026-02-03T22:44:15.649895Z"
+}

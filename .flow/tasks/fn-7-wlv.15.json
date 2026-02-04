@@ -1,0 +1,14 @@
+{
+  "assignee": null,
+  "claim_note": "",
+  "claimed_at": null,
+  "created_at": "2026-02-03T22:44:20.684472Z",
+  "depends_on": ["fn-7-wlv.14"],
+  "epic": "fn-7-wlv",
+  "id": "fn-7-wlv.15",
+  "priority": null,
+  "spec_path": ".flow/tasks/fn-7-wlv.15.md",
+  "status": "todo",
+  "title": "Create delivery manifest documenting what's being delivered",
+  "updated_at": "2026-02-03T22:44:20.684694Z"
+}

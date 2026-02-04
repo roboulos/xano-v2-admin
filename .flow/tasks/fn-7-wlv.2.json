@@ -1,0 +1,14 @@
+{
+  "assignee": null,
+  "claim_note": "",
+  "claimed_at": null,
+  "created_at": "2026-02-03T22:43:57.523559Z",
+  "depends_on": [],
+  "epic": "fn-7-wlv",
+  "id": "fn-7-wlv.2",
+  "priority": null,
+  "spec_path": ".flow/tasks/fn-7-wlv.2.md",
+  "status": "todo",
+  "title": "Clean v0-demo-sync-admin-interface - organize screenshots to docs/screenshots/",
+  "updated_at": "2026-02-03T22:43:57.523758Z"
+}
