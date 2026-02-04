@@ -64,10 +64,10 @@ Apply shared components and consistent patterns to tool tabs (functions, backgro
 
 ## Done summary
 
-TBD
+Polished all four tool tabs (functions-tab, background-tasks-tab, transformation-story-tab, parallel-comparison-tab) with consistent PageHeaders, AlertBanners for actionable warnings, MetricCard summaries, and shared LoadingState/EmptyState components.
 
 ## Evidence
 
-- Commits:
-- Tests:
+- Commits: 362d2794b9c6441ac497cfd863bde4558b43e497
+- Tests: pnpm build
 - PRs:

@@ -4,8 +4,10 @@ import useSWR from 'swr'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
+import { LoadingState } from '@/components/ui/loading-state'
+import { AlertBanner } from '@/components/ui/alert-banner'
 import {
-  Loader2,
   RefreshCw,
   Database,
   FunctionSquare,
@@ -20,6 +22,8 @@ import {
   ArrowUp,
   ArrowDown,
   Clock,
+  ChevronDown,
+  Loader2,
 } from 'lucide-react'
 import { formatRelativeTime } from '@/lib/utils'
 import { useState } from 'react'
@@ -34,6 +38,10 @@ export function LiveMigrationStatus() {
   const [selectedEndpoint, setSelectedEndpoint] = useState<MCPEndpoint | null>(null)
   const [endpointDetailsExpanded, setEndpointDetailsExpanded] = useState(false)
   const [syncLastUpdated, setSyncLastUpdated] = useState<Date | null>(null)
+  const [migrationScoreOpen, setMigrationScoreOpen] = useState(false)
+  const [technicalDeepDiveOpen, setTechnicalDeepDiveOpen] = useState(false)
+  const [sampleFlowOpen, setSampleFlowOpen] = useState(false)
+  const [knownMappingsOpen, setKnownMappingsOpen] = useState(false)
 
   const { data, error, isLoading, mutate } = useSWR('/api/migration/status', fetcher, {
     refreshInterval: 10000, // Refresh every 10 seconds
@@ -119,25 +127,19 @@ export function LiveMigrationStatus() {
 
   if (isLoading) {
     return (
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Loader2 className="h-5 w-5 animate-spin" />
-            Loading Live Migration Status...
-          </CardTitle>
-        </CardHeader>
+      <Card className="p-6">
+        <LoadingState size="lg" message="Loading Live Migration Status..." />
       </Card>
     )
   }
 
   if (error || !data?.success) {
     return (
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-destructive">Error Loading Status</CardTitle>
-          <CardDescription>{error?.message || data?.error || 'Unknown error'}</CardDescription>
-        </CardHeader>
-      </Card>
+      <AlertBanner
+        variant="critical"
+        title="Error Loading Status"
+        description={error?.message || data?.error || 'Unknown error'}
+      />
     )
   }
 
@@ -162,115 +164,121 @@ export function LiveMigrationStatus() {
 
   return (
     <div className="space-y-6">
-      {/* Header with Refresh */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-2xl font-bold">Live Migration Status</h2>
-          <p className="text-sm text-muted-foreground">
-            Last updated: {formatRelativeTime(timestamp)}
-          </p>
-        </div>
-        <div className="flex gap-2">
-          <button
-            onClick={() => {
-              mutate()
-              mutateCounts()
-              mutateTasks()
-              mutateSync()
-              if (integrityExpanded) {
-                mutateIntegrity()
+      {/* Page Header */}
+      <div className="space-y-4">
+        <div className="flex items-start justify-between">
+          <div>
+            <h2 className="text-2xl font-bold mb-1">Live Migration Status</h2>
+            <p className="text-muted-foreground">
+              Real-time V1 to V2 migration progress with validation health metrics
+            </p>
+            <p className="text-xs text-muted-foreground mt-1">
+              Last updated: {formatRelativeTime(timestamp)}
+            </p>
+          </div>
+          <div className="flex gap-2">
+            <Button
+              onClick={() => {
+                mutate()
+                mutateCounts()
+                mutateTasks()
+                mutateSync()
+                if (integrityExpanded) {
+                  mutateIntegrity()
+                }
+              }}
+              disabled={
+                isLoading || countsLoading || tasksLoading || syncLoading || integrityLoading
               }
-            }}
-            disabled={isLoading || countsLoading || tasksLoading || syncLoading || integrityLoading}
-            className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            <RefreshCw
-              className={`h-4 w-4 ${isLoading || countsLoading || tasksLoading || integrityLoading ? 'animate-spin' : ''}`}
-            />
-            Refresh
-          </button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => {
-              const sections = [
-                {
-                  title: 'V2 Backend Architecture',
-                  content: [
-                    `Production Flow: 109 Cron Jobs → 109 Tasks/ → 194 Workers/`,
-                    `1:1 Mapping: Each scheduled job calls one Tasks/ function`,
-                  ],
-                },
-                {
-                  title: 'Validation Health Status',
-                  content: [
-                    `Tasks/ Functions: 102/109 passing (95%) ✅`,
-                    `Test Endpoints (WORKERS API): 312/324 passing (96%) ✅`,
-                    `Workers/ Functions: 194 total (validated indirectly via Tasks/) ⚠️`,
-                    `Mapping Gap: 187 Worker endpoints exist but unmapped to functions`,
-                  ],
-                },
-                {
-                  title: 'Backend Health Summary',
-                  content: [
-                    `✅ Backend is Healthy`,
-                    `• 95% of production tasks working correctly`,
-                    `• 96% of test endpoints accessible and functional`,
-                    `• Workers/ functions validated indirectly through Tasks/ calls`,
-                    `• Mapping gap is a tooling issue, not a validation issue`,
-                  ],
-                },
-                {
-                  title: 'V2 Tables',
-                  content: [
-                    `Total: ${v2.tables.count} tables`,
-                    `Schema: Normalized from V1's 251 tables`,
-                    `Record Migration: ${countsData?.success ? countsData.comparison.percentage + '%' : 'Loading...'}`,
-                  ],
-                },
-                {
-                  title: 'Technical Metrics',
-                  content: [
-                    `Overall Score: ${migration_score.overall}%`,
-                    `Tables: ${migration_score.tables}%`,
-                    `Functions: ${migration_score.functions}% (understates reality due to mapping gap)`,
-                    `Endpoints: ${migration_score.endpoints}%`,
-                    `Status: ${migration_score.status}`,
-                  ],
-                },
-              ]
+            >
+              <RefreshCw
+                className={`h-4 w-4 mr-2 ${isLoading || countsLoading || tasksLoading || integrityLoading ? 'animate-spin' : ''}`}
+              />
+              Refresh
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                const sections = [
+                  {
+                    title: 'V2 Backend Architecture',
+                    content: [
+                      `Production Flow: 109 Cron Jobs → 109 Tasks/ → 194 Workers/`,
+                      `1:1 Mapping: Each scheduled job calls one Tasks/ function`,
+                    ],
+                  },
+                  {
+                    title: 'Validation Health Status',
+                    content: [
+                      `Tasks/ Functions: 102/109 passing (95%) ✅`,
+                      `Test Endpoints (WORKERS API): 312/324 passing (96%) ✅`,
+                      `Workers/ Functions: 194 total (validated indirectly via Tasks/) ⚠️`,
+                      `Mapping Gap: 187 Worker endpoints exist but unmapped to functions`,
+                    ],
+                  },
+                  {
+                    title: 'Backend Health Summary',
+                    content: [
+                      `✅ Backend is Healthy`,
+                      `• 95% of production tasks working correctly`,
+                      `• 96% of test endpoints accessible and functional`,
+                      `• Workers/ functions validated indirectly through Tasks/ calls`,
+                      `• Mapping gap is a tooling issue, not a validation issue`,
+                    ],
+                  },
+                  {
+                    title: 'V2 Tables',
+                    content: [
+                      `Total: ${v2.tables.count} tables`,
+                      `Schema: Normalized from V1's 251 tables`,
+                      `Record Migration: ${countsData?.success ? countsData.comparison.percentage + '%' : 'Loading...'}`,
+                    ],
+                  },
+                  {
+                    title: 'Technical Metrics',
+                    content: [
+                      `Overall Score: ${migration_score.overall}%`,
+                      `Tables: ${migration_score.tables}%`,
+                      `Functions: ${migration_score.functions}% (understates reality due to mapping gap)`,
+                      `Endpoints: ${migration_score.endpoints}%`,
+                      `Status: ${migration_score.status}`,
+                    ],
+                  },
+                ]
 
-              if (integrityData?.success) {
-                sections.push({
-                  title: 'Foreign Key Integrity',
-                  content: [
-                    `Total References: ${integrityData.data.totalReferences}`,
-                    `Validated: ${integrityData.data.validated}`,
-                    `Orphans Found: ${integrityData.data.orphansFound}`,
-                    `Tables Checked: ${integrityData.data.tablesChecked}`,
-                  ],
-                })
-              }
+                if (integrityData?.success) {
+                  sections.push({
+                    title: 'Foreign Key Integrity',
+                    content: [
+                      `Total References: ${integrityData.data.totalReferences}`,
+                      `Validated: ${integrityData.data.validated}`,
+                      `Orphans Found: ${integrityData.data.orphansFound}`,
+                      `Tables Checked: ${integrityData.data.tablesChecked}`,
+                    ],
+                  })
+                }
 
-              // Note: exportSummaryToPDF function needs to be imported
-              console.warn('PDF export not implemented - exportSummaryToPDF function not found')
-              alert(
-                'PDF Export:\n\n' +
-                  sections
-                    .map((s) => `${s.title}\n${s.content.map((c) => `  • ${c}`).join('\n')}`)
-                    .join('\n\n')
-              )
-            }}
-            disabled={isLoading}
-          >
-            Export PDF Report
-          </Button>
+                // Note: exportSummaryToPDF function needs to be imported
+                console.warn('PDF export not implemented - exportSummaryToPDF function not found')
+                alert(
+                  'PDF Export:\n\n' +
+                    sections
+                      .map((s) => `${s.title}\n${s.content.map((c) => `  • ${c}`).join('\n')}`)
+                      .join('\n\n')
+                )
+              }}
+              disabled={isLoading}
+            >
+              Export PDF Report
+            </Button>
+          </div>
         </div>
       </div>
 
       {/* System Architecture & Health - FIRST */}
       <Card className="border-4 border-indigo-500 bg-gradient-to-br from-indigo-50 to-blue-50">
-        <CardHeader>
+        <CardHeader className="p-6">
           <CardTitle className="text-2xl flex items-center gap-2">
             <Activity className="h-6 w-6" />
             V2 Backend Architecture & Health Status
@@ -279,7 +287,7 @@ export function LiveMigrationStatus() {
             Complete system map showing production flow and validation status
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-6">
+        <CardContent className="p-6 pt-0 space-y-6">
           {/* 1:1 Architecture Flow */}
           <div className="bg-white rounded-lg p-6 border-2 border-indigo-300">
             <div className="text-lg font-bold mb-4 text-indigo-900">
@@ -440,17 +448,17 @@ export function LiveMigrationStatus() {
       </Card>
 
       {/* Migration Score Card - SECONDARY */}
-      <details className="group">
-        <summary className="cursor-pointer list-none">
-          <Card className="border-2 hover:border-blue-400 transition-colors">
+      <Collapsible open={migrationScoreOpen} onOpenChange={setMigrationScoreOpen}>
+        <CollapsibleTrigger asChild>
+          <Card className="border-2 hover:border-blue-400 transition-colors cursor-pointer">
             <CardHeader>
               <div className="flex items-center justify-between">
                 <div>
                   <CardTitle className="flex items-center gap-2">
                     Migration Score (Technical Metrics)
-                    <span className="text-sm font-normal text-muted-foreground">
-                      Click to expand
-                    </span>
+                    <ChevronDown
+                      className={`h-4 w-4 text-muted-foreground transition-transform ${migrationScoreOpen ? 'rotate-180' : ''}`}
+                    />
                   </CardTitle>
                   <CardDescription>
                     Aggregate metrics - see architecture card above for real health status
@@ -461,525 +469,544 @@ export function LiveMigrationStatus() {
                 </Badge>
               </div>
             </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-4 gap-4">
-                <div className="text-center">
-                  <div className={`text-4xl font-bold ${getScoreColor(migration_score.overall)}`}>
-                    {migration_score.overall}%
+            <CollapsibleContent>
+              <CardContent>
+                <div className="grid grid-cols-4 gap-4">
+                  <div className="text-center">
+                    <div className={`text-4xl font-bold ${getScoreColor(migration_score.overall)}`}>
+                      {migration_score.overall}%
+                    </div>
+                    <div className="text-sm text-muted-foreground mt-1">Overall</div>
                   </div>
-                  <div className="text-sm text-muted-foreground mt-1">Overall</div>
-                </div>
-                <div className="text-center">
-                  <div className={`text-4xl font-bold ${getScoreColor(migration_score.tables)}`}>
-                    {migration_score.tables}%
+                  <div className="text-center">
+                    <div className={`text-4xl font-bold ${getScoreColor(migration_score.tables)}`}>
+                      {migration_score.tables}%
+                    </div>
+                    <div className="text-sm text-muted-foreground mt-1">Tables</div>
                   </div>
-                  <div className="text-sm text-muted-foreground mt-1">Tables</div>
-                </div>
-                <div className="text-center">
-                  <div className={`text-4xl font-bold ${getScoreColor(migration_score.functions)}`}>
-                    {migration_score.functions}%
+                  <div className="text-center">
+                    <div
+                      className={`text-4xl font-bold ${getScoreColor(migration_score.functions)}`}
+                    >
+                      {migration_score.functions}%
+                    </div>
+                    <div className="text-sm text-muted-foreground mt-1">Functions*</div>
+                    <div className="text-xs text-amber-600">*Understates reality</div>
                   </div>
-                  <div className="text-sm text-muted-foreground mt-1">Functions*</div>
-                  <div className="text-xs text-amber-600">*Understates reality</div>
-                </div>
-                <div className="text-center">
-                  <div className={`text-4xl font-bold ${getScoreColor(migration_score.endpoints)}`}>
-                    {migration_score.endpoints}%
+                  <div className="text-center">
+                    <div
+                      className={`text-4xl font-bold ${getScoreColor(migration_score.endpoints)}`}
+                    >
+                      {migration_score.endpoints}%
+                    </div>
+                    <div className="text-sm text-muted-foreground mt-1">Endpoints</div>
                   </div>
-                  <div className="text-sm text-muted-foreground mt-1">Endpoints</div>
                 </div>
-              </div>
-            </CardContent>
+              </CardContent>
+            </CollapsibleContent>
           </Card>
-        </summary>
-      </details>
+        </CollapsibleTrigger>
+      </Collapsible>
 
       {/* EXACT Breakdown - Numbers & Mapping - COLLAPSIBLE */}
-      <details className="group">
-        <summary className="cursor-pointer list-none">
-          <Card className="border-2 border-purple-200 bg-purple-50/50 hover:border-purple-400 transition-colors">
+      <Collapsible open={technicalDeepDiveOpen} onOpenChange={setTechnicalDeepDiveOpen}>
+        <CollapsibleTrigger asChild>
+          <Card className="border-2 border-purple-200 bg-purple-50/50 hover:border-purple-400 transition-colors cursor-pointer">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Code className="h-5 w-5" />
-                Technical Deep Dive: How "Functions: {migration_score.functions}%" is Calculated
-                <span className="text-sm font-normal text-muted-foreground ml-2">
-                  Click to expand
-                </span>
+                Technical Deep Dive: How &quot;Functions: {migration_score.functions}%&quot; is
+                Calculated
+                <ChevronDown
+                  className={`h-4 w-4 text-muted-foreground transition-transform ${technicalDeepDiveOpen ? 'rotate-180' : ''}`}
+                />
               </CardTitle>
               <CardDescription>
                 Detailed breakdown of validation methodology and mapping status
               </CardDescription>
             </CardHeader>
           </Card>
-        </summary>
-        <Card className="border-2 border-purple-200 bg-purple-50/50 mt-2">
-          <CardContent className="pt-6">
-            {/* The Actual Flow */}
-            <div className="bg-indigo-50 rounded-lg p-4 mb-4 border border-indigo-200">
-              <div className="text-sm font-semibold mb-3 text-indigo-900">
-                Production Flow (1:1 mapping: 109 jobs → 109 Tasks/ functions):
-              </div>
-              <div className="grid grid-cols-5 gap-2 items-center text-center text-sm">
-                <div className="bg-white rounded p-2 border border-indigo-200">
-                  <div className="font-semibold text-indigo-700">Cron Job</div>
-                  <div className="text-xs text-muted-foreground mt-1">
-                    {tasksLoading ? '...' : '109 active'}
+        </CollapsibleTrigger>
+        <CollapsibleContent>
+          <Card className="border-2 border-purple-200 bg-purple-50/50 mt-2">
+            <CardContent className="pt-6">
+              {/* The Actual Flow */}
+              <div className="bg-indigo-50 rounded-lg p-4 mb-4 border border-indigo-200">
+                <div className="text-sm font-semibold mb-3 text-indigo-900">
+                  Production Flow (1:1 mapping: 109 jobs → 109 Tasks/ functions):
+                </div>
+                <div className="grid grid-cols-5 gap-2 items-center text-center text-sm">
+                  <div className="bg-white rounded p-2 border border-indigo-200">
+                    <div className="font-semibold text-indigo-700">Cron Job</div>
+                    <div className="text-xs text-muted-foreground mt-1">
+                      {tasksLoading ? '...' : '109 active'}
+                    </div>
+                  </div>
+                  <div className="text-2xl text-indigo-400">→</div>
+                  <div className="bg-green-50 rounded p-2 border border-green-300">
+                    <div className="font-semibold text-green-700">Tasks/</div>
+                    <div className="text-xs text-muted-foreground mt-1">109 functions</div>
+                  </div>
+                  <div className="text-2xl text-green-400">→</div>
+                  <div className="bg-yellow-50 rounded p-2 border border-yellow-300">
+                    <div className="font-semibold text-yellow-700">Workers/</div>
+                    <div className="text-xs text-muted-foreground mt-1">194 functions</div>
                   </div>
                 </div>
-                <div className="text-2xl text-indigo-400">→</div>
-                <div className="bg-green-50 rounded p-2 border border-green-300">
-                  <div className="font-semibold text-green-700">Tasks/</div>
-                  <div className="text-xs text-muted-foreground mt-1">109 functions</div>
+
+                <div className="text-sm font-semibold mt-4 mb-3 text-indigo-900">
+                  Testing Flow (because Xano won't let you curl functions):
                 </div>
-                <div className="text-2xl text-green-400">→</div>
-                <div className="bg-yellow-50 rounded p-2 border border-yellow-300">
-                  <div className="font-semibold text-yellow-700">Workers/</div>
-                  <div className="text-xs text-muted-foreground mt-1">194 functions</div>
+                <div className="grid grid-cols-5 gap-2 items-center text-center text-sm">
+                  <div className="bg-blue-50 rounded p-2 border border-blue-300">
+                    <div className="font-semibold text-blue-700">/test-function-*</div>
+                    <div className="text-xs text-muted-foreground mt-1">Test endpoint</div>
+                  </div>
+                  <div className="text-2xl text-blue-400">→</div>
+                  <div className="bg-green-50 rounded p-2 border border-green-300">
+                    <div className="font-semibold text-green-700">Tasks/</div>
+                    <div className="text-xs text-muted-foreground mt-1">109 functions</div>
+                  </div>
+                  <div className="text-2xl text-green-400">→</div>
+                  <div className="bg-yellow-50 rounded p-2 border border-yellow-300">
+                    <div className="font-semibold text-yellow-700">Workers/</div>
+                    <div className="text-xs text-muted-foreground mt-1">194 functions</div>
+                  </div>
                 </div>
               </div>
 
-              <div className="text-sm font-semibold mt-4 mb-3 text-indigo-900">
-                Testing Flow (because Xano won't let you curl functions):
+              {/* Exact Numbers Table */}
+              <div className="border rounded-lg overflow-hidden">
+                <table className="w-full text-sm">
+                  <thead className="bg-muted">
+                    <tr>
+                      <th className="text-left p-3 font-semibold">Component</th>
+                      <th className="text-center p-3 font-semibold">Total</th>
+                      <th className="text-center p-3 font-semibold">Test Endpoints</th>
+                      <th className="text-center p-3 font-semibold">Passing</th>
+                      <th className="text-center p-3 font-semibold">Pass Rate</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y">
+                    <tr className="bg-white">
+                      <td className="p-3">
+                        <div className="font-semibold">Scheduled Background Jobs</div>
+                        <div className="text-xs text-muted-foreground">
+                          Actual cron tasks (see Tab 3) • 1:1 mapping with Tasks/ functions
+                        </div>
+                      </td>
+                      <td className="text-center p-3">
+                        {tasksLoading ? (
+                          <Loader2 className="h-4 w-4 animate-spin mx-auto" />
+                        ) : (
+                          <>
+                            <div className="font-semibold">{tasksData?.total || 218}</div>
+                            <div className="text-xs text-muted-foreground">
+                              (109 prod + 109 archive)
+                            </div>
+                          </>
+                        )}
+                      </td>
+                      <td className="text-center p-3">
+                        <span className="text-muted-foreground">N/A</span>
+                      </td>
+                      <td className="text-center p-3">
+                        <span className="text-muted-foreground">—</span>
+                      </td>
+                      <td className="text-center p-3">
+                        <Badge variant="outline">
+                          {tasksLoading ? 'Loading...' : '109 Active'}
+                        </Badge>
+                      </td>
+                    </tr>
+                    <tr className="bg-green-50/50">
+                      <td className="p-3">
+                        <div className="font-semibold text-green-700">Tasks/ Functions</div>
+                        <div className="text-xs text-muted-foreground">
+                          Called BY: Scheduled jobs • CALLS: Workers/
+                        </div>
+                      </td>
+                      <td className="text-center p-3 font-semibold">109</td>
+                      <td className="text-center p-3 font-semibold text-green-600">109</td>
+                      <td className="text-center p-3 font-semibold text-green-600">102</td>
+                      <td className="text-center p-3">
+                        <Badge className="bg-green-600">95%</Badge>
+                      </td>
+                    </tr>
+                    <tr className="bg-yellow-50/50">
+                      <td className="p-3">
+                        <div className="font-semibold text-yellow-700">Workers/ Functions</div>
+                        <div className="text-xs text-muted-foreground">
+                          Called BY: Tasks/ (via function.run) AND test endpoints
+                        </div>
+                      </td>
+                      <td className="text-center p-3 font-semibold">194</td>
+                      <td className="text-center p-3">
+                        <div className="font-semibold text-yellow-600">~187</div>
+                        <div className="text-xs text-muted-foreground">Unmapped*</div>
+                      </td>
+                      <td className="text-center p-3">
+                        <div className="font-semibold text-yellow-600">?</div>
+                        <div className="text-xs text-muted-foreground">Unknown</div>
+                      </td>
+                      <td className="text-center p-3">
+                        <Badge variant="outline" className="text-yellow-600">
+                          Endpoints exist
+                        </Badge>
+                      </td>
+                    </tr>
+                    <tr className="bg-blue-50/50 border-t-2">
+                      <td className="p-3">
+                        <div className="font-semibold text-blue-700">
+                          Test Endpoints (WORKERS API)
+                        </div>
+                        <div className="text-xs text-muted-foreground">
+                          For programmatic testing/control
+                        </div>
+                      </td>
+                      <td className="text-center p-3 font-semibold">324</td>
+                      <td className="text-center p-3">
+                        <span className="text-muted-foreground">Self</span>
+                      </td>
+                      <td className="text-center p-3 font-semibold text-blue-600">312</td>
+                      <td className="text-center p-3">
+                        <Badge className="bg-blue-600">96%</Badge>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
-              <div className="grid grid-cols-5 gap-2 items-center text-center text-sm">
-                <div className="bg-blue-50 rounded p-2 border border-blue-300">
-                  <div className="font-semibold text-blue-700">/test-function-*</div>
-                  <div className="text-xs text-muted-foreground mt-1">Test endpoint</div>
-                </div>
-                <div className="text-2xl text-blue-400">→</div>
-                <div className="bg-green-50 rounded p-2 border border-green-300">
-                  <div className="font-semibold text-green-700">Tasks/</div>
-                  <div className="text-xs text-muted-foreground mt-1">109 functions</div>
-                </div>
-                <div className="text-2xl text-green-400">→</div>
-                <div className="bg-yellow-50 rounded p-2 border border-yellow-300">
-                  <div className="font-semibold text-yellow-700">Workers/</div>
-                  <div className="text-xs text-muted-foreground mt-1">194 functions</div>
-                </div>
-              </div>
-            </div>
 
-            {/* Exact Numbers Table */}
-            <div className="border rounded-lg overflow-hidden">
-              <table className="w-full text-sm">
-                <thead className="bg-muted">
-                  <tr>
-                    <th className="text-left p-3 font-semibold">Component</th>
-                    <th className="text-center p-3 font-semibold">Total</th>
-                    <th className="text-center p-3 font-semibold">Test Endpoints</th>
-                    <th className="text-center p-3 font-semibold">Passing</th>
-                    <th className="text-center p-3 font-semibold">Pass Rate</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y">
-                  <tr className="bg-white">
-                    <td className="p-3">
-                      <div className="font-semibold">Scheduled Background Jobs</div>
-                      <div className="text-xs text-muted-foreground">
-                        Actual cron tasks (see Tab 3) • 1:1 mapping with Tasks/ functions
-                      </div>
-                    </td>
-                    <td className="text-center p-3">
-                      {tasksLoading ? (
-                        <Loader2 className="h-4 w-4 animate-spin mx-auto" />
-                      ) : (
-                        <>
-                          <div className="font-semibold">{tasksData?.total || 218}</div>
-                          <div className="text-xs text-muted-foreground">
-                            (109 prod + 109 archive)
-                          </div>
-                        </>
-                      )}
-                    </td>
-                    <td className="text-center p-3">
-                      <span className="text-muted-foreground">N/A</span>
-                    </td>
-                    <td className="text-center p-3">
-                      <span className="text-muted-foreground">—</span>
-                    </td>
-                    <td className="text-center p-3">
-                      <Badge variant="outline">{tasksLoading ? 'Loading...' : '109 Active'}</Badge>
-                    </td>
-                  </tr>
-                  <tr className="bg-green-50/50">
-                    <td className="p-3">
-                      <div className="font-semibold text-green-700">Tasks/ Functions</div>
-                      <div className="text-xs text-muted-foreground">
-                        Called BY: Scheduled jobs • CALLS: Workers/
-                      </div>
-                    </td>
-                    <td className="text-center p-3 font-semibold">109</td>
-                    <td className="text-center p-3 font-semibold text-green-600">109</td>
-                    <td className="text-center p-3 font-semibold text-green-600">102</td>
-                    <td className="text-center p-3">
-                      <Badge className="bg-green-600">95%</Badge>
-                    </td>
-                  </tr>
-                  <tr className="bg-yellow-50/50">
-                    <td className="p-3">
-                      <div className="font-semibold text-yellow-700">Workers/ Functions</div>
-                      <div className="text-xs text-muted-foreground">
-                        Called BY: Tasks/ (via function.run) AND test endpoints
-                      </div>
-                    </td>
-                    <td className="text-center p-3 font-semibold">194</td>
-                    <td className="text-center p-3">
-                      <div className="font-semibold text-yellow-600">~187</div>
-                      <div className="text-xs text-muted-foreground">Unmapped*</div>
-                    </td>
-                    <td className="text-center p-3">
-                      <div className="font-semibold text-yellow-600">?</div>
-                      <div className="text-xs text-muted-foreground">Unknown</div>
-                    </td>
-                    <td className="text-center p-3">
-                      <Badge variant="outline" className="text-yellow-600">
-                        Endpoints exist
-                      </Badge>
-                    </td>
-                  </tr>
-                  <tr className="bg-blue-50/50 border-t-2">
-                    <td className="p-3">
-                      <div className="font-semibold text-blue-700">
-                        Test Endpoints (WORKERS API)
-                      </div>
-                      <div className="text-xs text-muted-foreground">
-                        For programmatic testing/control
-                      </div>
-                    </td>
-                    <td className="text-center p-3 font-semibold">324</td>
-                    <td className="text-center p-3">
-                      <span className="text-muted-foreground">Self</span>
-                    </td>
-                    <td className="text-center p-3 font-semibold text-blue-600">312</td>
-                    <td className="text-center p-3">
-                      <Badge className="bg-blue-600">96%</Badge>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+              {/* Mapping Status */}
+              <div className="mt-4 p-4 bg-orange-50 rounded-lg border border-orange-200">
+                <div className="font-semibold text-orange-900 mb-2">
+                  ⚠️ Function-Endpoint Mapping Status:
+                </div>
+                <div className="text-sm space-y-1">
+                  <div>
+                    • <strong>324 WORKERS API endpoints exist</strong> (312 working, 96%)
+                  </div>
+                  <div>
+                    • <strong>137 mapped to functions:</strong> 101 Tasks/ + 36 Utils/
+                  </div>
+                  <div>
+                    • <strong>187 unmapped:</strong> Endpoints exist but we don't know which
+                    Workers/ function they call
+                  </div>
+                  <div className="text-xs text-orange-700 mt-2">
+                    * Name-based heuristics failed for Workers/ - need to inspect each endpoint's
+                    XanoScript to map correctly
+                  </div>
+                </div>
+              </div>
 
-            {/* Mapping Status */}
-            <div className="mt-4 p-4 bg-orange-50 rounded-lg border border-orange-200">
-              <div className="font-semibold text-orange-900 mb-2">
-                ⚠️ Function-Endpoint Mapping Status:
+              {/* The Math */}
+              <div className="mt-4 p-4 bg-amber-50 rounded-lg border border-amber-200">
+                <div className="font-semibold text-amber-900 mb-2">
+                  Why "Functions: {migration_score.functions}%"?
+                </div>
+                <div className="text-sm space-y-1 font-mono">
+                  <div>Tasks/ passing: 102</div>
+                  <div>Workers/ passing: 0 (endpoints exist but unmapped)</div>
+                  <div className="border-t border-amber-300 pt-1 mt-1">
+                    Total active functions: 109 + 194 = 303
+                  </div>
+                  <div className="text-amber-900 font-semibold">
+                    Pass rate: 102 ÷ 303 = {migration_score.functions}%
+                  </div>
+                  <div className="text-xs text-amber-700 mt-2">
+                    * This understates reality - many Workers/ likely have working endpoints, we
+                    just can't map them
+                  </div>
+                </div>
               </div>
-              <div className="text-sm space-y-1">
-                <div>
-                  • <strong>324 WORKERS API endpoints exist</strong> (312 working, 96%)
-                </div>
-                <div>
-                  • <strong>137 mapped to functions:</strong> 101 Tasks/ + 36 Utils/
-                </div>
-                <div>
-                  • <strong>187 unmapped:</strong> Endpoints exist but we don't know which Workers/
-                  function they call
-                </div>
-                <div className="text-xs text-orange-700 mt-2">
-                  * Name-based heuristics failed for Workers/ - need to inspect each endpoint's
-                  XanoScript to map correctly
-                </div>
-              </div>
-            </div>
 
-            {/* The Math */}
-            <div className="mt-4 p-4 bg-amber-50 rounded-lg border border-amber-200">
-              <div className="font-semibold text-amber-900 mb-2">
-                Why "Functions: {migration_score.functions}%"?
-              </div>
-              <div className="text-sm space-y-1 font-mono">
-                <div>Tasks/ passing: 102</div>
-                <div>Workers/ passing: 0 (endpoints exist but unmapped)</div>
-                <div className="border-t border-amber-300 pt-1 mt-1">
-                  Total active functions: 109 + 194 = 303
+              {/* What This Means */}
+              <div className="mt-4 p-4 bg-green-50 rounded-lg border border-green-200">
+                <div className="font-semibold text-green-900 mb-2">
+                  ✅ What This Actually Means:
                 </div>
-                <div className="text-amber-900 font-semibold">
-                  Pass rate: 102 ÷ 303 = {migration_score.functions}%
-                </div>
-                <div className="text-xs text-amber-700 mt-2">
-                  * This understates reality - many Workers/ likely have working endpoints, we just
-                  can't map them
-                </div>
-              </div>
-            </div>
-
-            {/* What This Means */}
-            <div className="mt-4 p-4 bg-green-50 rounded-lg border border-green-200">
-              <div className="font-semibold text-green-900 mb-2">✅ What This Actually Means:</div>
-              <ul className="text-sm space-y-1 text-green-800">
-                <li>
-                  • <strong>1:1 Mapping:</strong> 109 scheduled jobs → call → 109 Tasks/ functions
-                  (+ 109 archived jobs)
-                </li>
-                <li>
-                  • <strong>Tasks/:</strong> 109 functions exist → 102 test endpoints mapped &
-                  working (95%) ✅
-                </li>
-                <li>
-                  • <strong>Workers/:</strong> 194 functions exist → ~187 test endpoints exist
-                  (unmapped) + validated indirectly via Tasks ✅
-                </li>
-                <li>
-                  • <strong>WORKERS API:</strong> 324 total test endpoints → 312 working (96%) ✅
-                </li>
-                <li>
-                  • <strong>Reality:</strong> Backend is healthy - {migration_score.functions}%
-                  understates reality because 187 Worker endpoints exist but aren't mapped to
-                  specific functions
-                </li>
-              </ul>
-              <div className="mt-3 p-3 bg-white rounded border border-green-300">
-                <div className="text-xs font-semibold text-green-900 mb-1">
-                  Next Step to Fix Mapping:
-                </div>
-                <div className="text-xs text-green-800">
-                  Inspect each WORKERS API endpoint's XanoScript (via get_endpoint) to see which
-                  function it calls → build complete mapping
+                <ul className="text-sm space-y-1 text-green-800">
+                  <li>
+                    • <strong>1:1 Mapping:</strong> 109 scheduled jobs → call → 109 Tasks/ functions
+                    (+ 109 archived jobs)
+                  </li>
+                  <li>
+                    • <strong>Tasks/:</strong> 109 functions exist → 102 test endpoints mapped &
+                    working (95%) ✅
+                  </li>
+                  <li>
+                    • <strong>Workers/:</strong> 194 functions exist → ~187 test endpoints exist
+                    (unmapped) + validated indirectly via Tasks ✅
+                  </li>
+                  <li>
+                    • <strong>WORKERS API:</strong> 324 total test endpoints → 312 working (96%) ✅
+                  </li>
+                  <li>
+                    • <strong>Reality:</strong> Backend is healthy - {migration_score.functions}%
+                    understates reality because 187 Worker endpoints exist but aren't mapped to
+                    specific functions
+                  </li>
+                </ul>
+                <div className="mt-3 p-3 bg-white rounded border border-green-300">
+                  <div className="text-xs font-semibold text-green-900 mb-1">
+                    Next Step to Fix Mapping:
+                  </div>
+                  <div className="text-xs text-green-800">
+                    Inspect each WORKERS API endpoint's XanoScript (via get_endpoint) to see which
+                    function it calls → build complete mapping
+                  </div>
                 </div>
               </div>
-            </div>
-          </CardContent>
-        </Card>
-      </details>
+            </CardContent>
+          </Card>
+        </CollapsibleContent>
+      </Collapsible>
 
       {/* Complete Flow Mapping - The Cognitive Map - COLLAPSIBLE */}
-      <details className="group">
-        <summary className="cursor-pointer list-none">
-          <Card className="border-2 border-indigo-200 bg-indigo-50/50 hover:border-indigo-400 transition-colors">
+      <Collapsible open={sampleFlowOpen} onOpenChange={setSampleFlowOpen}>
+        <CollapsibleTrigger asChild>
+          <Card className="border-2 border-indigo-200 bg-indigo-50/50 hover:border-indigo-400 transition-colors cursor-pointer">
             <CardHeader>
               <div className="flex items-center justify-between">
                 <div>
                   <CardTitle className="flex items-center gap-2">
                     <Activity className="h-5 w-5" />
                     Sample Flow: Team Roster Sync
-                    <span className="text-sm font-normal text-muted-foreground ml-2">
-                      Click to expand
-                    </span>
+                    <ChevronDown
+                      className={`h-4 w-4 text-muted-foreground transition-transform ${sampleFlowOpen ? 'rotate-180' : ''}`}
+                    />
                   </CardTitle>
                   <CardDescription>
-                    Complete chain: Background Task → Tasks/ → Workers/ → Test Endpoint
+                    Complete chain: Background Task &rarr; Tasks/ &rarr; Workers/ &rarr; Test
+                    Endpoint
                   </CardDescription>
                 </div>
               </div>
             </CardHeader>
           </Card>
-        </summary>
-        <Card className="border-2 border-indigo-200 bg-indigo-50/50 mt-2">
-          <CardContent className="pt-6">
-            {/* Sample Flow - Team Roster */}
-            <div className="space-y-4">
-              <div className="text-sm font-semibold mb-3">Sample Flow (Team Roster Sync):</div>
+        </CollapsibleTrigger>
+        <CollapsibleContent>
+          <Card className="border-2 border-indigo-200 bg-indigo-50/50 mt-2">
+            <CardContent className="pt-6">
+              {/* Sample Flow - Team Roster */}
+              <div className="space-y-4">
+                <div className="text-sm font-semibold mb-3">Sample Flow (Team Roster Sync):</div>
 
-              <div className="bg-white rounded-lg p-4 border-l-4 border-indigo-500">
-                <div className="space-y-3">
-                  {/* Step 1: Background Task */}
-                  <div className="flex items-start gap-3">
-                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 font-semibold text-sm">
-                      1
-                    </div>
-                    <div className="flex-1">
-                      <div className="text-sm font-semibold text-indigo-900">
-                        Background Task (Scheduled)
+                <div className="bg-white rounded-lg p-4 border-l-4 border-indigo-500">
+                  <div className="space-y-3">
+                    {/* Step 1: Background Task */}
+                    <div className="flex items-start gap-3">
+                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 font-semibold text-sm">
+                        1
                       </div>
-                      <div className="text-sm text-muted-foreground mt-1">
-                        "Team Roster Sync" • Runs: Daily at 3:00 AM
-                      </div>
-                      <Badge variant="outline" className="mt-2 text-xs">
-                        Cron Job
-                      </Badge>
-                    </div>
-                  </div>
-
-                  <div className="ml-4 border-l-2 border-indigo-200 pl-6 py-2">
-                    <div className="text-lg text-indigo-400">↓ calls</div>
-                  </div>
-
-                  {/* Step 2: Tasks/ Function */}
-                  <div className="flex items-start gap-3">
-                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-700 font-semibold text-sm">
-                      2
-                    </div>
-                    <div className="flex-1">
-                      <div className="text-sm font-semibold text-green-900">Tasks/ Function</div>
-                      <code className="text-xs bg-green-50 px-2 py-1 rounded mt-1 inline-block">
-                        Tasks/Syncing - Team Roster
-                      </code>
-                      <div className="text-sm text-muted-foreground mt-2">
-                        Main logic for syncing team roster data
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="ml-4 border-l-2 border-green-200 pl-6 py-2">
-                    <div className="text-lg text-green-400">↓ calls (via function.run)</div>
-                  </div>
-
-                  {/* Step 3: Workers/ Functions */}
-                  <div className="flex items-start gap-3">
-                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-700 font-semibold text-sm">
-                      3
-                    </div>
-                    <div className="flex-1">
-                      <div className="text-sm font-semibold text-yellow-900">
-                        Workers/ Functions (Helpers)
-                      </div>
-                      <div className="space-y-1 mt-2">
-                        <code className="text-xs bg-yellow-50 px-2 py-1 rounded block w-fit">
-                          Workers/Enrich Team Members from Agent Data
-                        </code>
-                        <code className="text-xs bg-yellow-50 px-2 py-1 rounded block w-fit">
-                          Workers/Team - Roster Counts
-                        </code>
-                        <code className="text-xs bg-yellow-50 px-2 py-1 rounded block w-fit">
-                          Workers/Utility - Get API Key Data
-                        </code>
-                      </div>
-                      <div className="text-xs text-muted-foreground mt-2">
-                        + potentially more (need XanoScript inspection to see full chain)
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="ml-4 border-l-2 border-blue-200 pl-6 py-2">
-                    <div className="text-lg text-blue-400">↓ all accessible via</div>
-                  </div>
-
-                  {/* Step 4: Test Endpoint */}
-                  <div className="flex items-start gap-3">
-                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-semibold text-sm">
-                      4
-                    </div>
-                    <div className="flex-1">
-                      <div className="text-sm font-semibold text-blue-900">
-                        Test Endpoint (For Programmatic Control)
-                      </div>
-                      <code className="text-xs bg-blue-50 px-2 py-1 rounded mt-1 inline-block">
-                        POST /test-function-8066-team-roster
-                      </code>
-                      <div className="text-sm text-muted-foreground mt-2">
-                        WORKERS API • Triggers same flow as scheduled task
-                      </div>
-                      <div className="mt-2 flex gap-2">
-                        <Badge className="bg-blue-600 text-xs">✅ HTTP 200</Badge>
-                        <Badge variant="outline" className="text-xs">
-                          96% pass rate
+                      <div className="flex-1">
+                        <div className="text-sm font-semibold text-indigo-900">
+                          Background Task (Scheduled)
+                        </div>
+                        <div className="text-sm text-muted-foreground mt-1">
+                          "Team Roster Sync" • Runs: Daily at 3:00 AM
+                        </div>
+                        <Badge variant="outline" className="mt-2 text-xs">
+                          Cron Job
                         </Badge>
                       </div>
                     </div>
-                  </div>
-                </div>
-              </div>
 
-              {/* Known Mappings (101 Tasks/) */}
-              <div className="mt-6">
-                <details className="cursor-pointer">
-                  <summary className="text-sm font-semibold text-indigo-900 mb-3 hover:text-indigo-700">
-                    📋 Known Tasks/ → Endpoint Mappings (101/109 mapped) - Click to expand
-                  </summary>
-                  <div className="mt-3 space-y-2 max-h-96 overflow-y-auto">
-                    <div className="grid grid-cols-2 gap-2 text-xs">
-                      <div className="font-semibold text-muted-foreground">Tasks/ Function</div>
-                      <div className="font-semibold text-muted-foreground">Test Endpoint</div>
+                    <div className="ml-4 border-l-2 border-indigo-200 pl-6 py-2">
+                      <div className="text-lg text-indigo-400">↓ calls</div>
                     </div>
-                    {[
-                      {
-                        func: 'Tasks/AD - Email Network News Daily',
-                        endpoint: '/ad-email-network-news-weekly',
-                      },
-                      {
-                        func: 'Tasks/AD - Upload Agent Images to Cloud',
-                        endpoint: '/ad-upload-team-roster-images',
-                      },
-                      {
-                        func: 'Tasks/reZEN - Network Downline Sync v2',
-                        endpoint: '/onboarding-process-network-downline',
-                      },
-                      {
-                        func: 'Tasks/reZEN - Transactions Sync Worker 1',
-                        endpoint: '/skyslope-account-users-sync-worker-1',
-                      },
-                      {
-                        func: 'Tasks/reZEN - Transactions Sync Worker 2',
-                        endpoint: '/skyslope-account-users-sync-worker-1',
-                      },
-                      {
-                        func: 'Tasks/reZEN - Onboarding Load Listings',
-                        endpoint: '/test-rezen-load-user-60',
-                      },
-                      {
-                        func: 'Tasks/reZEN - Team Roster Caps Splits',
-                        endpoint: '/team-roster-caps-splits',
-                      },
-                      {
-                        func: 'Tasks/FUB - Onboarding Calls Worker 1',
-                        endpoint: '/fub-onboarding-calls-worker-1',
-                      },
-                      {
-                        func: 'Tasks/Syncing - Team Roster',
-                        endpoint: '/test-function-8066-team-roster',
-                      },
-                      {
-                        func: '+ 92 more Tasks/ functions...',
-                        endpoint: '(see function-endpoint-mapping.json)',
-                      },
-                    ].map((item, idx) => (
-                      <div
-                        key={idx}
-                        className="grid grid-cols-2 gap-2 text-xs py-1 border-b border-gray-100"
-                      >
-                        <code className="text-green-700">{item.func}</code>
-                        <code className="text-blue-700">{item.endpoint}</code>
-                      </div>
-                    ))}
-                  </div>
-                </details>
-              </div>
 
-              {/* Need Full Mapping Notice */}
-              <div className="mt-4 p-4 bg-amber-50 rounded-lg border border-amber-200">
-                <div className="text-sm font-semibold text-amber-900 mb-2">
-                  📊 To Show Complete Flow Map for All 109 Background Tasks:
+                    {/* Step 2: Tasks/ Function */}
+                    <div className="flex items-start gap-3">
+                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-700 font-semibold text-sm">
+                        2
+                      </div>
+                      <div className="flex-1">
+                        <div className="text-sm font-semibold text-green-900">Tasks/ Function</div>
+                        <code className="text-xs bg-green-50 px-2 py-1 rounded mt-1 inline-block">
+                          Tasks/Syncing - Team Roster
+                        </code>
+                        <div className="text-sm text-muted-foreground mt-2">
+                          Main logic for syncing team roster data
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="ml-4 border-l-2 border-green-200 pl-6 py-2">
+                      <div className="text-lg text-green-400">↓ calls (via function.run)</div>
+                    </div>
+
+                    {/* Step 3: Workers/ Functions */}
+                    <div className="flex items-start gap-3">
+                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-700 font-semibold text-sm">
+                        3
+                      </div>
+                      <div className="flex-1">
+                        <div className="text-sm font-semibold text-yellow-900">
+                          Workers/ Functions (Helpers)
+                        </div>
+                        <div className="space-y-1 mt-2">
+                          <code className="text-xs bg-yellow-50 px-2 py-1 rounded block w-fit">
+                            Workers/Enrich Team Members from Agent Data
+                          </code>
+                          <code className="text-xs bg-yellow-50 px-2 py-1 rounded block w-fit">
+                            Workers/Team - Roster Counts
+                          </code>
+                          <code className="text-xs bg-yellow-50 px-2 py-1 rounded block w-fit">
+                            Workers/Utility - Get API Key Data
+                          </code>
+                        </div>
+                        <div className="text-xs text-muted-foreground mt-2">
+                          + potentially more (need XanoScript inspection to see full chain)
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="ml-4 border-l-2 border-blue-200 pl-6 py-2">
+                      <div className="text-lg text-blue-400">↓ all accessible via</div>
+                    </div>
+
+                    {/* Step 4: Test Endpoint */}
+                    <div className="flex items-start gap-3">
+                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-semibold text-sm">
+                        4
+                      </div>
+                      <div className="flex-1">
+                        <div className="text-sm font-semibold text-blue-900">
+                          Test Endpoint (For Programmatic Control)
+                        </div>
+                        <code className="text-xs bg-blue-50 px-2 py-1 rounded mt-1 inline-block">
+                          POST /test-function-8066-team-roster
+                        </code>
+                        <div className="text-sm text-muted-foreground mt-2">
+                          WORKERS API • Triggers same flow as scheduled task
+                        </div>
+                        <div className="mt-2 flex gap-2">
+                          <Badge className="bg-blue-600 text-xs">✅ HTTP 200</Badge>
+                          <Badge variant="outline" className="text-xs">
+                            96% pass rate
+                          </Badge>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div className="text-sm text-amber-800 space-y-1">
-                  <div>
-                    <strong>What We Have:</strong>
+
+                {/* Known Mappings (101 Tasks/) */}
+                <Collapsible open={knownMappingsOpen} onOpenChange={setKnownMappingsOpen}>
+                  <CollapsibleTrigger className="mt-6 flex items-center gap-2 text-sm font-semibold text-indigo-900 hover:text-indigo-700 cursor-pointer">
+                    Known Tasks/ &rarr; Endpoint Mappings (101/109 mapped)
+                    <ChevronDown
+                      className={`h-4 w-4 transition-transform ${knownMappingsOpen ? 'rotate-180' : ''}`}
+                    />
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <div className="mt-3 space-y-2 max-h-96 overflow-y-auto">
+                      <div className="grid grid-cols-2 gap-2 text-xs">
+                        <div className="font-semibold text-muted-foreground">Tasks/ Function</div>
+                        <div className="font-semibold text-muted-foreground">Test Endpoint</div>
+                      </div>
+                      {[
+                        {
+                          func: 'Tasks/AD - Email Network News Daily',
+                          endpoint: '/ad-email-network-news-weekly',
+                        },
+                        {
+                          func: 'Tasks/AD - Upload Agent Images to Cloud',
+                          endpoint: '/ad-upload-team-roster-images',
+                        },
+                        {
+                          func: 'Tasks/reZEN - Network Downline Sync v2',
+                          endpoint: '/onboarding-process-network-downline',
+                        },
+                        {
+                          func: 'Tasks/reZEN - Transactions Sync Worker 1',
+                          endpoint: '/skyslope-account-users-sync-worker-1',
+                        },
+                        {
+                          func: 'Tasks/reZEN - Transactions Sync Worker 2',
+                          endpoint: '/skyslope-account-users-sync-worker-1',
+                        },
+                        {
+                          func: 'Tasks/reZEN - Onboarding Load Listings',
+                          endpoint: '/test-rezen-load-user-60',
+                        },
+                        {
+                          func: 'Tasks/reZEN - Team Roster Caps Splits',
+                          endpoint: '/team-roster-caps-splits',
+                        },
+                        {
+                          func: 'Tasks/FUB - Onboarding Calls Worker 1',
+                          endpoint: '/fub-onboarding-calls-worker-1',
+                        },
+                        {
+                          func: 'Tasks/Syncing - Team Roster',
+                          endpoint: '/test-function-8066-team-roster',
+                        },
+                        {
+                          func: '+ 92 more Tasks/ functions...',
+                          endpoint: '(see function-endpoint-mapping.json)',
+                        },
+                      ].map((item, idx) => (
+                        <div
+                          key={idx}
+                          className="grid grid-cols-2 gap-2 text-xs py-1 border-b border-gray-100"
+                        >
+                          <code className="text-green-700">{item.func}</code>
+                          <code className="text-blue-700">{item.endpoint}</code>
+                        </div>
+                      ))}
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+
+                {/* Need Full Mapping Notice */}
+                <div className="mt-4 p-4 bg-amber-50 rounded-lg border border-amber-200">
+                  <div className="text-sm font-semibold text-amber-900 mb-2">
+                    To Show Complete Flow Map for All 109 Background Tasks:
                   </div>
-                  <div>• ✅ 218 background tasks (via /api/v2/background-tasks)</div>
-                  <div>• ✅ 109 Tasks/ functions (1:1 with active background tasks)</div>
-                  <div>• ✅ 101/109 Tasks/ → test endpoint mappings</div>
-                  <div className="mt-2">
-                    <strong>What We Need:</strong>
+                  <div className="text-sm text-amber-800 space-y-1">
+                    <div>
+                      <strong>What We Have:</strong>
+                    </div>
+                    <div>* 218 background tasks (via /api/v2/background-tasks)</div>
+                    <div>* 109 Tasks/ functions (1:1 with active background tasks)</div>
+                    <div>* 101/109 Tasks/ to test endpoint mappings</div>
+                    <div className="mt-2">
+                      <strong>What We Need:</strong>
+                    </div>
+                    <div>
+                      * XanoScript inspection for each Tasks/ function to see Workers/ calls
+                    </div>
+                    <div>* ~187 unmapped Workers/ to test endpoint mappings</div>
+                    <div className="text-xs text-amber-700 mt-2">
+                      Once complete, this would show every chain: Background Task &rarr; Tasks/
+                      &rarr; Workers/ &rarr; Test Endpoint
+                    </div>
                   </div>
-                  <div>
-                    • ❌ XanoScript inspection for each Tasks/ function to see Workers/ calls
-                  </div>
-                  <div>• ❌ ~187 unmapped Workers/ → test endpoint mappings</div>
-                  <div className="text-xs text-amber-700 mt-2">
-                    Once complete, this would show every chain: Background Task → Tasks/ → Workers/
-                    → Test Endpoint
-                  </div>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="mt-3"
+                    onClick={() => {
+                      alert(
+                        'Building complete flow map would:\n\n1. Fetch all 218 background tasks\n2. For each active task (109), get its Tasks/ function\n3. Use get_function to inspect XanoScript\n4. Parse function.run calls to find Workers/\n5. Map test endpoints to both Tasks/ and Workers/\n6. Build visual dependency graph\n\nThis is expensive (109 get_function calls) but would create the complete cognitive map you want.'
+                      )
+                    }}
+                  >
+                    Build Complete Flow Map (Expensive Operation)
+                  </Button>
                 </div>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="mt-3"
-                  onClick={() => {
-                    alert(
-                      'Building complete flow map would:\n\n1. Fetch all 218 background tasks\n2. For each active task (109), get its Tasks/ function\n3. Use get_function to inspect XanoScript\n4. Parse function.run calls to find Workers/\n5. Map test endpoints to both Tasks/ and Workers/\n6. Build visual dependency graph\n\nThis is expensive (109 get_function calls) but would create the complete cognitive map you want.'
-                    )
-                  }}
-                >
-                  Build Complete Flow Map (Expensive Operation)
-                </Button>
               </div>
-            </div>
-          </CardContent>
-        </Card>
-      </details>
+            </CardContent>
+          </Card>
+        </CollapsibleContent>
+      </Collapsible>
 
       {/* Record Count Comparison Card */}
       <Card className="border-2 border-blue-200 bg-blue-50/50">
-        <CardHeader>
+        <CardHeader className="p-6">
           <CardTitle className="flex items-center gap-2">
             <Database className="h-5 w-5" />
             Live Record Count Comparison
@@ -988,21 +1015,17 @@ export function LiveMigrationStatus() {
             Real-time record counts from both workspaces via snappy CLI
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-6 pt-0">
           {countsLoading ? (
-            <div className="flex items-center justify-center py-8">
-              <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
-              <span className="ml-3 text-lg text-muted-foreground">
-                Fetching live record counts...
-              </span>
+            <div className="py-8">
+              <LoadingState size="lg" message="Fetching live record counts..." />
             </div>
           ) : countsError || !countsData?.success ? (
-            <div className="text-center py-8">
-              <p className="text-destructive font-semibold">Error loading record counts</p>
-              <p className="text-sm text-muted-foreground mt-2">
-                {countsError?.message || countsData?.error || 'Unknown error'}
-              </p>
-            </div>
+            <AlertBanner
+              variant="critical"
+              title="Error loading record counts"
+              description={countsError?.message || countsData?.error || 'Unknown error'}
+            />
           ) : (
             <div className="grid grid-cols-3 gap-6">
               <div className="text-center">
@@ -1039,14 +1062,16 @@ export function LiveMigrationStatus() {
 
       {/* Entity-by-Entity Sync Status with Delta Indicators */}
       <Card className="border-2 border-emerald-200 bg-emerald-50/30">
-        <CardHeader>
+        <CardHeader className="p-6">
           <div className="flex items-center justify-between">
             <div>
               <CardTitle className="flex items-center gap-2">
                 <Activity className="h-5 w-5" />
                 Entity Sync Status
               </CardTitle>
-              <CardDescription>Real-time V1 → V2 sync status with delta indicators</CardDescription>
+              <CardDescription>
+                Real-time V1 &rarr; V2 sync status with delta indicators
+              </CardDescription>
             </div>
             <div className="flex items-center gap-3">
               {syncLastUpdated && (
@@ -1066,19 +1091,17 @@ export function LiveMigrationStatus() {
             </div>
           </div>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-6 pt-0">
           {syncLoading && !syncData ? (
-            <div className="flex items-center justify-center py-8">
-              <Loader2 className="h-8 w-8 animate-spin text-emerald-600" />
-              <span className="ml-3 text-lg text-muted-foreground">Fetching sync status...</span>
+            <div className="py-8">
+              <LoadingState size="lg" message="Fetching sync status..." />
             </div>
           ) : syncError ? (
-            <div className="text-center py-8">
-              <p className="text-destructive font-semibold">Error loading sync status</p>
-              <p className="text-sm text-muted-foreground mt-2">
-                {syncError?.message || 'Unknown error'}
-              </p>
-            </div>
+            <AlertBanner
+              variant="critical"
+              title="Error loading sync status"
+              description={syncError?.message || 'Unknown error'}
+            />
           ) : syncData?.entity_counts ? (
             <div className="space-y-4">
               {/* Legend */}
@@ -1233,22 +1256,19 @@ export function LiveMigrationStatus() {
       <div className="grid grid-cols-3 gap-4">
         {/* Tables */}
         <Card>
-          <CardHeader>
+          <CardHeader className="p-6 pb-4">
             <CardTitle className="flex items-center gap-2">
               <Database className="h-5 w-5" />
               Tables
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="p-6 pt-0 space-y-4">
             <div>
               <div className="text-sm text-muted-foreground">V1 (Production)</div>
               <div className="text-2xl font-bold">{v1.tables.count}</div>
               <div className="text-xs text-muted-foreground">
                 {countsLoading ? (
-                  <span className="inline-flex items-center gap-1">
-                    <Loader2 className="h-3 w-3 animate-spin" />
-                    Loading...
-                  </span>
+                  <LoadingState size="sm" message="Loading..." />
                 ) : countsError || !countsData?.success ? (
                   <span className="text-destructive">Error loading counts</span>
                 ) : (
@@ -1261,10 +1281,7 @@ export function LiveMigrationStatus() {
               <div className="text-2xl font-bold text-green-600">{v2.tables.count}</div>
               <div className="text-xs text-muted-foreground">
                 {countsLoading ? (
-                  <span className="inline-flex items-center gap-1">
-                    <Loader2 className="h-3 w-3 animate-spin" />
-                    Loading...
-                  </span>
+                  <LoadingState size="sm" message="Loading..." />
                 ) : countsError || !countsData?.success ? (
                   <span className="text-destructive">Error loading counts</span>
                 ) : (
@@ -1334,11 +1351,8 @@ export function LiveMigrationStatus() {
               {integrityExpanded && (
                 <div className="mt-3 space-y-2">
                   {integrityLoading ? (
-                    <div className="flex items-center justify-center py-4">
-                      <Loader2 className="h-5 w-5 animate-spin text-blue-600" />
-                      <span className="ml-2 text-sm text-muted-foreground">
-                        Validating foreign keys...
-                      </span>
+                    <div className="py-4">
+                      <LoadingState size="sm" message="Validating foreign keys..." />
                     </div>
                   ) : integrityError || !integrityData?.success ? (
                     <div className="text-sm text-destructive">
@@ -1423,13 +1437,13 @@ export function LiveMigrationStatus() {
 
         {/* Functions */}
         <Card>
-          <CardHeader>
+          <CardHeader className="p-6 pb-4">
             <CardTitle className="flex items-center gap-2">
               <FunctionSquare className="h-5 w-5" />
               Functions
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="p-6 pt-0 space-y-4">
             <div>
               <div className="text-sm text-muted-foreground">V2 Total Functions</div>
               <div className="text-2xl font-bold">{v2.functions.count}</div>
@@ -1468,13 +1482,13 @@ export function LiveMigrationStatus() {
 
         {/* Endpoints */}
         <Card>
-          <CardHeader>
+          <CardHeader className="p-6 pb-4">
             <CardTitle className="flex items-center gap-2">
               <Zap className="h-5 w-5" />
               Endpoints
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="p-6 pt-0 space-y-4">
             <div>
               <div className="text-sm text-muted-foreground">V2 Total Endpoints</div>
               <div className="text-2xl font-bold text-green-600">{v2.endpoints.count}</div>
@@ -1594,13 +1608,13 @@ export function LiveMigrationStatus() {
 
       {/* Status Info */}
       <Card>
-        <CardHeader>
+        <CardHeader className="p-6 pb-4">
           <CardTitle className="flex items-center gap-2">
             <CheckCircle2 className="h-5 w-5" />
             What&apos;s Validated
           </CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-6 pt-0">
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <div className="flex items-center gap-2">
@@ -1645,7 +1659,7 @@ export function LiveMigrationStatus() {
       {/* Endpoint Test Results Details */}
       {endpointDetailsExpanded && healthData?.success && (
         <Card>
-          <CardHeader>
+          <CardHeader className="p-6 pb-4">
             <CardTitle className="flex items-center gap-2">
               <Activity className="h-5 w-5" />
               Endpoint Test Results
@@ -1654,7 +1668,7 @@ export function LiveMigrationStatus() {
               Individual endpoint test results with curl testing capability
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="p-6 pt-0">
             <div className="space-y-2">
               {healthData.results.map(
                 (
