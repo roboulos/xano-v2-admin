@@ -1,0 +1,194 @@
+{
+  "created_at": "2026-02-04T19:14:53.722177Z",
+  "epic": {
+    "data": {
+      "branch_name": "fn-11-ufo",
+      "created_at": "2026-02-04T19:12:08.671498Z",
+      "depends_on_epics": [],
+      "id": "fn-11-ufo",
+      "next_task": 1,
+      "plan_review_status": "unknown",
+      "plan_reviewed_at": null,
+      "spec_path": ".flow/specs/fn-11-ufo.md",
+      "status": "open",
+      "title": "Dashboard Design Polish - Professional Client Presentation",
+      "updated_at": "2026-02-04T19:12:40.870084Z"
+    },
+    "spec": "# Dashboard Design Polish - Professional Client Presentation\n\n## Overview\n\nThe xano-v2-admin dashboard has 15 tabs with **inconsistent design quality**. Some tabs (Endpoints, Architecture, Blockers) look clean and professional, while others lag behind with inconsistent patterns, missing states, and visual inconsistencies. This epic brings ALL tabs up to the same professional standard for client presentation.\n\n**Reference Tabs (Gold Standard):**\n- `blockers-tab.tsx` - Best PageHeader, AlertBanner, MetricCards, EmptyState patterns\n- `architecture-tab.tsx` - Clean Card structure, CollapsibleSection pattern\n- `endpoint-catalog-tab.tsx` - Search/filter UI, expandable details, copy functionality\n\n**Tabs Needing Work:**\n- `functions-tab.tsx` - Missing PageHeader, inconsistent badges, no alert banners\n- `background-tasks-tab.tsx` - Missing PageHeader, no metric cards, no alerts\n- `live-migration-status.tsx` - 1759 lines monolith, uses HTML `<details>` instead of ShadCN\n- `transformation-story-tab.tsx` - Missing PageHeader, weak loading states\n- `status-dashboard-tab.tsx` - Good but needs alert banners, refresh button\n- `gaps-tab.tsx` - Duplicate badges, raw button styling\n- `checklist-tab.tsx` - Good but missing alert banners for blocked items\n- `parallel-comparison-tab.tsx` - Missing alert banners for mismatches\n\n## Scope\n\n**In Scope:**\n- Extract 6 duplicate Badge components to `/components/ui/`\n- Extract shared MetricCard and ProgressBar components\n- Standardize PageHeader pattern across all tabs\n- Add consistent AlertBanner, LoadingState, EmptyState patterns\n- Fix spacing inconsistencies (define tokens in globals.css)\n- Ensure every tab has: header, refresh, export (where applicable)\n\n**Out of Scope (Future Work):**\n- Tab consolidation (reducing 15 tabs to 5-6) - separate epic\n- Splitting `live-migration-status.tsx` into sub-components - separate refactor\n- Adding \"presentation mode\" for client demos\n\n## Approach\n\n**Phase 1: Extract Shared Components (Foundation)**\n1. Extract SeverityBadge, StatusBadge, PriorityBadge, CategoryBadge, MethodBadge\n2. Extract MetricCard and ProgressBar from status-dashboard-tab\n3. Create AlertBanner, LoadingState, EmptyState shared components\n4. Define spacing tokens in globals.css\n\n**Phase 2: Apply to Migration Tabs**\n5. Polish status-dashboard-tab.tsx\n6. Polish gaps-tab.tsx\n7. Polish checklist-tab.tsx\n(blockers-tab.tsx is already gold standard)\n\n**Phase 3: Apply to Doc Tabs**\n8. Polish data-model-tab.tsx\n9. Polish integration-guide-tab.tsx\n(architecture-tab.tsx and endpoint-catalog-tab.tsx already good)\n\n**Phase 4: Apply to Live/Tool Tabs**\n10. Polish functions-tab.tsx\n11. Polish background-tasks-tab.tsx\n12. Polish transformation-story-tab.tsx\n13. Polish parallel-comparison-tab.tsx\n14. Polish live-migration-status.tsx (styling only, no split)\n\n**Phase 5: Apply to Machine 2.0 Tabs**\n15. Polish schema-tab.tsx\n16. Polish backend-validation-tab.tsx\n\n## Quick commands\n\n```bash\n# Build to verify no TypeScript errors\npnpm build\n\n# Run dev server to visually verify\npnpm dev\n\n# Check all tabs visually at http://localhost:3000\n```\n\n## Risks & Dependencies\n\n**Risks:**\n- `live-migration-status.tsx` at 1759 lines may have styling deeply coupled to logic\n- Existing duplicate badges have slight variations - need to pick canonical version\n\n**Dependencies:**\n- Extends work from fn-4-tkb (Frontend Enhancement)\n- Should coordinate with fn-2/fn-3 (ESLint/Prettier) if active\n\n## Acceptance\n\n- [ ] All 6 duplicate Badge components extracted to `/components/ui/`\n- [ ] MetricCard and ProgressBar are shared components\n- [ ] AlertBanner, LoadingState, EmptyState patterns consistent across tabs\n- [ ] Spacing tokens defined in globals.css and used consistently\n- [ ] All 15 tabs visually reviewed and matching quality standard\n- [ ] `pnpm build` passes with no TypeScript errors\n- [ ] No regressions in functionality\n\n## References\n\n- Reference patterns: `components/migration-tabs/blockers-tab.tsx` (lines 19-66 for badges, 221-264 for metrics)\n- Existing UI components: `components/ui/` (15+ ShadCN components)\n- UX proposal: `UX_REORGANIZATION_PROPOSAL.md` (tab consolidation for future)\n- Practice research: ShadCN dashboard patterns, Tailwind CSS 4 design tokens\n"
+  },
+  "epic_id": "fn-11-ufo",
+  "schema_version": 2,
+  "tasks": [
+    {
+      "data": {
+        "assignee": null,
+        "claim_note": "",
+        "claimed_at": null,
+        "created_at": "2026-02-04T19:12:51.061804Z",
+        "depends_on": [],
+        "epic": "fn-11-ufo",
+        "id": "fn-11-ufo.1",
+        "priority": null,
+        "spec_path": ".flow/tasks/fn-11-ufo.1.md",
+        "status": "todo",
+        "title": "Extract duplicate Badge components to /components/ui/",
+        "updated_at": "2026-02-04T19:13:06.841670Z"
+      },
+      "id": "fn-11-ufo.1",
+      "runtime": null,
+      "spec": "# fn-11-ufo.1 Extract duplicate Badge components to /components/ui/\n\n## Description\nExtract 6 duplicate Badge components currently scattered across tab files into reusable `/components/ui/` components.\n\n**Size:** S\n**Files:**\n- `components/ui/severity-badge.tsx` (new)\n- `components/ui/status-badge.tsx` (consolidate existing)\n- `components/ui/priority-badge.tsx` (new)\n- `components/ui/category-badge.tsx` (new)\n- `components/ui/method-badge.tsx` (new)\n- `components/migration-tabs/blockers-tab.tsx` (remove inline definitions)\n- `components/migration-tabs/gaps-tab.tsx` (remove inline definitions)\n- `components/migration-tabs/checklist-tab.tsx` (remove inline definitions)\n- `components/doc-tabs/endpoint-catalog-tab.tsx` (remove inline definitions)\n\n## Approach\n\nFollow pattern from `components/ui/badge.tsx` (line 1-36) for structure.\n\nExtract from:\n- SeverityBadge: `blockers-tab.tsx:19-33`, `gaps-tab.tsx:25-37`\n- StatusBadge: `blockers-tab.tsx:35-49`, `gaps-tab.tsx:39-51` (also has existing `status-badge.tsx`)\n- PriorityBadge: `checklist-tab.tsx:25-39`\n- CategoryBadge: `blockers-tab.tsx:51-66`\n- MethodBadge: `endpoint-catalog-tab.tsx:34-48`\n\n## Key context\n\n- Existing `components/ui/status-badge.tsx` has different API - consolidate both versions\n- Use `cva` from class-variance-authority for variant styling (already used in badge.tsx)\n## Acceptance\n- [ ] SeverityBadge extracted to `/components/ui/severity-badge.tsx`\n- [ ] StatusBadge consolidated in `/components/ui/status-badge.tsx`\n- [ ] PriorityBadge extracted to `/components/ui/priority-badge.tsx`\n- [ ] CategoryBadge extracted to `/components/ui/category-badge.tsx`\n- [ ] MethodBadge extracted to `/components/ui/method-badge.tsx`\n- [ ] All tab files updated to import from `/components/ui/`\n- [ ] No duplicate Badge definitions remain in tab files\n- [ ] `pnpm build` passes\n## Done summary\nTBD\n\n## Evidence\n- Commits:\n- Tests:\n- PRs:\n"
+    },
+    {
+      "data": {
+        "assignee": null,
+        "claim_note": "",
+        "claimed_at": null,
+        "created_at": "2026-02-04T19:12:51.458423Z",
+        "depends_on": [],
+        "epic": "fn-11-ufo",
+        "id": "fn-11-ufo.2",
+        "priority": null,
+        "spec_path": ".flow/tasks/fn-11-ufo.2.md",
+        "status": "todo",
+        "title": "Extract MetricCard and ProgressBar shared components",
+        "updated_at": "2026-02-04T19:13:16.249266Z"
+      },
+      "id": "fn-11-ufo.2",
+      "runtime": null,
+      "spec": "# fn-11-ufo.2 Extract MetricCard and ProgressBar shared components\n\n## Description\nExtract MetricCard and ProgressBar components from status-dashboard-tab into reusable shared components.\n\n**Size:** S\n**Files:**\n- `components/ui/metric-card.tsx` (new)\n- `components/ui/progress-bar.tsx` (new)\n- `components/migration-tabs/status-dashboard-tab.tsx` (remove inline definitions)\n- `components/migration-tabs/checklist-tab.tsx` (uses ProgressBar pattern)\n\n## Approach\n\nExtract MetricCard from `status-dashboard-tab.tsx:56-80`. Props: title, value, subtitle, highlight (boolean for emphasis).\n\nExtract ProgressBar from `status-dashboard-tab.tsx:82-96`. Props: value (0-100), label, showPercentage, colorThresholds.\n\nFollow existing Card component pattern from `components/ui/card.tsx`.\n\n## Key context\n\n- MetricCard uses conditional `highlight` class for primary emphasis\n- ProgressBar has color thresholds: green >= 75%, blue >= 50%, yellow >= 25%, red < 25%\n## Acceptance\n- [ ] MetricCard extracted to `/components/ui/metric-card.tsx`\n- [ ] ProgressBar extracted to `/components/ui/progress-bar.tsx`\n- [ ] status-dashboard-tab.tsx imports from `/components/ui/`\n- [ ] checklist-tab.tsx uses shared ProgressBar\n- [ ] Components have TypeScript types for props\n- [ ] `pnpm build` passes\n## Done summary\nTBD\n\n## Evidence\n- Commits:\n- Tests:\n- PRs:\n"
+    },
+    {
+      "data": {
+        "assignee": null,
+        "claim_note": "",
+        "claimed_at": null,
+        "created_at": "2026-02-04T19:12:51.629740Z",
+        "depends_on": [],
+        "epic": "fn-11-ufo",
+        "id": "fn-11-ufo.3",
+        "priority": null,
+        "spec_path": ".flow/tasks/fn-11-ufo.3.md",
+        "status": "todo",
+        "title": "Create AlertBanner, LoadingState, EmptyState shared components",
+        "updated_at": "2026-02-04T19:13:32.541704Z"
+      },
+      "id": "fn-11-ufo.3",
+      "runtime": null,
+      "spec": "# fn-11-ufo.3 Create AlertBanner, LoadingState, EmptyState shared components\n\n## Description\nCreate reusable AlertBanner, LoadingState, and EmptyState components for consistent UX patterns.\n\n**Size:** S\n**Files:**\n- `components/ui/alert-banner.tsx` (new)\n- `components/ui/loading-state.tsx` (new)\n- `components/ui/empty-state.tsx` (new)\n\n## Approach\n\n**AlertBanner** - Follow pattern from `blockers-tab.tsx:268-296`:\n- Props: variant (critical/warning/info/success), title, description, icon (optional)\n- Colors: red for critical, yellow for warning, blue for info, green for success\n\n**LoadingState** - Follow pattern from `parallel-comparison-tab.tsx:164-175`:\n- Props: message (optional), size (sm/md/lg)\n- Uses Loader2 icon with animate-spin\n\n**EmptyState** - Follow pattern from `blockers-tab.tsx:334-338`:\n- Props: icon, title, description\n- Centered layout with icon above text\n\n## Key context\n\n- AlertBanner should support dark mode (use semantic colors)\n- LoadingState should match existing Loader2 animation\n- EmptyState commonly uses CheckCircle2 for \"no issues\" states\n## Acceptance\n- [ ] AlertBanner with critical/warning/info/success variants\n- [ ] LoadingState with customizable message and size\n- [ ] EmptyState with icon, title, description props\n- [ ] All components support dark mode\n- [ ] TypeScript types exported for all props\n- [ ] `pnpm build` passes\n## Done summary\nTBD\n\n## Evidence\n- Commits:\n- Tests:\n- PRs:\n"
+    },
+    {
+      "data": {
+        "assignee": null,
+        "claim_note": "",
+        "claimed_at": null,
+        "created_at": "2026-02-04T19:12:51.873352Z",
+        "depends_on": [],
+        "epic": "fn-11-ufo",
+        "id": "fn-11-ufo.4",
+        "priority": null,
+        "spec_path": ".flow/tasks/fn-11-ufo.4.md",
+        "status": "todo",
+        "title": "Define spacing tokens in globals.css",
+        "updated_at": "2026-02-04T19:13:32.742285Z"
+      },
+      "id": "fn-11-ufo.4",
+      "runtime": null,
+      "spec": "# fn-11-ufo.4 Define spacing tokens in globals.css\n\n## Description\nDefine consistent spacing tokens in globals.css and document usage patterns.\n\n**Size:** S\n**Files:**\n- `app/globals.css` (add tokens)\n\n## Approach\n\nAdd CSS custom properties under existing `:root` section (line 3-29):\n\n```css\n/* Spacing tokens */\n--spacing-section: 1.5rem;    /* space-y-6 - between major sections */\n--spacing-content: 1rem;      /* space-y-4 - between content items */\n--spacing-card: 1.5rem;       /* p-6 - standard card padding */\n--spacing-card-compact: 1rem; /* p-4 - compact card padding */\n--spacing-inline: 0.5rem;     /* gap-2 - inline element gaps */\n```\n\nDocument which Tailwind classes map to which use cases.\n\n## Key context\n\n- Current inconsistency: tabs use mix of space-y-4, space-y-6, space-y-8\n- Current inconsistency: cards use mix of p-3, p-4, p-6\n- Don't change existing tabs yet - just define the tokens\n## Acceptance\n- [ ] Spacing tokens defined in globals.css :root\n- [ ] Tokens documented with use case comments\n- [ ] Dark mode variants if needed\n- [ ] `pnpm build` passes\n## Done summary\nTBD\n\n## Evidence\n- Commits:\n- Tests:\n- PRs:\n"
+    },
+    {
+      "data": {
+        "assignee": null,
+        "claim_note": "",
+        "claimed_at": null,
+        "created_at": "2026-02-04T19:12:52.037961Z",
+        "depends_on": ["fn-11-ufo.1", "fn-11-ufo.2", "fn-11-ufo.3", "fn-11-ufo.4"],
+        "epic": "fn-11-ufo",
+        "id": "fn-11-ufo.5",
+        "priority": null,
+        "spec_path": ".flow/tasks/fn-11-ufo.5.md",
+        "status": "todo",
+        "title": "Polish migration tabs (status-dashboard, gaps, checklist)",
+        "updated_at": "2026-02-04T19:14:21.782125Z"
+      },
+      "id": "fn-11-ufo.5",
+      "runtime": null,
+      "spec": "# fn-11-ufo.5 Polish migration tabs (status-dashboard, gaps, checklist)\n\n## Description\nApply shared components and consistent patterns to migration tabs (status-dashboard, gaps, checklist). Blockers tab is already gold standard.\n\n**Size:** M\n**Files:**\n- `components/migration-tabs/status-dashboard-tab.tsx`\n- `components/migration-tabs/gaps-tab.tsx`\n- `components/migration-tabs/checklist-tab.tsx`\n\n## Approach\n\n**status-dashboard-tab.tsx:**\n- Already has good PageHeader pattern\n- Import shared MetricCard (replace inline)\n- Import shared ProgressBar (replace inline)\n- Add AlertBanner for critical status (e.g., sync < 50%)\n- Add refresh button to header\n\n**gaps-tab.tsx:**\n- Import shared SeverityBadge, StatusBadge (replace inline definitions)\n- Add AlertBanner for critical gaps count\n- Replace raw export button with ShadCN Button\n\n**checklist-tab.tsx:**\n- Import shared PriorityBadge (replace inline)\n- Import shared ProgressBar\n- Add AlertBanner when blocked items > 0\n- Standardize spacing with tokens\n\n## Key context\n\n- Follow patterns from `blockers-tab.tsx` as reference\n- All tabs should have consistent header structure\n## Acceptance\n- [ ] status-dashboard uses shared MetricCard and ProgressBar\n- [ ] status-dashboard has refresh button in header\n- [ ] status-dashboard has AlertBanner for critical status\n- [ ] gaps-tab uses shared Badge components\n- [ ] gaps-tab has AlertBanner for critical gaps\n- [ ] gaps-tab uses ShadCN Button for export\n- [ ] checklist-tab uses shared components\n- [ ] checklist-tab has AlertBanner for blocked items\n- [ ] Consistent spacing across all three tabs\n- [ ] `pnpm build` passes\n## Done summary\nTBD\n\n## Evidence\n- Commits:\n- Tests:\n- PRs:\n"
+    },
+    {
+      "data": {
+        "assignee": null,
+        "claim_note": "",
+        "claimed_at": null,
+        "created_at": "2026-02-04T19:12:52.320834Z",
+        "depends_on": ["fn-11-ufo.1", "fn-11-ufo.3", "fn-11-ufo.4"],
+        "epic": "fn-11-ufo",
+        "id": "fn-11-ufo.6",
+        "priority": null,
+        "spec_path": ".flow/tasks/fn-11-ufo.6.md",
+        "status": "todo",
+        "title": "Polish doc tabs (data-model, integration-guide)",
+        "updated_at": "2026-02-04T19:14:22.253266Z"
+      },
+      "id": "fn-11-ufo.6",
+      "runtime": null,
+      "spec": "# fn-11-ufo.6 Polish doc tabs (data-model, integration-guide)\n\n## Description\nApply shared components and consistent patterns to doc tabs (data-model, integration-guide). Architecture and endpoint-catalog are already good.\n\n**Size:** S\n**Files:**\n- `components/doc-tabs/data-model-tab.tsx`\n- `components/doc-tabs/integration-guide-tab.tsx`\n\n## Approach\n\n**data-model-tab.tsx:**\n- Add consistent PageHeader if missing\n- Use shared Badge components for any status indicators\n- Ensure consistent Card structure\n- Use standard spacing tokens\n\n**integration-guide-tab.tsx:**\n- Add consistent PageHeader if missing\n- Use shared Badge components\n- Ensure consistent Card structure\n- Add EmptyState for sections without content\n\n## Key context\n\n- Follow patterns from `architecture-tab.tsx` for Card/CollapsibleSection usage\n- Follow patterns from `endpoint-catalog-tab.tsx` for expandable detail sections\n## Acceptance\n- [ ] data-model-tab has consistent PageHeader\n- [ ] data-model-tab uses standard Card structure\n- [ ] integration-guide-tab has consistent PageHeader\n- [ ] integration-guide-tab uses shared components\n- [ ] Consistent spacing with spacing tokens\n- [ ] `pnpm build` passes\n## Done summary\nTBD\n\n## Evidence\n- Commits:\n- Tests:\n- PRs:\n"
+    },
+    {
+      "data": {
+        "assignee": null,
+        "claim_note": "",
+        "claimed_at": null,
+        "created_at": "2026-02-04T19:12:52.504917Z",
+        "depends_on": ["fn-11-ufo.1", "fn-11-ufo.2", "fn-11-ufo.3", "fn-11-ufo.4"],
+        "epic": "fn-11-ufo",
+        "id": "fn-11-ufo.7",
+        "priority": null,
+        "spec_path": ".flow/tasks/fn-11-ufo.7.md",
+        "status": "todo",
+        "title": "Polish tool tabs (functions, background-tasks, transformation-story, parallel-comparison)",
+        "updated_at": "2026-02-04T19:14:22.815414Z"
+      },
+      "id": "fn-11-ufo.7",
+      "runtime": null,
+      "spec": "# fn-11-ufo.7 Polish tool tabs (functions, background-tasks, transformation-story, parallel-comparison)\n\n## Description\nApply shared components and consistent patterns to tool tabs (functions, background-tasks, transformation-story, parallel-comparison).\n\n**Size:** M\n**Files:**\n- `components/functions-tab.tsx`\n- `components/background-tasks-tab.tsx`\n- `components/transformation-story-tab.tsx`\n- `components/parallel-comparison-tab.tsx`\n\n## Approach\n\n**functions-tab.tsx:**\n- Add proper PageHeader with title and description (missing)\n- Replace inline CATEGORY_COLORS badges with shared Badge\n- Replace getStatusBadge() with shared StatusBadge\n- Add AlertBanner when test failures exist\n- Improve EmptyState with icon (line 349-351)\n\n**background-tasks-tab.tsx:**\n- Add proper PageHeader (missing)\n- Add metric summary cards row\n- Add AlertBanner for inactive critical tasks\n- Improve EmptyState with icon (line 147-149)\n\n**transformation-story-tab.tsx:**\n- Add proper PageHeader with description (missing, line 154)\n- Add export functionality\n- Improve LoadingState (line 246-248) to use shared component\n- Add AlertBanner for sync warnings\n\n**parallel-comparison-tab.tsx:**\n- Already has PageHeader (good)\n- Add AlertBanner for significant mismatches\n- Standardize summary cards with MetricCard\n\n## Key context\n\n- functions-tab at 477 lines has most work needed\n- transformation-story-tab was recently created - ensure it matches standard\n## Acceptance\n- [ ] functions-tab has PageHeader with description\n- [ ] functions-tab uses shared Badge components\n- [ ] functions-tab has AlertBanner for test failures\n- [ ] functions-tab has proper EmptyState with icon\n- [ ] background-tasks-tab has PageHeader\n- [ ] background-tasks-tab has metric summary cards\n- [ ] background-tasks-tab has AlertBanner capability\n- [ ] transformation-story-tab has PageHeader\n- [ ] transformation-story-tab uses shared LoadingState\n- [ ] parallel-comparison-tab has AlertBanner for mismatches\n- [ ] All tabs use consistent spacing tokens\n- [ ] `pnpm build` passes\n## Done summary\nTBD\n\n## Evidence\n- Commits:\n- Tests:\n- PRs:\n"
+    },
+    {
+      "data": {
+        "assignee": null,
+        "claim_note": "",
+        "claimed_at": null,
+        "created_at": "2026-02-04T19:12:52.680802Z",
+        "depends_on": ["fn-11-ufo.1", "fn-11-ufo.3", "fn-11-ufo.4"],
+        "epic": "fn-11-ufo",
+        "id": "fn-11-ufo.8",
+        "priority": null,
+        "spec_path": ".flow/tasks/fn-11-ufo.8.md",
+        "status": "todo",
+        "title": "Polish live-migration-status.tsx styling",
+        "updated_at": "2026-02-04T19:14:23.233088Z"
+      },
+      "id": "fn-11-ufo.8",
+      "runtime": null,
+      "spec": "# fn-11-ufo.8 Polish live-migration-status.tsx styling\n\n## Description\nApply consistent styling patterns to live-migration-status.tsx without restructuring the component.\n\n**Size:** M\n**Files:**\n- `components/live-migration-status.tsx`\n\n## Approach\n\nThis is a 1759-line monolith. Do NOT split it (separate epic). Focus on styling consistency only:\n\n1. **Replace HTML details with ShadCN Collapsible** where used\n2. **Add proper PageHeader** with title and description (line 166-171)\n3. **Standardize button styling** - replace raw buttons with ShadCN Button\n4. **Use shared Badge components** for status indicators\n5. **Use shared LoadingState** for loading patterns\n6. **Use shared AlertBanner** for critical sync warnings\n7. **Standardize Card padding** to use spacing tokens\n8. **Remove inline color calculations** where possible - use semantic classes\n\n## Key context\n\n- Don't refactor logic, only styling\n- Component has 5+ SWR calls - ensure loading states are consistent\n- Multiple sections: Architecture, Migration Score, Technical Deep Dive, Sample Flow, Record Count, Entity Sync, V1/V2 Comparison, Status Info\n## Acceptance\n- [ ] HTML details replaced with ShadCN Collapsible\n- [ ] PageHeader added with title and description\n- [ ] All buttons use ShadCN Button component\n- [ ] Badge components use shared components\n- [ ] LoadingState uses shared component\n- [ ] AlertBanner added for critical sync warnings\n- [ ] Card padding uses spacing tokens\n- [ ] No inline color calculations (use semantic classes)\n- [ ] `pnpm build` passes\n- [ ] No functionality regressions\n## Done summary\nTBD\n\n## Evidence\n- Commits:\n- Tests:\n- PRs:\n"
+    },
+    {
+      "data": {
+        "assignee": null,
+        "claim_note": "",
+        "claimed_at": null,
+        "created_at": "2026-02-04T19:12:52.854454Z",
+        "depends_on": ["fn-11-ufo.1", "fn-11-ufo.3", "fn-11-ufo.4"],
+        "epic": "fn-11-ufo",
+        "id": "fn-11-ufo.9",
+        "priority": null,
+        "spec_path": ".flow/tasks/fn-11-ufo.9.md",
+        "status": "todo",
+        "title": "Polish machine 2.0 tabs (schema, backend-validation)",
+        "updated_at": "2026-02-04T19:14:23.637343Z"
+      },
+      "id": "fn-11-ufo.9",
+      "runtime": null,
+      "spec": "# fn-11-ufo.9 Polish machine 2.0 tabs (schema, backend-validation)\n\n## Description\nApply shared components and consistent patterns to machine 2.0 tabs (schema, backend-validation).\n\n**Size:** S\n**Files:**\n- `components/machine-2/schema-tab.tsx`\n- `components/machine-2/backend-validation-tab.tsx`\n\n## Approach\n\n**schema-tab.tsx (1079 lines):**\n- Add proper PageHeader if missing\n- Use shared Badge components for any status indicators\n- Ensure consistent Card structure\n- Info note section (line 1053-1075) could use AlertBanner info variant\n- Standardize spacing\n\n**backend-validation-tab.tsx:**\n- Add proper PageHeader if missing\n- Use shared Badge components\n- Use shared LoadingState and EmptyState\n- Standardize Card structure and spacing\n\n## Key context\n\n- schema-tab.tsx is large (1079 lines) but well-structured\n- Both tabs are part of \"Machine 2.0\" system - should match blockers-tab quality\n## Acceptance\n- [ ] schema-tab has proper PageHeader\n- [ ] schema-tab uses shared Badge components\n- [ ] schema-tab info note uses AlertBanner info variant\n- [ ] backend-validation-tab has proper PageHeader\n- [ ] backend-validation-tab uses shared components\n- [ ] Both tabs use consistent spacing tokens\n- [ ] `pnpm build` passes\n## Done summary\nTBD\n\n## Evidence\n- Commits:\n- Tests:\n- PRs:\n"
+    }
+  ]
+}

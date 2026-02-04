@@ -1,0 +1,14 @@
+{
+  "assignee": null,
+  "claim_note": "",
+  "claimed_at": null,
+  "created_at": "2026-02-04T17:43:14.057774Z",
+  "depends_on": ["fn-10-p87.4"],
+  "epic": "fn-10-p87",
+  "id": "fn-10-p87.5",
+  "priority": null,
+  "spec_path": ".flow/tasks/fn-10-p87.5.md",
+  "status": "todo",
+  "title": "Update CLAUDE.md and README.md with monitoring sections",
+  "updated_at": "2026-02-04T17:44:34.755234Z"
+}

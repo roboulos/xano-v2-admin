@@ -15,55 +15,9 @@ import {
 } from '@/lib/blockers'
 import { Card } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-
-function SeverityBadge({ severity }: { severity: string }) {
-  const styles = {
-    low: 'bg-blue-100 text-blue-800',
-    medium: 'bg-yellow-100 text-yellow-800',
-    high: 'bg-orange-100 text-orange-800',
-    critical: 'bg-red-100 text-red-800',
-  }
-  return (
-    <span
-      className={`px-2 py-1 rounded text-xs font-semibold ${styles[severity as keyof typeof styles] || styles.medium}`}
-    >
-      {severity.charAt(0).toUpperCase() + severity.slice(1)}
-    </span>
-  )
-}
-
-function StatusBadge({ status }: { status: string }) {
-  const styles: Record<string, string> = {
-    open: 'bg-red-100 text-red-800',
-    'in-progress': 'bg-blue-100 text-blue-800',
-    escalated: 'bg-orange-100 text-orange-800',
-    resolved: 'bg-green-100 text-green-800',
-  }
-  return (
-    <span
-      className={`px-2 py-1 rounded text-xs font-semibold ${styles[status] || 'bg-gray-100 text-gray-800'}`}
-    >
-      {status.charAt(0).toUpperCase() + status.slice(1)}
-    </span>
-  )
-}
-
-function CategoryBadge({ category }: { category: string }) {
-  const styles: Record<string, string> = {
-    technical: 'bg-purple-100 text-purple-800',
-    resource: 'bg-indigo-100 text-indigo-800',
-    dependency: 'bg-cyan-100 text-cyan-800',
-    stakeholder: 'bg-pink-100 text-pink-800',
-    data: 'bg-teal-100 text-teal-800',
-  }
-  return (
-    <span
-      className={`px-2 py-0.5 rounded text-xs font-semibold ${styles[category] || 'bg-gray-100 text-gray-800'}`}
-    >
-      {category.charAt(0).toUpperCase() + category.slice(1)}
-    </span>
-  )
-}
+import { SeverityBadge } from '@/components/ui/severity-badge'
+import { SimpleStatusBadge } from '@/components/ui/status-badge'
+import { CategoryBadge } from '@/components/ui/category-badge'
 
 interface BlockerCardProps {
   blocker: Blocker
@@ -92,7 +46,7 @@ function BlockerCard({ blocker, showImpact = false }: BlockerCardProps) {
           </div>
           <div className="flex gap-2 flex-shrink-0">
             <SeverityBadge severity={blocker.severity} />
-            <StatusBadge status={blocker.status} />
+            <SimpleStatusBadge status={blocker.status} />
           </div>
         </div>
 

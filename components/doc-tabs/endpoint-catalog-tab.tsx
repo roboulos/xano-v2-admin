@@ -6,6 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Badge } from '@/components/ui/badge'
 import { Input } from '@/components/ui/input'
 import { CodeBlock } from '@/components/ui/code-block'
+import { MethodBadge } from '@/components/ui/method-badge'
 import {
   ENDPOINT_CATALOG,
   getEndpointsByGroup,
@@ -17,17 +18,6 @@ import {
 } from '@/lib/documentation/endpoint-catalog-data'
 import type { EndpointDoc } from '@/lib/documentation/types'
 import { ChevronDown, ChevronUp, Copy, Check } from 'lucide-react'
-
-function MethodBadge({ method }: { method: string }) {
-  const colors: Record<string, string> = {
-    GET: 'bg-blue-100 text-blue-800',
-    POST: 'bg-green-100 text-green-800',
-    PUT: 'bg-yellow-100 text-yellow-800',
-    PATCH: 'bg-orange-100 text-orange-800',
-    DELETE: 'bg-red-100 text-red-800',
-  }
-  return <Badge className={colors[method] || 'bg-gray-100 text-gray-800'}>{method}</Badge>
-}
 
 function CopyButton({ text }: { text: string }) {
   const [copied, setCopied] = useState(false)

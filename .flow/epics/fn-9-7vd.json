@@ -1,0 +1,13 @@
+{
+  "branch_name": "fn-9-v2-data-integrity",
+  "created_at": "2026-02-04T05:50:21.849304Z",
+  "depends_on_epics": [],
+  "id": "fn-9-7vd",
+  "next_task": 1,
+  "plan_review_status": "unknown",
+  "plan_reviewed_at": null,
+  "spec_path": ".flow/specs/fn-9-7vd.md",
+  "status": "open",
+  "title": "V2 Data Integrity - Fix Orphans and Validate System",
+  "updated_at": "2026-02-04T05:50:47.868241Z"
+}

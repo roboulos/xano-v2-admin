@@ -1,0 +1,14 @@
+{
+  "assignee": null,
+  "claim_note": "",
+  "claimed_at": null,
+  "created_at": "2026-02-04T17:43:04.250154Z",
+  "depends_on": ["fn-10-p87.6"],
+  "epic": "fn-10-p87",
+  "id": "fn-10-p87.1",
+  "priority": null,
+  "spec_path": ".flow/tasks/fn-10-p87.1.md",
+  "status": "todo",
+  "title": "Extend sync endpoint to cover agents/transactions/participants",
+  "updated_at": "2026-02-04T18:06:11.431316Z"
+}

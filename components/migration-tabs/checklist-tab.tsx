@@ -15,23 +15,7 @@ import {
 } from '@/lib/checklists'
 import { Card } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-
-function PriorityBadge({ priority }: { priority: string }) {
-  const styles = {
-    low: 'bg-blue-100 text-blue-800',
-    medium: 'bg-yellow-100 text-yellow-800',
-    high: 'bg-orange-100 text-orange-800',
-    critical: 'bg-red-100 text-red-800',
-  }
-
-  return (
-    <span
-      className={`px-2 py-0.5 rounded text-xs font-semibold ${styles[priority as keyof typeof styles] || styles.medium}`}
-    >
-      {priority.charAt(0).toUpperCase() + priority.slice(1)}
-    </span>
-  )
-}
+import { PriorityBadge } from '@/components/ui/priority-badge'
 
 function ChecklistItemRow({
   item,

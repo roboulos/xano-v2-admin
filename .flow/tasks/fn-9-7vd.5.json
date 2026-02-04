@@ -1,0 +1,14 @@
+{
+  "assignee": null,
+  "claim_note": "",
+  "claimed_at": null,
+  "created_at": "2026-02-04T05:50:54.780620Z",
+  "depends_on": ["fn-9-7vd.3", "fn-9-7vd.4"],
+  "epic": "fn-9-7vd",
+  "id": "fn-9-7vd.5",
+  "priority": null,
+  "spec_path": ".flow/tasks/fn-9-7vd.5.md",
+  "status": "todo",
+  "title": "Update documentation to accurately describe V2 state",
+  "updated_at": "2026-02-04T05:52:35.632972Z"
+}

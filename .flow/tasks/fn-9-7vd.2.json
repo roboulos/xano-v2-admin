@@ -1,0 +1,14 @@
+{
+  "assignee": null,
+  "claim_note": "",
+  "claimed_at": null,
+  "created_at": "2026-02-04T05:50:53.991888Z",
+  "depends_on": ["fn-9-7vd.1"],
+  "epic": "fn-9-7vd",
+  "id": "fn-9-7vd.2",
+  "priority": null,
+  "spec_path": ".flow/tasks/fn-9-7vd.2.md",
+  "status": "todo",
+  "title": "Delete orphaned child records from V2 tables",
+  "updated_at": "2026-02-04T05:51:20.335273Z"
+}

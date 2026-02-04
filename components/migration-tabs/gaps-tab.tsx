@@ -15,50 +15,10 @@ import {
 } from '@/lib/gap-detection'
 import { Card } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { SeverityBadge } from '@/components/ui/severity-badge'
+import { SimpleStatusBadge } from '@/components/ui/status-badge'
 
 type GapTab = 'data' | 'endpoints' | 'schema' | 'integrity'
-
-interface SeverityBadgeProps {
-  severity: 'low' | 'medium' | 'high' | 'critical'
-}
-
-function SeverityBadge({ severity }: SeverityBadgeProps) {
-  const styles = {
-    low: 'bg-blue-100 text-blue-800',
-    medium: 'bg-yellow-100 text-yellow-800',
-    high: 'bg-orange-100 text-orange-800',
-    critical: 'bg-red-100 text-red-800',
-  }
-
-  return (
-    <span className={`px-2 py-1 rounded-full text-xs font-semibold ${styles[severity]}`}>
-      {severity.charAt(0).toUpperCase() + severity.slice(1)}
-    </span>
-  )
-}
-
-interface StatusBadgeProps {
-  status: string
-}
-
-function StatusBadge({ status }: StatusBadgeProps) {
-  const styles: Record<string, string> = {
-    unresolved: 'bg-red-100 text-red-800',
-    'in-progress': 'bg-blue-100 text-blue-800',
-    resolved: 'bg-green-100 text-green-800',
-    missing: 'bg-red-100 text-red-800',
-    incomplete: 'bg-yellow-100 text-yellow-800',
-    deprecated: 'bg-gray-100 text-gray-800',
-  }
-
-  return (
-    <span
-      className={`px-2 py-1 rounded text-xs font-semibold ${styles[status] || 'bg-gray-100 text-gray-800'}`}
-    >
-      {status.charAt(0).toUpperCase() + status.slice(1).replace('-', ' ')}
-    </span>
-  )
-}
 
 function DataGapCard({ gap }: { gap: DataGap }) {
   return (
@@ -86,7 +46,7 @@ function DataGapCard({ gap }: { gap: DataGap }) {
         </div>
         <div>
           <div className="text-muted-foreground text-xs">Resolution</div>
-          <StatusBadge status={gap.resolutionStatus} />
+          <SimpleStatusBadge status={gap.resolutionStatus} />
         </div>
       </div>
 
@@ -142,7 +102,7 @@ function EndpointGapCard({ gap }: { gap: EndpointGap }) {
         </div>
       )}
 
-      <StatusBadge status={gap.status} />
+      <SimpleStatusBadge status={gap.status} />
     </div>
   )
 }

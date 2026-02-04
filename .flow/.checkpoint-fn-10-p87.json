@@ -1,0 +1,118 @@
+{
+  "created_at": "2026-02-04T18:01:11.806031Z",
+  "epic": {
+    "data": {
+      "branch_name": "fn-10-p87",
+      "created_at": "2026-02-04T17:42:13.702797Z",
+      "depends_on_epics": ["fn-2-riv", "fn-4-tkb"],
+      "id": "fn-10-p87",
+      "next_task": 1,
+      "plan_review_status": "unknown",
+      "plan_reviewed_at": null,
+      "spec_path": ".flow/specs/fn-10-p87.md",
+      "status": "open",
+      "title": "V1/V2 Sync Fix + Trust-Building Admin Dashboard",
+      "updated_at": "2026-02-04T17:44:36.310330Z"
+    },
+    "spec": "# V1/V2 Sync Fix + Trust-Building Admin Dashboard\n\n## Overview\n\nThe V2 system underwent a massive architectural transformation (251 JSONB tables \u2192 196 normalized tables) but has a critical gap: **V1 and V2 are independent systems syncing from the same external APIs**. There is no V1\u2192V2 replication pipeline. When V1 grows, V2 doesn't auto-sync.\n\n**Root Cause:** V2 onboarding jobs only exist for 1 user (user_id: 72). Network/data sync SKIPS when no pending onboarding jobs exist.\n\n**Current Data Gaps:**\n- Users: \u2705 Synced via test-sync endpoint (335 = 335)\n- Network: \u2705 Synced (V2 superset: 86,623 vs 86,617)\n- Transactions: \u274c -2,596 behind V1\n- Agents: \u274c -491 behind V1\n- Participants: \u274c -29,175 behind V1\n- FUB People: \u274c -87% (1.49M missing)\n- FUB Calls: \u274c -90% (4.89M missing)\n\n**Solution:** Extend the existing cross-workspace SQL sync (endpoint 18027) to cover all core tables, then build a trust-building admin dashboard that tells the transformation story.\n\n## Scope\n\n### In Scope\n1. Fix continuous V1\u2192V2 sync for core tables (users, network, agents, transactions, participants)\n2. Build admin dashboard with \"transformation story\" view\n3. Document migration scale (tables, functions, endpoints transformed)\n4. Add real-time sync status monitoring\n5. Prove data integrity through live verification\n\n### Out of Scope\n- FUB historical backfill (1.49M records) - separate epic\n- Demo data sync - not needed in V2\n- Webhook forwarding from V1 to V2 - complex, ongoing maintenance\n\n## Approach\n\n### Phase 1: Extend Sync Pipeline\nUse existing cross-workspace SQL pattern from endpoint 18027 (`api:20LTQtIX/test-sync`):\n- Add agent sync (mvpw1\u2192mvpw5 with JSONB extraction)\n- Add transaction sync\n- Add participant sync\n- Add background task schedule for continuous sync\n\n### Phase 2: Build Trust Dashboard\nEnhance `live-migration-status.tsx` with:\n- Transformation story tab (what WAS \u2192 what IS)\n- Scale metrics (251\u2192196 tables, JSONB\u2192normalized)\n- Live V1 vs V2 comparison with delta highlighting\n- Function/endpoint migration inventory\n\n### Phase 3: Documentation\nCreate consolidated guides:\n- `V2_SYNC_PIPELINE_GUIDE.md` - How sync works\n- Update `CLAUDE.md` with monitoring section\n- Update `README.md` with sync overview\n\n## Architecture\n\n```\n\u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n\u2502                     V1 Workspace (251 tables)                    \u2502\n\u2502   xmpx-swi5-tlvy.n7c.xano.io - JSONB xdo columns                \u2502\n\u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502   mvpw1_41 (users)  \u2502  mvpw1_48 (network)  \u2502  mvpw1_XX (agents) \u2502\n\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2534\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2534\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n             \u2502                   \u2502                     \u2502\n             \u2502    CROSS-WORKSPACE SQL SYNC            \u2502\n             \u2502    (endpoint 18027 - api:20LTQtIX)     \u2502\n             \u25bc                   \u25bc                     \u25bc\n\u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n\u2502                     V2 Workspace (196 tables)                    \u2502\n\u2502   x2nu-xcjc-vhax.xano.io - Normalized columns                   \u2502\n\u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n\u2502   mvpw5_664 (user)  \u2502  mvpw5_698 (network)  \u2502  mvpw5_670 (agent)\u2502\n\u2502   mvpw5_665 (creds) \u2502  mvpw5_684 (hierarchy)\u2502  mvpw5_671 (cap)  \u2502\n\u2502   mvpw5_666 (subs)  \u2502  mvpw5_690 (prefs)    \u2502  mvpw5_672 (comm) \u2502\n\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n```\n\n## Quick commands\n\n```bash\n# Verify current sync status\ncurl -s -X POST \"https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:20LTQtIX/test-sync\" | jq\n\n# Check aggregation table counts\ncurl -s -X POST \"https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:20LTQtIX/test-sync\" | jq '.aggregation_tables'\n\n# Run dev server\npnpm dev\n```\n\n## Acceptance\n\n- [ ] V2 users = V1 users (100% match)\n- [ ] V2 network \u2265 V1 network (superset OK)\n- [ ] V2 agents within 1% of V1 agents\n- [ ] V2 transactions within 1% of V1 transactions\n- [ ] Admin dashboard shows transformation story (JSONB \u2192 normalized)\n- [ ] Admin dashboard shows live V1 vs V2 deltas\n- [ ] `V2_SYNC_PIPELINE_GUIDE.md` exists with sync architecture\n- [ ] `CLAUDE.md` updated with monitoring section\n- [ ] Client can see at a glance: what was built, what it does, proof it works\n\n## References\n\n- **Existing sync endpoint:** `api:20LTQtIX/test-sync` (endpoint 18027)\n- **V1 table IDs:** users=mvpw1_41, network=mvpw1_48\n- **V2 table IDs:** user=664, network_member=698, agent=670, transaction=675\n- **Admin dashboard:** `/Users/sboulos/Desktop/ai_projects/xano-v2-admin/components/live-migration-status.tsx`\n- **V2 architecture doc:** `/Users/sboulos/Desktop/ai_projects/xano-v2-admin/V2_ARCHITECTURE_OVERVIEW.md`\n- **Table mappings:** `/Users/sboulos/Desktop/ai_projects/xano-v2-admin/V1_V2_TABLE_MAPPING.md`\n- **Daily sync docs:** `/Users/sboulos/Desktop/ai_projects/xano-v2-admin/.flow/docs/013-daily-sync-cycles.md`\n\n## Dependencies\n\n- **fn-2-riv**: V2 System Verification (uses validation infrastructure)\n- **fn-4-tkb**: Xano V2 Admin Frontend Enhancement (same dashboard)\n"
+  },
+  "epic_id": "fn-10-p87",
+  "schema_version": 2,
+  "tasks": [
+    {
+      "data": {
+        "assignee": null,
+        "claim_note": "",
+        "claimed_at": null,
+        "created_at": "2026-02-04T17:43:04.250154Z",
+        "depends_on": [],
+        "epic": "fn-10-p87",
+        "id": "fn-10-p87.1",
+        "priority": null,
+        "spec_path": ".flow/tasks/fn-10-p87.1.md",
+        "status": "todo",
+        "title": "Extend sync endpoint to cover agents/transactions/participants",
+        "updated_at": "2026-02-04T17:44:20.345455Z"
+      },
+      "id": "fn-10-p87.1",
+      "runtime": null,
+      "spec": "# fn-10-p87.1 Extend sync endpoint to cover agents/transactions/participants\n\n## Description\nExtend the existing `test-sync` endpoint (ID 18027, `api:20LTQtIX`) to sync agents, transactions, and participants from V1 to V2 using cross-workspace SQL.\n\n**Size:** M\n**Files:**\n- Xano endpoint 18027 (via MCP)\n- `/lib/mcp-endpoints.ts` (add new sync endpoints if needed)\n\n## Approach\n\nFollow the existing pattern in endpoint 18027 that syncs users and network:\n```sql\nINSERT INTO mvpw5_XXX (columns...)\nSELECT v1.id, (v1.xdo->>'field')::type, ...\nFROM mvpw1_XXX v1\nWHERE v1.id NOT IN (SELECT id FROM mvpw5_XXX)\nON CONFLICT (id) DO NOTHING;\n```\n\n**V1 \u2192 V2 Table Mappings to implement:**\n- `mvpw1_XX` (agents) \u2192 `mvpw5_670` (agent)\n- `mvpw1_XX` (transactions) \u2192 `mvpw5_675` (transaction)\n- `mvpw1_XX` (participants) \u2192 `mvpw5_696` (participant)\n\nMust first discover V1 table IDs for agents/transactions/participants via information_schema query.\n\n## Key context\n\n- V1 uses JSONB `xdo` column - extract fields with `v1.xdo->>'field_name'`\n- V2 uses normalized columns with proper types\n- Cast timestamps: `(v1.xdo->>'created_at')::bigint` (NOT to_timestamp)\n- Use `ON CONFLICT (id) DO NOTHING` for idempotent inserts\n\n## References\n\n- Existing sync pattern: `V1_V2_TABLE_MAPPING.md:298-329`\n- V2 table IDs: `V2_ARCHITECTURE_OVERVIEW.md`\n## Acceptance\n- [ ] V1 agent table ID discovered via information_schema\n- [ ] V1 transaction table ID discovered\n- [ ] V1 participant table ID discovered\n- [ ] Sync endpoint handles agent sync (V2 agents within 1% of V1)\n- [ ] Sync endpoint handles transaction sync (V2 transactions within 1% of V1)\n- [ ] Sync endpoint handles participant sync\n- [ ] Response includes entity counts for all synced tables\n- [ ] curl test confirms sync works: `curl -s -X POST \"https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:20LTQtIX/test-sync\" | jq`\n## Done summary\nTBD\n\n## Evidence\n- Commits:\n- Tests:\n- PRs:\n"
+    },
+    {
+      "data": {
+        "assignee": null,
+        "claim_note": "",
+        "claimed_at": null,
+        "created_at": "2026-02-04T17:43:05.210524Z",
+        "depends_on": ["fn-10-p87.1"],
+        "epic": "fn-10-p87",
+        "id": "fn-10-p87.2",
+        "priority": null,
+        "spec_path": ".flow/tasks/fn-10-p87.2.md",
+        "status": "todo",
+        "title": "Build transformation story dashboard tab",
+        "updated_at": "2026-02-04T17:44:34.144189Z"
+      },
+      "id": "fn-10-p87.2",
+      "runtime": null,
+      "spec": "# fn-10-p87.2 Build transformation story dashboard tab\n\n## Description\nBuild a new dashboard tab that tells the \"transformation story\" - visualizing what V1 WAS (251 JSONB tables) and what V2 IS (196 normalized tables). This builds client trust by showing the scale and sophistication of the migration.\n\n**Size:** M\n**Files:**\n- `components/transformation-story-tab.tsx` (new)\n- `app/page.tsx` (add tab)\n- `lib/v1-data.ts` (V1 table inventory)\n- `lib/v2-data.ts` (V2 table inventory)\n- `lib/table-mappings.ts` (transformation mappings)\n\n## Approach\n\nCreate a visual storytelling component with:\n1. **Before/After Summary** - 251 tables \u2192 196 tables, JSONB \u2192 normalized\n2. **Table Transformation Matrix** - Shows how V1 tables split/merged into V2\n3. **Scale Metrics** - Functions migrated, endpoints created, data transformed\n4. **Visual Diff** - Side-by-side comparison of V1 user table (1 JSONB) vs V2 user tables (7 normalized)\n\nFollow existing tab patterns in `app/page.tsx` using ShadCN Tabs component.\n\n## Key context\n\n- Use existing data from `V1_V2_TABLE_MAPPING.md` for transformation matrix\n- Reference `V2_ARCHITECTURE_OVERVIEW.md` for architecture diagrams\n- Keep it client-friendly - explain WHY normalization matters (performance, integrity, maintainability)\n## Acceptance\n- [ ] New \"Transformation Story\" tab appears in admin dashboard\n- [ ] Shows V1 \u2192 V2 table count comparison (251 \u2192 196)\n- [ ] Shows JSONB \u2192 normalized column transformation visual\n- [ ] Displays at least 3 example transformations (user, agent, transaction)\n- [ ] Includes scale metrics (total functions, endpoints, data records)\n- [ ] Explains WHY normalization was done (performance, integrity)\n- [ ] Client can understand transformation in under 2 minutes of viewing\n- [ ] No TypeScript errors: `pnpm typecheck` passes\n## Done summary\nTBD\n\n## Evidence\n- Commits:\n- Tests:\n- PRs:\n"
+    },
+    {
+      "data": {
+        "assignee": null,
+        "claim_note": "",
+        "claimed_at": null,
+        "created_at": "2026-02-04T17:43:06.933742Z",
+        "depends_on": ["fn-10-p87.1"],
+        "epic": "fn-10-p87",
+        "id": "fn-10-p87.3",
+        "priority": null,
+        "spec_path": ".flow/tasks/fn-10-p87.3.md",
+        "status": "todo",
+        "title": "Add real-time sync monitoring with delta highlighting",
+        "updated_at": "2026-02-04T17:44:34.526531Z"
+      },
+      "id": "fn-10-p87.3",
+      "runtime": null,
+      "spec": "# fn-10-p87.3 Add real-time sync monitoring with delta highlighting\n\n## Description\nEnhance the existing `live-migration-status.tsx` component with real-time delta highlighting - showing V1 vs V2 record counts with visual indicators for gaps.\n\n**Size:** S\n**Files:**\n- `components/live-migration-status.tsx` (modify)\n- `app/api/v2/tables/counts/route.ts` (may need adjustment)\n\n## Approach\n\nExtend existing SWR polling (already 10-second refresh) to:\n1. Add visual delta indicators (green = match, yellow = within 1%, red = significant gap)\n2. Show directional arrows (\u2191 V2 ahead, \u2193 V2 behind)\n3. Add \"last synced\" timestamp\n4. Highlight critical gaps (>5% difference) with alert styling\n\nFollow existing SWR pattern in component:\n```typescript\nconst { data, mutate } = useSWR('/api/migration/status', fetcher, {\n  refreshInterval: 10000,\n})\n```\n\n## Key context\n\n- Component already fetches via `/api/migration/status` endpoint\n- test-sync endpoint returns `entity_counts` with V1/V2 comparison\n- Use ShadCN Badge component for status indicators\n## Acceptance\n- [ ] Delta indicators show: green (match), yellow (within 1%), red (>1% gap)\n- [ ] Directional arrows indicate V2 ahead (\u2191) or behind (\u2193)\n- [ ] \"Last synced\" timestamp displays and updates on each poll\n- [ ] Critical gaps (>5%) have alert styling (red background or border)\n- [ ] Polling continues at 10-second intervals\n- [ ] No performance degradation (component re-renders efficiently)\n- [ ] Visual test: run `pnpm dev` and verify indicators update live\n## Done summary\nTBD\n\n## Evidence\n- Commits:\n- Tests:\n- PRs:\n"
+    },
+    {
+      "data": {
+        "assignee": null,
+        "claim_note": "",
+        "claimed_at": null,
+        "created_at": "2026-02-04T17:43:09.408032Z",
+        "depends_on": [],
+        "epic": "fn-10-p87",
+        "id": "fn-10-p87.4",
+        "priority": null,
+        "spec_path": ".flow/tasks/fn-10-p87.4.md",
+        "status": "todo",
+        "title": "Create V2_SYNC_PIPELINE_GUIDE.md documentation",
+        "updated_at": "2026-02-04T17:44:24.905608Z"
+      },
+      "id": "fn-10-p87.4",
+      "runtime": null,
+      "spec": "# fn-10-p87.4 Create V2_SYNC_PIPELINE_GUIDE.md documentation\n\n## Description\nCreate a comprehensive `V2_SYNC_PIPELINE_GUIDE.md` document that consolidates all sync pipeline knowledge into one authoritative reference.\n\n**Size:** S\n**Files:**\n- `V2_SYNC_PIPELINE_GUIDE.md` (new)\n\n## Approach\n\nConsolidate information from scattered `.flow/docs/` files into single guide:\n- `.flow/docs/013-daily-sync-cycles.md` - Sync schedules\n- `.flow/docs/011-webhook-handlers.md` - Webhook architecture\n- `.flow/docs/014-webhook-event-handling.md` - Event processing\n- `.flow/docs/040-onboarding-job-creation-flow.md` - Job creation\n\nStructure:\n1. **Architecture Overview** - Visual data flow diagram\n2. **Sync Mechanisms** - Cross-workspace SQL, onboarding jobs, webhooks\n3. **Table Mappings** - V1\u2192V2 with column transformations\n4. **Monitoring** - How to check sync status, interpret metrics\n5. **Troubleshooting** - Common issues and fixes\n6. **API Reference** - curl commands for all sync endpoints\n\n## Key context\n\n- Primary sync endpoint: `api:20LTQtIX/test-sync`\n- Follow markdown style from existing `V2_ARCHITECTURE_OVERVIEW.md`\n- Include ASCII diagrams for data flow\n## Acceptance\n- [ ] `V2_SYNC_PIPELINE_GUIDE.md` exists in project root\n- [ ] Contains architecture overview with visual diagram\n- [ ] Documents all sync mechanisms (SQL, jobs, webhooks)\n- [ ] Includes V1\u2192V2 table mapping reference\n- [ ] Has monitoring section with curl commands\n- [ ] Has troubleshooting section with common issues\n- [ ] All curl commands are tested and working\n- [ ] Document is under 500 lines (concise, not overwhelming)\n## Done summary\nTBD\n\n## Evidence\n- Commits:\n- Tests:\n- PRs:\n"
+    },
+    {
+      "data": {
+        "assignee": null,
+        "claim_note": "",
+        "claimed_at": null,
+        "created_at": "2026-02-04T17:43:14.057774Z",
+        "depends_on": ["fn-10-p87.4"],
+        "epic": "fn-10-p87",
+        "id": "fn-10-p87.5",
+        "priority": null,
+        "spec_path": ".flow/tasks/fn-10-p87.5.md",
+        "status": "todo",
+        "title": "Update CLAUDE.md and README.md with monitoring sections",
+        "updated_at": "2026-02-04T17:44:34.755234Z"
+      },
+      "id": "fn-10-p87.5",
+      "runtime": null,
+      "spec": "# fn-10-p87.5 Update CLAUDE.md and README.md with monitoring sections\n\n## Description\nUpdate `CLAUDE.md` and `README.md` with new monitoring sections so developers and operators can quickly understand sync status.\n\n**Size:** S\n**Files:**\n- `CLAUDE.md` (modify)\n- `README.md` (modify)\n\n## Approach\n\n**CLAUDE.md additions:**\n- Add \"Real-Time Monitoring\" section under existing sections\n- Include pipeline health check endpoint reference\n- Add alert threshold guidance (what counts define gaps)\n- Link to new `V2_SYNC_PIPELINE_GUIDE.md`\n\n**README.md additions:**\n- Add \"Sync Pipeline & Monitoring\" section after \"Getting Started\"\n- Brief 5-line overview of how sync works\n- Quick curl command to check status\n- Link to detailed guide\n\n## Key context\n\n- CLAUDE.md is already ~700+ lines - keep additions focused (under 50 lines)\n- README.md is currently 67 lines - keep it brief, link out for details\n- Monitoring endpoint: `api:20LTQtIX/test-sync`\n## Acceptance\n- [ ] CLAUDE.md has new \"Real-Time Monitoring\" section\n- [ ] CLAUDE.md links to V2_SYNC_PIPELINE_GUIDE.md\n- [ ] CLAUDE.md includes pipeline health check curl command\n- [ ] README.md has \"Sync Pipeline & Monitoring\" section\n- [ ] README.md includes quick status check command\n- [ ] README.md links to detailed guide for more info\n- [ ] Additions are concise (CLAUDE.md <50 new lines, README.md <20 new lines)\n- [ ] No broken links in either file\n## Done summary\nTBD\n\n## Evidence\n- Commits:\n- Tests:\n- PRs:\n"
+    }
+  ]
+}

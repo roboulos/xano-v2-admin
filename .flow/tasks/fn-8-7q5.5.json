@@ -1,0 +1,14 @@
+{
+  "assignee": null,
+  "claim_note": "",
+  "claimed_at": null,
+  "created_at": "2026-02-04T05:37:55.466625Z",
+  "depends_on": [],
+  "epic": "fn-8-7q5",
+  "id": "fn-8-7q5.5",
+  "priority": null,
+  "spec_path": ".flow/tasks/fn-8-7q5.5.md",
+  "status": "todo",
+  "title": "Fix dashboards2.0 TypeScript lint warnings",
+  "updated_at": "2026-02-04T05:38:59.098519Z"
+}

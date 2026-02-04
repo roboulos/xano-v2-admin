@@ -3,10 +3,89 @@
 /**
  * Status Badge Component
  * Visual status indicators for migration progress
+ *
+ * Two variants:
+ * - StatusBadge: Rich component with icons and variants (pending/in_progress/completed/blocked/failed)
+ * - SimpleStatusBadge: Lightweight string-based badge for arbitrary status values
  */
 
-import React from 'react'
+import * as React from 'react'
 import { CheckCircle2, Clock, AlertCircle, XCircle, Loader2 } from 'lucide-react'
+import { cva, type VariantProps } from 'class-variance-authority'
+import { cn } from '@/lib/utils'
+
+// ============================================================================
+// SIMPLE STATUS BADGE (String-based, lightweight)
+// ============================================================================
+
+const simpleStatusBadgeVariants = cva(
+  'inline-flex items-center justify-center rounded px-2 py-1 text-xs font-semibold transition-colors',
+  {
+    variants: {
+      status: {
+        open: 'bg-red-100 text-red-800',
+        'in-progress': 'bg-blue-100 text-blue-800',
+        escalated: 'bg-orange-100 text-orange-800',
+        resolved: 'bg-green-100 text-green-800',
+        unresolved: 'bg-red-100 text-red-800',
+        missing: 'bg-red-100 text-red-800',
+        incomplete: 'bg-yellow-100 text-yellow-800',
+        deprecated: 'bg-gray-100 text-gray-800',
+        default: 'bg-gray-100 text-gray-800',
+      },
+    },
+    defaultVariants: {
+      status: 'default',
+    },
+  }
+)
+
+export type SimpleStatusType =
+  | 'open'
+  | 'in-progress'
+  | 'escalated'
+  | 'resolved'
+  | 'unresolved'
+  | 'missing'
+  | 'incomplete'
+  | 'deprecated'
+
+export interface SimpleStatusBadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
+  status: SimpleStatusType | string
+}
+
+export function SimpleStatusBadge({ status, className, ...props }: SimpleStatusBadgeProps) {
+  const validStatuses = [
+    'open',
+    'in-progress',
+    'escalated',
+    'resolved',
+    'unresolved',
+    'missing',
+    'incomplete',
+    'deprecated',
+  ]
+  const validStatus = validStatuses.includes(status) ? (status as SimpleStatusType) : 'default'
+
+  const formatLabel = (s: string) => {
+    return s
+      .split('-')
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ')
+  }
+
+  return (
+    <span className={cn(simpleStatusBadgeVariants({ status: validStatus }), className)} {...props}>
+      {formatLabel(status)}
+    </span>
+  )
+}
+
+export { simpleStatusBadgeVariants }
+
+// ============================================================================
+// RICH STATUS BADGE (With icons and variants)
+// ============================================================================
 
 export type StatusType = 'pending' | 'in_progress' | 'completed' | 'blocked' | 'failed'
 

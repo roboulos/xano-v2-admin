@@ -1,0 +1,14 @@
+{
+  "assignee": null,
+  "claim_note": "",
+  "claimed_at": null,
+  "created_at": "2026-02-04T17:43:05.210524Z",
+  "depends_on": ["fn-10-p87.1", "fn-10-p87.7", "fn-10-p87.8", "fn-10-p87.9"],
+  "epic": "fn-10-p87",
+  "id": "fn-10-p87.2",
+  "priority": null,
+  "spec_path": ".flow/tasks/fn-10-p87.2.md",
+  "status": "todo",
+  "title": "Build transformation story dashboard tab",
+  "updated_at": "2026-02-04T18:06:12.308126Z"
+}
