@@ -794,6 +794,14 @@ curl -s -X POST "https://xmpx-swi5-tlvy.n7c.xano.io/api:4UsTtl3m/ENDPOINT" \
 - `lib/v2-data.ts` - V2 workspace tables (193)
 - `lib/table-mappings.ts` - V1 → V2 mappings
 
+---
+
+## Related Projects (Agent Dashboards Ecosystem)
+
+- **xano-v2-admin**: V1→V2 Migration tracking, validation, schema comparison (this repo)
+- **v0-demo-sync-admin-interface**: Demo data generation, storytelling cards, live→demo sync
+- **dashboards2.0**: Production frontend BI platform, 22+ dashboard pages
+
 <!-- BEGIN FLOW-NEXT -->
 
 ## Flow-Next
