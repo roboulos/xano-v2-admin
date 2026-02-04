@@ -16,6 +16,7 @@ import {
 import { Card } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { PriorityBadge } from '@/components/ui/priority-badge'
+import { ProgressBar } from '@/components/ui/progress-bar'
 
 function ChecklistItemRow({
   item,
@@ -139,16 +140,7 @@ function PhaseCard({ phase }: { phase: Phase }) {
         </div>
 
         <div className="space-y-2">
-          <div className="flex justify-between items-center text-sm">
-            <span className="text-muted-foreground">Progress</span>
-            <span className="font-semibold text-primary">{progress}%</span>
-          </div>
-          <div className="w-full bg-muted rounded-full h-2">
-            <div
-              className="h-full bg-primary rounded-full transition-all"
-              style={{ width: `${progress}%` }}
-            />
-          </div>
+          <ProgressBar value={progress} label="Progress" />
           <div className="text-xs text-muted-foreground">
             {completedItems} of {phase.items.length} items completed
           </div>
@@ -239,12 +231,7 @@ export function ChecklistTab() {
           <Card className="p-4 border-primary/50 bg-primary/5">
             <div className="text-sm text-muted-foreground mb-1">Overall Progress</div>
             <div className="text-3xl font-bold text-primary">{overallCompletion}%</div>
-            <div className="w-full bg-muted rounded-full h-2 mt-3">
-              <div
-                className="h-full bg-primary rounded-full transition-all"
-                style={{ width: `${overallCompletion}%` }}
-              />
-            </div>
+            <ProgressBar value={overallCompletion} showPercentage={false} className="mt-3" />
           </Card>
 
           <Card className="p-4">

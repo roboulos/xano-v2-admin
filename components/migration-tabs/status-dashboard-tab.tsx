@@ -1,7 +1,7 @@
 'use client'
 
 import { useMemo } from 'react'
-import { AlertTriangle, CheckCircle2, Clock, TrendingUp, AlertCircle, Target } from 'lucide-react'
+import { AlertTriangle, CheckCircle2, Clock, AlertCircle, Target } from 'lucide-react'
 import {
   getMockMigrationData,
   calculateOverallProgress,
@@ -11,73 +11,8 @@ import {
   getCriticalPath,
 } from '@/lib/migration-tracker'
 import { Card } from '@/components/ui/card'
-
-interface ProgressBarProps {
-  progress: number
-  label?: string
-  showLabel?: boolean
-}
-
-function ProgressBar({ progress, label, showLabel = true }: ProgressBarProps) {
-  const getColor = (percent: number) => {
-    if (percent >= 75) return 'bg-green-500'
-    if (percent >= 50) return 'bg-blue-500'
-    if (percent >= 25) return 'bg-yellow-500'
-    return 'bg-red-500'
-  }
-
-  return (
-    <div className="w-full">
-      {showLabel && (
-        <div className="flex justify-between items-center mb-2">
-          <span className="text-sm font-medium text-foreground">{label}</span>
-          <span className="text-sm font-semibold text-primary">{progress}%</span>
-        </div>
-      )}
-      <div className="w-full bg-muted rounded-full h-2 overflow-hidden">
-        <div
-          className={`h-full transition-all duration-500 ${getColor(progress)}`}
-          style={{ width: `${progress}%` }}
-        />
-      </div>
-    </div>
-  )
-}
-
-interface MetricCardProps {
-  title: string
-  value: string | number
-  subtext?: string
-  icon: React.ReactNode
-  trend?: 'up' | 'down' | 'stable'
-  highlight?: boolean
-}
-
-function MetricCard({ title, value, subtext, icon, trend, highlight }: MetricCardProps) {
-  return (
-    <Card className={`p-4 ${highlight ? 'border-primary/50 bg-primary/5' : ''}`}>
-      <div className="flex items-start justify-between mb-2">
-        <div className="text-sm font-medium text-muted-foreground">{title}</div>
-        <div className="text-primary/60">{icon}</div>
-      </div>
-      <div className="flex items-baseline gap-2">
-        <div className="text-2xl font-bold text-foreground">{value}</div>
-        {trend && (
-          <TrendingUp
-            className={`h-4 w-4 ${
-              trend === 'up'
-                ? 'text-green-500'
-                : trend === 'down'
-                  ? 'text-red-500'
-                  : 'text-muted-foreground'
-            }`}
-          />
-        )}
-      </div>
-      {subtext && <p className="text-xs text-muted-foreground mt-1">{subtext}</p>}
-    </Card>
-  )
-}
+import { MetricCard } from '@/components/ui/metric-card'
+import { ProgressBar } from '@/components/ui/progress-bar'
 
 export function StatusDashboardTab() {
   const { phases, risks } = getMockMigrationData()
@@ -138,7 +73,7 @@ export function StatusDashboardTab() {
           <MetricCard
             title="Overall Progress"
             value={`${metrics.overallProgress}%`}
-            subtext="All phases combined"
+            subtitle="All phases combined"
             icon={<Target className="h-4 w-4" />}
             trend="up"
             highlight
@@ -146,26 +81,26 @@ export function StatusDashboardTab() {
           <MetricCard
             title="Completed Phases"
             value={`${completedPhases}/${phases.length}`}
-            subtext="Fully finished"
+            subtitle="Fully finished"
             icon={<CheckCircle2 className="h-4 w-4" />}
           />
           <MetricCard
             title="Timeline"
             value={`${metrics.timeline.remainingDays}d`}
-            subtext={metrics.timeline.completionDate.toLocaleDateString()}
+            subtitle={metrics.timeline.completionDate.toLocaleDateString()}
             icon={<Clock className="h-4 w-4" />}
           />
           <MetricCard
             title="Critical Risks"
             value={metrics.riskSummary.critical + metrics.riskSummary.high}
-            subtext={`${metrics.riskSummary.critical} critical`}
+            subtitle={`${metrics.riskSummary.critical} critical`}
             icon={<AlertTriangle className="h-4 w-4" />}
             highlight={metrics.riskSummary.critical > 0 || metrics.riskSummary.high > 1}
           />
           <MetricCard
             title="Blockers"
             value={metrics.blockerSummary.totalBlockers}
-            subtext={`${metrics.blockerSummary.affectedComponents.length} components affected`}
+            subtitle={`${metrics.blockerSummary.affectedComponents.length} components affected`}
             icon={<AlertCircle className="h-4 w-4" />}
             highlight={metrics.blockerSummary.totalBlockers > 0}
           />
@@ -175,7 +110,7 @@ export function StatusDashboardTab() {
       {/* Overall Progress Bar */}
       <Card className="p-6">
         <h3 className="text-lg font-semibold mb-4">Overall Migration Status</h3>
-        <ProgressBar progress={metrics.overallProgress} showLabel={false} />
+        <ProgressBar value={metrics.overallProgress} showPercentage={false} />
         <div className="mt-4 grid grid-cols-3 gap-4 text-center text-sm">
           <div>
             <div className="font-semibold text-green-600">{completedPhases} Completed</div>
@@ -243,7 +178,7 @@ export function StatusDashboardTab() {
                 </div>
               </div>
 
-              <ProgressBar progress={phase.progress} label="Phase Progress" />
+              <ProgressBar value={phase.progress} label="Phase Progress" />
 
               <div className="space-y-2 text-sm">
                 {phase.startDate && (
