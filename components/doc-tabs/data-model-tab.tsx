@@ -7,7 +7,9 @@ import { Badge } from '@/components/ui/badge'
 import { Input } from '@/components/ui/input'
 import { CodeBlock } from '@/components/ui/code-block'
 import { Diagram } from '@/components/ui/diagram'
-import { ChevronDown, ChevronUp, Database } from 'lucide-react'
+import { MetricCard } from '@/components/ui/metric-card'
+import { EmptyState } from '@/components/ui/empty-state'
+import { ChevronDown, ChevronUp, Database, Table, Link2, Search } from 'lucide-react'
 
 // Sample core tables (representing the 193 total tables)
 const CORE_TABLES = [
@@ -347,6 +349,10 @@ export function DataModelTab() {
     )
   }, [searchQuery])
 
+  // Calculate statistics
+  const totalFields = CORE_TABLES.reduce((sum, t) => sum + t.fields.length, 0)
+  const totalRelationships = CORE_TABLES.reduce((sum, t) => sum + t.relationships.length, 0)
+
   const erDiagram = `erDiagram
     USERS ||--o{ TEAMS : owns
     USERS ||--o{ TEAM_MEMBERS : joins
@@ -387,10 +393,46 @@ export function DataModelTab() {
 
   return (
     <div className="space-y-6">
+      {/* Page Header */}
+      <div className="space-y-4">
+        <div>
+          <h2 className="text-2xl font-bold mb-1">Data Model Reference</h2>
+          <p className="text-muted-foreground">
+            Explore V2 database schema, table relationships, and TypeScript interfaces
+          </p>
+        </div>
+
+        {/* Summary Metrics */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <MetricCard
+            title="Total Tables"
+            value="193"
+            subtitle="V2 normalized schema"
+            icon={<Database className="h-4 w-4" />}
+          />
+          <MetricCard
+            title="Core Tables"
+            value={CORE_TABLES.length}
+            subtitle="Documented in this view"
+            icon={<Table className="h-4 w-4" />}
+          />
+          <MetricCard title="Total Fields" value={totalFields} subtitle="Across core tables" />
+          <MetricCard
+            title="Relationships"
+            value={totalRelationships}
+            subtitle="Foreign key references"
+            icon={<Link2 className="h-4 w-4" />}
+          />
+        </div>
+      </div>
+
       {/* Search */}
       <Card>
         <CardHeader>
-          <CardTitle>Data Model Search</CardTitle>
+          <CardTitle className="flex items-center gap-2">
+            <Search className="h-5 w-5" />
+            Data Model Search
+          </CardTitle>
           <CardDescription>Search tables by name, field, or tag</CardDescription>
         </CardHeader>
         <CardContent>
@@ -428,13 +470,15 @@ export function DataModelTab() {
           <TabsTrigger value="stats">Statistics</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="all" className="space-y-3 mt-4">
+        <TabsContent value="all" className="space-y-4 mt-4">
           {filteredTables.length === 0 ? (
             <Card>
               <CardContent className="pt-6">
-                <p className="text-sm text-muted-foreground text-center">
-                  No tables found matching your search
-                </p>
+                <EmptyState
+                  icon={Search}
+                  title="No tables found"
+                  description={`No tables match "${searchQuery}". Try searching by table name, field, or tag.`}
+                />
               </CardContent>
             </Card>
           ) : (
@@ -449,7 +493,7 @@ export function DataModelTab() {
           )}
         </TabsContent>
 
-        <TabsContent value="core" className="space-y-3 mt-4">
+        <TabsContent value="core" className="space-y-4 mt-4">
           {CORE_TABLES.map((table: any) => (
             <TableDetailView
               key={table.id}
@@ -460,41 +504,47 @@ export function DataModelTab() {
           ))}
         </TabsContent>
 
-        <TabsContent value="stats" className="mt-4">
+        <TabsContent value="stats" className="space-y-4 mt-4">
           <Card>
             <CardHeader>
               <CardTitle>Database Statistics</CardTitle>
+              <CardDescription>Overview of V2 normalized schema metrics</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-6">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div className="p-3 border rounded">
-                  <p className="text-xs font-semibold text-muted-foreground">Total Tables</p>
-                  <p className="text-lg font-bold mt-2">193</p>
-                </div>
-                <div className="p-3 border rounded">
-                  <p className="text-xs font-semibold text-muted-foreground">Core Tables</p>
-                  <p className="text-lg font-bold mt-2">{CORE_TABLES.length}</p>
-                </div>
-                <div className="p-3 border rounded">
-                  <p className="text-xs font-semibold text-muted-foreground">Total Records</p>
-                  <p className="text-lg font-bold mt-2">5M+</p>
-                </div>
-                <div className="p-3 border rounded">
-                  <p className="text-xs font-semibold text-muted-foreground">Relationships</p>
-                  <p className="text-lg font-bold mt-2">400+</p>
-                </div>
+                <MetricCard
+                  title="Total Tables"
+                  value="193"
+                  subtitle="V2 normalized schema"
+                  icon={<Database className="h-4 w-4" />}
+                />
+                <MetricCard
+                  title="Core Tables"
+                  value={CORE_TABLES.length}
+                  subtitle="Primary business entities"
+                  icon={<Table className="h-4 w-4" />}
+                />
+                <MetricCard title="Total Records" value="5M+" subtitle="Across all tables" />
+                <MetricCard
+                  title="Relationships"
+                  value="400+"
+                  subtitle="Foreign key constraints"
+                  icon={<Link2 className="h-4 w-4" />}
+                />
               </div>
 
-              <div className="p-4 border rounded-lg bg-blue-50">
-                <p className="font-semibold text-sm mb-2">About V2 Data Model</p>
-                <ul className="text-sm space-y-1 text-muted-foreground list-disc list-inside">
-                  <li>193 fully normalized tables</li>
-                  <li>Complex relationship structure with proper foreign keys</li>
-                  <li>Comprehensive indexes for performance</li>
-                  <li>Audit trails and timestamps on core tables</li>
-                  <li>V1 data fully migrated with validation</li>
-                </ul>
-              </div>
+              <Card className="bg-blue-50 border-blue-200">
+                <CardContent className="pt-6">
+                  <p className="font-semibold text-sm mb-3 text-blue-900">About V2 Data Model</p>
+                  <ul className="text-sm space-y-2 text-blue-800 list-disc list-inside">
+                    <li>193 fully normalized tables with proper normalization (3NF)</li>
+                    <li>Complex relationship structure with proper foreign keys</li>
+                    <li>Comprehensive indexes for optimized query performance</li>
+                    <li>Audit trails and timestamps on all core tables</li>
+                    <li>V1 data fully migrated with validation checks</li>
+                  </ul>
+                </CardContent>
+              </Card>
             </CardContent>
           </Card>
         </TabsContent>

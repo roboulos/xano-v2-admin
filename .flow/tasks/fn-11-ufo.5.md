@@ -54,10 +54,10 @@ Apply shared components and consistent patterns to migration tabs (status-dashbo
 
 ## Done summary
 
-TBD
+Polished 3 migration tabs (status-dashboard, gaps, checklist) by adding AlertBanner components for critical statuses, adding a refresh button to status-dashboard header, and replacing raw HTML export button with ShadCN Button in gaps-tab.
 
 ## Evidence
 
-- Commits:
-- Tests:
+- Commits: f7db4691e66f3ced1b11cce605f8f4d0dcbd7f82
+- Tests: pnpm build
 - PRs:

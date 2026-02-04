@@ -5,7 +5,19 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Badge } from '@/components/ui/badge'
 import { CodeBlock } from '@/components/ui/code-block'
-import { ChevronDown, ChevronUp } from 'lucide-react'
+import { MetricCard } from '@/components/ui/metric-card'
+import { EmptyState } from '@/components/ui/empty-state'
+import { SimpleStatusBadge } from '@/components/ui/status-badge'
+import {
+  ChevronDown,
+  ChevronUp,
+  Plug,
+  Link2,
+  Webhook,
+  RefreshCw,
+  ShieldCheck,
+  AlertTriangle,
+} from 'lucide-react'
 
 const INTEGRATIONS = [
   {
@@ -168,23 +180,19 @@ const response = await client.${Object.values(integration.endpoints)[0]?.name.to
 `
 
   return (
-    <div className="border rounded-lg">
+    <Card className={isOpen ? 'border-primary/30' : ''}>
       <button
         onClick={onToggle}
-        className="w-full px-4 py-3 flex items-center justify-between hover:bg-muted/50 transition-colors"
+        className="w-full px-4 py-3 flex items-center justify-between hover:bg-muted/50 transition-colors rounded-t-lg"
       >
         <div className="flex-1 text-left">
           <div className="flex items-center gap-3">
+            <Plug className="h-4 w-4 text-primary" />
             <h3 className="font-semibold">{integration.name}</h3>
-            <Badge
-              className={
-                integration.status === 'active'
-                  ? 'bg-green-100 text-green-800'
-                  : 'bg-red-100 text-red-800'
-              }
-            >
-              {integration.status}
-            </Badge>
+            <SimpleStatusBadge
+              status={integration.status === 'active' ? 'resolved' : 'open'}
+              className={integration.status === 'active' ? '' : ''}
+            />
           </div>
           <p className="text-sm text-muted-foreground mt-1">{integration.description}</p>
         </div>
@@ -196,16 +204,17 @@ const response = await client.${Object.values(integration.endpoints)[0]?.name.to
       </button>
 
       {isOpen && (
-        <div className="px-4 py-4 border-t space-y-4 bg-muted/20">
+        <CardContent className="pt-0 space-y-4 bg-muted/20 border-t">
           {/* Service URL */}
-          <div>
+          <div className="pt-4">
             <p className="text-xs font-semibold text-muted-foreground mb-1">SERVICE URL</p>
             <a
               href={integration.service_url}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm text-blue-600 hover:underline"
+              className="text-sm text-blue-600 hover:underline flex items-center gap-1"
             >
+              <Link2 className="h-3 w-3" />
               {integration.service_url}
             </a>
           </div>
@@ -213,9 +222,10 @@ const response = await client.${Object.values(integration.endpoints)[0]?.name.to
           {/* Authentication */}
           <div>
             <p className="text-xs font-semibold text-muted-foreground mb-2">AUTHENTICATION</p>
-            <Badge variant="secondary" className="mb-2">
-              {integration.auth.type}
-            </Badge>
+            <div className="flex items-center gap-2 mb-2">
+              <ShieldCheck className="h-4 w-4 text-green-600" />
+              <Badge variant="secondary">{integration.auth.type}</Badge>
+            </div>
             <p className="text-sm text-muted-foreground mb-2">{integration.auth.description}</p>
             <a
               href={integration.auth.setup_url}
@@ -228,7 +238,7 @@ const response = await client.${Object.values(integration.endpoints)[0]?.name.to
           </div>
 
           {/* Endpoints */}
-          {integration.endpoints.length > 0 && (
+          {integration.endpoints.length > 0 ? (
             <div>
               <p className="text-xs font-semibold text-muted-foreground mb-2">
                 ENDPOINTS ({integration.endpoints.length})
@@ -247,44 +257,53 @@ const response = await client.${Object.values(integration.endpoints)[0]?.name.to
                 ))}
               </div>
             </div>
+          ) : (
+            <div>
+              <p className="text-xs font-semibold text-muted-foreground mb-2">ENDPOINTS</p>
+              <div className="p-4 bg-background rounded border text-center">
+                <p className="text-sm text-muted-foreground">No endpoints documented</p>
+              </div>
+            </div>
           )}
 
           {/* Data Mapping */}
-          {Object.keys(integration.data_mapping).length > 0 && (
+          {Object.keys(integration.data_mapping).length > 0 ? (
             <div>
               <p className="text-xs font-semibold text-muted-foreground mb-2">DATA MAPPING</p>
               <div className="space-y-1 text-sm">
                 {Object.entries(integration.data_mapping).map(([source, target], idx) => (
-                  <div key={idx} className="p-2 bg-background rounded">
+                  <div key={idx} className="p-2 bg-background rounded flex items-center gap-2">
                     <code className="text-xs">{source}</code>
-                    <span className="mx-2">→</span>
+                    <span className="mx-2 text-muted-foreground">→</span>
                     <code className="text-xs">{target}</code>
                   </div>
                 ))}
               </div>
             </div>
+          ) : (
+            <div>
+              <p className="text-xs font-semibold text-muted-foreground mb-2">DATA MAPPING</p>
+              <div className="p-4 bg-background rounded border text-center">
+                <p className="text-sm text-muted-foreground">No data mapping configured</p>
+              </div>
+            </div>
           )}
 
           {/* Sync Jobs */}
-          {integration.sync_jobs.length > 0 && (
+          {integration.sync_jobs.length > 0 ? (
             <div>
-              <p className="text-xs font-semibold text-muted-foreground mb-2">
+              <p className="text-xs font-semibold text-muted-foreground mb-2 flex items-center gap-2">
+                <RefreshCw className="h-3 w-3" />
                 SYNC JOBS ({integration.sync_jobs.length})
               </p>
               <div className="space-y-2">
                 {integration.sync_jobs.map((job, idx) => (
-                  <div key={idx} className="p-2 bg-background rounded border text-sm">
+                  <div key={idx} className="p-3 bg-background rounded border text-sm">
                     <div className="flex items-center justify-between">
                       <span className="font-semibold">{job.name}</span>
-                      <Badge
-                        className={
-                          job.status === 'active'
-                            ? 'bg-green-100 text-green-800'
-                            : 'bg-yellow-100 text-yellow-800'
-                        }
-                      >
-                        {job.status}
-                      </Badge>
+                      <SimpleStatusBadge
+                        status={job.status === 'active' ? 'resolved' : 'incomplete'}
+                      />
                     </div>
                     <p className="text-xs text-muted-foreground mt-1">{job.description}</p>
                     <p className="text-xs text-muted-foreground mt-1">Runs: {job.frequency}</p>
@@ -292,12 +311,23 @@ const response = await client.${Object.values(integration.endpoints)[0]?.name.to
                 ))}
               </div>
             </div>
+          ) : (
+            <div>
+              <p className="text-xs font-semibold text-muted-foreground mb-2 flex items-center gap-2">
+                <RefreshCw className="h-3 w-3" />
+                SYNC JOBS
+              </p>
+              <div className="p-4 bg-background rounded border text-center">
+                <p className="text-sm text-muted-foreground">No sync jobs configured</p>
+              </div>
+            </div>
           )}
 
           {/* Webhooks */}
-          {integration.webhooks.length > 0 && (
+          {integration.webhooks.length > 0 ? (
             <div>
-              <p className="text-xs font-semibold text-muted-foreground mb-2">
+              <p className="text-xs font-semibold text-muted-foreground mb-2 flex items-center gap-2">
+                <Webhook className="h-3 w-3" />
                 WEBHOOKS ({integration.webhooks.length})
               </p>
               <div className="space-y-2">
@@ -313,6 +343,16 @@ const response = await client.${Object.values(integration.endpoints)[0]?.name.to
                 ))}
               </div>
             </div>
+          ) : (
+            <div>
+              <p className="text-xs font-semibold text-muted-foreground mb-2 flex items-center gap-2">
+                <Webhook className="h-3 w-3" />
+                WEBHOOKS
+              </p>
+              <div className="p-4 bg-background rounded border text-center">
+                <p className="text-sm text-muted-foreground">No webhooks configured</p>
+              </div>
+            </div>
           )}
 
           {/* Code Example */}
@@ -320,9 +360,9 @@ const response = await client.${Object.values(integration.endpoints)[0]?.name.to
             <p className="text-xs font-semibold text-muted-foreground mb-2">CODE EXAMPLE</p>
             <CodeBlock code={authCode} language="typescript" />
           </div>
-        </div>
+        </CardContent>
       )}
-    </div>
+    </Card>
   )
 }
 
@@ -332,36 +372,66 @@ export function IntegrationGuideTab() {
   const activeIntegrations = INTEGRATIONS.filter((i) => i.status === 'active')
   const totalEndpoints = INTEGRATIONS.reduce((sum, i) => sum + i.endpoints.length, 0)
   const totalWebhooks = INTEGRATIONS.reduce((sum, i) => sum + i.webhooks.length, 0)
+  const totalSyncJobs = INTEGRATIONS.reduce((sum, i) => sum + i.sync_jobs.length, 0)
 
   return (
     <div className="space-y-6">
-      {/* Overview */}
-      <Card>
-        <CardHeader>
-          <CardTitle>External Integrations Overview</CardTitle>
-          <CardDescription>List of all external systems integrated with Xano V2</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="p-3 border rounded">
-              <p className="text-xs font-semibold text-muted-foreground">Total Integrations</p>
-              <p className="text-lg font-bold mt-2">{INTEGRATIONS.length}</p>
+      {/* Page Header */}
+      <div className="space-y-4">
+        <div>
+          <h2 className="text-2xl font-bold mb-1">External Integrations Guide</h2>
+          <p className="text-muted-foreground">
+            Configure and manage external service integrations with Xano V2
+          </p>
+        </div>
+
+        {/* Summary Metrics */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <MetricCard
+            title="Total Integrations"
+            value={INTEGRATIONS.length}
+            subtitle="External services"
+            icon={<Plug className="h-4 w-4" />}
+          />
+          <MetricCard
+            title="Active"
+            value={activeIntegrations.length}
+            subtitle={`${Math.round((activeIntegrations.length / INTEGRATIONS.length) * 100)}% active`}
+            highlight={activeIntegrations.length === INTEGRATIONS.length}
+          />
+          <MetricCard
+            title="API Endpoints"
+            value={totalEndpoints}
+            subtitle="Across all integrations"
+            icon={<Link2 className="h-4 w-4" />}
+          />
+          <MetricCard
+            title="Webhooks"
+            value={totalWebhooks}
+            subtitle={`${totalSyncJobs} sync jobs`}
+            icon={<Webhook className="h-4 w-4" />}
+          />
+        </div>
+      </div>
+
+      {/* Alert if any integration is inactive */}
+      {activeIntegrations.length < INTEGRATIONS.length && (
+        <Card className="bg-yellow-50 border-yellow-300">
+          <CardContent className="pt-6">
+            <div className="flex items-start gap-3">
+              <AlertTriangle className="h-5 w-5 text-yellow-600 flex-shrink-0 mt-0.5" />
+              <div>
+                <h3 className="font-semibold text-yellow-900">
+                  {INTEGRATIONS.length - activeIntegrations.length} Inactive Integration(s)
+                </h3>
+                <p className="text-sm text-yellow-800 mt-1">
+                  Some integrations require configuration or have been disabled
+                </p>
+              </div>
             </div>
-            <div className="p-3 border rounded">
-              <p className="text-xs font-semibold text-muted-foreground">Active</p>
-              <p className="text-lg font-bold mt-2">{activeIntegrations.length}</p>
-            </div>
-            <div className="p-3 border rounded">
-              <p className="text-xs font-semibold text-muted-foreground">Total Endpoints</p>
-              <p className="text-lg font-bold mt-2">{totalEndpoints}</p>
-            </div>
-            <div className="p-3 border rounded">
-              <p className="text-xs font-semibold text-muted-foreground">Webhooks</p>
-              <p className="text-lg font-bold mt-2">{totalWebhooks}</p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Integration List */}
       <Tabs defaultValue="all" className="w-full">
@@ -370,70 +440,137 @@ export function IntegrationGuideTab() {
           <TabsTrigger value="active">Active Only</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="all" className="space-y-3 mt-4">
-          {INTEGRATIONS.map((integration) => (
-            <IntegrationDetailView
-              key={integration.id}
-              integration={integration}
-              isOpen={expandedIntegration === integration.id}
-              onToggle={() =>
-                setExpandedIntegration(
-                  expandedIntegration === integration.id ? null : integration.id
-                )
-              }
-            />
-          ))}
+        <TabsContent value="all" className="space-y-4 mt-4">
+          {INTEGRATIONS.length > 0 ? (
+            INTEGRATIONS.map((integration) => (
+              <IntegrationDetailView
+                key={integration.id}
+                integration={integration}
+                isOpen={expandedIntegration === integration.id}
+                onToggle={() =>
+                  setExpandedIntegration(
+                    expandedIntegration === integration.id ? null : integration.id
+                  )
+                }
+              />
+            ))
+          ) : (
+            <Card>
+              <CardContent className="pt-6">
+                <EmptyState
+                  icon={Plug}
+                  title="No integrations configured"
+                  description="External service integrations will appear here once configured"
+                />
+              </CardContent>
+            </Card>
+          )}
         </TabsContent>
 
-        <TabsContent value="active" className="space-y-3 mt-4">
-          {activeIntegrations.map((integration) => (
-            <IntegrationDetailView
-              key={integration.id}
-              integration={integration}
-              isOpen={expandedIntegration === integration.id}
-              onToggle={() =>
-                setExpandedIntegration(
-                  expandedIntegration === integration.id ? null : integration.id
-                )
-              }
-            />
-          ))}
+        <TabsContent value="active" className="space-y-4 mt-4">
+          {activeIntegrations.length > 0 ? (
+            activeIntegrations.map((integration) => (
+              <IntegrationDetailView
+                key={integration.id}
+                integration={integration}
+                isOpen={expandedIntegration === integration.id}
+                onToggle={() =>
+                  setExpandedIntegration(
+                    expandedIntegration === integration.id ? null : integration.id
+                  )
+                }
+              />
+            ))
+          ) : (
+            <Card>
+              <CardContent className="pt-6">
+                <EmptyState
+                  icon={Plug}
+                  title="No active integrations"
+                  description="Activate an integration to see it here"
+                />
+              </CardContent>
+            </Card>
+          )}
         </TabsContent>
       </Tabs>
 
       {/* Best Practices */}
       <Card>
         <CardHeader>
-          <CardTitle>Integration Best Practices</CardTitle>
+          <CardTitle className="flex items-center gap-2">
+            <ShieldCheck className="h-5 w-5" />
+            Integration Best Practices
+          </CardTitle>
+          <CardDescription>
+            Security guidelines and recommended patterns for external integrations
+          </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-3">
-          <div className="p-3 border rounded-lg">
-            <p className="font-semibold text-sm mb-1">API Keys & Secrets</p>
-            <p className="text-sm text-muted-foreground">
-              Always store API keys in environment variables. Never commit secrets to version
-              control.
-            </p>
-          </div>
-          <div className="p-3 border rounded-lg">
-            <p className="font-semibold text-sm mb-1">Webhook Security</p>
-            <p className="text-sm text-muted-foreground">
-              Verify webhook signatures to ensure authenticity. Implement retry logic for failed
-              webhooks.
-            </p>
-          </div>
-          <div className="p-3 border rounded-lg">
-            <p className="font-semibold text-sm mb-1">Error Handling</p>
-            <p className="text-sm text-muted-foreground">
-              Implement exponential backoff for rate-limited APIs. Log errors for monitoring and
-              debugging.
-            </p>
-          </div>
-          <div className="p-3 border rounded-lg">
-            <p className="font-semibold text-sm mb-1">Data Validation</p>
-            <p className="text-sm text-muted-foreground">
-              Validate all incoming data before storing. Maintain data consistency between systems.
-            </p>
-          </div>
+        <CardContent className="space-y-4">
+          <Card className="bg-muted/30 border-0">
+            <CardContent className="pt-4">
+              <div className="flex items-start gap-3">
+                <div className="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
+                  <span className="text-sm font-semibold text-blue-700">1</span>
+                </div>
+                <div>
+                  <p className="font-semibold text-sm mb-1">API Keys & Secrets</p>
+                  <p className="text-sm text-muted-foreground">
+                    Always store API keys in environment variables. Never commit secrets to version
+                    control.
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+          <Card className="bg-muted/30 border-0">
+            <CardContent className="pt-4">
+              <div className="flex items-start gap-3">
+                <div className="h-8 w-8 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
+                  <span className="text-sm font-semibold text-green-700">2</span>
+                </div>
+                <div>
+                  <p className="font-semibold text-sm mb-1">Webhook Security</p>
+                  <p className="text-sm text-muted-foreground">
+                    Verify webhook signatures to ensure authenticity. Implement retry logic for
+                    failed webhooks.
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+          <Card className="bg-muted/30 border-0">
+            <CardContent className="pt-4">
+              <div className="flex items-start gap-3">
+                <div className="h-8 w-8 rounded-full bg-orange-100 flex items-center justify-center flex-shrink-0">
+                  <span className="text-sm font-semibold text-orange-700">3</span>
+                </div>
+                <div>
+                  <p className="font-semibold text-sm mb-1">Error Handling</p>
+                  <p className="text-sm text-muted-foreground">
+                    Implement exponential backoff for rate-limited APIs. Log errors for monitoring
+                    and debugging.
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+          <Card className="bg-muted/30 border-0">
+            <CardContent className="pt-4">
+              <div className="flex items-start gap-3">
+                <div className="h-8 w-8 rounded-full bg-purple-100 flex items-center justify-center flex-shrink-0">
+                  <span className="text-sm font-semibold text-purple-700">4</span>
+                </div>
+                <div>
+                  <p className="font-semibold text-sm mb-1">Data Validation</p>
+                  <p className="text-sm text-muted-foreground">
+                    Validate all incoming data before storing. Maintain data consistency between
+                    systems.
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </CardContent>
       </Card>
     </div>
