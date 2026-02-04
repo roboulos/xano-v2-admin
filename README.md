@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# V1 to V2 Migration Admin Interface
 
-## Getting Started
+Admin interface for comparing and tracking migration from V1 Xano workspace (production) to V2 workspace (normalized, refactored).
 
-First, run the development server:
+## Overview
+
+This is a **"Frontend Reveals Backend"** diagnostic tool - migration gaps become immediately visible by comparing two Xano workspaces side-by-side.
+
+### Workspace Comparison
+
+| Workspace           | Instance                                 | Tables | Status               |
+| ------------------- | ---------------------------------------- | ------ | -------------------- |
+| **V1** (Production) | `xmpx-swi5-tlvy.n7c.xano.io`             | 251    | Live production data |
+| **V2** (Refactored) | `x2nu-xcjc-vhax.agentdashboards.xano.io` | 193    | Normalized schema    |
+
+## Quick Start
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+# Install dependencies
+pnpm install
+
+# Start development server
 pnpm dev
-# or
-bun dev
+
+# Open http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Available Scripts
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Command             | Description                  |
+| ------------------- | ---------------------------- |
+| `pnpm dev`          | Start dev server (port 3000) |
+| `pnpm build`        | Production build             |
+| `pnpm lint`         | Run ESLint                   |
+| `pnpm test`         | Run tests (Vitest)           |
+| `pnpm validate:all` | Run all 4 validators         |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Validation Pipeline
 
-## Learn More
+```bash
+pnpm validate:tables      # 193 V2 tables - schema integrity
+pnpm validate:functions   # 270 functions - business logic
+pnpm validate:endpoints   # 801 endpoints - API contracts
+pnpm validate:references  # 156 foreign keys - data integrity
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Tech Stack
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Framework:** Next.js 16, React 19
+- **Styling:** Tailwind CSS 4, ShadCN UI
+- **Backend:** Xano via MCP
+- **Testing:** Vitest
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Documentation
 
-## Deploy on Vercel
+See [CLAUDE.md](./CLAUDE.md) for comprehensive documentation including:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Table mapping philosophy
+- API automation pipeline
+- XanoScript patterns
+- Endpoint reference
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Related Projects
+
+- **dashboards2.0** - Production frontend BI platform
+- **v0-demo-sync-admin-interface** - Demo data sync admin
