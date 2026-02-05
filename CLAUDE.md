@@ -279,6 +279,7 @@ components/
 ├── user-picker.tsx             # Searchable user combobox
 ├── comparison-panel.tsx        # V1/V2 side-by-side data comparison
 ├── diff-highlight.tsx          # Diff rendering components
+├── refresh-indicator.tsx       # Polling status + change count badge
 ├── comparison-modal.tsx        # V1/V2 comparison modal
 ├── endpoint-tester-modal.tsx   # Endpoint testing modal
 ├── functions-tab.tsx           # Functions management
@@ -307,6 +308,8 @@ lib/
 └── *.json                      # Generated data files
     ├── frontend-api-v2-openapi.json (889KB)
     └── function-endpoint-mapping.json (217KB)
+hooks/
+└── use-polling.ts              # React Query polling with exponential backoff
 scripts/
 ├── validation/                 # Validation scripts
 │   ├── validate-tables.ts      # 193 V2 tables
@@ -667,6 +670,11 @@ Two files work together:
 - **`lib/diff-utils.ts`** -- Pure functions (no React imports, unit-testable). Exports `compareFields()`, `summarizeDiffs()`, `formatValue()`. Diff statuses: `match`, `modified`, `added`, `removed`, `type_mismatch`.
 - **`components/diff-highlight.tsx`** -- React rendering. Exports `DiffHighlight`, `DiffStatusBadge`, `DiffSummaryBar`. Uses semantic CSS tokens (`var(--status-success)`, `var(--status-error)`).
 
+### Real-Time Refresh
+
+- **`hooks/use-polling.ts`** -- `usePolling()` hook wrapping React Query with configurable interval, exponential backoff on errors (10s -> 20s -> 40s -> max 5min), backoff reset on success, and `onDataChange` callback for detecting when data changes between polls.
+- **`components/refresh-indicator.tsx`** -- `RefreshIndicator` component showing polling status (pulsing dot when fetching), last updated timestamp, change count badge, and auto-refresh toggle. Integrates with `useUserData()` or `usePolling()`.
+
 ### Proof System API Endpoints
 
 **`GET /api/users/list`** -- Search and list users from V2 workspace.
@@ -952,6 +960,8 @@ curl -s -X POST "https://xmpx-swi5-tlvy.n7c.xano.io/api:4UsTtl3m/ENDPOINT" \
 - `app/api/users/[id]/comparison/route.ts` - V1/V2 comparison endpoint
 - `app/api/staging/status/route.ts` - Staging table status proxy
 - `app/api/staging/unprocessed/route.ts` - Unprocessed records proxy
+- `hooks/use-polling.ts` - React Query polling with exponential backoff and change detection
+- `components/refresh-indicator.tsx` - Polling status indicator with change count badge
 
 ### Machine 2.0 Components
 

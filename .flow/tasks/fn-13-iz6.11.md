@@ -153,10 +153,10 @@ interface ChangeIndicator {
 
 ## Done summary
 
-TBD
+Created usePolling hook (React Query-based with exponential backoff and change detection) and RefreshIndicator component (pulsing status, last updated, change count badge, auto-refresh toggle, manual refresh). Integrated RefreshIndicator into comparison-panel header and added highlight-change CSS animation.
 
 ## Evidence
 
-- Commits:
-- Tests:
+- Commits: 288577fe785c2fa92c17b4a50ecaede16a9c5678
+- Tests: npx tsc --noEmit, pnpm lint
 - PRs:
