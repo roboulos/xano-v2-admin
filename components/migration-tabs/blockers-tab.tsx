@@ -29,13 +29,17 @@ function BlockerCard({ blocker, showImpact = false }: BlockerCardProps) {
 
   return (
     <Card
-      className={`p-4 ${
+      className="p-4"
+      style={
         blocker.severity === 'critical'
-          ? 'border-red-300 bg-red-50'
+          ? { borderColor: 'var(--status-error-border)', backgroundColor: 'var(--status-error-bg)' }
           : blocker.status === 'escalated'
-            ? 'border-orange-300 bg-orange-50'
-            : ''
-      }`}
+            ? {
+                borderColor: 'var(--status-warning-border)',
+                backgroundColor: 'var(--status-warning-bg)',
+              }
+            : {}
+      }
     >
       <div className="space-y-4">
         {/* Header */}
@@ -94,13 +98,29 @@ function BlockerCard({ blocker, showImpact = false }: BlockerCardProps) {
 
         {/* Detailed Impact if requested */}
         {showImpact && impact && (
-          <div className="p-3 bg-blue-50 border border-blue-200 rounded space-y-2">
+          <div
+            className="p-3 rounded space-y-2 border"
+            style={{
+              backgroundColor: 'var(--status-info-bg)',
+              borderColor: 'var(--status-info-border)',
+            }}
+          >
             <div className="flex items-start gap-2">
-              <TrendingDown className="h-4 w-4 text-blue-600 flex-shrink-0 mt-0.5" />
+              <TrendingDown
+                className="h-4 w-4 flex-shrink-0 mt-0.5"
+                style={{ color: 'var(--status-info)' }}
+              />
               <div>
-                <p className="text-sm font-semibold text-blue-900">Impact Analysis</p>
-                <p className="text-xs text-blue-800 mt-1">{impact.riskIfUnresolved}</p>
-                <div className="grid grid-cols-2 gap-2 mt-2 text-xs text-blue-800">
+                <p className="text-sm font-semibold" style={{ color: 'var(--status-info)' }}>
+                  Impact Analysis
+                </p>
+                <p className="text-xs mt-1" style={{ color: 'var(--status-info)' }}>
+                  {impact.riskIfUnresolved}
+                </p>
+                <div
+                  className="grid grid-cols-2 gap-2 mt-2 text-xs"
+                  style={{ color: 'var(--status-info)' }}
+                >
                   <div>Estimated Cost: {impact.estimatedCost}</div>
                   <div>Delay: {impact.delayInDays} days</div>
                 </div>
@@ -134,9 +154,17 @@ function BlockerCard({ blocker, showImpact = false }: BlockerCardProps) {
 
         {/* Escalation Info */}
         {blocker.status === 'escalated' && (
-          <div className="p-3 bg-orange-50 border border-orange-200 rounded">
-            <p className="text-xs font-semibold text-orange-900">Escalated</p>
-            <p className="text-xs text-orange-800 mt-1">
+          <div
+            className="p-3 rounded border"
+            style={{
+              backgroundColor: 'var(--status-warning-bg)',
+              borderColor: 'var(--status-warning-border)',
+            }}
+          >
+            <p className="text-xs font-semibold" style={{ color: 'var(--status-warning)' }}>
+              Escalated
+            </p>
+            <p className="text-xs mt-1" style={{ color: 'var(--status-warning)' }}>
               Escalated to {blocker.escalatedTo} ({blocker.escalationLevel})
               {blocker.escalatedAt && ` on ${blocker.escalatedAt.toLocaleDateString()}`}
             </p>
@@ -145,11 +173,21 @@ function BlockerCard({ blocker, showImpact = false }: BlockerCardProps) {
 
         {/* Resolution */}
         {blocker.status === 'resolved' && blocker.resolution && (
-          <div className="p-3 bg-green-50 border border-green-200 rounded">
-            <p className="text-xs font-semibold text-green-900">Resolved</p>
-            <p className="text-xs text-green-800 mt-1">{blocker.resolution}</p>
+          <div
+            className="p-3 rounded border"
+            style={{
+              backgroundColor: 'var(--status-success-bg)',
+              borderColor: 'var(--status-success-border)',
+            }}
+          >
+            <p className="text-xs font-semibold" style={{ color: 'var(--status-success)' }}>
+              Resolved
+            </p>
+            <p className="text-xs mt-1" style={{ color: 'var(--status-success)' }}>
+              {blocker.resolution}
+            </p>
             {blocker.resolvedAt && (
-              <p className="text-xs text-green-700 mt-1">
+              <p className="text-xs mt-1" style={{ color: 'var(--status-success)' }}>
                 Resolved on {blocker.resolvedAt.toLocaleDateString()}
               </p>
             )}
@@ -184,50 +222,95 @@ export function BlockersTab() {
 
         {/* Summary Metrics */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
-          <Card className={`p-3 ${summary.critical > 0 ? 'border-red-300 bg-red-50' : ''}`}>
+          <Card
+            className="p-3"
+            style={
+              summary.critical > 0
+                ? {
+                    borderColor: 'var(--status-error-border)',
+                    backgroundColor: 'var(--status-error-bg)',
+                  }
+                : {}
+            }
+          >
             <div className="text-xs text-muted-foreground font-semibold">Critical</div>
-            <div className="text-2xl font-bold text-red-600">{summary.critical}</div>
+            <div className="text-2xl font-bold" style={{ color: 'var(--status-error)' }}>
+              {summary.critical}
+            </div>
           </Card>
 
-          <Card className={`p-3 ${summary.high > 0 ? 'border-orange-300 bg-orange-50' : ''}`}>
+          <Card
+            className="p-3"
+            style={
+              summary.high > 0
+                ? {
+                    borderColor: 'var(--status-warning-border)',
+                    backgroundColor: 'var(--status-warning-bg)',
+                  }
+                : {}
+            }
+          >
             <div className="text-xs text-muted-foreground font-semibold">High</div>
-            <div className="text-2xl font-bold text-orange-600">{summary.high}</div>
+            <div className="text-2xl font-bold" style={{ color: 'var(--status-warning)' }}>
+              {summary.high}
+            </div>
           </Card>
 
           <Card className="p-3">
             <div className="text-xs text-muted-foreground font-semibold">Open</div>
-            <div className="text-2xl font-bold text-red-600">{summary.open}</div>
+            <div className="text-2xl font-bold" style={{ color: 'var(--status-error)' }}>
+              {summary.open}
+            </div>
           </Card>
 
           <Card className="p-3">
             <div className="text-xs text-muted-foreground font-semibold">In Progress</div>
-            <div className="text-2xl font-bold text-blue-600">
+            <div className="text-2xl font-bold" style={{ color: 'var(--status-info)' }}>
               {summary.total - summary.open - summary.escalated - summary.resolved}
             </div>
           </Card>
 
           <Card className="p-3">
             <div className="text-xs text-muted-foreground font-semibold">Escalated</div>
-            <div className="text-2xl font-bold text-orange-600">{summary.escalated}</div>
+            <div className="text-2xl font-bold" style={{ color: 'var(--status-warning)' }}>
+              {summary.escalated}
+            </div>
           </Card>
 
-          <Card className="p-3 bg-green-50 border-green-300">
+          <Card
+            className="p-3"
+            style={{
+              backgroundColor: 'var(--status-success-bg)',
+              borderColor: 'var(--status-success-border)',
+            }}
+          >
             <div className="text-xs text-muted-foreground font-semibold">Resolved</div>
-            <div className="text-2xl font-bold text-green-600">{summary.resolved}</div>
+            <div className="text-2xl font-bold" style={{ color: 'var(--status-success)' }}>
+              {summary.resolved}
+            </div>
           </Card>
         </div>
       </div>
 
       {/* Alert Sections */}
       {criticalBlockers.length > 0 && (
-        <div className="bg-red-50 border border-red-300 rounded-lg p-4">
+        <div
+          className="rounded-lg p-4 border"
+          style={{
+            backgroundColor: 'var(--status-error-bg)',
+            borderColor: 'var(--status-error-border)',
+          }}
+        >
           <div className="flex items-start gap-3">
-            <AlertTriangle className="h-5 w-5 text-red-600 flex-shrink-0 mt-0.5" />
+            <AlertTriangle
+              className="h-5 w-5 flex-shrink-0 mt-0.5"
+              style={{ color: 'var(--status-error)' }}
+            />
             <div>
-              <h3 className="font-semibold text-red-900">
+              <h3 className="font-semibold" style={{ color: 'var(--status-error)' }}>
                 {criticalBlockers.length} Critical Blocker(s)
               </h3>
-              <p className="text-sm text-red-800 mt-1">
+              <p className="text-sm mt-1" style={{ color: 'var(--status-error)' }}>
                 Immediate action required to prevent project delays
               </p>
             </div>
@@ -236,14 +319,25 @@ export function BlockersTab() {
       )}
 
       {nearingDeadline.length > 0 && (
-        <div className="bg-yellow-50 border border-yellow-300 rounded-lg p-4">
+        <div
+          className="rounded-lg p-4 border"
+          style={{
+            backgroundColor: 'var(--status-warning-bg)',
+            borderColor: 'var(--status-warning-border)',
+          }}
+        >
           <div className="flex items-start gap-3">
-            <Clock className="h-5 w-5 text-yellow-600 flex-shrink-0 mt-0.5" />
+            <Clock
+              className="h-5 w-5 flex-shrink-0 mt-0.5"
+              style={{ color: 'var(--status-warning)' }}
+            />
             <div>
-              <h3 className="font-semibold text-yellow-900">
+              <h3 className="font-semibold" style={{ color: 'var(--status-warning)' }}>
                 {nearingDeadline.length} Blocker(s) Nearing Deadline
               </h3>
-              <p className="text-sm text-yellow-800 mt-1">Resolution deadlines within 2 days</p>
+              <p className="text-sm mt-1" style={{ color: 'var(--status-warning)' }}>
+                Resolution deadlines within 2 days
+              </p>
             </div>
           </div>
         </div>
@@ -261,7 +355,10 @@ export function BlockersTab() {
           <TabsTrigger value="open">
             Open
             {summary.open > 0 && (
-              <span className="ml-2 text-xs bg-red-500 text-white px-2 py-0.5 rounded-full">
+              <span
+                className="ml-2 text-xs text-white px-2 py-0.5 rounded-full"
+                style={{ backgroundColor: 'var(--status-error)' }}
+              >
                 {summary.open}
               </span>
             )}
@@ -269,7 +366,10 @@ export function BlockersTab() {
           <TabsTrigger value="escalated">
             Escalated
             {summary.escalated > 0 && (
-              <span className="ml-2 text-xs bg-orange-500 text-white px-2 py-0.5 rounded-full">
+              <span
+                className="ml-2 text-xs text-white px-2 py-0.5 rounded-full"
+                style={{ backgroundColor: 'var(--status-warning)' }}
+              >
                 {summary.escalated}
               </span>
             )}
@@ -286,7 +386,10 @@ export function BlockersTab() {
             ))
           ) : (
             <div className="text-center py-12">
-              <CheckCircle2 className="h-12 w-12 text-green-600 mx-auto mb-4" />
+              <CheckCircle2
+                className="h-12 w-12 mx-auto mb-4"
+                style={{ color: 'var(--status-success)' }}
+              />
               <h3 className="text-lg font-semibold text-foreground mb-1">No Blockers</h3>
               <p className="text-muted-foreground">All identified blockers have been resolved</p>
             </div>
@@ -365,7 +468,7 @@ export function BlockersTab() {
             <span className="text-muted-foreground block text-xs font-semibold mb-2">
               Resolution Rate
             </span>
-            <div className="text-3xl font-bold text-green-600">
+            <div className="text-3xl font-bold" style={{ color: 'var(--status-success)' }}>
               {summary.total > 0 ? Math.round((summary.resolved / summary.total) * 100) : 0}%
             </div>
           </div>

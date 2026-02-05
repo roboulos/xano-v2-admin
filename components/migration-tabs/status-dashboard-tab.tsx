@@ -158,15 +158,19 @@ export function StatusDashboardTab() {
         <ProgressBar value={metrics.overallProgress} showPercentage={false} />
         <div className="mt-4 grid grid-cols-3 gap-4 text-center text-sm">
           <div>
-            <div className="font-semibold text-green-600">{completedPhases} Completed</div>
+            <div className="font-semibold" style={{ color: 'var(--status-success)' }}>
+              {completedPhases} Completed
+            </div>
             <div className="text-muted-foreground text-xs">phases finished</div>
           </div>
           <div>
-            <div className="font-semibold text-blue-600">{inProgressPhases} In Progress</div>
+            <div className="font-semibold" style={{ color: 'var(--status-info)' }}>
+              {inProgressPhases} In Progress
+            </div>
             <div className="text-muted-foreground text-xs">phases active</div>
           </div>
           <div>
-            <div className="font-semibold text-yellow-600">
+            <div className="font-semibold" style={{ color: 'var(--status-warning)' }}>
               {phases.length - completedPhases - inProgressPhases} Pending
             </div>
             <div className="text-muted-foreground text-xs">phases queued</div>
@@ -211,13 +215,21 @@ export function StatusDashboardTab() {
                   </p>
                 </div>
                 <div
-                  className={`px-2 py-1 rounded text-xs font-semibold ${
-                    phase.status === 'completed'
-                      ? 'bg-green-100 text-green-800'
-                      : phase.status === 'in-progress'
-                        ? 'bg-blue-100 text-blue-800'
-                        : 'bg-gray-100 text-gray-800'
-                  }`}
+                  className="px-2 py-1 rounded text-xs font-semibold"
+                  style={{
+                    backgroundColor:
+                      phase.status === 'completed'
+                        ? 'var(--status-success-bg)'
+                        : phase.status === 'in-progress'
+                          ? 'var(--status-info-bg)'
+                          : 'var(--status-pending-bg)',
+                    color:
+                      phase.status === 'completed'
+                        ? 'var(--status-success)'
+                        : phase.status === 'in-progress'
+                          ? 'var(--status-info)'
+                          : 'var(--status-pending)',
+                  }}
                 >
                   {phase.status.charAt(0).toUpperCase() + phase.status.slice(1).replace('-', ' ')}
                 </div>
@@ -244,19 +256,19 @@ export function StatusDashboardTab() {
               <div className="pt-2 border-t">
                 <div className="grid grid-cols-3 gap-2 text-sm">
                   <div className="text-center">
-                    <div className="font-semibold text-green-600">
+                    <div className="font-semibold" style={{ color: 'var(--status-success)' }}>
                       {phase.components.filter((c) => c.status === 'completed').length}
                     </div>
                     <div className="text-xs text-muted-foreground">Completed</div>
                   </div>
                   <div className="text-center">
-                    <div className="font-semibold text-blue-600">
+                    <div className="font-semibold" style={{ color: 'var(--status-info)' }}>
                       {phase.components.filter((c) => c.status === 'in-progress').length}
                     </div>
                     <div className="text-xs text-muted-foreground">In Progress</div>
                   </div>
                   <div className="text-center">
-                    <div className="font-semibold text-gray-600">
+                    <div className="font-semibold" style={{ color: 'var(--status-pending)' }}>
                       {
                         phase.components.filter(
                           (c) => c.status === 'pending' || c.status === 'blocked'

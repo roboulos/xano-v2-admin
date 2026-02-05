@@ -94,14 +94,42 @@ interface ComparisonData {
 }
 
 function SeverityBadge({ severity }: { severity: string }) {
-  const colors = {
-    critical: 'bg-red-500/10 text-red-500 border-red-500/20',
-    high: 'bg-orange-500/10 text-orange-500 border-orange-500/20',
-    medium: 'bg-yellow-500/10 text-yellow-500 border-yellow-500/20',
-    low: 'bg-blue-500/10 text-blue-500 border-blue-500/20',
+  const getStyles = () => {
+    switch (severity) {
+      case 'critical':
+        return {
+          backgroundColor: 'var(--status-error-bg)',
+          color: 'var(--status-error)',
+          borderColor: 'var(--status-error-border)',
+        }
+      case 'high':
+        return {
+          backgroundColor: 'var(--status-warning-bg)',
+          color: 'var(--status-warning)',
+          borderColor: 'var(--status-warning-border)',
+        }
+      case 'medium':
+        return {
+          backgroundColor: 'var(--status-warning-bg)',
+          color: 'var(--status-warning)',
+          borderColor: 'var(--status-warning-border)',
+        }
+      case 'low':
+        return {
+          backgroundColor: 'var(--status-info-bg)',
+          color: 'var(--status-info)',
+          borderColor: 'var(--status-info-border)',
+        }
+      default:
+        return {
+          backgroundColor: 'var(--status-pending-bg)',
+          color: 'var(--status-pending)',
+          borderColor: 'var(--status-pending-border)',
+        }
+    }
   }
   return (
-    <Badge variant="outline" className={colors[severity as keyof typeof colors] || colors.medium}>
+    <Badge variant="outline" style={getStyles()}>
       {severity}
     </Badge>
   )
@@ -122,7 +150,8 @@ export function ArchitectureComparisonTab() {
   )
 
   if (isLoading) return <LoadingState />
-  if (error) return <div className="text-red-500">Error loading comparison data</div>
+  if (error)
+    return <div style={{ color: 'var(--status-error)' }}>Error loading comparison data</div>
   if (!data) return null
 
   const fixedPercentage = Math.round(
@@ -133,41 +162,60 @@ export function ArchitectureComparisonTab() {
     <div className="space-y-6">
       {/* Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <Card className="border-green-500/30 bg-gradient-to-br from-green-500/10 to-transparent hover:shadow-lg transition-all duration-300 group">
+        <Card
+          className="border"
+          style={{
+            borderColor: 'var(--status-success-border)',
+            backgroundColor: 'var(--status-success-bg)',
+          }}
+        >
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium flex items-center gap-2">
-              <div className="p-1.5 bg-green-500/20 rounded group-hover:bg-green-500/30 transition-colors">
-                <TrendingDown className="h-4 w-4 text-green-500" />
+              <div
+                className="p-1.5 rounded"
+                style={{ backgroundColor: 'var(--status-success-border)' }}
+              >
+                <TrendingDown className="h-4 w-4" style={{ color: 'var(--status-success)' }} />
               </div>
               Aggregate Tables
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-green-500 group-hover:scale-105 transition-transform">
+            <div className="text-3xl font-bold" style={{ color: 'var(--status-success)' }}>
               {data.aggregateTables.reduction}
             </div>
             <p className="text-xs text-muted-foreground mt-1">
               {data.aggregateTables.v1.count} → {data.aggregateTables.v2.count} tables
             </p>
-            <div className="mt-3 pt-3 border-t border-green-500/20">
-              <Progress value={88} className="h-1.5 bg-green-500/10">
-                <div className="h-full bg-green-500"></div>
-              </Progress>
+            <div
+              className="mt-3 pt-3 border-t"
+              style={{ borderColor: 'var(--status-success-border)' }}
+            >
+              <Progress value={88} className="h-1.5" />
             </div>
           </CardContent>
         </Card>
 
-        <Card className="border-red-500/30 bg-gradient-to-br from-red-500/10 to-transparent hover:shadow-lg transition-all duration-300 group">
+        <Card
+          className="border"
+          style={{
+            borderColor: 'var(--status-error-border)',
+            backgroundColor: 'var(--status-error-bg)',
+          }}
+        >
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium flex items-center gap-2">
-              <div className="p-1.5 bg-red-500/20 rounded group-hover:bg-red-500/30 transition-colors">
-                <Bug className="h-4 w-4 text-red-500" />
+              <div
+                className="p-1.5 rounded"
+                style={{ backgroundColor: 'var(--status-error-border)' }}
+              >
+                <Bug className="h-4 w-4" style={{ color: 'var(--status-error)' }} />
               </div>
               V1 Failures Found
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-red-500 group-hover:scale-105 transition-transform">
+            <div className="text-3xl font-bold" style={{ color: 'var(--status-error)' }}>
               {data.failurePatterns.v1TotalFailures}
             </div>
             <p className="text-xs text-muted-foreground mt-1">
@@ -175,54 +223,81 @@ export function ArchitectureComparisonTab() {
             </p>
             <div className="mt-3 flex gap-1">
               {data.failurePatterns.patterns.slice(0, 5).map((_, idx) => (
-                <div key={idx} className="h-1.5 flex-1 bg-red-500/30 rounded"></div>
+                <div
+                  key={idx}
+                  className="h-1.5 flex-1 rounded"
+                  style={{ backgroundColor: 'var(--status-error-border)' }}
+                ></div>
               ))}
             </div>
           </CardContent>
         </Card>
 
-        <Card className="border-green-500/30 bg-gradient-to-br from-green-500/10 to-transparent hover:shadow-lg transition-all duration-300 group">
+        <Card
+          className="border"
+          style={{
+            borderColor: 'var(--status-success-border)',
+            backgroundColor: 'var(--status-success-bg)',
+          }}
+        >
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium flex items-center gap-2">
-              <div className="p-1.5 bg-green-500/20 rounded group-hover:bg-green-500/30 transition-colors">
-                <Shield className="h-4 w-4 text-green-500" />
+              <div
+                className="p-1.5 rounded"
+                style={{ backgroundColor: 'var(--status-success-border)' }}
+              >
+                <Shield className="h-4 w-4" style={{ color: 'var(--status-success)' }} />
               </div>
               V2 Fixes Applied
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-green-500 group-hover:scale-105 transition-transform">
+            <div className="text-3xl font-bold" style={{ color: 'var(--status-success)' }}>
               {fixedPercentage}%
             </div>
             <p className="text-xs text-muted-foreground mt-1">
               {data.failurePatterns.v2FixedCount}/{data.failurePatterns.v2TotalPatterns} patterns
               fixed
             </p>
-            <div className="mt-3 pt-3 border-t border-green-500/20">
-              <Progress value={fixedPercentage} className="h-1.5 bg-green-500/10">
-                <div className="h-full bg-green-500"></div>
-              </Progress>
+            <div
+              className="mt-3 pt-3 border-t"
+              style={{ borderColor: 'var(--status-success-border)' }}
+            >
+              <Progress value={fixedPercentage} className="h-1.5" />
             </div>
           </CardContent>
         </Card>
 
-        <Card className="border-blue-500/30 bg-gradient-to-br from-blue-500/10 to-transparent hover:shadow-lg transition-all duration-300 group">
+        <Card
+          className="border"
+          style={{
+            borderColor: 'var(--status-info-border)',
+            backgroundColor: 'var(--status-info-bg)',
+          }}
+        >
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium flex items-center gap-2">
-              <div className="p-1.5 bg-blue-500/20 rounded group-hover:bg-blue-500/30 transition-colors">
-                <Sparkles className="h-4 w-4 text-blue-500" />
+              <div
+                className="p-1.5 rounded"
+                style={{ backgroundColor: 'var(--status-info-border)' }}
+              >
+                <Sparkles className="h-4 w-4" style={{ color: 'var(--status-info)' }} />
               </div>
               Defensive Patterns
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-blue-500 group-hover:scale-105 transition-transform">
+            <div className="text-3xl font-bold" style={{ color: 'var(--status-info)' }}>
               {data.defensivePatterns.length}
             </div>
             <p className="text-xs text-muted-foreground mt-1">New V2 code patterns</p>
             <div className="mt-3 flex gap-1">
               {data.defensivePatterns.map((_, idx) => (
-                <div key={idx} className="h-1.5 flex-1 bg-blue-500/30 rounded"></div>
+                <div
+                  key={idx}
+                  className="h-1.5 flex-1 rounded"
+                  style={{ backgroundColor: 'var(--status-info-border)' }}
+                ></div>
               ))}
             </div>
           </CardContent>
@@ -257,9 +332,15 @@ export function ArchitectureComparisonTab() {
             {/* V1 Tables */}
             <Collapsible open={v1TablesOpen} onOpenChange={setV1TablesOpen}>
               <CollapsibleTrigger className="w-full">
-                <div className="flex items-center justify-between p-3 bg-red-500/10 rounded-lg border border-red-500/20">
+                <div
+                  className="flex items-center justify-between p-3 rounded-lg border"
+                  style={{
+                    backgroundColor: 'var(--status-error-bg)',
+                    borderColor: 'var(--status-error-border)',
+                  }}
+                >
                   <div className="flex items-center gap-2">
-                    <AlertTriangle className="h-4 w-4 text-red-500" />
+                    <AlertTriangle className="h-4 w-4" style={{ color: 'var(--status-error)' }} />
                     <span className="font-medium">V1: {data.aggregateTables.v1.count} Tables</span>
                   </div>
                   <ChevronDown
@@ -283,9 +364,15 @@ export function ArchitectureComparisonTab() {
             {/* V2 Tables */}
             <Collapsible open={v2TablesOpen} onOpenChange={setV2TablesOpen}>
               <CollapsibleTrigger className="w-full">
-                <div className="flex items-center justify-between p-3 bg-green-500/10 rounded-lg border border-green-500/20">
+                <div
+                  className="flex items-center justify-between p-3 rounded-lg border"
+                  style={{
+                    backgroundColor: 'var(--status-success-bg)',
+                    borderColor: 'var(--status-success-border)',
+                  }}
+                >
                   <div className="flex items-center gap-2">
-                    <CheckCircle2 className="h-4 w-4 text-green-500" />
+                    <CheckCircle2 className="h-4 w-4" style={{ color: 'var(--status-success)' }} />
                     <span className="font-medium">V2: {data.aggregateTables.v2.count} Tables</span>
                   </div>
                   <ChevronDown
@@ -297,7 +384,7 @@ export function ArchitectureComparisonTab() {
                 <div className="mt-2 p-3 bg-muted/50 rounded-lg">
                   <div className="space-y-1 text-xs font-mono">
                     {data.aggregateTables.v2.tables.map((table) => (
-                      <div key={table} className="text-green-600">
+                      <div key={table} style={{ color: 'var(--status-success)' }}>
                         {table}
                       </div>
                     ))}
@@ -310,11 +397,11 @@ export function ArchitectureComparisonTab() {
       </Card>
 
       {/* V1 Failure Patterns & V2 Fixes */}
-      <Card className="border-orange-500/20">
+      <Card className="border" style={{ borderColor: 'var(--status-warning-border)' }}>
         <CardHeader>
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-orange-500/10 rounded-lg">
-              <AlertCircle className="h-5 w-5 text-orange-500" />
+            <div className="p-2 rounded-lg" style={{ backgroundColor: 'var(--status-warning-bg)' }}>
+              <AlertCircle className="h-5 w-5" style={{ color: 'var(--status-warning)' }} />
             </div>
             <div>
               <CardTitle className="flex items-center gap-2">
@@ -347,9 +434,12 @@ export function ArchitectureComparisonTab() {
                   >
                     <div className="flex-shrink-0">
                       {pattern.v2Fixed ? (
-                        <CheckCircle2 className="h-5 w-5 text-green-500" />
+                        <CheckCircle2
+                          className="h-5 w-5"
+                          style={{ color: 'var(--status-success)' }}
+                        />
                       ) : (
-                        <AlertCircle className="h-5 w-5 text-red-500" />
+                        <AlertCircle className="h-5 w-5" style={{ color: 'var(--status-error)' }} />
                       )}
                     </div>
                     <div className="flex-grow space-y-1">
@@ -363,7 +453,7 @@ export function ArchitectureComparisonTab() {
                       <p className="text-sm text-muted-foreground">
                         <strong>Root Cause:</strong> {pattern.rootCause}
                       </p>
-                      <p className="text-sm text-green-600">
+                      <p className="text-sm" style={{ color: 'var(--status-success)' }}>
                         <strong>V2 Fix:</strong> {pattern.v2Fix}
                       </p>
                     </div>
@@ -376,11 +466,11 @@ export function ArchitectureComparisonTab() {
       </Card>
 
       {/* V2 Defensive Patterns */}
-      <Card className="border-blue-500/20">
+      <Card className="border" style={{ borderColor: 'var(--status-info-border)' }}>
         <CardHeader>
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-blue-500/10 rounded-lg">
-              <Code className="h-5 w-5 text-blue-500" />
+            <div className="p-2 rounded-lg" style={{ backgroundColor: 'var(--status-info-bg)' }}>
+              <Code className="h-5 w-5" style={{ color: 'var(--status-info)' }} />
             </div>
             <div>
               <CardTitle className="flex items-center gap-2">
@@ -397,19 +487,35 @@ export function ArchitectureComparisonTab() {
             {data.defensivePatterns.map((pattern, idx) => (
               <div
                 key={idx}
-                className="p-4 bg-gradient-to-br from-blue-500/5 to-transparent rounded-lg border border-blue-500/20 hover:border-blue-500/40 space-y-2 transition-all duration-300 hover:shadow-md"
+                className="p-4 rounded-lg border space-y-2"
+                style={{
+                  backgroundColor: 'var(--status-info-bg)',
+                  borderColor: 'var(--status-info-border)',
+                }}
               >
                 <div className="flex items-center justify-between">
-                  <span className="font-semibold text-blue-600">{pattern.name}</span>
+                  <span className="font-semibold" style={{ color: 'var(--status-info)' }}>
+                    {pattern.name}
+                  </span>
                   <Badge
                     variant="outline"
-                    className="text-green-600 border-green-500/30 bg-green-500/5"
+                    style={{
+                      color: 'var(--status-success)',
+                      borderColor: 'var(--status-success-border)',
+                      backgroundColor: 'var(--status-success-bg)',
+                    }}
                   >
                     {pattern.coverage}
                   </Badge>
                 </div>
                 <p className="text-sm text-muted-foreground">{pattern.description}</p>
-                <pre className="text-xs bg-black/80 text-green-400 p-3 rounded-md overflow-x-auto border border-green-500/20 font-mono">
+                <pre
+                  className="text-xs bg-black/80 p-3 rounded-md overflow-x-auto border font-mono"
+                  style={{
+                    color: 'var(--status-success)',
+                    borderColor: 'var(--status-success-border)',
+                  }}
+                >
                   {pattern.example}
                 </pre>
               </div>
@@ -420,10 +526,10 @@ export function ArchitectureComparisonTab() {
 
       {/* Live V2 Worker Tests */}
       {data.liveTests && (
-        <Card className="border-blue-500/20">
+        <Card className="border" style={{ borderColor: 'var(--status-info-border)' }}>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Play className="h-5 w-5 text-blue-500" />
+              <Play className="h-5 w-5" style={{ color: 'var(--status-info)' }} />
               Live V2 Worker Tests
             </CardTitle>
             <CardDescription>
@@ -438,17 +544,24 @@ export function ArchitectureComparisonTab() {
               {data.liveTests.tests.map((test, idx) => (
                 <div
                   key={idx}
-                  className={`flex items-center justify-between p-3 rounded-lg border ${
-                    test.defensivePatternWorking
-                      ? 'bg-green-500/5 border-green-500/20'
-                      : 'bg-red-500/5 border-red-500/20'
-                  }`}
+                  className="flex items-center justify-between p-3 rounded-lg border"
+                  style={{
+                    backgroundColor: test.defensivePatternWorking
+                      ? 'var(--status-success-bg)'
+                      : 'var(--status-error-bg)',
+                    borderColor: test.defensivePatternWorking
+                      ? 'var(--status-success-border)'
+                      : 'var(--status-error-border)',
+                  }}
                 >
                   <div className="flex items-center gap-3">
                     {test.defensivePatternWorking ? (
-                      <CheckCircle2 className="h-5 w-5 text-green-500" />
+                      <CheckCircle2
+                        className="h-5 w-5"
+                        style={{ color: 'var(--status-success)' }}
+                      />
                     ) : (
-                      <XCircle className="h-5 w-5 text-red-500" />
+                      <XCircle className="h-5 w-5" style={{ color: 'var(--status-error)' }} />
                     )}
                     <div>
                       <div className="font-medium">{test.name}</div>
@@ -462,11 +575,15 @@ export function ArchitectureComparisonTab() {
                       </Badge>
                     )}
                     {test.success ? (
-                      <Badge className="bg-green-500">Success</Badge>
+                      <Badge style={{ backgroundColor: 'var(--status-success)' }}>Success</Badge>
                     ) : test.error ? (
                       <Badge
                         variant="outline"
-                        className="text-orange-500 border-orange-500/30 text-xs max-w-48 truncate"
+                        className="text-xs max-w-48 truncate"
+                        style={{
+                          color: 'var(--status-warning)',
+                          borderColor: 'var(--status-warning-border)',
+                        }}
                       >
                         {test.error}
                       </Badge>
@@ -477,8 +594,11 @@ export function ArchitectureComparisonTab() {
                 </div>
               ))}
             </div>
-            <div className="mt-4 p-3 bg-blue-500/10 rounded-lg">
-              <p className="text-sm text-blue-600">
+            <div
+              className="mt-4 p-3 rounded-lg"
+              style={{ backgroundColor: 'var(--status-info-bg)' }}
+            >
+              <p className="text-sm" style={{ color: 'var(--status-info)' }}>
                 <strong>Key Insight:</strong> Even when endpoints return &quot;failure&quot; (e.g.,
                 missing API key), they return structured responses with clear error messages. This
                 is V2&apos;s defensive pattern in action - V1 would crash with &quot;Unable to
@@ -505,8 +625,16 @@ export function ArchitectureComparisonTab() {
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {/* Core Tables */}
-              <div className="p-3 bg-blue-500/10 rounded-lg border border-blue-500/20">
-                <h4 className="font-medium mb-2 text-blue-500">Core Tables</h4>
+              <div
+                className="p-3 rounded-lg border"
+                style={{
+                  backgroundColor: 'var(--status-info-bg)',
+                  borderColor: 'var(--status-info-border)',
+                }}
+              >
+                <h4 className="font-medium mb-2" style={{ color: 'var(--status-info)' }}>
+                  Core Tables
+                </h4>
                 <div className="space-y-1 text-sm">
                   {Object.entries(data.liveStatus.tableCounts.core_tables || {}).map(
                     ([table, count]) => (
@@ -520,8 +648,8 @@ export function ArchitectureComparisonTab() {
               </div>
 
               {/* Network Tables */}
-              <div className="p-3 bg-purple-500/10 rounded-lg border border-purple-500/20">
-                <h4 className="font-medium mb-2 text-purple-500">Network Tables</h4>
+              <div className="p-3 bg-muted/50 rounded-lg border">
+                <h4 className="font-medium mb-2 text-primary">Network Tables</h4>
                 <div className="space-y-1 text-sm">
                   {Object.entries(data.liveStatus.tableCounts.network_tables || {}).map(
                     ([table, count]) => (
@@ -535,8 +663,16 @@ export function ArchitectureComparisonTab() {
               </div>
 
               {/* Staging Tables */}
-              <div className="p-3 bg-orange-500/10 rounded-lg border border-orange-500/20">
-                <h4 className="font-medium mb-2 text-orange-500">Staging Tables</h4>
+              <div
+                className="p-3 rounded-lg border"
+                style={{
+                  backgroundColor: 'var(--status-warning-bg)',
+                  borderColor: 'var(--status-warning-border)',
+                }}
+              >
+                <h4 className="font-medium mb-2" style={{ color: 'var(--status-warning)' }}>
+                  Staging Tables
+                </h4>
                 <div className="space-y-1 text-sm">
                   {Object.entries(data.liveStatus.tableCounts.staging_tables || {}).map(
                     ([table, count]) => (
@@ -554,37 +690,75 @@ export function ArchitectureComparisonTab() {
       )}
 
       {/* Architecture Summary */}
-      <Card className="border-green-500/30 bg-gradient-to-br from-green-500/10 via-emerald-500/5 to-transparent">
+      <Card
+        className="border"
+        style={{
+          borderColor: 'var(--status-success-border)',
+          backgroundColor: 'var(--status-success-bg)',
+        }}
+      >
         <CardHeader>
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-green-500/20 rounded-lg">
-              <Sparkles className="h-5 w-5 text-green-500" />
+            <div
+              className="p-2 rounded-lg"
+              style={{ backgroundColor: 'var(--status-success-border)' }}
+            >
+              <Sparkles className="h-5 w-5" style={{ color: 'var(--status-success)' }} />
             </div>
-            <CardTitle className="text-green-600">V2 Architecture Wins</CardTitle>
+            <CardTitle style={{ color: 'var(--status-success)' }}>V2 Architecture Wins</CardTitle>
           </div>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="text-center p-5 bg-white/50 dark:bg-black/20 rounded-lg border border-green-500/20 hover:border-green-500/40 transition-all duration-300 hover:shadow-md">
-              <TrendingDown className="h-6 w-6 text-green-500 mx-auto mb-2" />
-              <div className="text-4xl font-bold text-green-500 mb-1">88%</div>
+            <div
+              className="text-center p-5 bg-white/50 dark:bg-black/20 rounded-lg border"
+              style={{ borderColor: 'var(--status-success-border)' }}
+            >
+              <TrendingDown
+                className="h-6 w-6 mx-auto mb-2"
+                style={{ color: 'var(--status-success)' }}
+              />
+              <div className="text-4xl font-bold mb-1" style={{ color: 'var(--status-success)' }}>
+                88%
+              </div>
               <div className="text-sm font-medium text-muted-foreground">
                 Fewer aggregate tables
               </div>
             </div>
-            <div className="text-center p-5 bg-white/50 dark:bg-black/20 rounded-lg border border-green-500/20 hover:border-green-500/40 transition-all duration-300 hover:shadow-md">
-              <CheckCircle2 className="h-6 w-6 text-green-500 mx-auto mb-2" />
-              <div className="text-4xl font-bold text-green-500 mb-1">100%</div>
+            <div
+              className="text-center p-5 bg-white/50 dark:bg-black/20 rounded-lg border"
+              style={{ borderColor: 'var(--status-success-border)' }}
+            >
+              <CheckCircle2
+                className="h-6 w-6 mx-auto mb-2"
+                style={{ color: 'var(--status-success)' }}
+              />
+              <div className="text-4xl font-bold mb-1" style={{ color: 'var(--status-success)' }}>
+                100%
+              </div>
               <div className="text-sm font-medium text-muted-foreground">V1 failures fixed</div>
             </div>
-            <div className="text-center p-5 bg-white/50 dark:bg-black/20 rounded-lg border border-green-500/20 hover:border-green-500/40 transition-all duration-300 hover:shadow-md">
-              <Shield className="h-6 w-6 text-green-500 mx-auto mb-2" />
-              <div className="text-4xl font-bold text-green-500 mb-1">5</div>
+            <div
+              className="text-center p-5 bg-white/50 dark:bg-black/20 rounded-lg border"
+              style={{ borderColor: 'var(--status-success-border)' }}
+            >
+              <Shield className="h-6 w-6 mx-auto mb-2" style={{ color: 'var(--status-success)' }} />
+              <div className="text-4xl font-bold mb-1" style={{ color: 'var(--status-success)' }}>
+                5
+              </div>
               <div className="text-sm font-medium text-muted-foreground">Defensive patterns</div>
             </div>
-            <div className="text-center p-5 bg-white/50 dark:bg-black/20 rounded-lg border border-green-500/20 hover:border-green-500/40 transition-all duration-300 hover:shadow-md">
-              <Database className="h-6 w-6 text-green-500 mx-auto mb-2" />
-              <div className="text-4xl font-bold text-green-500 mb-1">16</div>
+            <div
+              className="text-center p-5 bg-white/50 dark:bg-black/20 rounded-lg border"
+              style={{ borderColor: 'var(--status-success-border)' }}
+            >
+              <Database
+                className="h-6 w-6 mx-auto mb-2"
+                style={{ color: 'var(--status-success)' }}
+              />
+              <div className="text-4xl font-bold mb-1" style={{ color: 'var(--status-success)' }}>
+                16
+              </div>
               <div className="text-sm font-medium text-muted-foreground">Staging tables</div>
             </div>
           </div>

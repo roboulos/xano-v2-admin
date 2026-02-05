@@ -33,17 +33,21 @@ function ChecklistItemRow({
   return (
     <>
       <div
-        className={`p-3 border-b hover:bg-muted/50 transition-colors ${
-          isBlocked ? 'opacity-60 bg-red-50' : ''
-        }`}
-        style={{ paddingLeft: `${12 + depth * 20}px` }}
+        className="p-3 border-b hover:bg-muted/50 transition-colors"
+        style={{
+          paddingLeft: `${12 + depth * 20}px`,
+          ...(isBlocked ? { opacity: 0.6, backgroundColor: 'var(--status-error-bg)' } : {}),
+        }}
       >
         <div className="flex items-start gap-3">
           <div className="pt-1">
             {item.completed ? (
-              <CheckCircle2 className="h-5 w-5 text-green-600 flex-shrink-0" />
+              <CheckCircle2
+                className="h-5 w-5 flex-shrink-0"
+                style={{ color: 'var(--status-success)' }}
+              />
             ) : isBlocked ? (
-              <Lock className="h-5 w-5 text-red-600 flex-shrink-0" />
+              <Lock className="h-5 w-5 flex-shrink-0" style={{ color: 'var(--status-error)' }} />
             ) : (
               <Circle className="h-5 w-5 text-muted-foreground flex-shrink-0" />
             )}
@@ -88,7 +92,14 @@ function ChecklistItemRow({
             </div>
 
             {item.notes && (
-              <div className="mt-2 p-2 bg-blue-50 rounded text-xs text-blue-900 border border-blue-200">
+              <div
+                className="mt-2 p-2 rounded text-xs border"
+                style={{
+                  backgroundColor: 'var(--status-info-bg)',
+                  borderColor: 'var(--status-info-border)',
+                  color: 'var(--status-info)',
+                }}
+              >
                 {item.notes}
               </div>
             )}
@@ -128,13 +139,21 @@ function PhaseCard({ phase }: { phase: Phase }) {
             <p className="text-sm text-muted-foreground">{phase.description}</p>
           </div>
           <div
-            className={`px-3 py-1 rounded-full text-xs font-semibold ${
-              phase.status === 'completed'
-                ? 'bg-green-100 text-green-800'
-                : phase.status === 'in-progress'
-                  ? 'bg-blue-100 text-blue-800'
-                  : 'bg-gray-100 text-gray-800'
-            }`}
+            className="px-3 py-1 rounded-full text-xs font-semibold"
+            style={{
+              backgroundColor:
+                phase.status === 'completed'
+                  ? 'var(--status-success-bg)'
+                  : phase.status === 'in-progress'
+                    ? 'var(--status-info-bg)'
+                    : 'var(--status-pending-bg)',
+              color:
+                phase.status === 'completed'
+                  ? 'var(--status-success)'
+                  : phase.status === 'in-progress'
+                    ? 'var(--status-info)'
+                    : 'var(--status-pending)',
+            }}
           >
             {phase.status.charAt(0).toUpperCase() + phase.status.slice(1).replace('-', ' ')}
           </div>
@@ -175,7 +194,7 @@ function PhaseCard({ phase }: { phase: Phase }) {
           {phase.completedDate && (
             <div>
               <span className="text-muted-foreground text-xs">Completed</span>
-              <div className="font-semibold text-green-600">
+              <div className="font-semibold" style={{ color: 'var(--status-success)' }}>
                 {phase.completedDate.toLocaleDateString()}
               </div>
             </div>
@@ -183,24 +202,45 @@ function PhaseCard({ phase }: { phase: Phase }) {
         </div>
 
         {signOff && (
-          <div className="p-3 bg-green-50 border border-green-200 rounded">
-            <p className="text-xs font-semibold text-green-900">Sign-Off Approved</p>
-            <p className="text-xs text-green-800 mt-1">
+          <div
+            className="p-3 rounded border"
+            style={{
+              backgroundColor: 'var(--status-success-bg)',
+              borderColor: 'var(--status-success-border)',
+            }}
+          >
+            <p className="text-xs font-semibold" style={{ color: 'var(--status-success)' }}>
+              Sign-Off Approved
+            </p>
+            <p className="text-xs mt-1" style={{ color: 'var(--status-success)' }}>
               Signed by {signOff.signedBy} on {signOff.signedAt.toLocaleDateString()}
             </p>
-            {signOff.notes && <p className="text-xs text-green-700 mt-1 italic">{signOff.notes}</p>}
+            {signOff.notes && (
+              <p className="text-xs mt-1 italic" style={{ color: 'var(--status-success)' }}>
+                {signOff.notes}
+              </p>
+            )}
           </div>
         )}
 
         {!signOff && canSignOff && (
-          <button className="w-full px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded text-sm font-semibold transition-colors">
+          <button
+            className="w-full px-4 py-2 text-white rounded text-sm font-semibold transition-colors"
+            style={{ backgroundColor: 'var(--status-success)' }}
+          >
             Sign Off Phase
           </button>
         )}
 
         {!signOff && !canSignOff && phase.status === 'in-progress' && (
-          <div className="p-3 bg-yellow-50 border border-yellow-200 rounded">
-            <p className="text-xs font-semibold text-yellow-900">
+          <div
+            className="p-3 rounded border"
+            style={{
+              backgroundColor: 'var(--status-warning-bg)',
+              borderColor: 'var(--status-warning-border)',
+            }}
+          >
+            <p className="text-xs font-semibold" style={{ color: 'var(--status-warning)' }}>
               Cannot sign off - {phase.items.filter((i) => !i.completed).length} items remaining
             </p>
           </div>
@@ -247,24 +287,38 @@ export function ChecklistTab() {
 
           <Card className="p-4">
             <div className="text-sm text-muted-foreground mb-1">Phases Completed</div>
-            <div className="text-3xl font-bold text-green-600">
+            <div className="text-3xl font-bold" style={{ color: 'var(--status-success)' }}>
               {phases.filter((p) => p.status === 'completed').length}/{phases.length}
             </div>
           </Card>
 
           <Card className="p-4">
             <div className="text-sm text-muted-foreground mb-1">Critical Path</div>
-            <div className="text-3xl font-bold text-orange-600">
+            <div className="text-3xl font-bold" style={{ color: 'var(--status-warning)' }}>
               {criticalPath.estimatedDaysToCompletion}d
             </div>
             <div className="text-xs text-muted-foreground mt-1">Est. completion time</div>
           </Card>
 
-          <Card className={`p-4 ${blockedItems.length > 0 ? 'border-red-200 bg-red-50' : ''}`}>
+          <Card
+            className="p-4"
+            style={
+              blockedItems.length > 0
+                ? {
+                    borderColor: 'var(--status-error-border)',
+                    backgroundColor: 'var(--status-error-bg)',
+                  }
+                : {}
+            }
+          >
             <div className="text-sm text-muted-foreground mb-1">Blocked Items</div>
-            <div className="text-3xl font-bold text-red-600">{blockedItems.length}</div>
+            <div className="text-3xl font-bold" style={{ color: 'var(--status-error)' }}>
+              {blockedItems.length}
+            </div>
             {blockedItems.length > 0 && (
-              <div className="text-xs text-red-600 mt-1">Requiring attention</div>
+              <div className="text-xs mt-1" style={{ color: 'var(--status-error)' }}>
+                Requiring attention
+              </div>
             )}
           </Card>
         </div>
@@ -276,14 +330,20 @@ export function ChecklistTab() {
           <TabsTrigger value="phases">Phase Checklists</TabsTrigger>
           <TabsTrigger value="critical">
             Critical Path
-            <span className="ml-2 text-xs bg-orange-500 text-white px-2 py-0.5 rounded-full">
+            <span
+              className="ml-2 text-xs text-white px-2 py-0.5 rounded-full"
+              style={{ backgroundColor: 'var(--status-warning)' }}
+            >
               {criticalPath.items.length}
             </span>
           </TabsTrigger>
           <TabsTrigger value="blocked">
             Blocked Items
             {blockedItems.length > 0 && (
-              <span className="ml-2 text-xs bg-red-500 text-white px-2 py-0.5 rounded-full">
+              <span
+                className="ml-2 text-xs text-white px-2 py-0.5 rounded-full"
+                style={{ backgroundColor: 'var(--status-error)' }}
+              >
                 {blockedItems.length}
               </span>
             )}
@@ -300,12 +360,23 @@ export function ChecklistTab() {
         {/* Critical Path Tab */}
         <TabsContent value="critical" className="space-y-6 mt-6">
           <div className="space-y-4">
-            <div className="bg-orange-50 border border-orange-200 rounded-lg p-4">
+            <div
+              className="rounded-lg p-4 border"
+              style={{
+                backgroundColor: 'var(--status-warning-bg)',
+                borderColor: 'var(--status-warning-border)',
+              }}
+            >
               <div className="flex items-start gap-2">
-                <AlertCircle className="h-5 w-5 text-orange-600 flex-shrink-0 mt-0.5" />
+                <AlertCircle
+                  className="h-5 w-5 flex-shrink-0 mt-0.5"
+                  style={{ color: 'var(--status-warning)' }}
+                />
                 <div>
-                  <h3 className="font-semibold text-orange-900">Critical Path Analysis</h3>
-                  <p className="text-sm text-orange-800 mt-1">
+                  <h3 className="font-semibold" style={{ color: 'var(--status-warning)' }}>
+                    Critical Path Analysis
+                  </h3>
+                  <p className="text-sm mt-1" style={{ color: 'var(--status-warning)' }}>
                     {criticalPath.items.length} items on critical path requiring{' '}
                     {criticalPath.estimatedDaysToCompletion} days to completion
                   </p>
@@ -316,7 +387,7 @@ export function ChecklistTab() {
             {criticalPath.bottlenecks.length > 0 && (
               <Card className="p-4">
                 <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
-                  <AlertCircle className="h-4 w-4 text-orange-600" />
+                  <AlertCircle className="h-4 w-4" style={{ color: 'var(--status-warning)' }} />
                   Bottlenecks
                 </h4>
                 <div className="space-y-3">
@@ -335,7 +406,7 @@ export function ChecklistTab() {
             {criticalPath.parallelizableGroups.length > 0 && (
               <Card className="p-4">
                 <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
-                  <Zap className="h-4 w-4 text-blue-600" />
+                  <Zap className="h-4 w-4" style={{ color: 'var(--status-info)' }} />
                   Parallelizable Work
                 </h4>
                 <p className="text-sm text-muted-foreground mb-3">
@@ -343,13 +414,27 @@ export function ChecklistTab() {
                 </p>
                 <div className="space-y-3">
                   {criticalPath.parallelizableGroups.map((group, idx) => (
-                    <div key={idx} className="p-3 bg-blue-50 border border-blue-200 rounded">
-                      <p className="text-xs font-semibold text-blue-900 mb-2">
+                    <div
+                      key={idx}
+                      className="p-3 rounded border"
+                      style={{
+                        backgroundColor: 'var(--status-info-bg)',
+                        borderColor: 'var(--status-info-border)',
+                      }}
+                    >
+                      <p
+                        className="text-xs font-semibold mb-2"
+                        style={{ color: 'var(--status-info)' }}
+                      >
                         Parallel Group {idx + 1}
                       </p>
                       <div className="space-y-1">
                         {group.map((item) => (
-                          <p key={item.id} className="text-sm text-blue-800">
+                          <p
+                            key={item.id}
+                            className="text-sm"
+                            style={{ color: 'var(--status-info)' }}
+                          >
                             • {item.title}
                           </p>
                         ))}
@@ -388,14 +473,23 @@ export function ChecklistTab() {
         <TabsContent value="blocked" className="mt-6">
           {blockedItems.length > 0 ? (
             <div className="space-y-4">
-              <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+              <div
+                className="rounded-lg p-4 border"
+                style={{
+                  backgroundColor: 'var(--status-error-bg)',
+                  borderColor: 'var(--status-error-border)',
+                }}
+              >
                 <div className="flex items-start gap-2">
-                  <AlertCircle className="h-5 w-5 text-red-600 flex-shrink-0 mt-0.5" />
+                  <AlertCircle
+                    className="h-5 w-5 flex-shrink-0 mt-0.5"
+                    style={{ color: 'var(--status-error)' }}
+                  />
                   <div>
-                    <h3 className="font-semibold text-red-900">
+                    <h3 className="font-semibold" style={{ color: 'var(--status-error)' }}>
                       {blockedItems.length} Items Blocked
                     </h3>
-                    <p className="text-sm text-red-800 mt-1">
+                    <p className="text-sm mt-1" style={{ color: 'var(--status-error)' }}>
                       These items are waiting for dependencies to be completed
                     </p>
                   </div>
@@ -404,15 +498,25 @@ export function ChecklistTab() {
 
               <div className="space-y-3">
                 {blockedItems.map((item) => (
-                  <Card key={item.id} className="p-4 border-red-200 bg-red-50">
+                  <Card
+                    key={item.id}
+                    className="p-4"
+                    style={{
+                      borderColor: 'var(--status-error-border)',
+                      backgroundColor: 'var(--status-error-bg)',
+                    }}
+                  >
                     <div className="flex items-start gap-3">
-                      <Lock className="h-5 w-5 text-red-600 flex-shrink-0 mt-0.5" />
+                      <Lock
+                        className="h-5 w-5 flex-shrink-0 mt-0.5"
+                        style={{ color: 'var(--status-error)' }}
+                      />
                       <div className="flex-1 min-w-0">
                         <h4 className="font-semibold text-foreground">{item.title}</h4>
                         <p className="text-sm text-muted-foreground mt-1">{item.description}</p>
                         <div className="mt-2 text-sm">
                           <p className="text-muted-foreground font-semibold">Blocked by:</p>
-                          <p className="text-red-700 text-xs mt-1">
+                          <p className="text-xs mt-1" style={{ color: 'var(--status-error)' }}>
                             {item.dependencies.length} incomplete dependencies
                           </p>
                         </div>
@@ -425,7 +529,10 @@ export function ChecklistTab() {
             </div>
           ) : (
             <div className="text-center py-12">
-              <CheckCircle2 className="h-12 w-12 text-green-600 mx-auto mb-4" />
+              <CheckCircle2
+                className="h-12 w-12 mx-auto mb-4"
+                style={{ color: 'var(--status-success)' }}
+              />
               <h3 className="text-lg font-semibold text-foreground mb-1">No Blocked Items</h3>
               <p className="text-muted-foreground">
                 All items are either completed or ready to start

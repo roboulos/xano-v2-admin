@@ -215,12 +215,24 @@ export function TransformationStoryTab() {
 
       {/* Hero Section - The Big Numbers */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card className="p-6 bg-gradient-to-br from-orange-500/10 to-orange-600/5 border-orange-500/20">
+        <Card
+          className="p-6 border"
+          style={{
+            backgroundColor: 'var(--status-warning-bg)',
+            borderColor: 'var(--status-warning-border)',
+          }}
+        >
           <div className="text-center">
-            <div className="text-sm font-medium text-orange-600 mb-2">V1 PRODUCTION</div>
-            <div className="text-5xl font-bold text-orange-500 mb-1">{v1Stats.total}</div>
+            <div className="text-sm font-medium mb-2" style={{ color: 'var(--status-warning)' }}>
+              V1 PRODUCTION
+            </div>
+            <div className="text-5xl font-bold mb-1" style={{ color: 'var(--status-warning)' }}>
+              {v1Stats.total}
+            </div>
             <div className="text-lg text-muted-foreground">Tables</div>
-            <div className="mt-3 text-xs text-orange-600/80">JSONB xdo columns</div>
+            <div className="mt-3 text-xs" style={{ color: 'var(--status-warning)' }}>
+              JSONB xdo columns
+            </div>
           </div>
         </Card>
 
@@ -232,12 +244,24 @@ export function TransformationStoryTab() {
           </div>
         </Card>
 
-        <Card className="p-6 bg-gradient-to-br from-green-500/10 to-green-600/5 border-green-500/20">
+        <Card
+          className="p-6 border"
+          style={{
+            backgroundColor: 'var(--status-success-bg)',
+            borderColor: 'var(--status-success-border)',
+          }}
+        >
           <div className="text-center">
-            <div className="text-sm font-medium text-green-600 mb-2">V2 REFACTORED</div>
-            <div className="text-5xl font-bold text-green-500 mb-1">{v2TableCount}</div>
+            <div className="text-sm font-medium mb-2" style={{ color: 'var(--status-success)' }}>
+              V2 REFACTORED
+            </div>
+            <div className="text-5xl font-bold mb-1" style={{ color: 'var(--status-success)' }}>
+              {v2TableCount}
+            </div>
             <div className="text-lg text-muted-foreground">Tables</div>
-            <div className="mt-3 text-xs text-green-600/80">Typed columns</div>
+            <div className="mt-3 text-xs" style={{ color: 'var(--status-success)' }}>
+              Typed columns
+            </div>
           </div>
         </Card>
       </div>
@@ -290,11 +314,24 @@ export function TransformationStoryTab() {
               return (
                 <div
                   key={entity.entity}
-                  className={`p-4 rounded-lg border ${isComplete ? 'bg-green-500/5 border-green-500/20' : 'bg-yellow-500/5 border-yellow-500/20'}`}
+                  className="p-4 rounded-lg border"
+                  style={{
+                    backgroundColor: isComplete
+                      ? 'var(--status-success-bg)'
+                      : 'var(--status-warning-bg)',
+                    borderColor: isComplete
+                      ? 'var(--status-success-border)'
+                      : 'var(--status-warning-border)',
+                  }}
                 >
                   <div className="flex items-center justify-between mb-2">
                     <span className="font-medium capitalize">{entity.entity}</span>
-                    {isComplete && <CheckCircle2 className="h-4 w-4 text-green-500" />}
+                    {isComplete && (
+                      <CheckCircle2
+                        className="h-4 w-4"
+                        style={{ color: 'var(--status-success)' }}
+                      />
+                    )}
                   </div>
                   <div className="text-2xl font-bold">{ratio.toFixed(1)}%</div>
                   <div className="text-xs text-muted-foreground mt-1">
@@ -350,13 +387,19 @@ export function TransformationStoryTab() {
               <CollapsibleContent>
                 <div className="p-4 border border-t-0 rounded-b-lg space-y-4">
                   {/* V1 Side */}
-                  <div className="p-3 bg-orange-500/5 rounded border border-orange-500/20">
+                  <div
+                    className="p-3 rounded border"
+                    style={{
+                      backgroundColor: 'var(--status-warning-bg)',
+                      borderColor: 'var(--status-warning-border)',
+                    }}
+                  >
                     <div className="flex items-center gap-2 mb-2">
-                      <Badge className="bg-orange-500">V1</Badge>
+                      <Badge style={{ backgroundColor: 'var(--status-warning)' }}>V1</Badge>
                       <span className="font-mono text-sm">{example.v1.table}</span>
                     </div>
                     <div className="text-sm text-muted-foreground">{example.v1.columns}</div>
-                    <div className="text-xs text-orange-600/80 mt-1">
+                    <div className="text-xs mt-1" style={{ color: 'var(--status-warning)' }}>
                       Problem: {example.v1.example}
                     </div>
                   </div>
@@ -367,9 +410,15 @@ export function TransformationStoryTab() {
                   </div>
 
                   {/* V2 Side */}
-                  <div className="p-3 bg-green-500/5 rounded border border-green-500/20">
+                  <div
+                    className="p-3 rounded border"
+                    style={{
+                      backgroundColor: 'var(--status-success-bg)',
+                      borderColor: 'var(--status-success-border)',
+                    }}
+                  >
                     <div className="flex items-center gap-2 mb-3">
-                      <Badge className="bg-green-500">V2</Badge>
+                      <Badge style={{ backgroundColor: 'var(--status-success)' }}>V2</Badge>
                       <span className="text-sm">{example.v2.length} normalized tables</span>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
@@ -416,7 +465,9 @@ export function TransformationStoryTab() {
         <h3 className="text-lg font-semibold mb-4">Technical Summary</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <h4 className="font-medium text-orange-600 mb-2">V1 Architecture</h4>
+            <h4 className="font-medium mb-2" style={{ color: 'var(--status-warning)' }}>
+              V1 Architecture
+            </h4>
             <ul className="text-sm space-y-1 text-muted-foreground">
               <li>
                 • 251 tables with JSONB <code className="bg-muted px-1 rounded">xdo</code> columns
@@ -431,7 +482,9 @@ export function TransformationStoryTab() {
             </ul>
           </div>
           <div>
-            <h4 className="font-medium text-green-600 mb-2">V2 Architecture</h4>
+            <h4 className="font-medium mb-2" style={{ color: 'var(--status-success)' }}>
+              V2 Architecture
+            </h4>
             <ul className="text-sm space-y-1 text-muted-foreground">
               <li>• {v2TableCount} tables with typed columns</li>
               <li>• Proper data types: int, text, boolean, timestamp</li>

@@ -68,11 +68,11 @@ function StageCard({
     !status.running && stage.dependencies.every((dep) => status.completedStages.includes(dep))
 
   const getStatusBadge = () => {
-    if (isRunning) return <Badge className="bg-blue-500">Running</Badge>
+    if (isRunning) return <Badge style={{ backgroundColor: 'var(--status-info)' }}>Running</Badge>
     if (isComplete && result?.meetsSuccessCriteria)
-      return <Badge className="bg-green-500">✓ Passed</Badge>
+      return <Badge style={{ backgroundColor: 'var(--status-success)' }}>✓ Passed</Badge>
     if (isComplete && !result?.meetsSuccessCriteria)
-      return <Badge className="bg-red-500">✗ Failed</Badge>
+      return <Badge style={{ backgroundColor: 'var(--status-error)' }}>✗ Failed</Badge>
     if (canRun) return <Badge variant="outline">Ready</Badge>
     return <Badge variant="secondary">Waiting</Badge>
   }
@@ -85,12 +85,12 @@ function StageCard({
 
   return (
     <Card
-      className={
+      style={
         isRunning
-          ? 'border-blue-500'
+          ? { borderColor: 'var(--status-info)' }
           : isComplete && result?.meetsSuccessCriteria
-            ? 'border-green-500'
-            : ''
+            ? { borderColor: 'var(--status-success)' }
+            : {}
       }
     >
       <CardHeader>
@@ -116,11 +116,15 @@ function StageCard({
           </div>
           <div>
             <div className="text-sm text-muted-foreground">Target</div>
-            <div className="text-2xl font-bold text-green-600">{stage.metrics.target}</div>
+            <div className="text-2xl font-bold" style={{ color: 'var(--status-success)' }}>
+              {stage.metrics.target}
+            </div>
           </div>
           <div>
             <div className="text-sm text-muted-foreground">Threshold</div>
-            <div className="text-2xl font-bold text-orange-600">{stage.metrics.threshold}</div>
+            <div className="text-2xl font-bold" style={{ color: 'var(--status-warning)' }}>
+              {stage.metrics.threshold}
+            </div>
           </div>
         </div>
 
@@ -458,12 +462,18 @@ export function ValidationPipelineView() {
           <div className="flex items-center justify-between mb-4">
             <div className="text-4xl font-bold">{overallScore.toFixed(1)}%</div>
             {meetsCriteria ? (
-              <Badge className="bg-green-500 text-lg px-4 py-2">
+              <Badge
+                className="text-lg px-4 py-2"
+                style={{ backgroundColor: 'var(--status-success)' }}
+              >
                 <CheckCircle className="h-5 w-5 mr-2" />
                 Production Ready
               </Badge>
             ) : (
-              <Badge variant="destructive" className="text-lg px-4 py-2">
+              <Badge
+                className="text-lg px-4 py-2"
+                style={{ backgroundColor: 'var(--status-error)' }}
+              >
                 <AlertCircle className="h-5 w-5 mr-2" />
                 Not Ready
               </Badge>

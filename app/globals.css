@@ -46,29 +46,58 @@
 
   /* ============================================================
      SPACING TOKENS - Consistent spacing across all dashboard tabs
-
-     These tokens standardize spacing to ensure visual consistency.
-     Use these custom properties instead of arbitrary Tailwind values.
-
-     Tailwind Class Mapping:
-     - space-y-6 / gap-6 / mt-6 / mb-6 / py-6 -> var(--spacing-section)
-     - space-y-4 / gap-4 / mt-4 / mb-4 / py-4 -> var(--spacing-content)
-     - p-6 -> var(--spacing-card)
-     - p-4 -> var(--spacing-card-compact)
-     - gap-2 / space-x-2 -> var(--spacing-inline)
-
-     Use Cases:
-     - Section spacing: Major sections within a tab (metrics, tables, charts)
-     - Content spacing: Between items within a section (cards, rows, items)
-     - Card padding: Standard card/panel internal padding
-     - Compact padding: Dense cards like metrics or stats
-     - Inline spacing: Between badges, buttons, icons in a row
      ============================================================ */
   --spacing-section: 1.5rem;       /* 24px - space-y-6 - between major sections */
   --spacing-content: 1rem;         /* 16px - space-y-4 - between content items */
   --spacing-card: 1.5rem;          /* 24px - p-6 - standard card padding */
   --spacing-card-compact: 1rem;    /* 16px - p-4 - compact card padding */
   --spacing-inline: 0.5rem;        /* 8px - gap-2 - inline element gaps */
+
+  /* ============================================================
+     STATUS TOKENS - Semantic colors for pass/fail/warning/info states
+
+     Use these for consistent status indication across all tabs.
+     Each status has: text color, background (subtle), border color.
+
+     Usage:
+     - Cards: border-[var(--status-success-border)] bg-[var(--status-success-bg)]
+     - Text: text-[var(--status-success)]
+     - Badges: Same pattern for compact status indicators
+     ============================================================ */
+
+  /* Success (green) - passed checks, completed items, healthy status */
+  --status-success: oklch(0.45 0.15 145);           /* green-600 equivalent */
+  --status-success-bg: oklch(0.96 0.03 145);        /* green-50 equivalent */
+  --status-success-border: oklch(0.85 0.08 145);    /* green-200 equivalent */
+
+  /* Warning (amber) - warnings, attention needed, partial completion */
+  --status-warning: oklch(0.55 0.15 70);            /* amber-600 equivalent */
+  --status-warning-bg: oklch(0.97 0.03 85);         /* amber-50 equivalent */
+  --status-warning-border: oklch(0.88 0.08 85);     /* amber-200 equivalent */
+
+  /* Error (red) - failed checks, errors, critical issues */
+  --status-error: oklch(0.50 0.18 25);              /* red-600 equivalent */
+  --status-error-bg: oklch(0.97 0.02 20);           /* red-50 equivalent */
+  --status-error-border: oklch(0.88 0.06 20);       /* red-200 equivalent */
+
+  /* Info (blue) - running, in progress, informational */
+  --status-info: oklch(0.55 0.15 250);              /* blue-600 equivalent */
+  --status-info-bg: oklch(0.97 0.02 250);           /* blue-50 equivalent */
+  --status-info-border: oklch(0.88 0.06 250);       /* blue-200 equivalent */
+
+  /* Pending (gray) - not started, waiting, neutral */
+  --status-pending: oklch(0.55 0.01 260);           /* gray-500 equivalent */
+  --status-pending-bg: oklch(0.97 0.005 260);       /* gray-50 equivalent */
+  --status-pending-border: oklch(0.90 0.005 260);   /* gray-200 equivalent */
+
+  /* ============================================================
+     TYPOGRAPHY TOKENS - Consistent text sizing
+     ============================================================ */
+  --text-metric-lg: 2.25rem;       /* text-4xl - large hero numbers */
+  --text-metric-md: 1.875rem;      /* text-3xl - medium metrics */
+  --text-metric-sm: 1.5rem;        /* text-2xl - small metrics */
+  --text-label: 0.875rem;          /* text-sm - labels and descriptions */
+  --text-caption: 0.75rem;         /* text-xs - captions and meta */
 }
 
 .dark {
@@ -110,6 +139,27 @@
   --shadow-spread: 0px;
   --shadow-opacity: 0.1;
   --shadow-color: oklch(0 0 0);
+
+  /* Dark mode status tokens */
+  --status-success: oklch(0.65 0.15 145);
+  --status-success-bg: oklch(0.25 0.05 145);
+  --status-success-border: oklch(0.35 0.08 145);
+
+  --status-warning: oklch(0.70 0.15 70);
+  --status-warning-bg: oklch(0.25 0.05 70);
+  --status-warning-border: oklch(0.35 0.08 70);
+
+  --status-error: oklch(0.65 0.18 25);
+  --status-error-bg: oklch(0.25 0.05 25);
+  --status-error-border: oklch(0.35 0.08 25);
+
+  --status-info: oklch(0.65 0.15 250);
+  --status-info-bg: oklch(0.25 0.05 250);
+  --status-info-border: oklch(0.35 0.08 250);
+
+  --status-pending: oklch(0.65 0.01 260);
+  --status-pending-bg: oklch(0.25 0.01 260);
+  --status-pending-border: oklch(0.35 0.01 260);
 }
 
 @theme inline {
@@ -175,6 +225,77 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+/* ============================================================
+   STATUS CARD UTILITIES - Apply to cards based on status
+
+   Usage: className="status-card status-success"
+   This applies the correct bg, border, and text colors.
+   ============================================================ */
+@layer components {
+  .status-card {
+    @apply rounded-lg border p-4 transition-colors;
+  }
+
+  .status-success {
+    background-color: var(--status-success-bg);
+    border-color: var(--status-success-border);
+  }
+  .status-success .status-text {
+    color: var(--status-success);
+  }
+
+  .status-warning {
+    background-color: var(--status-warning-bg);
+    border-color: var(--status-warning-border);
+  }
+  .status-warning .status-text {
+    color: var(--status-warning);
+  }
+
+  .status-error {
+    background-color: var(--status-error-bg);
+    border-color: var(--status-error-border);
+  }
+  .status-error .status-text {
+    color: var(--status-error);
+  }
+
+  .status-info {
+    background-color: var(--status-info-bg);
+    border-color: var(--status-info-border);
+  }
+  .status-info .status-text {
+    color: var(--status-info);
+  }
+
+  .status-pending {
+    background-color: var(--status-pending-bg);
+    border-color: var(--status-pending-border);
+  }
+  .status-pending .status-text {
+    color: var(--status-pending);
+  }
+
+  /* Metric card - consistent styling for stat displays */
+  .metric-card {
+    @apply rounded-lg border bg-card p-4 text-center;
+  }
+  .metric-value {
+    font-size: var(--text-metric-md);
+    @apply font-bold;
+  }
+  .metric-label {
+    font-size: var(--text-label);
+    @apply text-muted-foreground;
+  }
+
+  /* Section header - consistent section titles */
+  .section-header {
+    font-size: var(--text-label);
+    @apply font-medium uppercase tracking-wider text-muted-foreground;
   }
 }
 

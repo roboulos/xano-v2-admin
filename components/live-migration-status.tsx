@@ -145,21 +145,21 @@ export function LiveMigrationStatus() {
 
   const { v1, v2, comparison: _comparison, migration_score, timestamp } = data
 
-  const getStatusColor = (status: string) => {
+  const getStatusColor = (status: string): React.CSSProperties => {
     switch (status) {
       case 'READY':
-        return 'bg-green-500'
+        return { backgroundColor: 'var(--status-success)' }
       case 'NEAR_READY':
-        return 'bg-yellow-500'
+        return { backgroundColor: 'var(--status-warning)' }
       default:
-        return 'bg-blue-500'
+        return { backgroundColor: 'var(--status-info)' }
     }
   }
 
-  const getScoreColor = (score: number) => {
-    if (score >= 95) return 'text-green-600'
-    if (score >= 80) return 'text-yellow-600'
-    return 'text-blue-600'
+  const getScoreColor = (score: number): React.CSSProperties => {
+    if (score >= 95) return { color: 'var(--status-success)' }
+    if (score >= 80) return { color: 'var(--status-warning)' }
+    return { color: 'var(--status-info)' }
   }
 
   return (
@@ -302,24 +302,63 @@ export function LiveMigrationStatus() {
                 <div className="text-xs text-muted-foreground mt-1">Scheduled</div>
               </div>
               <div className="text-4xl text-indigo-400">→</div>
-              <div className="bg-green-100 rounded-lg p-4 border-2 border-green-400">
-                <div className="text-2xl font-bold text-green-700">109</div>
-                <div className="text-sm font-semibold text-green-900 mt-1">Tasks/</div>
+              <div
+                className="rounded-lg p-4 border-2"
+                style={{
+                  backgroundColor: 'var(--status-success-bg)',
+                  borderColor: 'var(--status-success-border)',
+                }}
+              >
+                <div className="text-2xl font-bold" style={{ color: 'var(--status-success)' }}>
+                  109
+                </div>
+                <div
+                  className="text-sm font-semibold mt-1"
+                  style={{ color: 'var(--status-success)' }}
+                >
+                  Tasks/
+                </div>
                 <div className="text-xs text-muted-foreground mt-1">Main logic</div>
               </div>
-              <div className="text-4xl text-green-400">→</div>
-              <div className="bg-yellow-100 rounded-lg p-4 border-2 border-yellow-400">
-                <div className="text-2xl font-bold text-yellow-700">194</div>
-                <div className="text-sm font-semibold text-yellow-900 mt-1">Workers/</div>
+              <div className="text-4xl" style={{ color: 'var(--status-success)' }}>
+                →
+              </div>
+              <div
+                className="rounded-lg p-4 border-2"
+                style={{
+                  backgroundColor: 'var(--status-warning-bg)',
+                  borderColor: 'var(--status-warning-border)',
+                }}
+              >
+                <div className="text-2xl font-bold" style={{ color: 'var(--status-warning)' }}>
+                  194
+                </div>
+                <div
+                  className="text-sm font-semibold mt-1"
+                  style={{ color: 'var(--status-warning)' }}
+                >
+                  Workers/
+                </div>
                 <div className="text-xs text-muted-foreground mt-1">Helpers</div>
               </div>
             </div>
           </div>
 
           {/* Health Status Table */}
-          <div className="bg-white rounded-lg border-2 border-green-300 overflow-hidden">
-            <div className="bg-green-50 px-4 py-3 border-b-2 border-green-300">
-              <div className="text-lg font-bold text-green-900">✅ Validation Health Status</div>
+          <div
+            className="bg-white rounded-lg overflow-hidden border-2"
+            style={{ borderColor: 'var(--status-success-border)' }}
+          >
+            <div
+              className="px-4 py-3 border-b-2"
+              style={{
+                backgroundColor: 'var(--status-success-bg)',
+                borderColor: 'var(--status-success-border)',
+              }}
+            >
+              <div className="text-lg font-bold" style={{ color: 'var(--status-success)' }}>
+                ✅ Validation Health Status
+              </div>
             </div>
             <table className="w-full">
               <thead className="bg-gray-50 border-b-2 border-gray-200">
@@ -332,55 +371,94 @@ export function LiveMigrationStatus() {
                 </tr>
               </thead>
               <tbody className="divide-y-2">
-                <tr className="bg-green-50/50">
+                <tr style={{ backgroundColor: 'var(--status-success-bg)' }}>
                   <td className="p-4">
-                    <div className="font-bold text-green-800">Tasks/ Functions</div>
+                    <div className="font-bold" style={{ color: 'var(--status-success)' }}>
+                      Tasks/ Functions
+                    </div>
                     <div className="text-xs text-muted-foreground">Called by cron jobs</div>
                   </td>
                   <td className="text-center p-4 text-lg font-bold">109</td>
-                  <td className="text-center p-4 text-lg font-bold text-green-600">102</td>
-                  <td className="text-center p-4">
-                    <div className="text-2xl font-bold text-green-600">95%</div>
+                  <td
+                    className="text-center p-4 text-lg font-bold"
+                    style={{ color: 'var(--status-success)' }}
+                  >
+                    102
                   </td>
                   <td className="text-center p-4">
-                    <Badge className="bg-green-600 text-base px-3 py-1">✅ Healthy</Badge>
+                    <div className="text-2xl font-bold" style={{ color: 'var(--status-success)' }}>
+                      95%
+                    </div>
+                  </td>
+                  <td className="text-center p-4">
+                    <Badge
+                      className="text-base px-3 py-1"
+                      style={{ backgroundColor: 'var(--status-success)' }}
+                    >
+                      ✅ Healthy
+                    </Badge>
                   </td>
                 </tr>
-                <tr className="bg-blue-50/50">
+                <tr style={{ backgroundColor: 'var(--status-info-bg)' }}>
                   <td className="p-4">
-                    <div className="font-bold text-blue-800">Test Endpoints</div>
+                    <div className="font-bold" style={{ color: 'var(--status-info)' }}>
+                      Test Endpoints
+                    </div>
                     <div className="text-xs text-muted-foreground">
                       WORKERS API (for programmatic control)
                     </div>
                   </td>
                   <td className="text-center p-4 text-lg font-bold">324</td>
-                  <td className="text-center p-4 text-lg font-bold text-blue-600">312</td>
-                  <td className="text-center p-4">
-                    <div className="text-2xl font-bold text-blue-600">96%</div>
+                  <td
+                    className="text-center p-4 text-lg font-bold"
+                    style={{ color: 'var(--status-info)' }}
+                  >
+                    312
                   </td>
                   <td className="text-center p-4">
-                    <Badge className="bg-blue-600 text-base px-3 py-1">✅ Healthy</Badge>
+                    <div className="text-2xl font-bold" style={{ color: 'var(--status-info)' }}>
+                      96%
+                    </div>
+                  </td>
+                  <td className="text-center p-4">
+                    <Badge
+                      className="text-base px-3 py-1"
+                      style={{ backgroundColor: 'var(--status-info)' }}
+                    >
+                      ✅ Healthy
+                    </Badge>
                   </td>
                 </tr>
-                <tr className="bg-yellow-50/50">
+                <tr style={{ backgroundColor: 'var(--status-warning-bg)' }}>
                   <td className="p-4">
-                    <div className="font-bold text-yellow-800">Workers/ Functions</div>
+                    <div className="font-bold" style={{ color: 'var(--status-warning)' }}>
+                      Workers/ Functions
+                    </div>
                     <div className="text-xs text-muted-foreground">
                       Called by Tasks/ • Validated indirectly
                     </div>
                   </td>
                   <td className="text-center p-4 text-lg font-bold">194</td>
-                  <td className="text-center p-4 text-lg font-bold text-yellow-600">
+                  <td
+                    className="text-center p-4 text-lg font-bold"
+                    style={{ color: 'var(--status-warning)' }}
+                  >
                     <div>Unknown</div>
                     <div className="text-xs text-muted-foreground">~187 endpoints exist</div>
                   </td>
                   <td className="text-center p-4">
-                    <div className="text-2xl font-bold text-yellow-600">?</div>
+                    <div className="text-2xl font-bold" style={{ color: 'var(--status-warning)' }}>
+                      ?
+                    </div>
                   </td>
                   <td className="text-center p-4">
                     <Badge
                       variant="outline"
-                      className="text-base px-3 py-1 border-yellow-400 text-yellow-700"
+                      className="text-base px-3 py-1"
+                      style={{
+                        borderColor: 'var(--status-warning-border)',
+                        color: 'var(--status-warning)',
+                      }}
                     >
                       ⚠️ Unmapped
                     </Badge>
@@ -391,12 +469,23 @@ export function LiveMigrationStatus() {
           </div>
 
           {/* Key Insight */}
-          <div className="bg-green-50 border-2 border-green-300 rounded-lg p-4">
+          <div
+            className="rounded-lg p-4 border-2"
+            style={{
+              backgroundColor: 'var(--status-success-bg)',
+              borderColor: 'var(--status-success-border)',
+            }}
+          >
             <div className="flex items-start gap-3">
-              <CheckCircle2 className="h-6 w-6 text-green-600 flex-shrink-0 mt-1" />
+              <CheckCircle2
+                className="h-6 w-6 flex-shrink-0 mt-1"
+                style={{ color: 'var(--status-success)' }}
+              />
               <div>
-                <div className="font-bold text-green-900 text-lg mb-2">Backend is Healthy</div>
-                <ul className="text-sm text-green-800 space-y-1">
+                <div className="font-bold text-lg mb-2" style={{ color: 'var(--status-success)' }}>
+                  Backend is Healthy
+                </div>
+                <ul className="text-sm space-y-1" style={{ color: 'var(--status-success)' }}>
                   <li>
                     • <strong>95% of production tasks</strong> (102/109 Tasks/) are working
                     correctly
@@ -419,14 +508,23 @@ export function LiveMigrationStatus() {
           </div>
 
           {/* Mapping Gap Explanation */}
-          <div className="bg-amber-50 border-2 border-amber-300 rounded-lg p-4">
+          <div
+            className="rounded-lg p-4 border-2"
+            style={{
+              backgroundColor: 'var(--status-warning-bg)',
+              borderColor: 'var(--status-warning-border)',
+            }}
+          >
             <div className="flex items-start gap-3">
-              <AlertTriangle className="h-6 w-6 text-amber-600 flex-shrink-0 mt-1" />
+              <AlertTriangle
+                className="h-6 w-6 flex-shrink-0 mt-1"
+                style={{ color: 'var(--status-warning)' }}
+              />
               <div>
-                <div className="font-bold text-amber-900 text-lg mb-2">
+                <div className="font-bold text-lg mb-2" style={{ color: 'var(--status-warning)' }}>
                   Mapping Gap (Not a Validation Issue)
                 </div>
-                <div className="text-sm text-amber-800 space-y-1">
+                <div className="text-sm space-y-1" style={{ color: 'var(--status-warning)' }}>
                   <div>
                     • <strong>187 Worker test endpoints exist</strong> but aren't mapped to specific
                     functions yet
@@ -437,7 +535,7 @@ export function LiveMigrationStatus() {
                   <div>
                     • This is a <strong>mapping problem</strong>, not a backend health problem
                   </div>
-                  <div className="text-xs mt-2 text-amber-700">
+                  <div className="text-xs mt-2" style={{ color: 'var(--status-warning)' }}>
                     Next step: Use get_endpoint to inspect XanoScript and map endpoints to functions
                   </div>
                 </div>
@@ -464,7 +562,7 @@ export function LiveMigrationStatus() {
                     Test pass rates for tables, functions, endpoints (not data migration)
                   </CardDescription>
                 </div>
-                <Badge className={getStatusColor(migration_score.status)} variant="outline">
+                <Badge style={getStatusColor(migration_score.status)} variant="outline">
                   {migration_score.status.replace('_', ' ')}
                 </Badge>
               </div>
@@ -473,29 +571,39 @@ export function LiveMigrationStatus() {
               <CardContent>
                 <div className="grid grid-cols-4 gap-4">
                   <div className="text-center">
-                    <div className={`text-4xl font-bold ${getScoreColor(migration_score.overall)}`}>
+                    <div
+                      className="text-4xl font-bold"
+                      style={getScoreColor(migration_score.overall)}
+                    >
                       {migration_score.overall}%
                     </div>
                     <div className="text-sm text-muted-foreground mt-1">Overall</div>
                   </div>
                   <div className="text-center">
-                    <div className={`text-4xl font-bold ${getScoreColor(migration_score.tables)}`}>
+                    <div
+                      className="text-4xl font-bold"
+                      style={getScoreColor(migration_score.tables)}
+                    >
                       {migration_score.tables}%
                     </div>
                     <div className="text-sm text-muted-foreground mt-1">Tables</div>
                   </div>
                   <div className="text-center">
                     <div
-                      className={`text-4xl font-bold ${getScoreColor(migration_score.functions)}`}
+                      className="text-4xl font-bold"
+                      style={getScoreColor(migration_score.functions)}
                     >
                       {migration_score.functions}%
                     </div>
                     <div className="text-sm text-muted-foreground mt-1">Functions*</div>
-                    <div className="text-xs text-amber-600">*Understates reality</div>
+                    <div className="text-xs" style={{ color: 'var(--status-warning)' }}>
+                      *Understates reality
+                    </div>
                   </div>
                   <div className="text-center">
                     <div
-                      className={`text-4xl font-bold ${getScoreColor(migration_score.endpoints)}`}
+                      className="text-4xl font-bold"
+                      style={getScoreColor(migration_score.endpoints)}
                     >
                       {migration_score.endpoints}%
                     </div>
@@ -543,13 +651,31 @@ export function LiveMigrationStatus() {
                     </div>
                   </div>
                   <div className="text-2xl text-indigo-400">→</div>
-                  <div className="bg-green-50 rounded p-2 border border-green-300">
-                    <div className="font-semibold text-green-700">Tasks/</div>
+                  <div
+                    className="rounded p-2 border"
+                    style={{
+                      backgroundColor: 'var(--status-success-bg)',
+                      borderColor: 'var(--status-success-border)',
+                    }}
+                  >
+                    <div className="font-semibold" style={{ color: 'var(--status-success)' }}>
+                      Tasks/
+                    </div>
                     <div className="text-xs text-muted-foreground mt-1">109 functions</div>
                   </div>
-                  <div className="text-2xl text-green-400">→</div>
-                  <div className="bg-yellow-50 rounded p-2 border border-yellow-300">
-                    <div className="font-semibold text-yellow-700">Workers/</div>
+                  <div className="text-2xl" style={{ color: 'var(--status-success)' }}>
+                    →
+                  </div>
+                  <div
+                    className="rounded p-2 border"
+                    style={{
+                      backgroundColor: 'var(--status-warning-bg)',
+                      borderColor: 'var(--status-warning-border)',
+                    }}
+                  >
+                    <div className="font-semibold" style={{ color: 'var(--status-warning)' }}>
+                      Workers/
+                    </div>
                     <div className="text-xs text-muted-foreground mt-1">194 functions</div>
                   </div>
                 </div>
@@ -558,18 +684,46 @@ export function LiveMigrationStatus() {
                   Testing Flow (because Xano won't let you curl functions):
                 </div>
                 <div className="grid grid-cols-5 gap-2 items-center text-center text-sm">
-                  <div className="bg-blue-50 rounded p-2 border border-blue-300">
-                    <div className="font-semibold text-blue-700">/test-function-*</div>
+                  <div
+                    className="rounded p-2 border"
+                    style={{
+                      backgroundColor: 'var(--status-info-bg)',
+                      borderColor: 'var(--status-info-border)',
+                    }}
+                  >
+                    <div className="font-semibold" style={{ color: 'var(--status-info)' }}>
+                      /test-function-*
+                    </div>
                     <div className="text-xs text-muted-foreground mt-1">Test endpoint</div>
                   </div>
-                  <div className="text-2xl text-blue-400">→</div>
-                  <div className="bg-green-50 rounded p-2 border border-green-300">
-                    <div className="font-semibold text-green-700">Tasks/</div>
+                  <div className="text-2xl" style={{ color: 'var(--status-info)' }}>
+                    →
+                  </div>
+                  <div
+                    className="rounded p-2 border"
+                    style={{
+                      backgroundColor: 'var(--status-success-bg)',
+                      borderColor: 'var(--status-success-border)',
+                    }}
+                  >
+                    <div className="font-semibold" style={{ color: 'var(--status-success)' }}>
+                      Tasks/
+                    </div>
                     <div className="text-xs text-muted-foreground mt-1">109 functions</div>
                   </div>
-                  <div className="text-2xl text-green-400">→</div>
-                  <div className="bg-yellow-50 rounded p-2 border border-yellow-300">
-                    <div className="font-semibold text-yellow-700">Workers/</div>
+                  <div className="text-2xl" style={{ color: 'var(--status-success)' }}>
+                    →
+                  </div>
+                  <div
+                    className="rounded p-2 border"
+                    style={{
+                      backgroundColor: 'var(--status-warning-bg)',
+                      borderColor: 'var(--status-warning-border)',
+                    }}
+                  >
+                    <div className="font-semibold" style={{ color: 'var(--status-warning)' }}>
+                      Workers/
+                    </div>
                     <div className="text-xs text-muted-foreground mt-1">194 functions</div>
                   </div>
                 </div>
@@ -619,45 +773,63 @@ export function LiveMigrationStatus() {
                         </Badge>
                       </td>
                     </tr>
-                    <tr className="bg-green-50/50">
+                    <tr style={{ backgroundColor: 'var(--status-success-bg)' }}>
                       <td className="p-3">
-                        <div className="font-semibold text-green-700">Tasks/ Functions</div>
+                        <div className="font-semibold" style={{ color: 'var(--status-success)' }}>
+                          Tasks/ Functions
+                        </div>
                         <div className="text-xs text-muted-foreground">
                           Called BY: Scheduled jobs • CALLS: Workers/
                         </div>
                       </td>
                       <td className="text-center p-3 font-semibold">109</td>
-                      <td className="text-center p-3 font-semibold text-green-600">109</td>
-                      <td className="text-center p-3 font-semibold text-green-600">102</td>
+                      <td
+                        className="text-center p-3 font-semibold"
+                        style={{ color: 'var(--status-success)' }}
+                      >
+                        109
+                      </td>
+                      <td
+                        className="text-center p-3 font-semibold"
+                        style={{ color: 'var(--status-success)' }}
+                      >
+                        102
+                      </td>
                       <td className="text-center p-3">
-                        <Badge className="bg-green-600">95%</Badge>
+                        <Badge style={{ backgroundColor: 'var(--status-success)' }}>95%</Badge>
                       </td>
                     </tr>
-                    <tr className="bg-yellow-50/50">
+                    <tr style={{ backgroundColor: 'var(--status-warning-bg)' }}>
                       <td className="p-3">
-                        <div className="font-semibold text-yellow-700">Workers/ Functions</div>
+                        <div className="font-semibold" style={{ color: 'var(--status-warning)' }}>
+                          Workers/ Functions
+                        </div>
                         <div className="text-xs text-muted-foreground">
                           Called BY: Tasks/ (via function.run) AND test endpoints
                         </div>
                       </td>
                       <td className="text-center p-3 font-semibold">194</td>
                       <td className="text-center p-3">
-                        <div className="font-semibold text-yellow-600">~187</div>
+                        <div className="font-semibold" style={{ color: 'var(--status-warning)' }}>
+                          ~187
+                        </div>
                         <div className="text-xs text-muted-foreground">Unmapped*</div>
                       </td>
                       <td className="text-center p-3">
-                        <div className="font-semibold text-yellow-600">?</div>
+                        <div className="font-semibold" style={{ color: 'var(--status-warning)' }}>
+                          ?
+                        </div>
                         <div className="text-xs text-muted-foreground">Unknown</div>
                       </td>
                       <td className="text-center p-3">
-                        <Badge variant="outline" className="text-yellow-600">
+                        <Badge variant="outline" style={{ color: 'var(--status-warning)' }}>
                           Endpoints exist
                         </Badge>
                       </td>
                     </tr>
-                    <tr className="bg-blue-50/50 border-t-2">
+                    <tr className="border-t-2" style={{ backgroundColor: 'var(--status-info-bg)' }}>
                       <td className="p-3">
-                        <div className="font-semibold text-blue-700">
+                        <div className="font-semibold" style={{ color: 'var(--status-info)' }}>
                           Test Endpoints (WORKERS API)
                         </div>
                         <div className="text-xs text-muted-foreground">
@@ -668,9 +840,14 @@ export function LiveMigrationStatus() {
                       <td className="text-center p-3">
                         <span className="text-muted-foreground">Self</span>
                       </td>
-                      <td className="text-center p-3 font-semibold text-blue-600">312</td>
+                      <td
+                        className="text-center p-3 font-semibold"
+                        style={{ color: 'var(--status-info)' }}
+                      >
+                        312
+                      </td>
                       <td className="text-center p-3">
-                        <Badge className="bg-blue-600">96%</Badge>
+                        <Badge style={{ backgroundColor: 'var(--status-info)' }}>96%</Badge>
                       </td>
                     </tr>
                   </tbody>
@@ -678,11 +855,17 @@ export function LiveMigrationStatus() {
               </div>
 
               {/* Mapping Status */}
-              <div className="mt-4 p-4 bg-orange-50 rounded-lg border border-orange-200">
-                <div className="font-semibold text-orange-900 mb-2">
+              <div
+                className="mt-4 p-4 rounded-lg border"
+                style={{
+                  backgroundColor: 'var(--status-warning-bg)',
+                  borderColor: 'var(--status-warning-border)',
+                }}
+              >
+                <div className="font-semibold mb-2" style={{ color: 'var(--status-warning)' }}>
                   ⚠️ Function-Endpoint Mapping Status:
                 </div>
-                <div className="text-sm space-y-1">
+                <div className="text-sm space-y-1" style={{ color: 'var(--status-warning)' }}>
                   <div>
                     • <strong>324 WORKERS API endpoints exist</strong> (312 working, 96%)
                   </div>
@@ -693,7 +876,7 @@ export function LiveMigrationStatus() {
                     • <strong>187 unmapped:</strong> Endpoints exist but we don't know which
                     Workers/ function they call
                   </div>
-                  <div className="text-xs text-orange-700 mt-2">
+                  <div className="text-xs mt-2" style={{ color: 'var(--status-warning)' }}>
                     * Name-based heuristics failed for Workers/ - need to inspect each endpoint's
                     XanoScript to map correctly
                   </div>
@@ -701,20 +884,32 @@ export function LiveMigrationStatus() {
               </div>
 
               {/* The Math */}
-              <div className="mt-4 p-4 bg-amber-50 rounded-lg border border-amber-200">
-                <div className="font-semibold text-amber-900 mb-2">
+              <div
+                className="mt-4 p-4 rounded-lg border"
+                style={{
+                  backgroundColor: 'var(--status-warning-bg)',
+                  borderColor: 'var(--status-warning-border)',
+                }}
+              >
+                <div className="font-semibold mb-2" style={{ color: 'var(--status-warning)' }}>
                   Why "Functions: {migration_score.functions}%"?
                 </div>
-                <div className="text-sm space-y-1 font-mono">
+                <div
+                  className="text-sm space-y-1 font-mono"
+                  style={{ color: 'var(--status-warning)' }}
+                >
                   <div>Tasks/ passing: 102</div>
                   <div>Workers/ passing: 0 (endpoints exist but unmapped)</div>
-                  <div className="border-t border-amber-300 pt-1 mt-1">
+                  <div
+                    className="pt-1 mt-1"
+                    style={{ borderTop: '1px solid var(--status-warning-border)' }}
+                  >
                     Total active functions: 109 + 194 = 303
                   </div>
-                  <div className="text-amber-900 font-semibold">
+                  <div className="font-semibold" style={{ color: 'var(--status-warning)' }}>
                     Pass rate: 102 ÷ 303 = {migration_score.functions}%
                   </div>
-                  <div className="text-xs text-amber-700 mt-2">
+                  <div className="text-xs mt-2" style={{ color: 'var(--status-warning)' }}>
                     * This understates reality - many Workers/ likely have working endpoints, we
                     just can't map them
                   </div>
@@ -722,11 +917,17 @@ export function LiveMigrationStatus() {
               </div>
 
               {/* What This Means */}
-              <div className="mt-4 p-4 bg-green-50 rounded-lg border border-green-200">
-                <div className="font-semibold text-green-900 mb-2">
+              <div
+                className="mt-4 p-4 rounded-lg border"
+                style={{
+                  backgroundColor: 'var(--status-success-bg)',
+                  borderColor: 'var(--status-success-border)',
+                }}
+              >
+                <div className="font-semibold mb-2" style={{ color: 'var(--status-success)' }}>
                   ✅ What This Actually Means:
                 </div>
-                <ul className="text-sm space-y-1 text-green-800">
+                <ul className="text-sm space-y-1" style={{ color: 'var(--status-success)' }}>
                   <li>
                     • <strong>1:1 Mapping:</strong> 109 scheduled jobs → call → 109 Tasks/ functions
                     (+ 109 archived jobs)
@@ -748,11 +949,17 @@ export function LiveMigrationStatus() {
                     specific functions
                   </li>
                 </ul>
-                <div className="mt-3 p-3 bg-white rounded border border-green-300">
-                  <div className="text-xs font-semibold text-green-900 mb-1">
+                <div
+                  className="mt-3 p-3 bg-white rounded border"
+                  style={{ borderColor: 'var(--status-success-border)' }}
+                >
+                  <div
+                    className="text-xs font-semibold mb-1"
+                    style={{ color: 'var(--status-success)' }}
+                  >
                     Next Step to Fix Mapping:
                   </div>
-                  <div className="text-xs text-green-800">
+                  <div className="text-xs" style={{ color: 'var(--status-success)' }}>
                     Inspect each WORKERS API endpoint's XanoScript (via get_endpoint) to see which
                     function it calls → build complete mapping
                   </div>
@@ -819,12 +1026,26 @@ export function LiveMigrationStatus() {
 
                     {/* Step 2: Tasks/ Function */}
                     <div className="flex items-start gap-3">
-                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-700 font-semibold text-sm">
+                      <div
+                        className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-semibold text-sm"
+                        style={{
+                          backgroundColor: 'var(--status-success-bg)',
+                          color: 'var(--status-success)',
+                        }}
+                      >
                         2
                       </div>
                       <div className="flex-1">
-                        <div className="text-sm font-semibold text-green-900">Tasks/ Function</div>
-                        <code className="text-xs bg-green-50 px-2 py-1 rounded mt-1 inline-block">
+                        <div
+                          className="text-sm font-semibold"
+                          style={{ color: 'var(--status-success)' }}
+                        >
+                          Tasks/ Function
+                        </div>
+                        <code
+                          className="text-xs px-2 py-1 rounded mt-1 inline-block"
+                          style={{ backgroundColor: 'var(--status-success-bg)' }}
+                        >
                           Tasks/Syncing - Team Roster
                         </code>
                         <div className="text-sm text-muted-foreground mt-2">
@@ -833,27 +1054,50 @@ export function LiveMigrationStatus() {
                       </div>
                     </div>
 
-                    <div className="ml-4 border-l-2 border-green-200 pl-6 py-2">
-                      <div className="text-lg text-green-400">↓ calls (via function.run)</div>
+                    <div
+                      className="ml-4 pl-6 py-2"
+                      style={{ borderLeft: '2px solid var(--status-success-border)' }}
+                    >
+                      <div className="text-lg" style={{ color: 'var(--status-success)' }}>
+                        ↓ calls (via function.run)
+                      </div>
                     </div>
 
                     {/* Step 3: Workers/ Functions */}
                     <div className="flex items-start gap-3">
-                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-700 font-semibold text-sm">
+                      <div
+                        className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-semibold text-sm"
+                        style={{
+                          backgroundColor: 'var(--status-warning-bg)',
+                          color: 'var(--status-warning)',
+                        }}
+                      >
                         3
                       </div>
                       <div className="flex-1">
-                        <div className="text-sm font-semibold text-yellow-900">
+                        <div
+                          className="text-sm font-semibold"
+                          style={{ color: 'var(--status-warning)' }}
+                        >
                           Workers/ Functions (Helpers)
                         </div>
                         <div className="space-y-1 mt-2">
-                          <code className="text-xs bg-yellow-50 px-2 py-1 rounded block w-fit">
+                          <code
+                            className="text-xs px-2 py-1 rounded block w-fit"
+                            style={{ backgroundColor: 'var(--status-warning-bg)' }}
+                          >
                             Workers/Enrich Team Members from Agent Data
                           </code>
-                          <code className="text-xs bg-yellow-50 px-2 py-1 rounded block w-fit">
+                          <code
+                            className="text-xs px-2 py-1 rounded block w-fit"
+                            style={{ backgroundColor: 'var(--status-warning-bg)' }}
+                          >
                             Workers/Team - Roster Counts
                           </code>
-                          <code className="text-xs bg-yellow-50 px-2 py-1 rounded block w-fit">
+                          <code
+                            className="text-xs px-2 py-1 rounded block w-fit"
+                            style={{ backgroundColor: 'var(--status-warning-bg)' }}
+                          >
                             Workers/Utility - Get API Key Data
                           </code>
                         </div>
@@ -863,27 +1107,49 @@ export function LiveMigrationStatus() {
                       </div>
                     </div>
 
-                    <div className="ml-4 border-l-2 border-blue-200 pl-6 py-2">
-                      <div className="text-lg text-blue-400">↓ all accessible via</div>
+                    <div
+                      className="ml-4 pl-6 py-2"
+                      style={{ borderLeft: '2px solid var(--status-info-border)' }}
+                    >
+                      <div className="text-lg" style={{ color: 'var(--status-info)' }}>
+                        ↓ all accessible via
+                      </div>
                     </div>
 
                     {/* Step 4: Test Endpoint */}
                     <div className="flex items-start gap-3">
-                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-semibold text-sm">
+                      <div
+                        className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-semibold text-sm"
+                        style={{
+                          backgroundColor: 'var(--status-info-bg)',
+                          color: 'var(--status-info)',
+                        }}
+                      >
                         4
                       </div>
                       <div className="flex-1">
-                        <div className="text-sm font-semibold text-blue-900">
+                        <div
+                          className="text-sm font-semibold"
+                          style={{ color: 'var(--status-info)' }}
+                        >
                           Test Endpoint (For Programmatic Control)
                         </div>
-                        <code className="text-xs bg-blue-50 px-2 py-1 rounded mt-1 inline-block">
+                        <code
+                          className="text-xs px-2 py-1 rounded mt-1 inline-block"
+                          style={{ backgroundColor: 'var(--status-info-bg)' }}
+                        >
                           POST /test-function-8066-team-roster
                         </code>
                         <div className="text-sm text-muted-foreground mt-2">
                           WORKERS API • Triggers same flow as scheduled task
                         </div>
                         <div className="mt-2 flex gap-2">
-                          <Badge className="bg-blue-600 text-xs">✅ HTTP 200</Badge>
+                          <Badge
+                            className="text-xs"
+                            style={{ backgroundColor: 'var(--status-info)' }}
+                          >
+                            ✅ HTTP 200
+                          </Badge>
                           <Badge variant="outline" className="text-xs">
                             96% pass rate
                           </Badge>
@@ -953,8 +1219,8 @@ export function LiveMigrationStatus() {
                           key={idx}
                           className="grid grid-cols-2 gap-2 text-xs py-1 border-b border-gray-100"
                         >
-                          <code className="text-green-700">{item.func}</code>
-                          <code className="text-blue-700">{item.endpoint}</code>
+                          <code style={{ color: 'var(--status-success)' }}>{item.func}</code>
+                          <code style={{ color: 'var(--status-info)' }}>{item.endpoint}</code>
                         </div>
                       ))}
                     </div>
@@ -962,11 +1228,20 @@ export function LiveMigrationStatus() {
                 </Collapsible>
 
                 {/* Need Full Mapping Notice */}
-                <div className="mt-4 p-4 bg-amber-50 rounded-lg border border-amber-200">
-                  <div className="text-sm font-semibold text-amber-900 mb-2">
+                <div
+                  className="mt-4 p-4 rounded-lg border"
+                  style={{
+                    backgroundColor: 'var(--status-warning-bg)',
+                    borderColor: 'var(--status-warning-border)',
+                  }}
+                >
+                  <div
+                    className="text-sm font-semibold mb-2"
+                    style={{ color: 'var(--status-warning)' }}
+                  >
                     To Show Complete Flow Map for All 109 Background Tasks:
                   </div>
-                  <div className="text-sm text-amber-800 space-y-1">
+                  <div className="text-sm space-y-1" style={{ color: 'var(--status-warning)' }}>
                     <div>
                       <strong>What We Have:</strong>
                     </div>
@@ -980,7 +1255,7 @@ export function LiveMigrationStatus() {
                       * XanoScript inspection for each Tasks/ function to see Workers/ calls
                     </div>
                     <div>* ~187 unmapped Workers/ to test endpoint mappings</div>
-                    <div className="text-xs text-amber-700 mt-2">
+                    <div className="text-xs mt-2" style={{ color: 'var(--status-warning)' }}>
                       Once complete, this would show every chain: Background Task &rarr; Tasks/
                       &rarr; Workers/ &rarr; Test Endpoint
                     </div>
@@ -1030,18 +1305,40 @@ export function LiveMigrationStatus() {
           ) : (
             <>
               <div className="grid grid-cols-2 gap-6 mb-4">
-                <div className="text-center p-4 bg-orange-50 rounded-lg border border-orange-200">
-                  <div className="text-sm font-medium text-orange-700 mb-2">V1 Production</div>
-                  <div className="text-2xl font-bold text-orange-600">
+                <div
+                  className="text-center p-4 rounded-lg border"
+                  style={{
+                    backgroundColor: 'var(--status-warning-bg)',
+                    borderColor: 'var(--status-warning-border)',
+                  }}
+                >
+                  <div
+                    className="text-sm font-medium mb-2"
+                    style={{ color: 'var(--status-warning)' }}
+                  >
+                    V1 Production
+                  </div>
+                  <div className="text-2xl font-bold" style={{ color: 'var(--status-warning)' }}>
                     {countsData.v1.total_records.toLocaleString()}
                   </div>
                   <div className="text-xs text-muted-foreground mt-1">
                     records across {countsData.v1.table_count} tables
                   </div>
                 </div>
-                <div className="text-center p-4 bg-green-50 rounded-lg border border-green-200">
-                  <div className="text-sm font-medium text-green-700 mb-2">V2 Normalized</div>
-                  <div className="text-2xl font-bold text-green-600">
+                <div
+                  className="text-center p-4 rounded-lg border"
+                  style={{
+                    backgroundColor: 'var(--status-success-bg)',
+                    borderColor: 'var(--status-success-border)',
+                  }}
+                >
+                  <div
+                    className="text-sm font-medium mb-2"
+                    style={{ color: 'var(--status-success)' }}
+                  >
+                    V2 Normalized
+                  </div>
+                  <div className="text-2xl font-bold" style={{ color: 'var(--status-success)' }}>
                     {countsData.v2.total_records.toLocaleString()}
                   </div>
                   <div className="text-xs text-muted-foreground mt-1">
@@ -1130,7 +1427,13 @@ export function LiveMigrationStatus() {
                         </div>
                       </div>
                     </div>
-                    <Badge className={allHealthy ? 'bg-emerald-600' : 'bg-yellow-600'}>
+                    <Badge
+                      style={{
+                        backgroundColor: allHealthy
+                          ? 'var(--status-success)'
+                          : 'var(--status-warning)',
+                      }}
+                    >
                       {allHealthy ? '✅ Healthy' : '⚠️ Review Needed'}
                     </Badge>
                   </div>
@@ -1140,19 +1443,31 @@ export function LiveMigrationStatus() {
               {/* Legend */}
               <div className="flex items-center gap-4 text-xs text-muted-foreground pb-2 border-b">
                 <div className="flex items-center gap-1">
-                  <div className="w-3 h-3 bg-green-500 rounded-full" />
+                  <div
+                    className="w-3 h-3 rounded-full"
+                    style={{ backgroundColor: 'var(--status-success)' }}
+                  />
                   <span>100% Match</span>
                 </div>
                 <div className="flex items-center gap-1">
-                  <div className="w-3 h-3 bg-emerald-400 rounded-full" />
+                  <div
+                    className="w-3 h-3 rounded-full"
+                    style={{ backgroundColor: 'var(--status-success)' }}
+                  />
                   <span>≥99%</span>
                 </div>
                 <div className="flex items-center gap-1">
-                  <div className="w-3 h-3 bg-yellow-500 rounded-full" />
+                  <div
+                    className="w-3 h-3 rounded-full"
+                    style={{ backgroundColor: 'var(--status-warning)' }}
+                  />
                   <span>95-99%</span>
                 </div>
                 <div className="flex items-center gap-1">
-                  <div className="w-3 h-3 bg-red-500 rounded-full" />
+                  <div
+                    className="w-3 h-3 rounded-full"
+                    style={{ backgroundColor: 'var(--status-error)' }}
+                  />
                   <span>&lt;95% (Critical)</span>
                 </div>
               </div>
@@ -1167,26 +1482,41 @@ export function LiveMigrationStatus() {
                       entity.v1 > 0 ? Math.abs(((entity.v2 - entity.v1) / entity.v1) * 100) : 0
 
                     // Determine status color and indicator
-                    let statusColor = 'bg-green-500'
-                    let bgColor = 'bg-green-500/5 border-green-500/20'
-                    let textColor = 'text-green-600'
+                    let statusBg = 'var(--status-success)'
+                    let bgStyles: React.CSSProperties = {
+                      backgroundColor: 'var(--status-success-bg)',
+                      borderColor: 'var(--status-success-border)',
+                    }
+                    let textStyles: React.CSSProperties = { color: 'var(--status-success)' }
 
                     if (ratio >= 100) {
-                      statusColor = 'bg-green-500'
-                      bgColor = 'bg-green-500/5 border-green-500/20'
-                      textColor = 'text-green-600'
+                      statusBg = 'var(--status-success)'
+                      bgStyles = {
+                        backgroundColor: 'var(--status-success-bg)',
+                        borderColor: 'var(--status-success-border)',
+                      }
+                      textStyles = { color: 'var(--status-success)' }
                     } else if (ratio >= 99) {
-                      statusColor = 'bg-emerald-400'
-                      bgColor = 'bg-emerald-500/5 border-emerald-500/20'
-                      textColor = 'text-emerald-600'
+                      statusBg = 'var(--status-success)'
+                      bgStyles = {
+                        backgroundColor: 'var(--status-success-bg)',
+                        borderColor: 'var(--status-success-border)',
+                      }
+                      textStyles = { color: 'var(--status-success)' }
                     } else if (ratio >= 95) {
-                      statusColor = 'bg-yellow-500'
-                      bgColor = 'bg-yellow-500/5 border-yellow-500/20'
-                      textColor = 'text-yellow-600'
+                      statusBg = 'var(--status-warning)'
+                      bgStyles = {
+                        backgroundColor: 'var(--status-warning-bg)',
+                        borderColor: 'var(--status-warning-border)',
+                      }
+                      textStyles = { color: 'var(--status-warning)' }
                     } else {
-                      statusColor = 'bg-red-500'
-                      bgColor = 'bg-red-500/5 border-red-500/20'
-                      textColor = 'text-red-600'
+                      statusBg = 'var(--status-error)'
+                      bgStyles = {
+                        backgroundColor: 'var(--status-error-bg)',
+                        borderColor: 'var(--status-error-border)',
+                      }
+                      textStyles = { color: 'var(--status-error)' }
                     }
 
                     // Critical gap alert
@@ -1195,23 +1525,34 @@ export function LiveMigrationStatus() {
                     return (
                       <div
                         key={entity.entity}
-                        className={`p-4 rounded-lg border-2 transition-all ${bgColor} ${isCritical ? 'ring-2 ring-red-500/50 ring-offset-2' : ''}`}
+                        className={`p-4 rounded-lg border-2 transition-all ${isCritical ? 'ring-2 ring-offset-2' : ''}`}
+                        style={{
+                          ...bgStyles,
+                          ...(isCritical ? { ringColor: 'var(--status-error)' } : {}),
+                        }}
                       >
                         <div className="flex items-center justify-between mb-2">
                           <span className="font-semibold capitalize text-foreground">
                             {entity.entity}
                           </span>
-                          <div className={`w-3 h-3 rounded-full ${statusColor}`} />
+                          <div
+                            className="w-3 h-3 rounded-full"
+                            style={{ backgroundColor: statusBg }}
+                          />
                         </div>
 
                         {/* Percentage with delta arrow */}
                         <div className="flex items-baseline gap-2">
-                          <span className={`text-2xl font-bold ${textColor}`}>
+                          <span className="text-2xl font-bold" style={textStyles}>
                             {ratio.toFixed(1)}%
                           </span>
                           {delta !== 0 && (
                             <div
-                              className={`flex items-center text-sm ${delta > 0 ? 'text-green-600' : 'text-amber-600'}`}
+                              className="flex items-center text-sm"
+                              style={{
+                                color:
+                                  delta > 0 ? 'var(--status-success)' : 'var(--status-warning)',
+                              }}
                             >
                               {delta > 0 ? (
                                 <ArrowUp className="h-3 w-3" />
@@ -1235,7 +1576,11 @@ export function LiveMigrationStatus() {
                           </div>
                           {delta !== 0 && (
                             <div
-                              className={`flex justify-between ${delta > 0 ? 'text-green-600' : 'text-amber-600'}`}
+                              className="flex justify-between"
+                              style={{
+                                color:
+                                  delta > 0 ? 'var(--status-success)' : 'var(--status-warning)',
+                              }}
                             >
                               <span>Δ:</span>
                               <span className="font-mono">
@@ -1248,7 +1593,13 @@ export function LiveMigrationStatus() {
 
                         {/* Critical Alert */}
                         {isCritical && (
-                          <div className="mt-3 p-2 bg-red-100 rounded text-xs text-red-700 flex items-center gap-1">
+                          <div
+                            className="mt-3 p-2 rounded text-xs flex items-center gap-1"
+                            style={{
+                              backgroundColor: 'var(--status-error-bg)',
+                              color: 'var(--status-error)',
+                            }}
+                          >
                             <AlertCircle className="h-3 w-3 flex-shrink-0" />
                             <span>Critical gap ({(100 - ratio).toFixed(1)}% behind)</span>
                           </div>
@@ -1311,7 +1662,9 @@ export function LiveMigrationStatus() {
             </div>
             <div>
               <div className="text-sm text-muted-foreground">V2 (Normalized)</div>
-              <div className="text-2xl font-bold text-green-600">{v2.tables.count}</div>
+              <div className="text-2xl font-bold" style={{ color: 'var(--status-success)' }}>
+                {v2.tables.count}
+              </div>
               <div className="text-xs text-muted-foreground">
                 {countsLoading ? (
                   <LoadingState size="sm" message="Loading..." />
@@ -1332,8 +1685,12 @@ export function LiveMigrationStatus() {
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-muted-foreground">V2:</span>
-                  <span className="font-semibold text-green-600">193 tables</span>
-                  <span className="text-xs text-green-600">(normalized)</span>
+                  <span className="font-semibold" style={{ color: 'var(--status-success)' }}>
+                    193 tables
+                  </span>
+                  <span className="text-xs" style={{ color: 'var(--status-success)' }}>
+                    (normalized)
+                  </span>
                 </div>
               </div>
               <div className="text-xs text-muted-foreground mt-2">
@@ -1345,9 +1702,12 @@ export function LiveMigrationStatus() {
               <div className="text-lg font-semibold">
                 {countsData?.success ? (
                   <span
-                    className={
-                      countsData.comparison.percentage >= 95 ? 'text-green-600' : 'text-yellow-600'
-                    }
+                    style={{
+                      color:
+                        countsData.comparison.percentage >= 95
+                          ? 'var(--status-success)'
+                          : 'var(--status-warning)',
+                    }}
                   >
                     {countsData.comparison.percentage}%
                   </span>
@@ -1394,50 +1754,94 @@ export function LiveMigrationStatus() {
                   ) : (
                     <div className="space-y-2">
                       <div className="grid grid-cols-2 gap-2 text-xs">
-                        <div className="bg-blue-50 p-2 rounded border border-blue-200">
-                          <div className="font-semibold text-blue-900">
+                        <div
+                          className="p-2 rounded border"
+                          style={{
+                            backgroundColor: 'var(--status-info-bg)',
+                            borderColor: 'var(--status-info-border)',
+                          }}
+                        >
+                          <div className="font-semibold" style={{ color: 'var(--status-info)' }}>
                             {integrityData.data.totalReferences}
                           </div>
-                          <div className="text-blue-600">Total Foreign Keys</div>
-                        </div>
-                        <div className="bg-green-50 p-2 rounded border border-green-200">
-                          <div className="font-semibold text-green-900">
-                            {integrityData.data.validated}
-                          </div>
-                          <div className="text-green-600">Validated</div>
+                          <div style={{ color: 'var(--status-info)' }}>Total Foreign Keys</div>
                         </div>
                         <div
-                          className={`p-2 rounded border ${integrityData.data.orphansFound > 0 ? 'bg-amber-50 border-amber-200' : 'bg-green-50 border-green-200'}`}
+                          className="p-2 rounded border"
+                          style={{
+                            backgroundColor: 'var(--status-success-bg)',
+                            borderColor: 'var(--status-success-border)',
+                          }}
+                        >
+                          <div className="font-semibold" style={{ color: 'var(--status-success)' }}>
+                            {integrityData.data.validated}
+                          </div>
+                          <div style={{ color: 'var(--status-success)' }}>Validated</div>
+                        </div>
+                        <div
+                          className="p-2 rounded border"
+                          style={{
+                            backgroundColor:
+                              integrityData.data.orphansFound > 0
+                                ? 'var(--status-warning-bg)'
+                                : 'var(--status-success-bg)',
+                            borderColor:
+                              integrityData.data.orphansFound > 0
+                                ? 'var(--status-warning-border)'
+                                : 'var(--status-success-border)',
+                          }}
                         >
                           <div
-                            className={`font-semibold ${integrityData.data.orphansFound > 0 ? 'text-amber-900' : 'text-green-900'}`}
+                            className="font-semibold"
+                            style={{
+                              color:
+                                integrityData.data.orphansFound > 0
+                                  ? 'var(--status-warning)'
+                                  : 'var(--status-success)',
+                            }}
                           >
                             {integrityData.data.orphansFound}
                           </div>
                           <div
-                            className={
-                              integrityData.data.orphansFound > 0
-                                ? 'text-amber-600'
-                                : 'text-green-600'
-                            }
+                            style={{
+                              color:
+                                integrityData.data.orphansFound > 0
+                                  ? 'var(--status-warning)'
+                                  : 'var(--status-success)',
+                            }}
                           >
                             Orphans
                           </div>
                         </div>
-                        <div className="bg-purple-50 p-2 rounded border border-purple-200">
-                          <div className="font-semibold text-purple-900">
+                        <div
+                          className="p-2 rounded border"
+                          style={{
+                            backgroundColor: 'var(--status-info-bg)',
+                            borderColor: 'var(--status-info-border)',
+                          }}
+                        >
+                          <div className="font-semibold" style={{ color: 'var(--status-info)' }}>
                             {integrityData.data.tablesChecked}
                           </div>
-                          <div className="text-purple-600">Tables Checked</div>
+                          <div style={{ color: 'var(--status-info)' }}>Tables Checked</div>
                         </div>
                       </div>
                       {integrityData.data.orphansFound > 0 && (
-                        <div className="mt-2 p-2 bg-amber-50 border border-amber-200 rounded text-xs">
-                          <div className="flex items-center gap-1 font-semibold text-amber-900 mb-1">
+                        <div
+                          className="mt-2 p-2 rounded text-xs border"
+                          style={{
+                            backgroundColor: 'var(--status-warning-bg)',
+                            borderColor: 'var(--status-warning-border)',
+                          }}
+                        >
+                          <div
+                            className="flex items-center gap-1 font-semibold mb-1"
+                            style={{ color: 'var(--status-warning)' }}
+                          >
                             <AlertTriangle className="h-3 w-3" />
                             Orphaned Records Found
                           </div>
-                          <div className="text-amber-700 space-y-1">
+                          <div className="space-y-1" style={{ color: 'var(--status-warning)' }}>
                             {integrityData.data.checks
                               .filter((c: { orphanedRecords: number }) => c.orphanedRecords > 0)
                               .slice(0, 3)
@@ -1489,26 +1893,34 @@ export function LiveMigrationStatus() {
               <div className="space-y-2">
                 <div className="flex items-center justify-between text-sm">
                   <span>Tasks/ Functions</span>
-                  <Badge className="bg-green-600">102/109 (95%)</Badge>
+                  <Badge style={{ backgroundColor: 'var(--status-success)' }}>102/109 (95%)</Badge>
                 </div>
                 <div className="flex items-center justify-between text-sm">
                   <span>Workers/ Functions</span>
-                  <Badge variant="outline" className="border-yellow-400 text-yellow-700">
+                  <Badge
+                    variant="outline"
+                    style={{
+                      borderColor: 'var(--status-warning-border)',
+                      color: 'var(--status-warning)',
+                    }}
+                  >
                     Unmapped
                   </Badge>
                 </div>
                 <div className="flex items-center justify-between text-sm">
                   <span>Test Endpoints</span>
-                  <Badge className="bg-blue-600">312/324 (96%)</Badge>
+                  <Badge style={{ backgroundColor: 'var(--status-info)' }}>312/324 (96%)</Badge>
                 </div>
               </div>
             </div>
             <div className="pt-2 border-t">
               <div className="text-xs text-muted-foreground">Overall Pass Rate</div>
-              <div className="text-lg font-semibold text-yellow-600">
+              <div className="text-lg font-semibold" style={{ color: 'var(--status-warning)' }}>
                 {migration_score.functions}%
               </div>
-              <div className="text-xs text-amber-600">Understates reality (mapping gap)</div>
+              <div className="text-xs" style={{ color: 'var(--status-warning)' }}>
+                Understates reality (mapping gap)
+              </div>
             </div>
           </CardContent>
         </Card>
@@ -1524,7 +1936,9 @@ export function LiveMigrationStatus() {
           <CardContent className="p-6 pt-0 space-y-4">
             <div>
               <div className="text-sm text-muted-foreground">V2 Total Endpoints</div>
-              <div className="text-2xl font-bold text-green-600">{v2.endpoints.count}</div>
+              <div className="text-2xl font-bold" style={{ color: 'var(--status-success)' }}>
+                {v2.endpoints.count}
+              </div>
               <div className="text-xs text-muted-foreground">{v2.api_groups.count} API groups</div>
             </div>
             <div className="pt-2 border-t">
@@ -1546,15 +1960,19 @@ export function LiveMigrationStatus() {
             </div>
             <div className="pt-2 border-t">
               <div className="text-xs text-muted-foreground">Validation Status</div>
-              <div className="text-2xl font-bold text-green-600">{migration_score.endpoints}%</div>
-              <div className="text-xs text-green-600">312/324 test endpoints passing</div>
+              <div className="text-2xl font-bold" style={{ color: 'var(--status-success)' }}>
+                {migration_score.endpoints}%
+              </div>
+              <div className="text-xs" style={{ color: 'var(--status-success)' }}>
+                312/324 test endpoints passing
+              </div>
             </div>
 
             {/* Endpoint Health Section */}
             <div className="pt-2 border-t">
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2">
-                  <Activity className="h-4 w-4 text-blue-600" />
+                  <Activity className="h-4 w-4" style={{ color: 'var(--status-info)' }} />
                   <div className="text-xs font-semibold text-muted-foreground">Endpoint Health</div>
                 </div>
                 <Button
@@ -1580,34 +1998,38 @@ export function LiveMigrationStatus() {
                   <div className="text-xs text-muted-foreground">
                     Average response time:{' '}
                     <span
-                      className={`font-semibold ${
-                        healthData.avg_response_time < 500
-                          ? 'text-green-600'
-                          : healthData.avg_response_time < 1000
-                            ? 'text-yellow-600'
-                            : 'text-red-600'
-                      }`}
+                      className="font-semibold"
+                      style={{
+                        color:
+                          healthData.avg_response_time < 500
+                            ? 'var(--status-success)'
+                            : healthData.avg_response_time < 1000
+                              ? 'var(--status-warning)'
+                              : 'var(--status-error)',
+                      }}
                     >
                       {healthData.avg_response_time}ms
                     </span>
                   </div>
                   <div className="text-xs text-muted-foreground">
                     Tested:{' '}
-                    <span className="font-semibold text-blue-600">
+                    <span className="font-semibold" style={{ color: 'var(--status-info)' }}>
                       {healthData.tested}/{v2.endpoints.count}
                     </span>
                   </div>
                   <div className="text-xs text-muted-foreground">
                     Errors:{' '}
                     <span
-                      className={`font-semibold ${
-                        healthData.failed === 0 ? 'text-green-600' : 'text-red-600'
-                      }`}
+                      className="font-semibold"
+                      style={{
+                        color:
+                          healthData.failed === 0 ? 'var(--status-success)' : 'var(--status-error)',
+                      }}
                     >
                       {healthData.failed}
                     </span>
                     {healthData.failed > 0 && (
-                      <span className="ml-1 text-red-600">
+                      <span className="ml-1" style={{ color: 'var(--status-error)' }}>
                         ({Math.round((healthData.failed / healthData.tested) * 100)}% fail rate)
                       </span>
                     )}
@@ -1651,7 +2073,7 @@ export function LiveMigrationStatus() {
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4 text-green-600" />
+                <CheckCircle2 className="h-4 w-4" style={{ color: 'var(--status-success)' }} />
                 <span className="font-semibold">
                   {v2.tables.count}/{v2.tables.count} Tables
                 </span>
@@ -1662,7 +2084,7 @@ export function LiveMigrationStatus() {
             </div>
             <div className="space-y-2">
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4 text-green-600" />
+                <CheckCircle2 className="h-4 w-4" style={{ color: 'var(--status-success)' }} />
                 <span className="font-semibold">Tasks/: 102/109 (95%)</span>
               </div>
               <div className="text-sm text-muted-foreground ml-6">
@@ -1671,7 +2093,7 @@ export function LiveMigrationStatus() {
             </div>
             <div className="space-y-2">
               <div className="flex items-center gap-2">
-                <Database className="h-4 w-4 text-blue-600" />
+                <Database className="h-4 w-4" style={{ color: 'var(--status-info)' }} />
                 <span className="font-semibold">Live Data</span>
               </div>
               <div className="text-sm text-muted-foreground ml-6">
@@ -1680,7 +2102,7 @@ export function LiveMigrationStatus() {
             </div>
             <div className="space-y-2">
               <div className="flex items-center gap-2">
-                <RefreshCw className="h-4 w-4 text-blue-600" />
+                <RefreshCw className="h-4 w-4" style={{ color: 'var(--status-info)' }} />
                 <span className="font-semibold">Auto-Refresh</span>
               </div>
               <div className="text-sm text-muted-foreground ml-6">Updates every 10 seconds</div>
@@ -1722,9 +2144,15 @@ export function LiveMigrationStatus() {
                   >
                     <div className="flex items-center gap-3 flex-1">
                       {result.success ? (
-                        <CheckCircle2 className="h-4 w-4 text-green-600 flex-shrink-0" />
+                        <CheckCircle2
+                          className="h-4 w-4 flex-shrink-0"
+                          style={{ color: 'var(--status-success)' }}
+                        />
                       ) : (
-                        <AlertCircle className="h-4 w-4 text-red-600 flex-shrink-0" />
+                        <AlertCircle
+                          className="h-4 w-4 flex-shrink-0"
+                          style={{ color: 'var(--status-error)' }}
+                        />
                       )}
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
@@ -1744,18 +2172,22 @@ export function LiveMigrationStatus() {
                         <div className="flex items-center gap-3 text-xs text-muted-foreground">
                           <span>Status: {result.status}</span>
                           <span
-                            className={`font-semibold ${
-                              result.response_time_ms < 500
-                                ? 'text-green-600'
-                                : result.response_time_ms < 1000
-                                  ? 'text-yellow-600'
-                                  : 'text-red-600'
-                            }`}
+                            className="font-semibold"
+                            style={{
+                              color:
+                                result.response_time_ms < 500
+                                  ? 'var(--status-success)'
+                                  : result.response_time_ms < 1000
+                                    ? 'var(--status-warning)'
+                                    : 'var(--status-error)',
+                            }}
                           >
                             {result.response_time_ms}ms
                           </span>
                           {result.error && (
-                            <span className="text-red-600 truncate">{result.error}</span>
+                            <span style={{ color: 'var(--status-error)' }} className="truncate">
+                              {result.error}
+                            </span>
                           )}
                         </div>
                       </div>

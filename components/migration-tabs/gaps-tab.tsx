@@ -98,9 +98,19 @@ function EndpointGapCard({ gap }: { gap: EndpointGap }) {
       </div>
 
       {gap.responseContract && !gap.responseContract.matches && (
-        <div className="bg-red-50 border border-red-200 rounded p-2 mb-3 text-xs">
-          <p className="text-red-800 font-semibold">Response contract mismatch</p>
-          <p className="text-red-700 text-xs">Expected vs actual response structure differs</p>
+        <div
+          className="rounded p-2 mb-3 text-xs border"
+          style={{
+            backgroundColor: 'var(--status-error-bg)',
+            borderColor: 'var(--status-error-border)',
+          }}
+        >
+          <p className="font-semibold" style={{ color: 'var(--status-error)' }}>
+            Response contract mismatch
+          </p>
+          <p className="text-xs" style={{ color: 'var(--status-error)' }}>
+            Expected vs actual response structure differs
+          </p>
         </div>
       )}
 
@@ -143,9 +153,19 @@ function SchemaMismatchCard({ mismatch }: { mismatch: SchemaMismatch }) {
         </div>
       </div>
 
-      <div className="bg-blue-50 border border-blue-200 rounded p-2 text-xs">
-        <p className="font-semibold text-blue-900">Resolution Approach</p>
-        <p className="text-blue-800 mt-1">{mismatch.resolutionApproach}</p>
+      <div
+        className="rounded p-2 text-xs border"
+        style={{
+          backgroundColor: 'var(--status-info-bg)',
+          borderColor: 'var(--status-info-border)',
+        }}
+      >
+        <p className="font-semibold" style={{ color: 'var(--status-info)' }}>
+          Resolution Approach
+        </p>
+        <p className="mt-1" style={{ color: 'var(--status-info)' }}>
+          {mismatch.resolutionApproach}
+        </p>
       </div>
     </div>
   )
@@ -183,9 +203,19 @@ function IntegrityIssueCard({ issue }: { issue: DataIntegrityIssue }) {
         </div>
       </div>
 
-      <div className="bg-amber-50 border border-amber-200 rounded p-2 text-xs">
-        <p className="font-semibold text-amber-900">Recommended Resolution</p>
-        <p className="text-amber-800 mt-1">{issue.resolution}</p>
+      <div
+        className="rounded p-2 text-xs border"
+        style={{
+          backgroundColor: 'var(--status-warning-bg)',
+          borderColor: 'var(--status-warning-border)',
+        }}
+      >
+        <p className="font-semibold" style={{ color: 'var(--status-warning)' }}>
+          Recommended Resolution
+        </p>
+        <p className="mt-1" style={{ color: 'var(--status-warning)' }}>
+          {issue.resolution}
+        </p>
       </div>
     </div>
   )
@@ -228,27 +258,43 @@ export function GapsTab() {
 
         {/* Summary Metrics */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
-          <Card className={`p-3 ${criticalCount > 0 ? 'border-red-200 bg-red-50' : ''}`}>
+          <Card
+            className="p-3"
+            style={
+              criticalCount > 0
+                ? {
+                    borderColor: 'var(--status-error-border)',
+                    backgroundColor: 'var(--status-error-bg)',
+                  }
+                : {}
+            }
+          >
             <div className="text-xs text-muted-foreground font-semibold">Critical Issues</div>
-            <div className="text-2xl font-bold text-red-600">{criticalCount}</div>
+            <div className="text-2xl font-bold" style={{ color: 'var(--status-error)' }}>
+              {criticalCount}
+            </div>
           </Card>
           <Card className="p-3">
             <div className="text-xs text-muted-foreground font-semibold">Data Gaps</div>
-            <div className="text-2xl font-bold text-orange-600">{summary.dataGapsTotal}</div>
+            <div className="text-2xl font-bold" style={{ color: 'var(--status-warning)' }}>
+              {summary.dataGapsTotal}
+            </div>
           </Card>
           <Card className="p-3">
             <div className="text-xs text-muted-foreground font-semibold">Affected Records</div>
-            <div className="text-2xl font-bold text-purple-600">
+            <div className="text-2xl font-bold text-primary">
               {(summary.affectedRecordsTotal / 1000).toFixed(0)}k
             </div>
           </Card>
           <Card className="p-3">
             <div className="text-xs text-muted-foreground font-semibold">Endpoint Gaps</div>
-            <div className="text-2xl font-bold text-blue-600">{summary.endpointGapsTotal}</div>
+            <div className="text-2xl font-bold" style={{ color: 'var(--status-info)' }}>
+              {summary.endpointGapsTotal}
+            </div>
           </Card>
           <Card className="p-3">
             <div className="text-xs text-muted-foreground font-semibold">Schema Issues</div>
-            <div className="text-2xl font-bold text-yellow-600">
+            <div className="text-2xl font-bold" style={{ color: 'var(--status-warning)' }}>
               {summary.schemaMismatchesTotal}
             </div>
           </Card>
@@ -261,7 +307,10 @@ export function GapsTab() {
           <TabsTrigger value="data">
             Data Gaps
             {summary.dataGapsCritical > 0 && (
-              <span className="ml-2 bg-red-500 text-white text-xs px-2 py-0.5 rounded-full">
+              <span
+                className="ml-2 text-white text-xs px-2 py-0.5 rounded-full"
+                style={{ backgroundColor: 'var(--status-error)' }}
+              >
                 {summary.dataGapsCritical}
               </span>
             )}
@@ -269,7 +318,10 @@ export function GapsTab() {
           <TabsTrigger value="endpoints">
             Endpoints
             {summary.endpointGapsCritical > 0 && (
-              <span className="ml-2 bg-red-500 text-white text-xs px-2 py-0.5 rounded-full">
+              <span
+                className="ml-2 text-white text-xs px-2 py-0.5 rounded-full"
+                style={{ backgroundColor: 'var(--status-error)' }}
+              >
                 {summary.endpointGapsCritical}
               </span>
             )}
@@ -278,7 +330,10 @@ export function GapsTab() {
           <TabsTrigger value="integrity">
             Data Integrity
             {summary.integrityIssuesCritical > 0 && (
-              <span className="ml-2 bg-red-500 text-white text-xs px-2 py-0.5 rounded-full">
+              <span
+                className="ml-2 text-white text-xs px-2 py-0.5 rounded-full"
+                style={{ backgroundColor: 'var(--status-error)' }}
+              >
                 {summary.integrityIssuesCritical}
               </span>
             )}
