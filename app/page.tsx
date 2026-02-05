@@ -22,6 +22,7 @@ import {
 
 // UI Components
 import { ErrorBoundary } from '@/components/ui/error-boundary'
+import { UserPicker } from '@/components/user-picker'
 
 // Tabs
 import { SchemaTab } from '@/components/machine-2/schema-tab'
@@ -85,11 +86,16 @@ export default function Home() {
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5">
       <div className="container mx-auto py-6 px-4 max-w-7xl">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-2">Xano V2 Admin System</h1>
-          <p className="text-muted-foreground">
-            System documentation, migration tracking, and live verification tools
-          </p>
+        <div className="mb-8 flex items-start justify-between gap-4">
+          <div>
+            <h1 className="text-3xl font-bold mb-2">Xano V2 Admin System</h1>
+            <p className="text-muted-foreground">
+              System documentation, migration tracking, and live verification tools
+            </p>
+          </div>
+          <div className="shrink-0 pt-1">
+            <UserPicker />
+          </div>
         </div>
 
         {/* Tab Navigation */}
