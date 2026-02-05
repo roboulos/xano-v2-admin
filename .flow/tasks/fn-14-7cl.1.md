@@ -57,10 +57,10 @@ Wire the 4 existing (but orphaned) story tab components into `app/page.tsx` so t
 
 ## Done summary
 
-TBD
+Wired 4 existing story tab components (OnboardingStoryTab, BackgroundTasksStoryTab, SyncPipelinesStoryTab, SchemaMappingStoryTab) into the page.tsx tab navigation by adding ViewMode values, viewModes array entries with lucide-react icons, component imports, and ErrorBoundary-wrapped renders grouped after the Proof System tab.
 
 ## Evidence
 
-- Commits:
-- Tests:
+- Commits: d28edb59c35b98ad8a8b39788083bee1202bb1b8
+- Tests: npx tsc --noEmit, pnpm lint
 - PRs:
