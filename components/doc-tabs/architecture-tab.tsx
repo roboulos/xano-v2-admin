@@ -11,9 +11,7 @@ import {
   generateUserLoginDataFlow,
   generateTransactionCreationFlow,
   generateDataSyncFlow,
-  generateTeamManagementFlow,
   XANO_API_GROUPS,
-  SYSTEM_COMPONENTS,
   DATA_FLOWS,
   TECHNOLOGY_STACK,
 } from '@/lib/documentation/architecture-diagrams'
@@ -230,7 +228,7 @@ export function ArchitectureTab() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <Diagram mermaidCode={generateSystemArchitectureDiagram()} />
+              <Diagram mermaidCode={generateSystemArchitectureDiagram()} variant="ocean" />
             </CardContent>
           </Card>
 
@@ -759,12 +757,14 @@ export function ArchitectureTab() {
                     SEQUENCE DIAGRAM
                   </p>
                   {flow.id === 'user-login' && (
-                    <Diagram mermaidCode={generateUserLoginDataFlow()} />
+                    <Diagram mermaidCode={generateUserLoginDataFlow()} variant="neutral" />
                   )}
                   {flow.id === 'transaction-creation' && (
-                    <Diagram mermaidCode={generateTransactionCreationFlow()} />
+                    <Diagram mermaidCode={generateTransactionCreationFlow()} variant="forest" />
                   )}
-                  {flow.id === 'data-sync' && <Diagram mermaidCode={generateDataSyncFlow()} />}
+                  {flow.id === 'data-sync' && (
+                    <Diagram mermaidCode={generateDataSyncFlow()} variant="sunset" />
+                  )}
                 </div>
 
                 {flow.steps && (

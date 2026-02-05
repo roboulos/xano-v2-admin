@@ -458,7 +458,7 @@ export function DataModelTab() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Diagram mermaidCode={erDiagram} />
+          <Diagram mermaidCode={erDiagram} variant="default" />
         </CardContent>
       </Card>
 
