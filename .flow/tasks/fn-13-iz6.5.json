@@ -1,0 +1,14 @@
+{
+  "assignee": null,
+  "claim_note": "",
+  "claimed_at": null,
+  "created_at": "2026-02-05T20:00:16.418560Z",
+  "depends_on": ["fn-13-iz6.1", "fn-13-iz6.4", "fn-13-iz6.6"],
+  "epic": "fn-13-iz6",
+  "id": "fn-13-iz6.5",
+  "priority": null,
+  "spec_path": ".flow/tasks/fn-13-iz6.5.md",
+  "status": "todo",
+  "title": "Build Comparison Panel with V1/V2 side-by-side view",
+  "updated_at": "2026-02-05T20:04:33.503224Z"
+}

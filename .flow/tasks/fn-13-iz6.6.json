@@ -1,0 +1,14 @@
+{
+  "assignee": null,
+  "claim_note": "",
+  "claimed_at": null,
+  "created_at": "2026-02-05T20:00:16.563110Z",
+  "depends_on": ["fn-13-iz6.1"],
+  "epic": "fn-13-iz6",
+  "id": "fn-13-iz6.6",
+  "priority": null,
+  "spec_path": ".flow/tasks/fn-13-iz6.6.md",
+  "status": "todo",
+  "title": "Implement diff highlighting system with status tokens",
+  "updated_at": "2026-02-05T20:09:17.629812Z"
+}

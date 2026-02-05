@@ -3,12 +3,14 @@
 /**
  * React Query Provider Setup
  *
- * Wraps the application with TanStack Query (React Query) for data fetching.
+ * Wraps the application with TanStack Query (React Query) for data fetching,
+ * and the UserProvider for selected user state management.
  */
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { useState } from 'react'
+import { UserProvider } from '@/contexts/UserContext'
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(
@@ -26,7 +28,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {children}
+      <UserProvider>{children}</UserProvider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   )

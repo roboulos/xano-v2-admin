@@ -1,0 +1,14 @@
+{
+  "assignee": null,
+  "claim_note": "",
+  "claimed_at": null,
+  "created_at": "2026-02-05T20:00:17.519564Z",
+  "depends_on": [],
+  "epic": "fn-13-iz6",
+  "id": "fn-13-iz6.12",
+  "priority": null,
+  "spec_path": ".flow/tasks/fn-13-iz6.12.md",
+  "status": "todo",
+  "title": "Update documentation (CLAUDE.md, V2_TOOLS_REFERENCE.md)",
+  "updated_at": "2026-02-05T20:04:36.535993Z"
+}

@@ -1,0 +1,14 @@
+{
+  "assignee": null,
+  "claim_note": "",
+  "claimed_at": null,
+  "created_at": "2026-02-05T20:00:16.857129Z",
+  "depends_on": ["fn-13-iz6.1", "fn-13-iz6.5"],
+  "epic": "fn-13-iz6",
+  "id": "fn-13-iz6.8",
+  "priority": null,
+  "spec_path": ".flow/tasks/fn-13-iz6.8.md",
+  "status": "todo",
+  "title": "Create Background Tasks Story tab with job queue status",
+  "updated_at": "2026-02-05T20:04:35.900589Z"
+}

@@ -1,0 +1,14 @@
+{
+  "assignee": null,
+  "claim_note": "",
+  "claimed_at": null,
+  "created_at": "2026-02-05T20:00:17.366780Z",
+  "depends_on": ["fn-13-iz6.5"],
+  "epic": "fn-13-iz6",
+  "id": "fn-13-iz6.11",
+  "priority": null,
+  "spec_path": ".flow/tasks/fn-13-iz6.11.md",
+  "status": "todo",
+  "title": "Add real-time refresh with change indicators",
+  "updated_at": "2026-02-05T20:09:17.843348Z"
+}
