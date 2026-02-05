@@ -110,10 +110,10 @@ Follow existing provider pattern at `app/providers.tsx` for React Query integrat
 
 ## Done summary
 
-TBD
+Created split UserContext provider with two contexts (SelectedUserIdContext for lightweight ID state, UserDataQueryContext for heavy V1/V2 data) to minimize re-renders. Includes localStorage persistence, AbortController race condition handling, centralized React Query polling, and TypeScript interfaces. Provider is wrapped in app/providers.tsx inside QueryClientProvider.
 
 ## Evidence
 
-- Commits:
-- Tests:
+- Commits: 9e05a781d8e142ab5a2c2e4621c1041cbd84a335
+- Tests: pnpm build
 - PRs:
