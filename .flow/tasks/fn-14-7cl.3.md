@@ -58,10 +58,10 @@ Note: There's an existing `components/functions-tab.tsx` (the "Functions Deep Di
 
 ## Done summary
 
-TBD
+Built FunctionsStoryTab component showing V2 function inventory grouped by API group (Tasks, Workers, System, Seeding, Auth, Frontend) with endpoint health status indicators (working/broken/unknown) derived from audit data, V1 vs V2 function comparison with migration coverage metrics, and a V2 API group inventory reference. Wired into page.tsx navigation as "Function Health" with HeartPulse icon.
 
 ## Evidence
 
-- Commits:
-- Tests:
+- Commits: d28edb59c35b98ad8a8b39788083bee1202bb1b8, 52123d61d4892454ff376a29b5aed24a4ffc2bd1
+- Tests: npx tsc --noEmit, pnpm lint
 - PRs:

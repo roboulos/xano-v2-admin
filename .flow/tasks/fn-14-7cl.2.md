@@ -57,10 +57,10 @@ The V2 system uses Rezen webhooks for real-time data sync. The tab should show:
 
 ## Done summary
 
-TBD
+Built WebhooksStoryTab component showing 8 configured webhook integrations (reZEN and FUB), webhook health status with active/inactive badges, architecture flow diagram, and user-scoped staging activity feed via /staging-status endpoint with graceful 404 handling. Wired into page.tsx navigation as 'Webhooks' tab.
 
 ## Evidence
 
-- Commits:
-- Tests:
+- Commits: 52123d61d4892454ff376a29b5aed24a4ffc2bd1
+- Tests: npx tsc --noEmit, pnpm lint
 - PRs:
