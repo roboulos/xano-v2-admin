@@ -183,37 +183,45 @@ export function BlockersTab() {
         </div>
 
         {/* Summary Metrics */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
-          <Card className={`p-3 ${summary.critical > 0 ? 'border-red-300 bg-red-50' : ''}`}>
-            <div className="text-xs text-muted-foreground font-semibold">Critical</div>
-            <div className="text-2xl font-bold text-red-600">{summary.critical}</div>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+          <Card
+            className={`p-4 hover:shadow-md transition-shadow ${
+              summary.critical > 0 ? 'border-2 border-red-300 bg-red-50' : ''
+            }`}
+          >
+            <div className="text-xs text-muted-foreground font-semibold mb-2">Critical</div>
+            <div className="text-3xl font-bold text-red-600">{summary.critical}</div>
           </Card>
 
-          <Card className={`p-3 ${summary.high > 0 ? 'border-orange-300 bg-orange-50' : ''}`}>
-            <div className="text-xs text-muted-foreground font-semibold">High</div>
-            <div className="text-2xl font-bold text-orange-600">{summary.high}</div>
+          <Card
+            className={`p-4 hover:shadow-md transition-shadow ${
+              summary.high > 0 ? 'border-2 border-orange-300 bg-orange-50' : ''
+            }`}
+          >
+            <div className="text-xs text-muted-foreground font-semibold mb-2">High</div>
+            <div className="text-3xl font-bold text-orange-600">{summary.high}</div>
           </Card>
 
-          <Card className="p-3">
-            <div className="text-xs text-muted-foreground font-semibold">Open</div>
-            <div className="text-2xl font-bold text-red-600">{summary.open}</div>
+          <Card className="p-4 hover:shadow-md transition-shadow">
+            <div className="text-xs text-muted-foreground font-semibold mb-2">Open</div>
+            <div className="text-3xl font-bold text-red-600">{summary.open}</div>
           </Card>
 
-          <Card className="p-3">
-            <div className="text-xs text-muted-foreground font-semibold">In Progress</div>
-            <div className="text-2xl font-bold text-blue-600">
+          <Card className="p-4 hover:shadow-md transition-shadow">
+            <div className="text-xs text-muted-foreground font-semibold mb-2">In Progress</div>
+            <div className="text-3xl font-bold text-blue-600">
               {summary.total - summary.open - summary.escalated - summary.resolved}
             </div>
           </Card>
 
-          <Card className="p-3">
-            <div className="text-xs text-muted-foreground font-semibold">Escalated</div>
-            <div className="text-2xl font-bold text-orange-600">{summary.escalated}</div>
+          <Card className="p-4 hover:shadow-md transition-shadow">
+            <div className="text-xs text-muted-foreground font-semibold mb-2">Escalated</div>
+            <div className="text-3xl font-bold text-orange-600">{summary.escalated}</div>
           </Card>
 
-          <Card className="p-3 bg-green-50 border-green-300">
-            <div className="text-xs text-muted-foreground font-semibold">Resolved</div>
-            <div className="text-2xl font-bold text-green-600">{summary.resolved}</div>
+          <Card className="p-4 bg-green-50 border-2 border-green-300 hover:shadow-md transition-shadow">
+            <div className="text-xs text-muted-foreground font-semibold mb-2">Resolved</div>
+            <div className="text-3xl font-bold text-green-600">{summary.resolved}</div>
           </Card>
         </div>
       </div>

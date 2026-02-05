@@ -239,32 +239,37 @@ export function ChecklistTab() {
 
         {/* Summary */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <Card className="p-4 border-primary/50 bg-primary/5">
-            <div className="text-sm text-muted-foreground mb-1">Overall Progress</div>
-            <div className="text-3xl font-bold text-primary">{overallCompletion}%</div>
-            <ProgressBar value={overallCompletion} showPercentage={false} className="mt-3" />
+          <Card className="p-5 border-2 border-primary/30 bg-gradient-to-br from-primary/5 to-primary/10 hover:shadow-md transition-shadow">
+            <div className="text-sm font-semibold text-muted-foreground mb-2">Overall Progress</div>
+            <div className="text-4xl font-bold text-primary mb-3">{overallCompletion}%</div>
+            <ProgressBar value={overallCompletion} showPercentage={false} />
           </Card>
 
-          <Card className="p-4">
-            <div className="text-sm text-muted-foreground mb-1">Phases Completed</div>
-            <div className="text-3xl font-bold text-green-600">
-              {phases.filter((p) => p.status === 'completed').length}/{phases.length}
+          <Card className="p-5 hover:shadow-md transition-shadow">
+            <div className="text-sm font-semibold text-muted-foreground mb-2">Phases Completed</div>
+            <div className="text-4xl font-bold text-green-600">
+              {phases.filter((p) => p.status === 'completed').length}
             </div>
+            <div className="text-lg font-medium text-muted-foreground">/ {phases.length}</div>
           </Card>
 
-          <Card className="p-4">
-            <div className="text-sm text-muted-foreground mb-1">Critical Path</div>
-            <div className="text-3xl font-bold text-orange-600">
-              {criticalPath.estimatedDaysToCompletion}d
+          <Card className="p-5 hover:shadow-md transition-shadow">
+            <div className="text-sm font-semibold text-muted-foreground mb-2">Critical Path</div>
+            <div className="text-4xl font-bold text-orange-600">
+              {criticalPath.estimatedDaysToCompletion}
             </div>
-            <div className="text-xs text-muted-foreground mt-1">Est. completion time</div>
+            <div className="text-sm font-medium text-muted-foreground mt-1">days to complete</div>
           </Card>
 
-          <Card className={`p-4 ${blockedItems.length > 0 ? 'border-red-200 bg-red-50' : ''}`}>
-            <div className="text-sm text-muted-foreground mb-1">Blocked Items</div>
-            <div className="text-3xl font-bold text-red-600">{blockedItems.length}</div>
+          <Card
+            className={`p-5 hover:shadow-md transition-shadow ${
+              blockedItems.length > 0 ? 'border-2 border-red-300 bg-red-50' : ''
+            }`}
+          >
+            <div className="text-sm font-semibold text-muted-foreground mb-2">Blocked Items</div>
+            <div className="text-4xl font-bold text-red-600">{blockedItems.length}</div>
             {blockedItems.length > 0 && (
-              <div className="text-xs text-red-600 mt-1">Requiring attention</div>
+              <div className="text-sm font-medium text-red-700 mt-1">Requiring attention</div>
             )}
           </Card>
         </div>
