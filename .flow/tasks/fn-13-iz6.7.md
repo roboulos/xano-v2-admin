@@ -72,10 +72,10 @@ From CLAUDE.md MCP endpoint documentation:
 
 ## Done summary
 
-TBD
+Created OnboardingStoryTab component with 6-step progress visualization, collapsible step details showing tables/endpoints/V1-V2 record counts, trigger sync buttons calling WORKERS endpoints, and status derivation from UserContext data.
 
 ## Evidence
 
-- Commits:
-- Tests:
+- Commits: d677bbf45e68714c6766c48682e5b8855b6fbdd9
+- Tests: npx tsc --noEmit, pnpm lint
 - PRs:
