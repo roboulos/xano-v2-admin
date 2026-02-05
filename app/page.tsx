@@ -17,6 +17,7 @@ import {
   Layers,
   AlertCircle,
   Sparkles,
+  Shield,
 } from 'lucide-react'
 
 // UI Components
@@ -38,6 +39,7 @@ import { GapsTab } from '@/components/migration-tabs/gaps-tab'
 import { ChecklistTab } from '@/components/migration-tabs/checklist-tab'
 import { BlockersTab } from '@/components/migration-tabs/blockers-tab'
 import { TransformationStoryTab } from '@/components/transformation-story-tab'
+import { ArchitectureComparisonTab } from '@/components/architecture-comparison-tab'
 
 type ViewMode =
   | 'schema'
@@ -55,12 +57,14 @@ type ViewMode =
   | 'checklist'
   | 'blockers'
   | 'transformation'
+  | 'v1-v2-compare'
 
 export default function Home() {
   const [viewMode, setViewMode] = useState<ViewMode>('transformation')
 
   const viewModes = [
     { id: 'transformation' as ViewMode, label: 'Transformation Story', icon: Sparkles },
+    { id: 'v1-v2-compare' as ViewMode, label: 'V1 vs V2', icon: Shield },
     { id: 'migration-status' as ViewMode, label: 'Phase Tracker', icon: TrendingUp },
     { id: 'gaps' as ViewMode, label: 'Gaps & Issues', icon: AlertCircle },
     { id: 'checklist' as ViewMode, label: 'Checklists', icon: CheckCircle2 },
@@ -112,6 +116,9 @@ export default function Home() {
         <div className="mt-6">
           <ErrorBoundary title="Transformation Story">
             {viewMode === 'transformation' && <TransformationStoryTab />}
+          </ErrorBoundary>
+          <ErrorBoundary title="V1 vs V2 Comparison">
+            {viewMode === 'v1-v2-compare' && <ArchitectureComparisonTab />}
           </ErrorBoundary>
           <ErrorBoundary title="Migration Status">
             {viewMode === 'migration-status' && <StatusDashboardTab />}
