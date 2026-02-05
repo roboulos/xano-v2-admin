@@ -76,8 +76,9 @@ export function Diagram({ mermaidCode, title, theme = 'dark', className = '' }: 
           containerRef.current.innerHTML = ''
         }
 
-        // Render Mermaid diagram
-        const { svg } = await window.mermaid!.render('diagram-' + Math.random(), mermaidCode)
+        // Render Mermaid diagram with valid CSS selector ID
+        const diagramId = 'diagram-' + Math.random().toString().replace('.', '-')
+        const { svg } = await window.mermaid!.render(diagramId, mermaidCode)
 
         if (containerRef.current) {
           containerRef.current.innerHTML = svg
