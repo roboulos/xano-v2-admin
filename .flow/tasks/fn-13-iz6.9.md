@@ -82,10 +82,10 @@ V1 Source → Staging Tables → Processing → V2 Target
 
 ## Done summary
 
-TBD
+Created SyncPipelinesStoryTab component with 4-stage pipeline flow visualization (V1 Source -> Staging -> Processing -> V2 Target) for 5 integration pipelines (FUB, reZEN, SkySlope, DotLoop, Lofty). Added /api/staging/status and /api/staging/unprocessed proxy routes, pipeline status indicators (healthy/warning/error/inactive), staging backlog highlighting, expandable per-table breakdown, and UserContext integration with graceful fallback for missing endpoints.
 
 ## Evidence
 
-- Commits:
-- Tests:
+- Commits: d677bbf45e68714c6766c48682e5b8855b6fbdd9
+- Tests: npx tsc --noEmit, pnpm build
 - PRs:

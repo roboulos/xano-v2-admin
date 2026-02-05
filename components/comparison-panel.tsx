@@ -20,6 +20,7 @@ import {
 } from '@/contexts/UserContext'
 import { DiffHighlight, DiffStatusBadge, DiffSummaryBar } from '@/components/diff-highlight'
 import { compareFields, summarizeDiffs, formatValue, type FieldDiff } from '@/lib/diff-utils'
+import { RefreshIndicator } from '@/components/refresh-indicator'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -220,33 +221,36 @@ interface PanelHeaderProps {
 
 function PanelHeader({ userId, isFetching, lastUpdated, onRefresh }: PanelHeaderProps) {
   return (
-    <Card>
-      <CardHeader className="flex-row items-center justify-between py-4">
-        <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10">
-            <Users className="h-5 w-5 text-primary" />
+    <div className="space-y-2">
+      <Card>
+        <CardHeader className="flex-row items-center justify-between py-4">
+          <div className="flex items-center gap-3">
+            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10">
+              <Users className="h-5 w-5 text-primary" />
+            </div>
+            <div>
+              <CardTitle className="text-base">User #{userId}</CardTitle>
+            </div>
           </div>
-          <div>
-            <CardTitle className="text-base">User #{userId}</CardTitle>
-            {lastUpdated && (
-              <p className="text-xs text-muted-foreground">
-                Last updated: {lastUpdated.toLocaleTimeString()}
-              </p>
-            )}
-          </div>
-        </div>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => onRefresh()}
-          disabled={isFetching}
-          className="gap-1.5"
-        >
-          <RefreshCw className={cn('h-4 w-4', isFetching && 'animate-spin')} />
-          Refresh
-        </Button>
-      </CardHeader>
-    </Card>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => onRefresh()}
+            disabled={isFetching}
+            className="gap-1.5"
+          >
+            <RefreshCw className={cn('h-4 w-4', isFetching && 'animate-spin')} />
+            Refresh
+          </Button>
+        </CardHeader>
+      </Card>
+      <RefreshIndicator
+        isFetching={isFetching}
+        lastUpdated={lastUpdated}
+        onRefresh={onRefresh}
+        label="Comparison Data"
+      />
+    </div>
   )
 }
 

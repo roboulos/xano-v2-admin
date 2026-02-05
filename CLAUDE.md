@@ -253,16 +253,32 @@ app/
 │   │   ├── functions/          # V2 functions + testing
 │   │   ├── endpoints/          # Endpoint health checks
 │   │   └── background-tasks/   # Background task management
+│   ├── users/                  # User-scoped routes (Proof System)
+│   │   ├── list/route.ts       # GET /api/users/list - search users
+│   │   └── [id]/comparison/route.ts  # GET /api/users/:id/comparison
+│   ├── staging/                # Staging pipeline routes
+│   │   ├── status/route.ts     # GET /api/staging/status?user_id=X
+│   │   └── unprocessed/route.ts # GET /api/staging/unprocessed?user_id=X
 │   └── validation/             # Validation pipeline routes
 │       ├── pipeline/           # Pipeline status
 │       ├── run/                # Run validation
 │       ├── reports/            # Report retrieval
 │       └── status/             # Current status
+contexts/
+└── UserContext.tsx              # Split context: SelectedUserId + UserDataQuery
 components/
 ├── ui/                         # ShadCN components (15 components)
 ├── machine-2/                  # Machine 2.0 components
 │   ├── backend-validation-tab.tsx
 │   └── schema-tab.tsx
+├── story-tabs/                 # Interactive Proof System story tabs
+│   ├── onboarding-story-tab.tsx      # 6-step onboarding progress
+│   ├── background-tasks-story-tab.tsx # Job queue status
+│   ├── sync-pipelines-story-tab.tsx   # V1->Staging->V2 pipeline
+│   └── schema-mapping-story-tab.tsx   # V1->V2 table mapping viz
+├── user-picker.tsx             # Searchable user combobox
+├── comparison-panel.tsx        # V1/V2 side-by-side data comparison
+├── diff-highlight.tsx          # Diff rendering components
 ├── comparison-modal.tsx        # V1/V2 comparison modal
 ├── endpoint-tester-modal.tsx   # Endpoint testing modal
 ├── functions-tab.tsx           # Functions management
@@ -278,6 +294,8 @@ lib/
 │   ├── generated-hooks.ts      # Auto-generated React Query hooks (3,298 lines)
 │   ├── generated-schemas.ts    # Auto-generated Zod schemas (3,915 lines)
 │   └── endpoint-tester.ts      # Endpoint testing utilities
+├── diff-utils.ts               # Pure diff computation (no React deps)
+├── table-mappings-detailed.ts  # Field-level V1->V2 mapping definitions
 ├── v1-data.ts                  # V1 workspace data (251 tables)
 ├── v2-data.ts                  # V2 workspace data (193 tables)
 ├── table-mappings.ts           # V1 → V2 table mappings
@@ -592,6 +610,114 @@ curl -s -X POST "https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:4UsTtl3m/tes
 
 ---
 
+## Interactive Proof System
+
+The Proof System transforms static migration documentation into a live verification tool. Select any user and instantly see their data from both V1 and V2 workspaces side by side, with diff highlighting that proves migration accuracy at the field level.
+
+### User Picker
+
+A searchable combobox (`components/user-picker.tsx`) that queries `/api/users/list` to find users by name, email, or ID. Features:
+
+- **Type-ahead search** with debounced API calls
+- **Recently selected users** shown at top (max 5, persisted to localStorage)
+- **Verified test users highlighted** (user 60 = David Keener shown with badge)
+- **Keyboard navigation** (arrow keys, enter, escape)
+- Selection updates `UserContext`, which triggers data loading for all tabs
+
+### UserContext (`contexts/UserContext.tsx`)
+
+Split context architecture to minimize re-renders:
+
+| Context                 | Weight | Purpose                                             |
+| ----------------------- | ------ | --------------------------------------------------- |
+| `SelectedUserIdContext` | Tiny   | Holds selected user ID + setter                     |
+| `UserDataQueryContext`  | Heavy  | V1/V2 comparison data via React Query (10s polling) |
+
+**Hooks:**
+
+- `useSelectedUserId()` -- lightweight, for components that only read/write the selection (User Picker)
+- `useUserData()` -- heavy, for components that display V1/V2 comparison data (Story tabs, Comparison Panel)
+
+**Features:** localStorage persistence, AbortController for rapid user switching, React Query caching with 10s polling interval.
+
+### Story Tabs (`components/story-tabs/`)
+
+Each tab tells a different "story" about the selected user's migration state:
+
+| Tab                  | File                             | Description                                                                                                                                                                               |
+| -------------------- | -------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Onboarding Story** | `onboarding-story-tab.tsx`       | 6-step progress tracker: Team Data, Agent Data, Transactions, Listings, Contributions, Network. Each step shows endpoint status and record counts.                                        |
+| **Background Tasks** | `background-tasks-story-tab.tsx` | Job queue status across 4 queue types (fub_onboarding, fub_sync, rezen_sync, job_status). Handles `/job-queue-status` 404 gracefully with fallback UI.                                    |
+| **Sync Pipelines**   | `sync-pipelines-story-tab.tsx`   | 4-stage pipeline flow (Source -> Staging -> Processing -> V2 Target) for 5 integrations: FUB, reZEN, SkySlope, DotLoop, Lofty. Uses `/api/staging/status` and `/api/staging/unprocessed`. |
+| **Schema Mapping**   | `schema-mapping-story-tab.tsx`   | V1->V2 table mapping visualization from `lib/table-mappings.ts`. Shows mapping types (direct, renamed, split, merged, deprecated, new) with color coding and expand/collapse.             |
+
+### Comparison Panel (`components/comparison-panel.tsx`)
+
+Side-by-side V1/V2 data display for the selected user. Shows:
+
+- **Record counts with delta** (V2 - V1) per entity (user, agent, transactions, listings, network, contributions)
+- **Field-level diff highlighting** via `DiffHighlight` component using semantic status tokens
+- **Expandable sections** for scalar records (user profile, agent profile) and array records (transactions list)
+- **Copy to clipboard** for raw JSON data
+
+### Diff System
+
+Two files work together:
+
+- **`lib/diff-utils.ts`** -- Pure functions (no React imports, unit-testable). Exports `compareFields()`, `summarizeDiffs()`, `formatValue()`. Diff statuses: `match`, `modified`, `added`, `removed`, `type_mismatch`.
+- **`components/diff-highlight.tsx`** -- React rendering. Exports `DiffHighlight`, `DiffStatusBadge`, `DiffSummaryBar`. Uses semantic CSS tokens (`var(--status-success)`, `var(--status-error)`).
+
+### Proof System API Endpoints
+
+**`GET /api/users/list`** -- Search and list users from V2 workspace.
+
+```bash
+# List users with search
+curl -s "http://localhost:3000/api/users/list?search=david&limit=10" | jq '.users[:3]'
+
+# Paginate results
+curl -s "http://localhost:3000/api/users/list?limit=50&offset=100" | jq '.total, .hasMore'
+```
+
+| Param    | Type   | Default | Description                  |
+| -------- | ------ | ------- | ---------------------------- |
+| `search` | string | --      | Filter by name, email, or ID |
+| `limit`  | number | 50      | Max results to return        |
+| `offset` | number | 0       | Pagination offset            |
+
+**`GET /api/users/[id]/comparison`** -- V1/V2 side-by-side comparison for a specific user.
+
+```bash
+# Full comparison for user 60
+curl -s "http://localhost:3000/api/users/60/comparison" | jq '.comparison'
+
+# Specific sections only (faster)
+curl -s "http://localhost:3000/api/users/60/comparison?sections=user,agent" | jq
+
+# Paginate array sections
+curl -s "http://localhost:3000/api/users/60/comparison?sections=transactions&limit=20&offset=0" | jq
+```
+
+| Param      | Type   | Default | Description                                                                        |
+| ---------- | ------ | ------- | ---------------------------------------------------------------------------------- |
+| `sections` | string | all     | Comma-separated: user, agent, transactions, listings, network, contributions, team |
+| `limit`    | number | 100     | Max records per array section                                                      |
+| `offset`   | number | 0       | Pagination offset for array sections                                               |
+
+**`GET /api/staging/status`** -- Staging table counts for a user (proxies V2 SYSTEM endpoint).
+
+```bash
+curl -s "http://localhost:3000/api/staging/status?user_id=60" | jq
+```
+
+**`GET /api/staging/unprocessed`** -- Unprocessed staging records for a user.
+
+```bash
+curl -s "http://localhost:3000/api/staging/unprocessed?user_id=60" | jq
+```
+
+---
+
 ## 🔥 XanoScript Hard-Won Lessons (January 2026)
 
 ### The Team Roster Sync Fix
@@ -809,6 +935,23 @@ curl -s -X POST "https://xmpx-swi5-tlvy.n7c.xano.io/api:4UsTtl3m/ENDPOINT" \
 ### Main Entry Point
 
 - `app/page.tsx` - Main dashboard with tabs
+
+### Interactive Proof System
+
+- `contexts/UserContext.tsx` - Split context provider (SelectedUserId + UserDataQuery)
+- `components/user-picker.tsx` - Searchable user combobox
+- `components/comparison-panel.tsx` - V1/V2 side-by-side data comparison
+- `components/diff-highlight.tsx` - Diff rendering components (DiffHighlight, DiffStatusBadge, DiffSummaryBar)
+- `components/story-tabs/onboarding-story-tab.tsx` - 6-step onboarding progress
+- `components/story-tabs/background-tasks-story-tab.tsx` - Job queue status
+- `components/story-tabs/sync-pipelines-story-tab.tsx` - V1->Staging->V2 pipeline visualization
+- `components/story-tabs/schema-mapping-story-tab.tsx` - Table mapping visualization
+- `lib/diff-utils.ts` - Pure diff computation functions
+- `lib/table-mappings-detailed.ts` - Field-level V1->V2 mapping definitions
+- `app/api/users/list/route.ts` - User search endpoint
+- `app/api/users/[id]/comparison/route.ts` - V1/V2 comparison endpoint
+- `app/api/staging/status/route.ts` - Staging table status proxy
+- `app/api/staging/unprocessed/route.ts` - Unprocessed records proxy
 
 ### Machine 2.0 Components
 

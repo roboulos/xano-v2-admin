@@ -580,6 +580,26 @@
   animation: rotate-in 0.5s ease-out forwards;
 }
 
+/* Highlight change animation - briefly flashes changed values */
+@keyframes highlight-change {
+  0% {
+    background-color: var(--status-info-bg);
+    box-shadow: 0 0 0 2px var(--status-info-border);
+  }
+  50% {
+    background-color: var(--status-info-bg);
+    box-shadow: 0 0 0 2px var(--status-info-border);
+  }
+  100% {
+    background-color: transparent;
+    box-shadow: 0 0 0 0 transparent;
+  }
+}
+
+.animate-highlight-change {
+  animation: highlight-change 1.5s ease-out forwards;
+}
+
 /* Shake animation for errors */
 @keyframes shake {
   0%, 100% {

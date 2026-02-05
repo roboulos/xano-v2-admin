@@ -78,10 +78,10 @@ Create a Story tab that visualizes V1→V2 schema mappings, showing how tables a
 
 ## Done summary
 
-TBD
+Created SchemaMappingStoryTab component that visualizes all 267 V1-to-V2 table mappings with summary cards by type (direct/renamed/split/merged/deprecated/new), searchable and filterable mapping list grouped by 16 categories, expandable detail rows with notes and split mapping diagrams, and a mapping type reference section. Uses existing TABLE_MAPPINGS data and ShadCN components with semantic CSS tokens.
 
 ## Evidence
 
-- Commits:
-- Tests:
+- Commits: d677bbf45e68714c6766c48682e5b8855b6fbdd9
+- Tests: npx tsc --noEmit, pnpm lint, pnpm build
 - PRs:
