@@ -692,7 +692,7 @@ export function BackgroundTasksStoryTab() {
 
   // Derive queue data from API response (or use placeholders on 404)
   const queues: QueueData[] = useMemo(() => {
-    if (!data || is404) return PLACEHOLDER_QUEUES
+    if (!data || is404 || !data.queues) return PLACEHOLDER_QUEUES
     return Object.entries(data.queues).map(([key, counts]) => ({
       queue: key as Exclude<JobType, 'all'>,
       label: JOB_TYPE_LABELS[key as Exclude<JobType, 'all'>] ?? key,
