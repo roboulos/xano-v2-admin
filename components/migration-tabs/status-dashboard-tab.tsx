@@ -153,26 +153,23 @@ export function StatusDashboardTab() {
       </div>
 
       {/* Overall Progress Bar */}
-      <Card className="p-6 bg-gradient-to-br from-background to-muted/30">
+      <Card className="p-6">
         <h3 className="text-lg font-semibold mb-4">Overall Migration Status</h3>
         <ProgressBar value={metrics.overallProgress} showPercentage={false} />
-        <div className="mt-6 grid grid-cols-3 gap-6 text-center">
-          <div className="p-3 rounded-lg bg-green-50 border border-green-100">
-            <div className="text-2xl font-bold text-green-600">{completedPhases}</div>
-            <div className="text-xs font-medium text-green-700 mt-1">Completed</div>
-            <div className="text-xs text-muted-foreground">phases finished</div>
+        <div className="mt-4 grid grid-cols-3 gap-4 text-center text-sm">
+          <div>
+            <div className="font-semibold text-green-600">{completedPhases} Completed</div>
+            <div className="text-muted-foreground text-xs">phases finished</div>
           </div>
-          <div className="p-3 rounded-lg bg-blue-50 border border-blue-100">
-            <div className="text-2xl font-bold text-blue-600">{inProgressPhases}</div>
-            <div className="text-xs font-medium text-blue-700 mt-1">In Progress</div>
-            <div className="text-xs text-muted-foreground">phases active</div>
+          <div>
+            <div className="font-semibold text-blue-600">{inProgressPhases} In Progress</div>
+            <div className="text-muted-foreground text-xs">phases active</div>
           </div>
-          <div className="p-3 rounded-lg bg-yellow-50 border border-yellow-100">
-            <div className="text-2xl font-bold text-yellow-600">
-              {phases.length - completedPhases - inProgressPhases}
+          <div>
+            <div className="font-semibold text-yellow-600">
+              {phases.length - completedPhases - inProgressPhases} Pending
             </div>
-            <div className="text-xs font-medium text-yellow-700 mt-1">Pending</div>
-            <div className="text-xs text-muted-foreground">phases queued</div>
+            <div className="text-muted-foreground text-xs">phases queued</div>
           </div>
         </div>
       </Card>
@@ -204,22 +201,22 @@ export function StatusDashboardTab() {
       {/* Phase Details Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {phases.map((phase) => (
-          <Card key={phase.id} className="p-6 hover:shadow-md transition-shadow">
+          <Card key={phase.id} className="p-6">
             <div className="space-y-4">
-              <div className="flex items-start justify-between gap-3">
-                <div className="flex-1 min-w-0">
-                  <h4 className="font-semibold text-foreground text-lg">{phase.name}</h4>
-                  <p className="text-sm text-muted-foreground mt-0.5">
+              <div className="flex items-start justify-between">
+                <div>
+                  <h4 className="font-semibold text-foreground">{phase.name}</h4>
+                  <p className="text-sm text-muted-foreground">
                     {phase.components.length} components
                   </p>
                 </div>
                 <div
-                  className={`px-3 py-1 rounded-full text-xs font-semibold flex-shrink-0 ${
+                  className={`px-2 py-1 rounded text-xs font-semibold ${
                     phase.status === 'completed'
-                      ? 'bg-green-100 text-green-800 border border-green-200'
+                      ? 'bg-green-100 text-green-800'
                       : phase.status === 'in-progress'
-                        ? 'bg-blue-100 text-blue-800 border border-blue-200'
-                        : 'bg-gray-100 text-gray-800 border border-gray-200'
+                        ? 'bg-blue-100 text-blue-800'
+                        : 'bg-gray-100 text-gray-800'
                   }`}
                 >
                   {phase.status.charAt(0).toUpperCase() + phase.status.slice(1).replace('-', ' ')}
@@ -244,29 +241,29 @@ export function StatusDashboardTab() {
               </div>
 
               {/* Component Summary */}
-              <div className="pt-4 border-t">
-                <div className="grid grid-cols-3 gap-3">
-                  <div className="text-center p-2 rounded-lg bg-green-50">
-                    <div className="text-xl font-bold text-green-600">
+              <div className="pt-2 border-t">
+                <div className="grid grid-cols-3 gap-2 text-sm">
+                  <div className="text-center">
+                    <div className="font-semibold text-green-600">
                       {phase.components.filter((c) => c.status === 'completed').length}
                     </div>
-                    <div className="text-xs font-medium text-green-700 mt-1">Completed</div>
+                    <div className="text-xs text-muted-foreground">Completed</div>
                   </div>
-                  <div className="text-center p-2 rounded-lg bg-blue-50">
-                    <div className="text-xl font-bold text-blue-600">
+                  <div className="text-center">
+                    <div className="font-semibold text-blue-600">
                       {phase.components.filter((c) => c.status === 'in-progress').length}
                     </div>
-                    <div className="text-xs font-medium text-blue-700 mt-1">In Progress</div>
+                    <div className="text-xs text-muted-foreground">In Progress</div>
                   </div>
-                  <div className="text-center p-2 rounded-lg bg-gray-50">
-                    <div className="text-xl font-bold text-gray-600">
+                  <div className="text-center">
+                    <div className="font-semibold text-gray-600">
                       {
                         phase.components.filter(
                           (c) => c.status === 'pending' || c.status === 'blocked'
                         ).length
                       }
                     </div>
-                    <div className="text-xs font-medium text-gray-700 mt-1">Pending</div>
+                    <div className="text-xs text-muted-foreground">Pending</div>
                   </div>
                 </div>
               </div>

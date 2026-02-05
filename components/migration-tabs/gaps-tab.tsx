@@ -24,7 +24,7 @@ type GapTab = 'data' | 'endpoints' | 'schema' | 'integrity'
 
 function DataGapCard({ gap }: { gap: DataGap }) {
   return (
-    <div className="p-4 border rounded-lg hover:shadow-md hover:border-primary/50 transition-all">
+    <div className="p-4 border rounded-lg hover:shadow-sm transition-shadow">
       <div className="flex items-start justify-between mb-3">
         <div className="flex-1">
           <h4 className="font-semibold text-foreground">{gap.table}</h4>
@@ -64,7 +64,7 @@ function EndpointGapCard({ gap }: { gap: EndpointGap }) {
   const completionPercent = (gap.implementedParams.length / gap.expectedParams.length) * 100
 
   return (
-    <div className="p-4 border rounded-lg hover:shadow-md hover:border-primary/50 transition-all">
+    <div className="p-4 border rounded-lg hover:shadow-sm transition-shadow">
       <div className="flex items-start justify-between mb-3">
         <div className="flex-1">
           <h4 className="font-semibold text-foreground">{gap.name}</h4>
@@ -111,7 +111,7 @@ function EndpointGapCard({ gap }: { gap: EndpointGap }) {
 
 function SchemaMismatchCard({ mismatch }: { mismatch: SchemaMismatch }) {
   return (
-    <div className="p-4 border rounded-lg hover:shadow-md hover:border-primary/50 transition-all">
+    <div className="p-4 border rounded-lg hover:shadow-sm transition-shadow">
       <div className="flex items-start justify-between mb-3">
         <div className="flex-1">
           <h4 className="font-semibold text-foreground">
@@ -160,7 +160,7 @@ function IntegrityIssueCard({ issue }: { issue: DataIntegrityIssue }) {
   }
 
   return (
-    <div className="p-4 border rounded-lg hover:shadow-md hover:border-primary/50 transition-all">
+    <div className="p-4 border rounded-lg hover:shadow-sm transition-shadow">
       <div className="flex items-start justify-between mb-3">
         <div className="flex items-start gap-3 flex-1">
           <div className="text-muted-foreground mt-1">{iconMap[issue.checkType]}</div>
@@ -227,38 +227,28 @@ export function GapsTab() {
         )}
 
         {/* Summary Metrics */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-          <Card
-            className={`p-4 hover:shadow-md transition-shadow ${
-              criticalCount > 0 ? 'border-2 border-red-300 bg-red-50' : ''
-            }`}
-          >
-            <div className="text-xs text-muted-foreground font-semibold mb-2">Critical Issues</div>
-            <div className="text-3xl font-bold text-red-600">{criticalCount}</div>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+          <Card className={`p-3 ${criticalCount > 0 ? 'border-red-200 bg-red-50' : ''}`}>
+            <div className="text-xs text-muted-foreground font-semibold">Critical Issues</div>
+            <div className="text-2xl font-bold text-red-600">{criticalCount}</div>
           </Card>
-          <Card className="p-4 hover:shadow-md transition-shadow">
-            <div className="text-xs text-muted-foreground font-semibold mb-2">Data Gaps</div>
-            <div className="text-3xl font-bold text-orange-600">{summary.dataGapsTotal}</div>
+          <Card className="p-3">
+            <div className="text-xs text-muted-foreground font-semibold">Data Gaps</div>
+            <div className="text-2xl font-bold text-orange-600">{summary.dataGapsTotal}</div>
           </Card>
-          <Card
-            className="p-4 hover:shadow-md transition-shadow"
-            title={`${summary.affectedRecordsTotal.toLocaleString()} records`}
-          >
-            <div className="text-xs text-muted-foreground font-semibold mb-2">Affected Records</div>
-            <div className="text-3xl font-bold text-purple-600">
+          <Card className="p-3">
+            <div className="text-xs text-muted-foreground font-semibold">Affected Records</div>
+            <div className="text-2xl font-bold text-purple-600">
               {(summary.affectedRecordsTotal / 1000).toFixed(0)}k
             </div>
-            <div className="text-xs text-purple-700 mt-1">
-              {summary.affectedRecordsTotal.toLocaleString()} total
-            </div>
           </Card>
-          <Card className="p-4 hover:shadow-md transition-shadow">
-            <div className="text-xs text-muted-foreground font-semibold mb-2">Endpoint Gaps</div>
-            <div className="text-3xl font-bold text-blue-600">{summary.endpointGapsTotal}</div>
+          <Card className="p-3">
+            <div className="text-xs text-muted-foreground font-semibold">Endpoint Gaps</div>
+            <div className="text-2xl font-bold text-blue-600">{summary.endpointGapsTotal}</div>
           </Card>
-          <Card className="p-4 hover:shadow-md transition-shadow">
-            <div className="text-xs text-muted-foreground font-semibold mb-2">Schema Issues</div>
-            <div className="text-3xl font-bold text-yellow-600">
+          <Card className="p-3">
+            <div className="text-xs text-muted-foreground font-semibold">Schema Issues</div>
+            <div className="text-2xl font-bold text-yellow-600">
               {summary.schemaMismatchesTotal}
             </div>
           </Card>
@@ -351,19 +341,16 @@ export function GapsTab() {
       </Tabs>
 
       {/* Export Options */}
-      <Card className="p-6 bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200">
-        <div className="flex items-center justify-between gap-4">
-          <div className="flex-1">
-            <div className="flex items-center gap-2 mb-1">
-              <Download className="h-5 w-5 text-blue-600" />
-              <h4 className="font-bold text-foreground text-lg">Export Gap Report</h4>
-            </div>
+      <Card className="p-4 bg-muted/50">
+        <div className="flex items-center justify-between">
+          <div>
+            <h4 className="font-semibold text-foreground">Export Gap Report</h4>
             <p className="text-sm text-muted-foreground">
               Generate a comprehensive gap analysis report for stakeholders
             </p>
           </div>
-          <Button size="lg" className="flex-shrink-0 bg-blue-600 hover:bg-blue-700">
-            <Download className="h-4 w-4 mr-2" />
+          <Button>
+            <Download className="h-4 w-4" />
             Export Report
           </Button>
         </div>

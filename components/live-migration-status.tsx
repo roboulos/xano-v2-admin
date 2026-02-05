@@ -172,12 +172,9 @@ export function LiveMigrationStatus() {
             <p className="text-muted-foreground">
               Backend architecture status, data migration progress, and validation health
             </p>
-            <div className="flex items-center gap-2 mt-1">
-              <Clock className="h-3 w-3 text-muted-foreground" />
-              <p className="text-xs text-muted-foreground">
-                Last updated: {formatRelativeTime(timestamp)}
-              </p>
-            </div>
+            <p className="text-xs text-muted-foreground mt-1">
+              Last updated: {formatRelativeTime(timestamp)}
+            </p>
           </div>
           <div className="flex gap-2">
             <Button
@@ -193,10 +190,9 @@ export function LiveMigrationStatus() {
               disabled={
                 isLoading || countsLoading || tasksLoading || syncLoading || integrityLoading
               }
-              variant="outline"
             >
               <RefreshCw
-                className={`h-4 w-4 mr-2 ${isLoading || countsLoading || tasksLoading || syncLoading || integrityLoading ? 'animate-spin' : ''}`}
+                className={`h-4 w-4 mr-2 ${isLoading || countsLoading || tasksLoading || integrityLoading ? 'animate-spin' : ''}`}
               />
               Refresh
             </Button>
@@ -281,10 +277,10 @@ export function LiveMigrationStatus() {
       </div>
 
       {/* System Architecture & Health - FIRST */}
-      <Card className="border-2 border-indigo-200 shadow-lg bg-gradient-to-br from-indigo-50 to-blue-50">
+      <Card className="border-4 border-indigo-500 bg-gradient-to-br from-indigo-50 to-blue-50">
         <CardHeader className="p-6">
           <CardTitle className="text-2xl flex items-center gap-2">
-            <Activity className="h-6 w-6 text-indigo-600" />
+            <Activity className="h-6 w-6" />
             V2 Backend Architecture & Health Status
           </CardTitle>
           <CardDescription className="text-base">
@@ -1065,7 +1061,7 @@ export function LiveMigrationStatus() {
       </Card>
 
       {/* DATA MIGRATION STATUS - Primary Indicator */}
-      <Card className="border-2 border-emerald-200 shadow-lg bg-gradient-to-br from-emerald-50 to-green-50">
+      <Card className="border-4 border-emerald-500 bg-gradient-to-br from-emerald-50 to-green-50">
         <CardHeader className="p-6">
           <div className="flex items-center justify-between">
             <div>

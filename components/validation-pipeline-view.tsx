@@ -87,24 +87,16 @@ function StageCard({
     <Card
       className={
         isRunning
-          ? 'border-2 border-blue-500 shadow-lg'
+          ? 'border-blue-500'
           : isComplete && result?.meetsSuccessCriteria
-            ? 'border-2 border-green-500 shadow-md'
-            : isComplete && !result?.meetsSuccessCriteria
-              ? 'border-2 border-red-500 shadow-md'
-              : 'border'
+            ? 'border-green-500'
+            : ''
       }
     >
       <CardHeader>
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-3">
-            <div
-              className={`p-2 rounded-lg ${isComplete && result?.meetsSuccessCriteria ? 'bg-green-100' : isComplete && !result?.meetsSuccessCriteria ? 'bg-red-100' : isRunning ? 'bg-blue-100' : 'bg-muted'}`}
-            >
-              <Icon
-                className={`h-5 w-5 ${isComplete && result?.meetsSuccessCriteria ? 'text-green-700' : isComplete && !result?.meetsSuccessCriteria ? 'text-red-700' : isRunning ? 'text-blue-700' : 'text-muted-foreground'}`}
-              />
-            </div>
+            <Icon className="h-5 w-5 text-muted-foreground" />
             <div>
               <CardTitle className="text-lg">{stage.name}</CardTitle>
               <CardDescription>{stage.description}</CardDescription>
@@ -196,22 +188,7 @@ function StageCard({
 
         {/* Actions */}
         <Button onClick={onRun} disabled={!canRun || isRunning} className="w-full">
-          {isRunning ? (
-            <>
-              <RefreshCw className="h-4 w-4 mr-2 animate-spin" />
-              Running...
-            </>
-          ) : isComplete ? (
-            <>
-              <RefreshCw className="h-4 w-4 mr-2" />
-              Re-run
-            </>
-          ) : (
-            <>
-              <Play className="h-4 w-4 mr-2" />
-              Run Validation
-            </>
-          )}
+          {isRunning ? 'Running...' : isComplete ? 'Re-run' : 'Run Validation'}
         </Button>
       </CardContent>
     </Card>
@@ -392,12 +369,9 @@ export function ValidationPipelineView() {
           <div>
             <h2 className="text-2xl font-bold mb-1">{config.name}</h2>
             <p className="text-muted-foreground">{config.description}</p>
-            <div className="flex items-center gap-2 mt-1">
-              <Clock className="h-3 w-3 text-muted-foreground" />
-              <p className="text-sm text-muted-foreground">
-                Last updated: {formatRelativeTime(lastUpdated)}
-              </p>
-            </div>
+            <p className="text-sm text-muted-foreground mt-1">
+              Last updated: {formatRelativeTime(lastUpdated)}
+            </p>
           </div>
           <div className="flex gap-2">
             <Button
@@ -473,33 +447,29 @@ export function ValidationPipelineView() {
       </div>
 
       {/* Overall Score */}
-      <Card className="border-2 shadow-lg">
+      <Card>
         <CardHeader>
-          <CardTitle className="text-xl">Overall Migration Score</CardTitle>
+          <CardTitle>Overall Migration Score</CardTitle>
           <CardDescription>
-            Minimum {config.overallSuccessCriteria.minimumScore}% required for production
+            Minimum {config.overallSuccessCriteria.minimumScore}% required
           </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="flex items-center justify-between mb-4">
-            <div
-              className={`text-5xl font-bold ${meetsCriteria ? 'text-green-600' : 'text-red-600'}`}
-            >
-              {overallScore.toFixed(1)}%
-            </div>
+            <div className="text-4xl font-bold">{overallScore.toFixed(1)}%</div>
             {meetsCriteria ? (
               <Badge className="bg-green-500 text-lg px-4 py-2">
                 <CheckCircle className="h-5 w-5 mr-2" />
                 Production Ready
               </Badge>
             ) : (
-              <Badge className="bg-red-600 text-lg px-4 py-2">
+              <Badge variant="destructive" className="text-lg px-4 py-2">
                 <AlertCircle className="h-5 w-5 mr-2" />
                 Not Ready
               </Badge>
             )}
           </div>
-          <Progress value={overallScore} className="h-4" />
+          <Progress value={overallScore} className="h-3" />
 
           <div className="mt-4 flex gap-4">
             <Button onClick={runFullPipeline} disabled={status.running} size="lg">
@@ -511,34 +481,33 @@ export function ValidationPipelineView() {
       </Card>
 
       {/* Business Context */}
-      <Card className="bg-muted/30">
+      <Card>
         <CardHeader>
-          <CardTitle className="text-xl">Business Context</CardTitle>
-          <CardDescription>Migration objectives and requirements</CardDescription>
+          <CardTitle>Business Context</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div>
-            <span className="font-semibold text-foreground">Purpose:</span>
+            <span className="font-semibold">Purpose:</span>
             <p className="text-muted-foreground mt-1">{config.businessContext.purpose}</p>
           </div>
           <div>
-            <span className="font-semibold text-foreground">Stakeholders:</span>
-            <ul className="list-disc list-inside text-muted-foreground mt-1 space-y-1">
+            <span className="font-semibold">Stakeholders:</span>
+            <ul className="list-disc list-inside text-muted-foreground mt-1">
               {config.businessContext.stakeholders.map((s) => (
                 <li key={s}>{s}</li>
               ))}
             </ul>
           </div>
           <div>
-            <span className="font-semibold text-foreground">Risks:</span>
-            <ul className="list-disc list-inside text-muted-foreground mt-1 space-y-1">
+            <span className="font-semibold">Risks:</span>
+            <ul className="list-disc list-inside text-muted-foreground mt-1">
               {config.businessContext.risks.map((r) => (
                 <li key={r}>{r}</li>
               ))}
             </ul>
           </div>
           <div>
-            <span className="font-semibold text-foreground">Timeline:</span>
+            <span className="font-semibold">Timeline:</span>
             <p className="text-muted-foreground mt-1">{config.businessContext.timeline}</p>
           </div>
         </CardContent>
