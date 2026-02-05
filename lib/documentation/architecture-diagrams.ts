@@ -20,27 +20,27 @@ graph TB
     end
 
     subgraph api["API Layer"]
-        auth["Auth API<br/>api:lkmcgxf_:v1.5"]
-        main["Main API V1.5<br/>api:kaVkk3oM:v1.5"]
-        transactions["Transactions API V2<br/>api:KPx5ivcP"]
-        additional["Additional Groups<br/>Functions, Jobs, etc."]
+        auth["Auth API"]
+        main["Main API V1.5"]
+        transactions["Transactions API V2"]
+        additional["Additional Groups"]
     end
 
     subgraph backend["Backend Services"]
-        functions["XanoScript Functions<br/>120+ total"]
-        tasks["Background Jobs<br/>Task Queue"]
-        hooks["Webhooks & Triggers<br/>Event System"]
+        functions["XanoScript Functions"]
+        tasks["Background Jobs"]
+        hooks["Webhooks & Triggers"]
     end
 
     subgraph data["Data Layer"]
-        tables["193 Tables<br/>Relational Database"]
-        cache["Cache Layer<br/>Performance"]
+        tables["193 Tables"]
+        cache["Cache Layer"]
     end
 
     subgraph external["External Services"]
-        stripe["Stripe<br/>Payments"]
-        calendar["Google Calendar<br/>Scheduling"]
-        storage["Cloud Storage<br/>Files"]
+        stripe["Stripe Payments"]
+        calendar["Google Calendar"]
+        storage["Cloud Storage"]
     end
 
     web -->|API Calls| client
@@ -86,10 +86,10 @@ export function generateUserLoginDataFlow(): string {
   return `
 sequenceDiagram
     participant User
-    participant NextJS["Next.js Frontend"]
-    participant Auth["Auth API<br/>(api:lkmcgxf_:v1.5)"]
-    participant Session["Session Management<br/>(Function)"]
-    participant DB["Database<br/>(tables)"]
+    participant NextJS as Next.js Frontend
+    participant Auth as Auth API
+    participant Session as Session Management
+    participant DB as Database
 
     User->>NextJS: 1. Enter credentials
     NextJS->>Auth: 2. POST /login
@@ -110,12 +110,12 @@ sequenceDiagram
 export function generateTransactionCreationFlow(): string {
   return `
 sequenceDiagram
-    participant UI["Admin UI"]
-    participant API["Transactions API<br/>(api:KPx5ivcP)"]
-    participant ValidateFn["Validate<br/>Transaction"]
-    participant CreateFn["Create &<br/>Enrich"]
-    participant DB["Database"]
-    participant WebHook["Webhooks"]
+    participant UI as Admin UI
+    participant API as Transactions API
+    participant ValidateFn as Validate Transaction
+    participant CreateFn as Create & Enrich
+    participant DB as Database
+    participant WebHook as Webhooks
 
     UI->>API: 1. POST /transactions
     API->>ValidateFn: 2. Validate input
@@ -138,12 +138,12 @@ sequenceDiagram
 export function generateDataSyncFlow(): string {
   return `
 sequenceDiagram
-    participant Scheduler["Scheduler"]
-    participant SyncJob["Sync Job<br/>(Background Task)"]
-    participant Source["Source System<br/>(External API)"]
-    participant Transform["Transform &<br/>Validate"]
-    participant DB["Database"]
-    participant Logging["Audit Log"]
+    participant Scheduler
+    participant SyncJob as Sync Job
+    participant Source as External API
+    participant Transform as Transform & Validate
+    participant DB as Database
+    participant Logging as Audit Log
 
     Scheduler->>SyncJob: 1. Start sync job
     SyncJob->>Source: 2. Fetch data
@@ -156,8 +156,8 @@ sequenceDiagram
     Logging-->>Transform: 9. Logged
     Transform-->>SyncJob: 10. Sync complete
 
-    Note over SyncJob: Runs on schedule<br/>Handles errors & retries
-    Note over Transform: Handles duplicates<br/>Validates data
+    Note over SyncJob: Runs on schedule, handles errors
+    Note over Transform: Handles duplicates, validates data
     Note over Logging: Complete audit trail
 `.trim()
 }
