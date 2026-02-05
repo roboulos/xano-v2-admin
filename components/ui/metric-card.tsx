@@ -20,6 +20,12 @@ export interface MetricCardProps {
   className?: string
 }
 
+const trendColors: Record<'up' | 'down' | 'stable', string> = {
+  up: 'var(--status-success)',
+  down: 'var(--status-error)',
+  stable: 'var(--muted-foreground)',
+}
+
 function MetricCard({
   title,
   value,
@@ -37,16 +43,7 @@ function MetricCard({
       </div>
       <div className="flex items-baseline gap-2">
         <div className="text-2xl font-bold text-foreground">{value}</div>
-        {trend && (
-          <TrendingUp
-            className={cn(
-              'h-4 w-4',
-              trend === 'up' && 'text-green-500',
-              trend === 'down' && 'text-red-500',
-              trend === 'stable' && 'text-muted-foreground'
-            )}
-          />
-        )}
+        {trend && <TrendingUp className="h-4 w-4" style={{ color: trendColors[trend] }} />}
       </div>
       {subtitle && <p className="text-xs text-muted-foreground mt-1">{subtitle}</p>}
     </Card>

@@ -1,39 +1,38 @@
 'use client'
 
 import * as React from 'react'
-import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
-
-const priorityBadgeVariants = cva(
-  'inline-flex items-center justify-center rounded px-2 py-0.5 text-xs font-semibold transition-colors',
-  {
-    variants: {
-      priority: {
-        low: 'bg-blue-100 text-blue-800',
-        medium: 'bg-yellow-100 text-yellow-800',
-        high: 'bg-orange-100 text-orange-800',
-        critical: 'bg-red-100 text-red-800',
-      },
-    },
-    defaultVariants: {
-      priority: 'medium',
-    },
-  }
-)
 
 export type PriorityLevel = 'low' | 'medium' | 'high' | 'critical'
 
-export interface PriorityBadgeProps
-  extends React.HTMLAttributes<HTMLSpanElement>, VariantProps<typeof priorityBadgeVariants> {
+const priorityStyles: Record<PriorityLevel | 'default', { bg: string; text: string }> = {
+  low: { bg: 'var(--status-info-bg)', text: 'var(--status-info)' },
+  medium: { bg: 'var(--status-pending-bg)', text: 'var(--status-pending)' },
+  high: { bg: 'var(--status-warning-bg)', text: 'var(--status-warning)' },
+  critical: { bg: 'var(--status-error-bg)', text: 'var(--status-error)' },
+  default: { bg: 'var(--status-pending-bg)', text: 'var(--status-pending)' },
+}
+
+export interface PriorityBadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
   priority: PriorityLevel
 }
 
 export function PriorityBadge({ priority, className, ...props }: PriorityBadgeProps) {
+  const style = priorityStyles[priority] || priorityStyles.default
+
   return (
-    <span className={cn(priorityBadgeVariants({ priority }), className)} {...props}>
+    <span
+      className={cn(
+        'inline-flex items-center justify-center rounded px-2 py-0.5 text-xs font-semibold transition-colors',
+        className
+      )}
+      style={{
+        backgroundColor: style.bg,
+        color: style.text,
+      }}
+      {...props}
+    >
       {priority.charAt(0).toUpperCase() + priority.slice(1)}
     </span>
   )
 }
-
-export { priorityBadgeVariants }

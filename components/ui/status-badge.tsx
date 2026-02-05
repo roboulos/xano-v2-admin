@@ -11,34 +11,11 @@
 
 import * as React from 'react'
 import { CheckCircle2, Clock, AlertCircle, XCircle, Loader2 } from 'lucide-react'
-import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 
 // ============================================================================
 // SIMPLE STATUS BADGE (String-based, lightweight)
 // ============================================================================
-
-const simpleStatusBadgeVariants = cva(
-  'inline-flex items-center justify-center rounded px-2 py-1 text-xs font-semibold transition-colors',
-  {
-    variants: {
-      status: {
-        open: 'bg-red-100 text-red-800',
-        'in-progress': 'bg-blue-100 text-blue-800',
-        escalated: 'bg-orange-100 text-orange-800',
-        resolved: 'bg-green-100 text-green-800',
-        unresolved: 'bg-red-100 text-red-800',
-        missing: 'bg-red-100 text-red-800',
-        incomplete: 'bg-yellow-100 text-yellow-800',
-        deprecated: 'bg-gray-100 text-gray-800',
-        default: 'bg-gray-100 text-gray-800',
-      },
-    },
-    defaultVariants: {
-      status: 'default',
-    },
-  }
-)
 
 export type SimpleStatusType =
   | 'open'
@@ -49,6 +26,18 @@ export type SimpleStatusType =
   | 'missing'
   | 'incomplete'
   | 'deprecated'
+
+const simpleStatusStyles: Record<SimpleStatusType | 'default', { bg: string; text: string }> = {
+  open: { bg: 'var(--status-error-bg)', text: 'var(--status-error)' },
+  'in-progress': { bg: 'var(--status-info-bg)', text: 'var(--status-info)' },
+  escalated: { bg: 'var(--status-warning-bg)', text: 'var(--status-warning)' },
+  resolved: { bg: 'var(--status-success-bg)', text: 'var(--status-success)' },
+  unresolved: { bg: 'var(--status-error-bg)', text: 'var(--status-error)' },
+  missing: { bg: 'var(--status-error-bg)', text: 'var(--status-error)' },
+  incomplete: { bg: 'var(--status-pending-bg)', text: 'var(--status-pending)' },
+  deprecated: { bg: 'var(--muted)', text: 'var(--muted-foreground)' },
+  default: { bg: 'var(--muted)', text: 'var(--muted-foreground)' },
+}
 
 export interface SimpleStatusBadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
   status: SimpleStatusType | string
@@ -66,6 +55,7 @@ export function SimpleStatusBadge({ status, className, ...props }: SimpleStatusB
     'deprecated',
   ]
   const validStatus = validStatuses.includes(status) ? (status as SimpleStatusType) : 'default'
+  const style = simpleStatusStyles[validStatus]
 
   const formatLabel = (s: string) => {
     return s
@@ -75,13 +65,21 @@ export function SimpleStatusBadge({ status, className, ...props }: SimpleStatusB
   }
 
   return (
-    <span className={cn(simpleStatusBadgeVariants({ status: validStatus }), className)} {...props}>
+    <span
+      className={cn(
+        'inline-flex items-center justify-center rounded px-2 py-1 text-xs font-semibold transition-colors',
+        className
+      )}
+      style={{
+        backgroundColor: style.bg,
+        color: style.text,
+      }}
+      {...props}
+    >
       {formatLabel(status)}
     </span>
   )
 }
-
-export { simpleStatusBadgeVariants }
 
 // ============================================================================
 // RICH STATUS BADGE (With icons and variants)
@@ -110,36 +108,36 @@ const statusConfig: Record<
 > = {
   pending: {
     label: 'Pending',
-    color: 'text-slate-600',
-    bgColor: 'bg-slate-100',
+    color: 'var(--status-pending)',
+    bgColor: 'var(--status-pending-bg)',
     icon: <Clock className="h-4 w-4" />,
     description: 'Waiting to start',
   },
   in_progress: {
     label: 'In Progress',
-    color: 'text-blue-600',
-    bgColor: 'bg-blue-100',
+    color: 'var(--status-info)',
+    bgColor: 'var(--status-info-bg)',
     icon: <Loader2 className="h-4 w-4 animate-spin" />,
     description: 'Currently processing',
   },
   completed: {
     label: 'Completed',
-    color: 'text-green-600',
-    bgColor: 'bg-green-100',
+    color: 'var(--status-success)',
+    bgColor: 'var(--status-success-bg)',
     icon: <CheckCircle2 className="h-4 w-4" />,
     description: 'Successfully completed',
   },
   blocked: {
     label: 'Blocked',
-    color: 'text-orange-600',
-    bgColor: 'bg-orange-100',
+    color: 'var(--status-warning)',
+    bgColor: 'var(--status-warning-bg)',
     icon: <AlertCircle className="h-4 w-4" />,
     description: 'Waiting on dependency',
   },
   failed: {
     label: 'Failed',
-    color: 'text-red-600',
-    bgColor: 'bg-red-100',
+    color: 'var(--status-error)',
+    bgColor: 'var(--status-error-bg)',
     icon: <XCircle className="h-4 w-4" />,
     description: 'Error occurred',
   },
@@ -156,14 +154,20 @@ export function StatusBadge({
   const config = statusConfig[status]
   const displayLabel = label || config.label
 
-  const baseClasses = `inline-flex items-center gap-2 font-medium transition-colors ${className}`
+  const baseStyle = {
+    color: config.color,
+    backgroundColor: config.bgColor,
+  }
 
   if (variant === 'compact') {
     return (
       <div
-        className={`${baseClasses} px-2 py-1 rounded text-xs ${config.color} ${config.bgColor} ${
-          onClick ? 'cursor-pointer hover:opacity-80' : ''
-        }`}
+        className={cn(
+          'inline-flex items-center gap-2 font-medium transition-colors px-2 py-1 rounded text-xs',
+          onClick && 'cursor-pointer hover:opacity-80',
+          className
+        )}
+        style={baseStyle}
         onClick={onClick}
       >
         {showIcon && config.icon}
@@ -175,12 +179,15 @@ export function StatusBadge({
   if (variant === 'detailed') {
     return (
       <div
-        className={`${baseClasses} flex-col items-start p-3 rounded-lg border ${config.bgColor} ${
-          onClick ? 'cursor-pointer hover:opacity-80' : ''
-        }`}
+        className={cn(
+          'inline-flex flex-col items-start p-3 rounded-lg border',
+          onClick && 'cursor-pointer hover:opacity-80',
+          className
+        )}
+        style={{ backgroundColor: config.bgColor }}
         onClick={onClick}
       >
-        <div className={`flex items-center gap-2 ${config.color}`}>
+        <div className="flex items-center gap-2" style={{ color: config.color }}>
           {showIcon && config.icon}
           <span className="font-semibold">{displayLabel}</span>
         </div>
@@ -194,9 +201,12 @@ export function StatusBadge({
   // Default variant
   return (
     <div
-      className={`${baseClasses} px-3 py-1.5 rounded-full text-sm ${config.color} ${config.bgColor} ${
-        onClick ? 'cursor-pointer hover:opacity-80' : ''
-      }`}
+      className={cn(
+        'inline-flex items-center gap-2 font-medium transition-colors px-3 py-1.5 rounded-full text-sm',
+        onClick && 'cursor-pointer hover:opacity-80',
+        className
+      )}
+      style={baseStyle}
       onClick={onClick}
     >
       {showIcon && config.icon}
@@ -231,22 +241,22 @@ export function StatusProgress({
   const segments = [
     {
       value: completed,
-      color: 'bg-green-500',
+      color: 'var(--status-success)',
       label: 'Completed',
     },
     {
       value: inProgress,
-      color: 'bg-blue-500',
+      color: 'var(--status-info)',
       label: 'In Progress',
     },
     {
       value: blocked,
-      color: 'bg-orange-500',
+      color: 'var(--status-warning)',
       label: 'Blocked',
     },
     {
       value: failed,
-      color: 'bg-red-500',
+      color: 'var(--status-error)',
       label: 'Failed',
     },
   ]
@@ -265,8 +275,7 @@ export function StatusProgress({
             seg.value > 0 && (
               <div
                 key={seg.label}
-                className={seg.color}
-                style={{ width: `${(seg.value / total) * 100}%` }}
+                style={{ width: `${(seg.value / total) * 100}%`, backgroundColor: seg.color }}
               />
             )
         )}
@@ -278,7 +287,7 @@ export function StatusProgress({
           (seg) =>
             seg.value > 0 && (
               <div key={seg.label} className="flex items-center gap-2">
-                <div className={`w-2 h-2 rounded-full ${seg.color}`} />
+                <div className="w-2 h-2 rounded-full" style={{ backgroundColor: seg.color }} />
                 <span>
                   {seg.label}: {seg.value}
                 </span>

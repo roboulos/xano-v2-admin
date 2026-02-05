@@ -46,19 +46,20 @@ interface Function {
   created: string
 }
 
-// Category badge colors mapping
-const CATEGORY_COLORS: Record<string, string> = {
-  Workers: 'bg-blue-100 text-blue-800',
-  Tasks: 'bg-purple-100 text-purple-800',
-  Utils: 'bg-green-100 text-green-800',
-  Archive: 'bg-gray-100 text-gray-800',
-  FUB: 'bg-orange-100 text-orange-800',
-  reZEN: 'bg-pink-100 text-pink-800',
-  SkySlope: 'bg-yellow-100 text-yellow-800',
-  DotLoop: 'bg-indigo-100 text-indigo-800',
-  Lofty: 'bg-red-100 text-red-800',
-  'Title/Qualia': 'bg-teal-100 text-teal-800',
-  Other: 'bg-slate-100 text-slate-800',
+// Category badge styles using inline styles for consistency
+// These are domain categories, not status indicators
+const CATEGORY_STYLES: Record<string, { bg: string; text: string }> = {
+  Workers: { bg: 'var(--status-info-bg)', text: 'var(--status-info)' },
+  Tasks: { bg: 'oklch(0.92 0.04 285)', text: 'oklch(0.45 0.12 285)' }, // purple
+  Utils: { bg: 'var(--status-success-bg)', text: 'var(--status-success)' },
+  Archive: { bg: 'var(--muted)', text: 'var(--muted-foreground)' },
+  FUB: { bg: 'var(--status-warning-bg)', text: 'var(--status-warning)' },
+  reZEN: { bg: 'oklch(0.92 0.04 340)', text: 'oklch(0.45 0.12 340)' }, // pink
+  SkySlope: { bg: 'var(--status-pending-bg)', text: 'var(--status-pending)' },
+  DotLoop: { bg: 'oklch(0.92 0.04 265)', text: 'oklch(0.45 0.12 265)' }, // indigo
+  Lofty: { bg: 'var(--status-error-bg)', text: 'var(--status-error)' },
+  'Title/Qualia': { bg: 'oklch(0.92 0.04 175)', text: 'oklch(0.45 0.12 175)' }, // teal
+  Other: { bg: 'var(--muted)', text: 'var(--muted-foreground)' },
 }
 
 export function FunctionsTab() {
@@ -170,21 +171,39 @@ export function FunctionsTab() {
 
     if (result.status === 'passed') {
       return (
-        <Badge className="bg-green-100 text-green-800 text-xs">
+        <Badge
+          className="text-xs"
+          style={{
+            backgroundColor: 'var(--status-success-bg)',
+            color: 'var(--status-success)',
+          }}
+        >
           <CheckCircle2 className="h-3 w-3 mr-1" />
           Passing
         </Badge>
       )
     } else if (result.status === 'failed') {
       return (
-        <Badge className="bg-red-100 text-red-800 text-xs">
+        <Badge
+          className="text-xs"
+          style={{
+            backgroundColor: 'var(--status-error-bg)',
+            color: 'var(--status-error)',
+          }}
+        >
           <XCircle className="h-3 w-3 mr-1" />
           Failing
         </Badge>
       )
     } else {
       return (
-        <Badge className="bg-yellow-100 text-yellow-800 text-xs">
+        <Badge
+          className="text-xs"
+          style={{
+            backgroundColor: 'var(--status-pending-bg)',
+            color: 'var(--status-pending)',
+          }}
+        >
           <Clock className="h-3 w-3 mr-1" />
           Simulated
         </Badge>
@@ -315,8 +334,12 @@ export function FunctionsTab() {
                     <div className="flex items-center justify-between">
                       <p className="text-sm text-muted-foreground truncate">{cat.category}</p>
                       <Badge
-                        className={CATEGORY_COLORS[cat.category] || CATEGORY_COLORS.Other}
                         variant="secondary"
+                        style={{
+                          backgroundColor:
+                            CATEGORY_STYLES[cat.category]?.bg || CATEGORY_STYLES.Other.bg,
+                          color: CATEGORY_STYLES[cat.category]?.text || CATEGORY_STYLES.Other.text,
+                        }}
                       >
                         {cat.count}
                       </Badge>
@@ -416,7 +439,13 @@ export function FunctionsTab() {
                           )}
                           <div className="flex flex-wrap gap-1 mb-2">
                             <Badge
-                              className={CATEGORY_COLORS[func.category] || CATEGORY_COLORS.Other}
+                              style={{
+                                backgroundColor:
+                                  CATEGORY_STYLES[func.category]?.bg || CATEGORY_STYLES.Other.bg,
+                                color:
+                                  CATEGORY_STYLES[func.category]?.text ||
+                                  CATEGORY_STYLES.Other.text,
+                              }}
                             >
                               {func.category}
                             </Badge>

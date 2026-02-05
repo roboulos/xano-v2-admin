@@ -65,9 +65,11 @@ export function BackgroundTasksTab() {
 
   if (error) {
     return (
-      <Card className="border-red-200">
+      <Card style={{ borderColor: 'var(--status-error-border)' }}>
         <CardContent className="p-6">
-          <p className="text-red-600">Error loading background tasks: {error.message}</p>
+          <p style={{ color: 'var(--status-error)' }}>
+            Error loading background tasks: {error.message}
+          </p>
         </CardContent>
       </Card>
     )
@@ -204,20 +206,30 @@ export function BackgroundTasksTab() {
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-2">
                           {task.active ? (
-                            <Play className="h-4 w-4 text-green-600 shrink-0" />
+                            <Play
+                              className="h-4 w-4 shrink-0"
+                              style={{ color: 'var(--status-success)' }}
+                            />
                           ) : (
-                            <Pause className="h-4 w-4 text-gray-400 shrink-0" />
+                            <Pause className="h-4 w-4 text-muted-foreground shrink-0" />
                           )}
                           <h3 className="font-mono text-sm font-medium truncate">{task.name}</h3>
                           {task.active ? (
-                            <Badge className="bg-green-100 text-green-800">Active</Badge>
+                            <Badge
+                              style={{
+                                backgroundColor: 'var(--status-success-bg)',
+                                color: 'var(--status-success)',
+                              }}
+                            >
+                              Active
+                            </Badge>
                           ) : (
-                            <Badge variant="outline" className="text-gray-600">
+                            <Badge variant="outline" className="text-muted-foreground">
                               Inactive
                             </Badge>
                           )}
                           {task.draft && (
-                            <Badge variant="outline" className="text-orange-600">
+                            <Badge variant="outline" style={{ color: 'var(--status-warning)' }}>
                               Draft
                             </Badge>
                           )}

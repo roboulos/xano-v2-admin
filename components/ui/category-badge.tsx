@@ -1,29 +1,20 @@
 'use client'
 
 import * as React from 'react'
-import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 
-const categoryBadgeVariants = cva(
-  'inline-flex items-center justify-center rounded px-2 py-0.5 text-xs font-semibold transition-colors',
-  {
-    variants: {
-      category: {
-        technical: 'bg-purple-100 text-purple-800',
-        resource: 'bg-indigo-100 text-indigo-800',
-        dependency: 'bg-cyan-100 text-cyan-800',
-        stakeholder: 'bg-pink-100 text-pink-800',
-        data: 'bg-teal-100 text-teal-800',
-        default: 'bg-gray-100 text-gray-800',
-      },
-    },
-    defaultVariants: {
-      category: 'default',
-    },
-  }
-)
-
 export type CategoryType = 'technical' | 'resource' | 'dependency' | 'stakeholder' | 'data'
+
+// Categories use muted variants to distinguish from status colors
+// These represent domains/topics, not status levels
+const categoryStyles: Record<CategoryType | 'default', { bg: string; text: string }> = {
+  technical: { bg: 'oklch(0.92 0.04 285)', text: 'oklch(0.45 0.12 285)' }, // purple
+  resource: { bg: 'oklch(0.92 0.04 265)', text: 'oklch(0.45 0.12 265)' }, // indigo
+  dependency: { bg: 'oklch(0.92 0.04 200)', text: 'oklch(0.45 0.12 200)' }, // cyan
+  stakeholder: { bg: 'oklch(0.92 0.04 340)', text: 'oklch(0.45 0.12 340)' }, // pink
+  data: { bg: 'oklch(0.92 0.04 175)', text: 'oklch(0.45 0.12 175)' }, // teal
+  default: { bg: 'var(--muted)', text: 'var(--muted-foreground)' },
+}
 
 export interface CategoryBadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
   category: CategoryType | string
@@ -35,12 +26,21 @@ export function CategoryBadge({ category, className, ...props }: CategoryBadgePr
   )
     ? (category as CategoryType)
     : 'default'
+  const style = categoryStyles[validCategory]
 
   return (
-    <span className={cn(categoryBadgeVariants({ category: validCategory }), className)} {...props}>
+    <span
+      className={cn(
+        'inline-flex items-center justify-center rounded px-2 py-0.5 text-xs font-semibold transition-colors',
+        className
+      )}
+      style={{
+        backgroundColor: style.bg,
+        color: style.text,
+      }}
+      {...props}
+    >
       {category.charAt(0).toUpperCase() + category.slice(1)}
     </span>
   )
 }
-
-export { categoryBadgeVariants }
