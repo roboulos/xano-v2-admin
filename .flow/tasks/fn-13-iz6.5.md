@@ -70,10 +70,10 @@ Use semantic CSS tokens from `globals.css`:
 
 ## Done summary
 
-TBD
+Built ComparisonPanel component with V1/V2 side-by-side data comparison, including collapsible sections for 6 entity types (user, agent, transactions, listings, network, contributions), field-level diffs for scalar entities, count comparisons for array entities, loading skeleton, empty state, error handling, refresh button, copy-to-clipboard, and semantic status tokens. Added "Proof System" tab to the main page.
 
 ## Evidence
 
-- Commits:
-- Tests:
+- Commits: f35f33d7bae3b83dbfadf64d4f145efc7b5bae15
+- Tests: npx tsc --noEmit, pnpm build, pnpm lint
 - PRs:
