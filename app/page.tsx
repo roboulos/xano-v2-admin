@@ -19,6 +19,10 @@ import {
   Sparkles,
   Shield,
   FlaskConical,
+  ListChecks,
+  Timer,
+  RefreshCw,
+  Map,
 } from 'lucide-react'
 
 // UI Components
@@ -43,6 +47,11 @@ import { BlockersTab } from '@/components/migration-tabs/blockers-tab'
 import { TransformationStoryTab } from '@/components/transformation-story-tab'
 import { ArchitectureComparisonTab } from '@/components/architecture-comparison-tab'
 import { ComparisonPanel } from '@/components/comparison-panel'
+import { OnboardingStoryTab } from '@/components/story-tabs/onboarding-story-tab'
+import { BackgroundTasksStoryTab } from '@/components/story-tabs/background-tasks-story-tab'
+import { SyncPipelinesStoryTab } from '@/components/story-tabs/sync-pipelines-story-tab'
+import { SchemaMappingStoryTab } from '@/components/story-tabs/schema-mapping-story-tab'
+import { WebhooksStoryTab } from '@/components/story-tabs/webhooks-story-tab'
 
 type ViewMode =
   | 'schema'
@@ -62,6 +71,10 @@ type ViewMode =
   | 'transformation'
   | 'v1-v2-compare'
   | 'proof-system'
+  | 'onboarding-story'
+  | 'bg-tasks-story'
+  | 'sync-pipelines-story'
+  | 'schema-mapping-story'
 
 export default function Home() {
   const [viewMode, setViewMode] = useState<ViewMode>('transformation')
@@ -70,6 +83,10 @@ export default function Home() {
     { id: 'transformation' as ViewMode, label: 'Transformation Story', icon: Sparkles },
     { id: 'v1-v2-compare' as ViewMode, label: 'V1 vs V2', icon: Shield },
     { id: 'proof-system' as ViewMode, label: 'Proof System', icon: FlaskConical },
+    { id: 'onboarding-story' as ViewMode, label: 'Onboarding Steps', icon: ListChecks },
+    { id: 'bg-tasks-story' as ViewMode, label: 'Job Queues', icon: Timer },
+    { id: 'sync-pipelines-story' as ViewMode, label: 'Sync Pipelines', icon: RefreshCw },
+    { id: 'schema-mapping-story' as ViewMode, label: 'Schema Map', icon: Map },
     { id: 'migration-status' as ViewMode, label: 'Phase Tracker', icon: TrendingUp },
     { id: 'gaps' as ViewMode, label: 'Gaps & Issues', icon: AlertCircle },
     { id: 'checklist' as ViewMode, label: 'Checklists', icon: CheckCircle2 },
@@ -132,6 +149,18 @@ export default function Home() {
           </ErrorBoundary>
           <ErrorBoundary title="Proof System">
             {viewMode === 'proof-system' && <ComparisonPanel />}
+          </ErrorBoundary>
+          <ErrorBoundary title="Onboarding Steps">
+            {viewMode === 'onboarding-story' && <OnboardingStoryTab />}
+          </ErrorBoundary>
+          <ErrorBoundary title="Job Queues">
+            {viewMode === 'bg-tasks-story' && <BackgroundTasksStoryTab />}
+          </ErrorBoundary>
+          <ErrorBoundary title="Sync Pipelines">
+            {viewMode === 'sync-pipelines-story' && <SyncPipelinesStoryTab />}
+          </ErrorBoundary>
+          <ErrorBoundary title="Schema Map">
+            {viewMode === 'schema-mapping-story' && <SchemaMappingStoryTab />}
           </ErrorBoundary>
           <ErrorBoundary title="Migration Status">
             {viewMode === 'migration-status' && <StatusDashboardTab />}

@@ -52,10 +52,10 @@ Update features list and screenshots showing the new UI.
 
 ## Done summary
 
-TBD
+Updated CLAUDE.md with comprehensive Interactive Proof System documentation covering User Picker, UserContext split architecture, 4 Story Tabs, Comparison Panel, diff system, real-time polling, and 4 new API endpoints with curl examples and parameter tables.
 
 ## Evidence
 
-- Commits:
-- Tests:
+- Commits: 60396570794573e00ec9bc9cd4ded595c4e1b939
+- Tests: npx tsc --noEmit
 - PRs:
