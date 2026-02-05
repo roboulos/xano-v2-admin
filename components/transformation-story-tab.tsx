@@ -215,65 +215,99 @@ export function TransformationStoryTab() {
 
       {/* Hero Section - The Big Numbers */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card className="p-6 bg-gradient-to-br from-orange-500/10 to-orange-600/5 border-orange-500/20">
+        <Card className="p-6 bg-gradient-to-br from-orange-500/10 via-orange-500/5 to-transparent border-orange-500/20 hover:border-orange-500/40 transition-all duration-300 group">
           <div className="text-center">
-            <div className="text-sm font-medium text-orange-600 mb-2">V1 PRODUCTION</div>
-            <div className="text-5xl font-bold text-orange-500 mb-1">{v1Stats.total}</div>
-            <div className="text-lg text-muted-foreground">Tables</div>
-            <div className="mt-3 text-xs text-orange-600/80">JSONB xdo columns</div>
+            <div className="flex items-center justify-center gap-2 mb-3">
+              <Database className="h-4 w-4 text-orange-600" />
+              <div className="text-sm font-medium text-orange-600">V1 PRODUCTION</div>
+            </div>
+            <div className="text-6xl font-bold text-orange-500 mb-2 group-hover:scale-105 transition-transform">
+              {v1Stats.total}
+            </div>
+            <div className="text-lg font-medium text-muted-foreground mb-2">Tables</div>
+            <div className="mt-4 pt-4 border-t border-orange-500/20">
+              <div className="text-xs text-orange-600/80 font-medium">JSONB xdo columns</div>
+              <div className="text-xs text-muted-foreground mt-1">Untyped data blobs</div>
+            </div>
           </div>
         </Card>
 
-        <Card className="p-6 flex items-center justify-center">
+        <Card className="p-6 flex items-center justify-center bg-gradient-to-br from-primary/5 to-transparent border-primary/20 hover:border-primary/40 transition-all duration-300">
           <div className="text-center">
-            <ArrowRight className="h-12 w-12 text-primary mx-auto mb-2" />
-            <div className="text-lg font-semibold text-primary">Normalized</div>
+            <div className="relative">
+              <div className="absolute inset-0 bg-primary/10 rounded-full blur-xl animate-pulse"></div>
+              <ArrowRight className="h-16 w-16 text-primary mx-auto mb-3 relative animate-pulse" />
+            </div>
+            <div className="text-xl font-bold text-primary mb-1">Normalized</div>
             <div className="text-sm text-muted-foreground">Split & Typed</div>
+            <div className="mt-4 pt-4 border-t border-primary/20 text-xs text-primary font-medium">
+              -23% Tables • +100% Clarity
+            </div>
           </div>
         </Card>
 
-        <Card className="p-6 bg-gradient-to-br from-green-500/10 to-green-600/5 border-green-500/20">
+        <Card className="p-6 bg-gradient-to-br from-green-500/10 via-green-500/5 to-transparent border-green-500/20 hover:border-green-500/40 transition-all duration-300 group">
           <div className="text-center">
-            <div className="text-sm font-medium text-green-600 mb-2">V2 REFACTORED</div>
-            <div className="text-5xl font-bold text-green-500 mb-1">{v2TableCount}</div>
-            <div className="text-lg text-muted-foreground">Tables</div>
-            <div className="mt-3 text-xs text-green-600/80">Typed columns</div>
+            <div className="flex items-center justify-center gap-2 mb-3">
+              <CheckCircle2 className="h-4 w-4 text-green-600" />
+              <div className="text-sm font-medium text-green-600">V2 REFACTORED</div>
+            </div>
+            <div className="text-6xl font-bold text-green-500 mb-2 group-hover:scale-105 transition-transform">
+              {v2TableCount}
+            </div>
+            <div className="text-lg font-medium text-muted-foreground mb-2">Tables</div>
+            <div className="mt-4 pt-4 border-t border-green-500/20">
+              <div className="text-xs text-green-600/80 font-medium">Typed columns</div>
+              <div className="text-xs text-muted-foreground mt-1">Foreign key enforced</div>
+            </div>
           </div>
         </Card>
       </div>
 
       {/* Key Transformation Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <Card className="p-4 text-center">
-          <div className="text-3xl font-bold text-primary">{splitCount}</div>
-          <div className="text-sm text-muted-foreground">Core Entities Split</div>
+        <Card className="p-5 text-center hover:shadow-lg transition-all duration-300 border-l-4 border-l-blue-500">
+          <Layers className="h-6 w-6 text-blue-500 mx-auto mb-2" />
+          <div className="text-4xl font-bold text-blue-500 mb-1">{splitCount}</div>
+          <div className="text-sm font-medium text-muted-foreground">Core Entities Split</div>
         </Card>
-        <Card className="p-4 text-center">
-          <div className="text-3xl font-bold text-primary">{normalizedTables}</div>
-          <div className="text-sm text-muted-foreground">Normalized Tables</div>
+        <Card className="p-5 text-center hover:shadow-lg transition-all duration-300 border-l-4 border-l-purple-500">
+          <Database className="h-6 w-6 text-purple-500 mx-auto mb-2" />
+          <div className="text-4xl font-bold text-purple-500 mb-1">{normalizedTables}</div>
+          <div className="text-sm font-medium text-muted-foreground">Normalized Tables</div>
         </Card>
-        <Card className="p-4 text-center">
-          <div className="text-3xl font-bold text-primary">449</div>
-          <div className="text-sm text-muted-foreground">Fields Mapped</div>
+        <Card className="p-5 text-center hover:shadow-lg transition-all duration-300 border-l-4 border-l-indigo-500">
+          <ArrowRight className="h-6 w-6 text-indigo-500 mx-auto mb-2" />
+          <div className="text-4xl font-bold text-indigo-500 mb-1">449</div>
+          <div className="text-sm font-medium text-muted-foreground">Fields Mapped</div>
         </Card>
-        <Card className="p-4 text-center">
-          <div className="text-3xl font-bold text-primary">5</div>
-          <div className="text-sm text-muted-foreground">Domains Synced</div>
+        <Card className="p-5 text-center hover:shadow-lg transition-all duration-300 border-l-4 border-l-emerald-500">
+          <CheckCircle2 className="h-6 w-6 text-emerald-500 mx-auto mb-2" />
+          <div className="text-4xl font-bold text-emerald-500 mb-1">5</div>
+          <div className="text-sm font-medium text-muted-foreground">Domains Synced</div>
         </Card>
       </div>
 
       {/* Live Sync Status */}
-      <Card className="p-6">
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-2">
-            <Database className="h-5 w-5 text-primary" />
-            <h3 className="text-lg font-semibold">Live Sync Status</h3>
+      <Card className="p-6 bg-gradient-to-br from-primary/5 to-transparent border-primary/20">
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-primary/10 rounded-lg">
+              <Database className="h-5 w-5 text-primary" />
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold">Live Sync Status</h3>
+              <p className="text-xs text-muted-foreground">
+                Real-time V1 → V2 data synchronization
+              </p>
+            </div>
           </div>
           <div className="flex items-center gap-3">
             {lastUpdated && (
-              <span className="text-xs text-muted-foreground">
+              <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                <div className="h-2 w-2 bg-green-500 rounded-full animate-pulse"></div>
                 Updated {lastUpdated.toLocaleTimeString()}
-              </span>
+              </div>
             )}
             <Button variant="outline" size="sm" onClick={() => mutate()} disabled={loading}>
               <RefreshCw className={`h-4 w-4 mr-1 ${loading ? 'animate-spin' : ''}`} />
@@ -290,27 +324,50 @@ export function TransformationStoryTab() {
               return (
                 <div
                   key={entity.entity}
-                  className={`p-4 rounded-lg border ${isComplete ? 'bg-green-500/5 border-green-500/20' : 'bg-yellow-500/5 border-yellow-500/20'}`}
+                  className={`p-4 rounded-lg border transition-all duration-300 hover:shadow-md ${
+                    isComplete
+                      ? 'bg-green-500/5 border-green-500/20 hover:border-green-500/40'
+                      : 'bg-yellow-500/5 border-yellow-500/20 hover:border-yellow-500/40'
+                  }`}
                 >
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="font-medium capitalize">{entity.entity}</span>
-                    {isComplete && <CheckCircle2 className="h-4 w-4 text-green-500" />}
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="font-semibold capitalize text-sm">{entity.entity}</span>
+                    {isComplete ? (
+                      <CheckCircle2 className="h-5 w-5 text-green-500" />
+                    ) : (
+                      <AlertTriangle className="h-5 w-5 text-yellow-500" />
+                    )}
                   </div>
-                  <div className="text-2xl font-bold">{ratio.toFixed(1)}%</div>
-                  <div className="text-xs text-muted-foreground mt-1">
+                  <div
+                    className={`text-3xl font-bold mb-2 ${isComplete ? 'text-green-500' : 'text-yellow-500'}`}
+                  >
+                    {ratio.toFixed(1)}%
+                  </div>
+                  <div className="text-xs text-muted-foreground mb-2">
                     {entity.v2.toLocaleString()} / {entity.v1.toLocaleString()}
+                  </div>
+                  <div className="w-full bg-muted rounded-full h-1.5 overflow-hidden">
+                    <div
+                      className={`h-full transition-all duration-500 ${isComplete ? 'bg-green-500' : 'bg-yellow-500'}`}
+                      style={{ width: `${Math.min(ratio, 100)}%` }}
+                    ></div>
                   </div>
                 </div>
               )
             })}
           </div>
         ) : (
-          <div className="py-8">
+          <div className="py-12">
             {loading ? (
               <LoadingState message="Loading sync status..." size="md" />
             ) : (
-              <div className="text-center text-muted-foreground">
-                Click Refresh to load sync status
+              <div className="text-center">
+                <Database className="h-12 w-12 text-muted-foreground/50 mx-auto mb-3" />
+                <div className="text-muted-foreground mb-4">Click Refresh to load sync status</div>
+                <Button variant="outline" onClick={() => mutate()}>
+                  <RefreshCw className="h-4 w-4 mr-2" />
+                  Load Sync Data
+                </Button>
               </div>
             )}
           </div>
