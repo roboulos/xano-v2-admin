@@ -1,314 +1,290 @@
 'use client'
 
-import { useMemo, useState, useCallback } from 'react'
-import { AlertTriangle, CheckCircle2, Clock, AlertCircle, Target, RefreshCw } from 'lucide-react'
+import { useState, useCallback, useEffect } from 'react'
 import {
-  getMockMigrationData,
-  calculateOverallProgress,
-  getTimelineEstimate,
-  getRiskSummary,
-  getBlockerSummary,
-  getCriticalPath,
-} from '@/lib/migration-tracker'
+  AlertTriangle,
+  CheckCircle2,
+  Clock,
+  RefreshCw,
+  Database,
+  Users,
+  FileText,
+  Network,
+  Activity,
+} from 'lucide-react'
 import { Card } from '@/components/ui/card'
 import { MetricCard } from '@/components/ui/metric-card'
 import { ProgressBar } from '@/components/ui/progress-bar'
-import { AlertBanner } from '@/components/ui/alert-banner'
 import { Button } from '@/components/ui/button'
 
-export function StatusDashboardTab() {
-  const [refreshKey, setRefreshKey] = useState(0)
-  const [isRefreshing, setIsRefreshing] = useState(false)
+interface EntitySyncStatus {
+  entity: string
+  v1_count: number
+  v2_count: number
+  sync_percent: number
+  delta: number
+  status: 'synced' | 'partial' | 'pending'
+}
 
-  const handleRefresh = useCallback(() => {
-    setIsRefreshing(true)
-    // Simulate refresh delay
-    setTimeout(() => {
-      setRefreshKey((prev) => prev + 1)
-      setIsRefreshing(false)
-    }, 500)
+interface DataSyncResponse {
+  success: boolean
+  timestamp: string
+  data_sync: {
+    entities: EntitySyncStatus[]
+    totals: {
+      v1_records: number
+      v2_records: number
+      sync_percent: number
+      status: string
+    }
+    source: string
+  }
+  migration_score: {
+    overall: number
+    status: string
+  }
+}
+
+const ENTITY_ICONS: Record<string, React.ReactNode> = {
+  users: <Users className="h-4 w-4" />,
+  agents: <Users className="h-4 w-4" />,
+  transactions: <FileText className="h-4 w-4" />,
+  participants: <Activity className="h-4 w-4" />,
+  network: <Network className="h-4 w-4" />,
+}
+
+const ENTITY_LABELS: Record<string, string> = {
+  users: 'Users',
+  agents: 'Agents',
+  transactions: 'Transactions',
+  participants: 'Participants',
+  network: 'Network Hierarchy',
+}
+
+export function StatusDashboardTab() {
+  const [data, setData] = useState<DataSyncResponse | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  const fetchData = useCallback(async () => {
+    setIsLoading(true)
+    setError(null)
+    try {
+      const res = await fetch('/api/migration/status')
+      if (!res.ok) throw new Error(`HTTP ${res.status}`)
+      const json = await res.json()
+      setData(json)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to fetch')
+    } finally {
+      setIsLoading(false)
+    }
   }, [])
 
-  const { phases, risks } = getMockMigrationData()
+  useEffect(() => {
+    fetchData()
+  }, [fetchData])
 
-  const metrics = useMemo(() => {
-    const overallProgress = calculateOverallProgress(phases)
-    const timeline = getTimelineEstimate(phases)
-    const riskSummary = getRiskSummary(risks)
-    const blockerSummary = getBlockerSummary(phases)
-    const criticalPath = getCriticalPath(phases)
-
-    // Prepare progress data for chart
-    const progressData = phases.map((phase) => ({
-      name: phase.name.substring(0, 12),
-      progress: phase.progress,
-      target: 100,
-    }))
-
-    // Prepare timeline data
-    const timelineData = phases.flatMap((phase) =>
-      phase.components
-        .filter((comp) => comp.startDate)
-        .map((comp) => ({
-          date: comp.startDate?.toLocaleDateString() || '',
-          completed: comp.status === 'completed' ? 1 : 0,
-          inProgress: comp.status === 'in-progress' ? 1 : 0,
-          pending: comp.status === 'pending' ? 1 : 0,
-        }))
-    )
-
-    return {
-      overallProgress,
-      timeline,
-      riskSummary,
-      blockerSummary,
-      criticalPath,
-      progressData,
-      timelineData: timelineData.slice(0, 10), // Last 10 data points
-    }
-  }, [phases, risks])
-
-  const completedPhases = phases.filter((p) => p.status === 'completed').length
-  const inProgressPhases = phases.filter((p) => p.status === 'in-progress').length
+  const entities = data?.data_sync?.entities || []
+  const totals = data?.data_sync?.totals
+  const migrationScore = data?.migration_score
 
   return (
     <div className="space-y-6">
-      {/* Header Section */}
-      <div className="space-y-4">
-        <div className="flex items-start justify-between">
-          <div>
-            <h2 className="text-2xl font-bold mb-1">Project Phase Tracker</h2>
-            <p className="text-muted-foreground">
-              Track V1→V2 migration phases: schema, APIs, data sync, and testing
+      {/* Header */}
+      <div className="flex items-start justify-between">
+        <div>
+          <h2 className="text-2xl font-bold mb-1">Live Data Sync Status</h2>
+          <p className="text-muted-foreground">Real-time V1 → V2 record counts from Xano</p>
+          {data?.timestamp && (
+            <p className="text-xs text-muted-foreground mt-1">
+              Last updated: {new Date(data.timestamp).toLocaleString()}
             </p>
-          </div>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleRefresh}
-            disabled={isRefreshing}
-            className="flex-shrink-0"
-          >
-            <RefreshCw className={`h-4 w-4 ${isRefreshing ? 'animate-spin' : ''}`} />
-            Refresh
-          </Button>
+          )}
         </div>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={fetchData}
+          disabled={isLoading}
+          className="flex-shrink-0"
+        >
+          <RefreshCw className={`h-4 w-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
+          Refresh
+        </Button>
+      </div>
 
-        {/* Critical Status Alert */}
-        {metrics.overallProgress < 50 && (
-          <AlertBanner
-            variant="warning"
-            title="Migration Progress Below 50%"
-            description={`Overall progress is at ${metrics.overallProgress}%. Consider allocating additional resources to meet timeline targets.`}
-          />
-        )}
-        {metrics.riskSummary.critical > 0 && (
-          <AlertBanner
-            variant="critical"
-            title={`${metrics.riskSummary.critical} Critical Risk(s) Identified`}
-            description="Immediate attention required to prevent project delays"
-          />
-        )}
+      {/* Error State */}
+      {error && (
+        <Card className="p-4 border-[var(--status-error-border)] bg-[var(--status-error-bg)]">
+          <div className="flex items-center gap-2">
+            <AlertTriangle className="h-4 w-4" style={{ color: 'var(--status-error)' }} />
+            <span style={{ color: 'var(--status-error)' }}>Error: {error}</span>
+          </div>
+        </Card>
+      )}
 
-        {/* Key Metrics Row */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+      {/* Loading State */}
+      {isLoading && !data && (
+        <Card className="p-8 text-center">
+          <RefreshCw className="h-8 w-8 mx-auto mb-2 animate-spin text-muted-foreground" />
+          <p className="text-muted-foreground">Loading live sync data...</p>
+        </Card>
+      )}
+
+      {/* Summary Metrics */}
+      {totals && (
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <MetricCard
-            title="Overall Progress"
-            value={`${metrics.overallProgress}%`}
-            subtitle="All phases combined"
-            icon={<Target className="h-4 w-4" />}
-            trend="up"
-            highlight
+            title="Overall Sync"
+            value={`${totals.sync_percent}%`}
+            subtitle={totals.status === 'synced' ? 'Fully synced' : 'In progress'}
+            icon={<Database className="h-4 w-4" />}
+            highlight={totals.sync_percent >= 99}
           />
           <MetricCard
-            title="Completed Phases"
-            value={`${completedPhases}/${phases.length}`}
-            subtitle="Fully finished"
+            title="V1 Records"
+            value={totals.v1_records.toLocaleString()}
+            subtitle="Source (production)"
+            icon={<FileText className="h-4 w-4" />}
+          />
+          <MetricCard
+            title="V2 Records"
+            value={totals.v2_records.toLocaleString()}
+            subtitle="Target (normalized)"
+            icon={<FileText className="h-4 w-4" />}
+          />
+          <MetricCard
+            title="Migration Score"
+            value={migrationScore?.overall ? `${migrationScore.overall}%` : '--'}
+            subtitle={migrationScore?.status || 'Calculating...'}
             icon={<CheckCircle2 className="h-4 w-4" />}
           />
-          <MetricCard
-            title="Timeline"
-            value={`${metrics.timeline.remainingDays}d`}
-            subtitle={metrics.timeline.completionDate.toLocaleDateString()}
-            icon={<Clock className="h-4 w-4" />}
-          />
-          <MetricCard
-            title="Critical Risks"
-            value={metrics.riskSummary.critical + metrics.riskSummary.high}
-            subtitle={`${metrics.riskSummary.critical} critical`}
-            icon={<AlertTriangle className="h-4 w-4" />}
-            highlight={metrics.riskSummary.critical > 0 || metrics.riskSummary.high > 1}
-          />
-          <MetricCard
-            title="Blockers"
-            value={metrics.blockerSummary.totalBlockers}
-            subtitle={`${metrics.blockerSummary.affectedComponents.length} components affected`}
-            icon={<AlertCircle className="h-4 w-4" />}
-            highlight={metrics.blockerSummary.totalBlockers > 0}
-          />
         </div>
-      </div>
+      )}
 
       {/* Overall Progress Bar */}
-      <Card className="p-6">
-        <h3 className="text-lg font-semibold mb-4">Overall Migration Status</h3>
-        <ProgressBar value={metrics.overallProgress} showPercentage={false} />
-        <div className="mt-4 grid grid-cols-3 gap-4 text-center text-sm">
-          <div>
-            <div className="font-semibold" style={{ color: 'var(--status-success)' }}>
-              {completedPhases} Completed
-            </div>
-            <div className="text-muted-foreground text-xs">phases finished</div>
+      {totals && (
+        <Card className="p-6">
+          <h3 className="text-lg font-semibold mb-4">Overall Data Sync Progress</h3>
+          <ProgressBar value={totals.sync_percent} showPercentage={false} />
+          <div className="mt-4 flex items-center justify-between text-sm text-muted-foreground">
+            <span>V1: {totals.v1_records.toLocaleString()} records</span>
+            <span
+              className="font-semibold"
+              style={{
+                color:
+                  totals.sync_percent >= 99
+                    ? 'var(--status-success)'
+                    : totals.sync_percent >= 90
+                      ? 'var(--status-warning)'
+                      : 'var(--status-info)',
+              }}
+            >
+              {totals.sync_percent}% synced
+            </span>
+            <span>V2: {totals.v2_records.toLocaleString()} records</span>
           </div>
-          <div>
-            <div className="font-semibold" style={{ color: 'var(--status-info)' }}>
-              {inProgressPhases} In Progress
-            </div>
-            <div className="text-muted-foreground text-xs">phases active</div>
+        </Card>
+      )}
+
+      {/* Entity-by-Entity Breakdown */}
+      {entities.length > 0 && (
+        <Card className="p-6">
+          <h3 className="text-lg font-semibold mb-4">Entity Sync Status</h3>
+          <div className="space-y-4">
+            {entities.map((entity) => (
+              <div key={entity.entity} className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    {ENTITY_ICONS[entity.entity] || <Database className="h-4 w-4" />}
+                    <span className="font-medium">
+                      {ENTITY_LABELS[entity.entity] || entity.entity}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-4 text-sm">
+                    <span className="text-muted-foreground">
+                      V1: {entity.v1_count.toLocaleString()}
+                    </span>
+                    <span className="text-muted-foreground">
+                      V2: {entity.v2_count.toLocaleString()}
+                    </span>
+                    <span
+                      className="font-semibold min-w-[60px] text-right"
+                      style={{
+                        color:
+                          entity.status === 'synced'
+                            ? 'var(--status-success)'
+                            : entity.status === 'partial'
+                              ? 'var(--status-warning)'
+                              : 'var(--status-info)',
+                      }}
+                    >
+                      {entity.sync_percent}%
+                    </span>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="flex-1 bg-muted rounded-full h-2 overflow-hidden">
+                    <div
+                      className="h-full transition-all"
+                      style={{
+                        width: `${Math.min(entity.sync_percent, 100)}%`,
+                        backgroundColor:
+                          entity.status === 'synced'
+                            ? 'var(--status-success)'
+                            : entity.status === 'partial'
+                              ? 'var(--status-warning)'
+                              : 'var(--status-info)',
+                      }}
+                    />
+                  </div>
+                  {entity.delta !== 0 && (
+                    <span
+                      className="text-xs min-w-[60px] text-right"
+                      style={{
+                        color: entity.delta > 0 ? 'var(--status-success)' : 'var(--status-warning)',
+                      }}
+                    >
+                      {entity.delta > 0 ? '+' : ''}
+                      {entity.delta.toLocaleString()}
+                    </span>
+                  )}
+                </div>
+              </div>
+            ))}
           </div>
-          <div>
-            <div className="font-semibold" style={{ color: 'var(--status-warning)' }}>
-              {phases.length - completedPhases - inProgressPhases} Pending
-            </div>
-            <div className="text-muted-foreground text-xs">phases queued</div>
-          </div>
-        </div>
-      </Card>
+        </Card>
+      )}
 
-      {/* Phase Progress Chart */}
-      <Card className="p-6">
-        <h3 className="text-lg font-semibold mb-4">Progress by Phase</h3>
-        <div className="space-y-4">
-          {metrics.progressData.map((item, idx) => (
-            <div key={idx} className="space-y-2">
-              <div className="flex items-center justify-between text-sm">
-                <span className="font-medium">{item.name}</span>
-                <span className="text-primary font-semibold">{item.progress}%</span>
-              </div>
-              <div className="flex gap-1">
-                <div className="flex-1 bg-muted rounded-full h-2 overflow-hidden">
-                  <div
-                    className="h-full bg-primary transition-all"
-                    style={{ width: `${item.progress}%` }}
-                  />
-                </div>
-                <div className="w-12 h-2 bg-muted/50 rounded-full flex-shrink-0" />
-              </div>
-            </div>
-          ))}
-        </div>
-      </Card>
-
-      {/* Phase Details Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {phases.map((phase) => (
-          <Card key={phase.id} className="p-6">
-            <div className="space-y-4">
-              <div className="flex items-start justify-between">
-                <div>
-                  <h4 className="font-semibold text-foreground">{phase.name}</h4>
-                  <p className="text-sm text-muted-foreground">
-                    {phase.components.length} components
-                  </p>
-                </div>
-                <div
-                  className="px-2 py-1 rounded text-xs font-semibold"
-                  style={{
-                    backgroundColor:
-                      phase.status === 'completed'
-                        ? 'var(--status-success-bg)'
-                        : phase.status === 'in-progress'
-                          ? 'var(--status-info-bg)'
-                          : 'var(--status-pending-bg)',
-                    color:
-                      phase.status === 'completed'
-                        ? 'var(--status-success)'
-                        : phase.status === 'in-progress'
-                          ? 'var(--status-info)'
-                          : 'var(--status-pending)',
-                  }}
-                >
-                  {phase.status.charAt(0).toUpperCase() + phase.status.slice(1).replace('-', ' ')}
-                </div>
-              </div>
-
-              <ProgressBar value={phase.progress} label="Phase Progress" />
-
-              <div className="space-y-2 text-sm">
-                {phase.startDate && (
-                  <div className="flex justify-between text-muted-foreground">
-                    <span>Started:</span>
-                    <span>{phase.startDate.toLocaleDateString()}</span>
-                  </div>
-                )}
-                {phase.completedDate && (
-                  <div className="flex justify-between text-muted-foreground">
-                    <span>Completed:</span>
-                    <span>{phase.completedDate.toLocaleDateString()}</span>
-                  </div>
-                )}
-              </div>
-
-              {/* Component Summary */}
-              <div className="pt-2 border-t">
-                <div className="grid grid-cols-3 gap-2 text-sm">
-                  <div className="text-center">
-                    <div className="font-semibold" style={{ color: 'var(--status-success)' }}>
-                      {phase.components.filter((c) => c.status === 'completed').length}
-                    </div>
-                    <div className="text-xs text-muted-foreground">Completed</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="font-semibold" style={{ color: 'var(--status-info)' }}>
-                      {phase.components.filter((c) => c.status === 'in-progress').length}
-                    </div>
-                    <div className="text-xs text-muted-foreground">In Progress</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="font-semibold" style={{ color: 'var(--status-pending)' }}>
-                      {
-                        phase.components.filter(
-                          (c) => c.status === 'pending' || c.status === 'blocked'
-                        ).length
-                      }
-                    </div>
-                    <div className="text-xs text-muted-foreground">Pending</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </Card>
-        ))}
-      </div>
-
-      {/* Critical Path */}
-      <Card className="p-6">
-        <div className="flex items-center gap-2 mb-4">
-          <AlertTriangle className="h-5 w-5 text-orange-500" />
-          <h3 className="text-lg font-semibold">Critical Path</h3>
-        </div>
-        <div className="space-y-2">
-          {metrics.criticalPath.length > 0 ? (
-            metrics.criticalPath.slice(0, 8).map((comp) => (
+      {/* Status Legend */}
+      <Card className="p-4">
+        <div className="flex items-center justify-between text-sm">
+          <div className="flex items-center gap-6">
+            <div className="flex items-center gap-2">
               <div
-                key={comp.id}
-                className="flex items-center justify-between p-3 rounded-lg bg-muted/50"
-              >
-                <div>
-                  <p className="font-medium text-foreground">{comp.name}</p>
-                  <p className="text-xs text-muted-foreground">
-                    {comp.dependencies.length > 0 &&
-                      `Depends on: ${comp.dependencies.length} tasks`}
-                  </p>
-                </div>
-                <div className="text-right">
-                  <div className="font-semibold text-primary">{comp.progress}%</div>
-                  <div className="text-xs text-muted-foreground capitalize">{comp.status}</div>
-                </div>
-              </div>
-            ))
-          ) : (
-            <p className="text-muted-foreground text-sm">No critical path items identified</p>
+                className="w-3 h-3 rounded-full"
+                style={{ backgroundColor: 'var(--status-success)' }}
+              />
+              <span className="text-muted-foreground">Synced (≥99%)</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div
+                className="w-3 h-3 rounded-full"
+                style={{ backgroundColor: 'var(--status-warning)' }}
+              />
+              <span className="text-muted-foreground">Partial (90-99%)</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div
+                className="w-3 h-3 rounded-full"
+                style={{ backgroundColor: 'var(--status-info)' }}
+              />
+              <span className="text-muted-foreground">In Progress (&lt;90%)</span>
+            </div>
+          </div>
+          {data?.data_sync?.source && (
+            <span className="text-xs text-muted-foreground">Source: {data.data_sync.source}</span>
           )}
         </div>
       </Card>

@@ -2,7 +2,7 @@
  * GET /api/migration/status
  *
  * Live V1 ↔ V2 migration status comparison
- * Uses known counts from migration plan + validation results
+ * Fetches real-time record counts from Xano + validation results
  */
 
 import { NextResponse } from 'next/server'
@@ -16,6 +16,43 @@ import {
 } from '@/lib/migration-score'
 
 export const dynamic = 'force-dynamic'
+
+interface EntityCount {
+  entity: string
+  v1: number
+  v2: number
+}
+
+interface LiveSyncResponse {
+  entity_counts: EntityCount[]
+}
+
+/**
+ * Fetch live V1 vs V2 record counts from Xano
+ */
+async function getLiveEntityCounts(): Promise<EntityCount[]> {
+  try {
+    const res = await fetch(
+      'https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:20LTQtIX/sync-v1-to-v2-direct',
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        next: { revalidate: 60 }, // Cache for 60 seconds
+      }
+    )
+
+    if (!res.ok) {
+      console.error('[Migration Status] Failed to fetch live counts:', res.status)
+      return []
+    }
+
+    const data: LiveSyncResponse = await res.json()
+    return data.entity_counts || []
+  } catch (error) {
+    console.error('[Migration Status] Error fetching live counts:', error)
+    return []
+  }
+}
 
 interface ValidationReport {
   summary: {
@@ -105,6 +142,27 @@ export async function GET() {
     // Get real validation scores from reports
     const scoreData = await getValidationScores()
     const migrationScore = calculateMigrationScore(scoreData)
+
+    // Get live V1 vs V2 record counts from Xano
+    const liveEntityCounts = await getLiveEntityCounts()
+
+    // Calculate sync percentages for each entity
+    const dataSyncStatus = liveEntityCounts.map((entity) => {
+      const syncPercent = entity.v1 > 0 ? Math.round((entity.v2 / entity.v1) * 100 * 10) / 10 : 100
+      return {
+        entity: entity.entity,
+        v1_count: entity.v1,
+        v2_count: entity.v2,
+        sync_percent: Math.min(syncPercent, 100), // Cap at 100%
+        delta: entity.v2 - entity.v1,
+        status: syncPercent >= 99 ? 'synced' : syncPercent >= 90 ? 'partial' : 'pending',
+      }
+    })
+
+    // Calculate overall data sync progress
+    const totalV1 = liveEntityCounts.reduce((sum, e) => sum + e.v1, 0)
+    const totalV2 = liveEntityCounts.reduce((sum, e) => sum + e.v2, 0)
+    const overallSyncPercent = totalV1 > 0 ? Math.round((totalV2 / totalV1) * 100 * 10) / 10 : 0
 
     return NextResponse.json({
       success: true,
@@ -209,6 +267,18 @@ export async function GET() {
           total: scoreData.references.total,
           pass_rate: scoreData.references.passRate,
         },
+      },
+      // Live V1 ↔ V2 data sync status (fetched from Xano)
+      data_sync: {
+        entities: dataSyncStatus,
+        totals: {
+          v1_records: totalV1,
+          v2_records: totalV2,
+          sync_percent: overallSyncPercent,
+          status:
+            overallSyncPercent >= 99 ? 'synced' : overallSyncPercent >= 90 ? 'partial' : 'pending',
+        },
+        source: 'api:20LTQtIX/sync-v1-to-v2-direct',
       },
     })
   } catch (error: any) {
