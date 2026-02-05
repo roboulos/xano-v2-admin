@@ -18,6 +18,7 @@ import {
   AlertCircle,
   Sparkles,
   Shield,
+  FlaskConical,
 } from 'lucide-react'
 
 // UI Components
@@ -41,6 +42,7 @@ import { ChecklistTab } from '@/components/migration-tabs/checklist-tab'
 import { BlockersTab } from '@/components/migration-tabs/blockers-tab'
 import { TransformationStoryTab } from '@/components/transformation-story-tab'
 import { ArchitectureComparisonTab } from '@/components/architecture-comparison-tab'
+import { ComparisonPanel } from '@/components/comparison-panel'
 
 type ViewMode =
   | 'schema'
@@ -59,6 +61,7 @@ type ViewMode =
   | 'blockers'
   | 'transformation'
   | 'v1-v2-compare'
+  | 'proof-system'
 
 export default function Home() {
   const [viewMode, setViewMode] = useState<ViewMode>('transformation')
@@ -66,6 +69,7 @@ export default function Home() {
   const viewModes = [
     { id: 'transformation' as ViewMode, label: 'Transformation Story', icon: Sparkles },
     { id: 'v1-v2-compare' as ViewMode, label: 'V1 vs V2', icon: Shield },
+    { id: 'proof-system' as ViewMode, label: 'Proof System', icon: FlaskConical },
     { id: 'migration-status' as ViewMode, label: 'Phase Tracker', icon: TrendingUp },
     { id: 'gaps' as ViewMode, label: 'Gaps & Issues', icon: AlertCircle },
     { id: 'checklist' as ViewMode, label: 'Checklists', icon: CheckCircle2 },
@@ -125,6 +129,9 @@ export default function Home() {
           </ErrorBoundary>
           <ErrorBoundary title="V1 vs V2 Comparison">
             {viewMode === 'v1-v2-compare' && <ArchitectureComparisonTab />}
+          </ErrorBoundary>
+          <ErrorBoundary title="Proof System">
+            {viewMode === 'proof-system' && <ComparisonPanel />}
           </ErrorBoundary>
           <ErrorBoundary title="Migration Status">
             {viewMode === 'migration-status' && <StatusDashboardTab />}

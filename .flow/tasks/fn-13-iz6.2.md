@@ -61,10 +61,10 @@ Build a searchable combobox component that allows users to select a user for V1/
 
 ## Done summary
 
-TBD
+Built UserPicker searchable combobox component at components/user-picker.tsx with type-ahead search by name/email/ID, recently selected users (max 5, localStorage-persisted), verified test user highlighting (user 60), loading skeleton, keyboard navigation via cmdk, and UserContext integration. Added ShadCN Command and Popover UI primitives. Integrated picker in the page header for always-visible access.
 
 ## Evidence
 
-- Commits:
-- Tests:
+- Commits: 3223869c38b5736ec972f74c390ec007c224466a
+- Tests: pnpm build
 - PRs:

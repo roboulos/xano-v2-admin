@@ -66,10 +66,10 @@ Response:
 
 ## Done summary
 
-TBD
+Created GET /api/users/list endpoint that queries V2 workspace user table (primary source) and cross-references with V1 workspace for existence flags. Supports search, limit/offset pagination, and returns normalized user data with v1_exists/v2_exists flags, total count, and hasMore indicator.
 
 ## Evidence
 
-- Commits:
-- Tests:
+- Commits: 6ab82d088930072b48c23808c9c313bace5ea06c
+- Tests: pnpm build
 - PRs:

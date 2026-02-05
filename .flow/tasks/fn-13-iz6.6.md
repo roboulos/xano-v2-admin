@@ -146,10 +146,10 @@ interface FieldDiff {
 
 ## Done summary
 
-TBD
+Implemented diff highlighting system: lib/diff-utils.ts (pure functions, zero React imports) with compareFields, valuesMatch, hasTypeMismatch, diffArrays, formatValue, summarizeDiffs, resolveFieldName, and buildFieldNameMap; components/diff-highlight.tsx (React) with DiffHighlight, DiffFieldRow, DiffStatusBadge, DiffValue, and DiffSummaryBar using semantic CSS tokens, inline/block display modes, tooltip for original values, and accessible text icons alongside color indicators.
 
 ## Evidence
 
-- Commits:
-- Tests:
+- Commits: 900f1ac64afc110bc415b2befb4f667a73751ad0, 5813daf
+- Tests: npx tsc --noEmit, pnpm build (compiled successfully, TypeScript passed)
 - PRs:

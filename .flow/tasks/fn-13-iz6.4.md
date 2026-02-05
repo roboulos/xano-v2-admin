@@ -144,10 +144,10 @@ Reference `lib/table-mappings.ts` for V1→V2 field name conversions when compar
 
 ## Done summary
 
-TBD
+Created GET /api/users/[id]/comparison endpoint that fetches V1 and V2 data in parallel via Promise.allSettled, computes field-level diffs for scalar entities (user, agent, team) and count-based comparisons for array entities (transactions, listings, network, contributions). Supports sections filter and pagination. Also fixed a self-referencing variable bug in lib/diff-utils.ts.
 
 ## Evidence
 
-- Commits:
-- Tests:
+- Commits: 5813dafac778cc6f753556d11f587c9b05702e9e
+- Tests: pnpm build
 - PRs:
