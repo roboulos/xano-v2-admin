@@ -4,6 +4,9 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
+  /* ============================================================
+     CORE COLOR TOKENS
+     ============================================================ */
   --background: oklch(0.9818 0.0054 95.0986);
   --foreground: oklch(0.3438 0.0269 95.7226);
   --card: oklch(0.9818 0.0054 95.0986);
@@ -37,67 +40,78 @@
   --sidebar-accent-foreground: oklch(0.3250 0 0);
   --sidebar-border: oklch(0.9401 0 0);
   --sidebar-ring: oklch(0.7731 0 0);
-  --shadow-x: 0;
-  --shadow-y: 1px;
-  --shadow-blur: 3px;
-  --shadow-spread: 0px;
-  --shadow-opacity: 0.1;
-  --shadow-color: oklch(0 0 0);
 
   /* ============================================================
-     SPACING TOKENS - Consistent spacing across all dashboard tabs
+     FONT FAMILY TOKENS
      ============================================================ */
-  --spacing-section: 1.5rem;       /* 24px - space-y-6 - between major sections */
-  --spacing-content: 1rem;         /* 16px - space-y-4 - between content items */
-  --spacing-card: 1.5rem;          /* 24px - p-6 - standard card padding */
-  --spacing-card-compact: 1rem;    /* 16px - p-4 - compact card padding */
-  --spacing-inline: 0.5rem;        /* 8px - gap-2 - inline element gaps */
+  --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+
+  /* ============================================================
+     SHADOW TOKENS (hsl-based for consistency)
+     ============================================================ */
+  --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
+  --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
+  --shadow-sm: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 1px 2px -1px hsl(0 0% 0% / 0.10);
+  --shadow-md: 0 4px 6px -1px hsl(0 0% 0% / 0.10), 0 2px 4px -2px hsl(0 0% 0% / 0.10);
+  --shadow-lg: 0 10px 15px -3px hsl(0 0% 0% / 0.10), 0 4px 6px -4px hsl(0 0% 0% / 0.10);
+  --shadow-xl: 0 20px 25px -5px hsl(0 0% 0% / 0.10), 0 8px 10px -6px hsl(0 0% 0% / 0.10);
+  --shadow-2xl: 0 25px 50px -12px hsl(0 0% 0% / 0.25);
+  --shadow: var(--shadow-md);
+
+  /* ============================================================
+     SPACING TOKENS
+     ============================================================ */
+  --spacing: 0.25rem;
+  --spacing-section: 1.5rem;
+  --spacing-content: 1rem;
+  --spacing-card: 1.5rem;
+  --spacing-card-compact: 1rem;
+  --spacing-inline: 0.5rem;
+
+  /* ============================================================
+     TRACKING / LETTER-SPACING TOKENS
+     ============================================================ */
+  --tracking-normal: 0em;
 
   /* ============================================================
      STATUS TOKENS - Semantic colors for pass/fail/warning/info states
-
-     Use these for consistent status indication across all tabs.
-     Each status has: text color, background (subtle), border color.
-
-     Usage:
-     - Cards: border-[var(--status-success-border)] bg-[var(--status-success-bg)]
-     - Text: text-[var(--status-success)]
-     - Badges: Same pattern for compact status indicators
      ============================================================ */
 
-  /* Success (green) - passed checks, completed items, healthy status */
-  --status-success: oklch(0.45 0.15 145);           /* green-600 equivalent */
-  --status-success-bg: oklch(0.96 0.03 145);        /* green-50 equivalent */
-  --status-success-border: oklch(0.85 0.08 145);    /* green-200 equivalent */
+  /* Success (green) */
+  --status-success: oklch(0.45 0.15 145);
+  --status-success-bg: oklch(0.96 0.03 145);
+  --status-success-border: oklch(0.85 0.08 145);
 
-  /* Warning (amber) - warnings, attention needed, partial completion */
-  --status-warning: oklch(0.55 0.15 70);            /* amber-600 equivalent */
-  --status-warning-bg: oklch(0.97 0.03 85);         /* amber-50 equivalent */
-  --status-warning-border: oklch(0.88 0.08 85);     /* amber-200 equivalent */
+  /* Warning (amber) */
+  --status-warning: oklch(0.55 0.15 70);
+  --status-warning-bg: oklch(0.97 0.03 85);
+  --status-warning-border: oklch(0.88 0.08 85);
 
-  /* Error (red) - failed checks, errors, critical issues */
-  --status-error: oklch(0.50 0.18 25);              /* red-600 equivalent */
-  --status-error-bg: oklch(0.97 0.02 20);           /* red-50 equivalent */
-  --status-error-border: oklch(0.88 0.06 20);       /* red-200 equivalent */
+  /* Error (red) */
+  --status-error: oklch(0.50 0.18 25);
+  --status-error-bg: oklch(0.97 0.02 20);
+  --status-error-border: oklch(0.88 0.06 20);
 
-  /* Info (blue) - running, in progress, informational */
-  --status-info: oklch(0.55 0.15 250);              /* blue-600 equivalent */
-  --status-info-bg: oklch(0.97 0.02 250);           /* blue-50 equivalent */
-  --status-info-border: oklch(0.88 0.06 250);       /* blue-200 equivalent */
+  /* Info (blue) */
+  --status-info: oklch(0.55 0.15 250);
+  --status-info-bg: oklch(0.97 0.02 250);
+  --status-info-border: oklch(0.88 0.06 250);
 
-  /* Pending (gray) - not started, waiting, neutral */
-  --status-pending: oklch(0.55 0.01 260);           /* gray-500 equivalent */
-  --status-pending-bg: oklch(0.97 0.005 260);       /* gray-50 equivalent */
-  --status-pending-border: oklch(0.90 0.005 260);   /* gray-200 equivalent */
+  /* Pending (gray) */
+  --status-pending: oklch(0.55 0.01 260);
+  --status-pending-bg: oklch(0.97 0.005 260);
+  --status-pending-border: oklch(0.90 0.005 260);
 
   /* ============================================================
-     TYPOGRAPHY TOKENS - Consistent text sizing
+     TYPOGRAPHY TOKENS
      ============================================================ */
-  --text-metric-lg: 2.25rem;       /* text-4xl - large hero numbers */
-  --text-metric-md: 1.875rem;      /* text-3xl - medium metrics */
-  --text-metric-sm: 1.5rem;        /* text-2xl - small metrics */
-  --text-label: 0.875rem;          /* text-sm - labels and descriptions */
-  --text-caption: 0.75rem;         /* text-xs - captions and meta */
+  --text-metric-lg: 2.25rem;
+  --text-metric-md: 1.875rem;
+  --text-metric-sm: 1.5rem;
+  --text-label: 0.875rem;
+  --text-caption: 0.75rem;
 }
 
 .dark {
@@ -133,12 +147,15 @@
   --sidebar-accent-foreground: oklch(0.8074 0.0142 93.0137);
   --sidebar-border: oklch(0.9401 0 0);
   --sidebar-ring: oklch(0.7731 0 0);
-  --shadow-x: 0;
-  --shadow-y: 1px;
-  --shadow-blur: 3px;
-  --shadow-spread: 0px;
-  --shadow-opacity: 0.1;
-  --shadow-color: oklch(0 0 0);
+
+  /* Dark mode shadows (slightly more visible) */
+  --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.15);
+  --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.15);
+  --shadow-sm: 0 1px 3px 0px hsl(0 0% 0% / 0.20), 0 1px 2px -1px hsl(0 0% 0% / 0.20);
+  --shadow-md: 0 4px 6px -1px hsl(0 0% 0% / 0.20), 0 2px 4px -2px hsl(0 0% 0% / 0.20);
+  --shadow-lg: 0 10px 15px -3px hsl(0 0% 0% / 0.20), 0 4px 6px -4px hsl(0 0% 0% / 0.20);
+  --shadow-xl: 0 20px 25px -5px hsl(0 0% 0% / 0.20), 0 8px 10px -6px hsl(0 0% 0% / 0.20);
+  --shadow-2xl: 0 25px 50px -12px hsl(0 0% 0% / 0.40);
 
   /* Dark mode status tokens */
   --status-success: oklch(0.65 0.15 145);
@@ -163,8 +180,12 @@
 }
 
 @theme inline {
+  /* Typography */
   --font-sans: var(--font-sans);
+  --font-serif: var(--font-serif);
   --font-mono: var(--font-mono);
+
+  /* Colors */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -189,10 +210,8 @@
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+
+  /* Sidebar */
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
@@ -201,22 +220,28 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
-  --font-serif: var(--font-serif);
-  /* computed shadow variables below - do not modify */
-  --shadow-2xs: var(--shadow-x) var(--shadow-y) color-mix(in srgb, var(--shadow-color) calc(var(--shadow-opacity) * 100%), transparent);
-  --shadow-xs: var(--shadow-x) var(--shadow-y) var(--shadow-blur) var(--shadow-spread) color-mix(in srgb, var(--shadow-color) calc(var(--shadow-opacity) * 100%), transparent);
-  --shadow-sm: var(--shadow-x) var(--shadow-y) calc(var(--shadow-blur) * 1.5) var(--shadow-spread) color-mix(in srgb, var(--shadow-color) calc(var(--shadow-opacity) * 100%), transparent);
-  --shadow-md: calc(var(--shadow-x) * 2) calc(var(--shadow-y) * 2) calc(var(--shadow-blur) * 3) calc(var(--shadow-spread) - 1px) color-mix(in srgb, var(--shadow-color) calc(var(--shadow-opacity) * 100%), transparent);
-  --shadow-lg: calc(var(--shadow-x) * 4) calc(var(--shadow-y) * 4) calc(var(--shadow-blur) * 5) calc(var(--shadow-spread) - 3px) color-mix(in srgb, var(--shadow-color) calc(var(--shadow-opacity) * 100%), transparent);
-  --shadow-xl: calc(var(--shadow-x) * 6) calc(var(--shadow-y) * 6) calc(var(--shadow-blur) * 7) calc(var(--shadow-spread) - 5px) color-mix(in srgb, var(--shadow-color) calc(var(--shadow-opacity) * 100%), transparent);
-  --shadow-2xl: calc(var(--shadow-x) * 8) calc(var(--shadow-y) * 8) calc(max(0px, var(--shadow-blur) * 9 - 8px)) calc(var(--shadow-spread) - 12px) color-mix(in srgb, var(--shadow-color) calc(var(--shadow-opacity) * 250%), transparent);
-  --shadow: var(--shadow-md);
-  --color-shadow-color: var(--shadow-color);
-  --shadow-opacity: var(--shadow-opacity);
-  --shadow-spread: var(--shadow-spread);
-  --shadow-blur: var(--shadow-blur);
-  --shadow-y: var(--shadow-y);
-  --shadow-x: var(--shadow-x);
+
+  /* Border radius */
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  /* Shadows (direct hsl-based values) */
+  --shadow-2xs: var(--shadow-2xs);
+  --shadow-xs: var(--shadow-xs);
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+  --shadow-xl: var(--shadow-xl);
+  --shadow-2xl: var(--shadow-2xl);
+  --shadow: var(--shadow);
+
+  /* Spacing */
+  --spacing: var(--spacing);
+
+  /* Tracking */
+  --tracking-normal: var(--tracking-normal);
 }
 
 @layer base {
