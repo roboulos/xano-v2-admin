@@ -79,10 +79,7 @@ export function StatusDashboardTab() {
           <div>
             <h2 className="text-2xl font-bold mb-1">Project Phase Tracker</h2>
             <p className="text-muted-foreground">
-              Track project delivery phases: planning, testing, documentation (not data migration)
-            </p>
-            <p className="text-xs text-emerald-600 mt-1">
-              📊 Data migration is ~100% complete — see Transformation Story tab for details
+              Track V1→V2 migration phases: schema, APIs, data sync, and testing
             </p>
           </div>
           <Button
