@@ -62,10 +62,10 @@ Fetch from V2 Xano endpoints in parallel:
 
 ## Done summary
 
-TBD
+Built GET /api/users/[id]/timeline endpoint that aggregates chronological events from onboarding-status, staging-status, and table-counts Xano endpoints using Promise.allSettled for resilient parallel fetching. Supports pagination (limit/offset) and filtering by event type and source.
 
 ## Evidence
 
-- Commits:
-- Tests:
+- Commits: 3171b0e8e14f9ddb523a16fa0106c30e2a6637dd
+- Tests: npx tsc --noEmit, pnpm lint
 - PRs:

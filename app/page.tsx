@@ -79,6 +79,7 @@ type ViewMode =
   | 'sync-pipelines-story'
   | 'schema-mapping-story'
   | 'webhooks-story'
+  | 'functions-story'
 
 export default function Home() {
   const [viewMode, setViewMode] = useState<ViewMode>('transformation')
@@ -92,6 +93,7 @@ export default function Home() {
     { id: 'sync-pipelines-story' as ViewMode, label: 'Sync Pipelines', icon: RefreshCw },
     { id: 'schema-mapping-story' as ViewMode, label: 'Schema Map', icon: Map },
     { id: 'webhooks-story' as ViewMode, label: 'Webhooks', icon: Webhook },
+    { id: 'functions-story' as ViewMode, label: 'Function Health', icon: HeartPulse },
     { id: 'migration-status' as ViewMode, label: 'Phase Tracker', icon: TrendingUp },
     { id: 'gaps' as ViewMode, label: 'Gaps & Issues', icon: AlertCircle },
     { id: 'checklist' as ViewMode, label: 'Checklists', icon: CheckCircle2 },
@@ -169,6 +171,9 @@ export default function Home() {
           </ErrorBoundary>
           <ErrorBoundary title="Webhooks">
             {viewMode === 'webhooks-story' && <WebhooksStoryTab />}
+          </ErrorBoundary>
+          <ErrorBoundary title="Function Health">
+            {viewMode === 'functions-story' && <FunctionsStoryTab />}
           </ErrorBoundary>
           <ErrorBoundary title="Migration Status">
             {viewMode === 'migration-status' && <StatusDashboardTab />}
