@@ -32,6 +32,26 @@ import { MCP_BASES, MCPEndpoint } from '@/lib/mcp-endpoints'
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json())
 
+// Architecture counts — update these when Xano workspace changes
+const ARCH = {
+  TASKS_TOTAL: 109,
+  TASKS_PASSING: 102,
+  WORKERS_TOTAL: 194,
+  WORKERS_ENDPOINTS_UNMAPPED: 187,
+  TEST_ENDPOINTS_TOTAL: 324,
+  TEST_ENDPOINTS_PASSING: 312,
+  ACTIVE_TOTAL: 109 + 194, // Tasks + Workers
+  get TASKS_PASS_RATE() {
+    return Math.round((this.TASKS_PASSING / this.TASKS_TOTAL) * 100)
+  },
+  get ENDPOINTS_PASS_RATE() {
+    return Math.round((this.TEST_ENDPOINTS_PASSING / this.TEST_ENDPOINTS_TOTAL) * 100)
+  },
+  get TASKS_MAPPED() {
+    return this.TASKS_TOTAL - 8
+  }, // 8 unmapped
+} as const
+
 export function LiveMigrationStatus() {
   const [isTestingEndpoints, setIsTestingEndpoints] = useState(false)
   const [integrityExpanded, setIntegrityExpanded] = useState(false)
@@ -204,25 +224,25 @@ export function LiveMigrationStatus() {
                   {
                     title: 'V2 Backend Architecture',
                     content: [
-                      `Production Flow: 109 Cron Jobs → 109 Tasks/ → 194 Workers/`,
+                      `Production Flow: ${ARCH.TASKS_TOTAL} Cron Jobs → ${ARCH.TASKS_TOTAL} Tasks/ → ${ARCH.WORKERS_TOTAL} Workers/`,
                       `1:1 Mapping: Each scheduled job calls one Tasks/ function`,
                     ],
                   },
                   {
                     title: 'Validation Health Status',
                     content: [
-                      `Tasks/ Functions: 102/109 passing (95%) ✅`,
-                      `Test Endpoints (WORKERS API): 312/324 passing (96%) ✅`,
-                      `Workers/ Functions: 194 total (validated indirectly via Tasks/) ⚠️`,
-                      `Mapping Gap: 187 Worker endpoints exist but unmapped to functions`,
+                      `Tasks/ Functions: ${ARCH.TASKS_PASSING}/${ARCH.TASKS_TOTAL} passing (${ARCH.TASKS_PASS_RATE}%) ✅`,
+                      `Test Endpoints (WORKERS API): ${ARCH.TEST_ENDPOINTS_PASSING}/${ARCH.TEST_ENDPOINTS_TOTAL} passing (${ARCH.ENDPOINTS_PASS_RATE}%) ✅`,
+                      `Workers/ Functions: ${ARCH.WORKERS_TOTAL} total (validated indirectly via Tasks/) ⚠️`,
+                      `Mapping Gap: ${ARCH.WORKERS_ENDPOINTS_UNMAPPED} Worker endpoints exist but unmapped to functions`,
                     ],
                   },
                   {
                     title: 'Backend Health Summary',
                     content: [
                       `✅ Backend is Healthy`,
-                      `• 95% of production tasks working correctly`,
-                      `• 96% of test endpoints accessible and functional`,
+                      `• ${ARCH.TASKS_PASS_RATE}% of production tasks working correctly`,
+                      `• ${ARCH.ENDPOINTS_PASS_RATE}% of test endpoints accessible and functional`,
                       `• Workers/ functions validated indirectly through Tasks/ calls`,
                       `• Mapping gap is a tooling issue, not a validation issue`,
                     ],
@@ -296,7 +316,7 @@ export function LiveMigrationStatus() {
             <div className="grid grid-cols-5 gap-3 items-center text-center">
               <div className="bg-indigo-100 rounded-lg p-4 border-2 border-indigo-300">
                 <div className="text-2xl font-bold text-indigo-700">
-                  {tasksLoading ? '...' : '109'}
+                  {tasksLoading ? '...' : ARCH.TASKS_TOTAL}
                 </div>
                 <div className="text-sm font-semibold text-indigo-900 mt-1">Cron Jobs</div>
                 <div className="text-xs text-muted-foreground mt-1">Scheduled</div>
@@ -310,7 +330,7 @@ export function LiveMigrationStatus() {
                 }}
               >
                 <div className="text-2xl font-bold" style={{ color: 'var(--status-success)' }}>
-                  109
+                  {ARCH.TASKS_TOTAL}
                 </div>
                 <div
                   className="text-sm font-semibold mt-1"
@@ -331,7 +351,7 @@ export function LiveMigrationStatus() {
                 }}
               >
                 <div className="text-2xl font-bold" style={{ color: 'var(--status-warning)' }}>
-                  194
+                  {ARCH.WORKERS_TOTAL}
                 </div>
                 <div
                   className="text-sm font-semibold mt-1"
@@ -378,16 +398,16 @@ export function LiveMigrationStatus() {
                     </div>
                     <div className="text-xs text-muted-foreground">Called by cron jobs</div>
                   </td>
-                  <td className="text-center p-4 text-lg font-bold">109</td>
+                  <td className="text-center p-4 text-lg font-bold">{ARCH.TASKS_TOTAL}</td>
                   <td
                     className="text-center p-4 text-lg font-bold"
                     style={{ color: 'var(--status-success)' }}
                   >
-                    102
+                    {ARCH.TASKS_PASSING}
                   </td>
                   <td className="text-center p-4">
                     <div className="text-2xl font-bold" style={{ color: 'var(--status-success)' }}>
-                      95%
+                      {ARCH.TASKS_PASS_RATE}%
                     </div>
                   </td>
                   <td className="text-center p-4">
@@ -408,16 +428,16 @@ export function LiveMigrationStatus() {
                       WORKERS API (for programmatic control)
                     </div>
                   </td>
-                  <td className="text-center p-4 text-lg font-bold">324</td>
+                  <td className="text-center p-4 text-lg font-bold">{ARCH.TEST_ENDPOINTS_TOTAL}</td>
                   <td
                     className="text-center p-4 text-lg font-bold"
                     style={{ color: 'var(--status-info)' }}
                   >
-                    312
+                    {ARCH.TEST_ENDPOINTS_PASSING}
                   </td>
                   <td className="text-center p-4">
                     <div className="text-2xl font-bold" style={{ color: 'var(--status-info)' }}>
-                      96%
+                      {ARCH.ENDPOINTS_PASS_RATE}%
                     </div>
                   </td>
                   <td className="text-center p-4">
@@ -438,13 +458,15 @@ export function LiveMigrationStatus() {
                       Called by Tasks/ • Validated indirectly
                     </div>
                   </td>
-                  <td className="text-center p-4 text-lg font-bold">194</td>
+                  <td className="text-center p-4 text-lg font-bold">{ARCH.WORKERS_TOTAL}</td>
                   <td
                     className="text-center p-4 text-lg font-bold"
                     style={{ color: 'var(--status-warning)' }}
                   >
                     <div>Unknown</div>
-                    <div className="text-xs text-muted-foreground">~187 endpoints exist</div>
+                    <div className="text-xs text-muted-foreground">
+                      ~{ARCH.WORKERS_ENDPOINTS_UNMAPPED} endpoints exist
+                    </div>
                   </td>
                   <td className="text-center p-4">
                     <div className="text-2xl font-bold" style={{ color: 'var(--status-warning)' }}>
@@ -487,20 +509,21 @@ export function LiveMigrationStatus() {
                 </div>
                 <ul className="text-sm space-y-1" style={{ color: 'var(--status-success)' }}>
                   <li>
-                    • <strong>95% of production tasks</strong> (102/109 Tasks/) are working
-                    correctly
+                    • <strong>{ARCH.TASKS_PASS_RATE}% of production tasks</strong> (
+                    {ARCH.TASKS_PASSING}/{ARCH.TASKS_TOTAL} Tasks/) are working correctly
                   </li>
                   <li>
-                    • <strong>96% of test endpoints</strong> (312/324 WORKERS API) are accessible
-                    and functional
+                    • <strong>{ARCH.ENDPOINTS_PASS_RATE}% of test endpoints</strong> (
+                    {ARCH.TEST_ENDPOINTS_PASSING}/{ARCH.TEST_ENDPOINTS_TOTAL} WORKERS API) are
+                    accessible and functional
                   </li>
                   <li>
-                    • <strong>Workers/ functions</strong> (194 total) validated indirectly via
-                    Tasks/ that call them
+                    • <strong>Workers/ functions</strong> ({ARCH.WORKERS_TOTAL} total) validated
+                    indirectly via Tasks/ that call them
                   </li>
                   <li>
-                    • Mapping gap: ~187 Worker endpoints exist but aren't mapped to specific
-                    functions yet
+                    • Mapping gap: ~{ARCH.WORKERS_ENDPOINTS_UNMAPPED} Worker endpoints exist but
+                    aren&apos;t mapped to specific functions yet
                   </li>
                 </ul>
               </div>
@@ -526,8 +549,8 @@ export function LiveMigrationStatus() {
                 </div>
                 <div className="text-sm space-y-1" style={{ color: 'var(--status-warning)' }}>
                   <div>
-                    • <strong>187 Worker test endpoints exist</strong> but aren't mapped to specific
-                    functions yet
+                    • <strong>{ARCH.WORKERS_ENDPOINTS_UNMAPPED} Worker test endpoints exist</strong>{' '}
+                    but aren&apos;t mapped to specific functions yet
                   </div>
                   <div>
                     • Name-based heuristics failed for Workers/ (need XanoScript inspection)
@@ -641,13 +664,14 @@ export function LiveMigrationStatus() {
               {/* The Actual Flow */}
               <div className="bg-indigo-50 rounded-lg p-4 mb-4 border border-indigo-200">
                 <div className="text-sm font-semibold mb-3 text-indigo-900">
-                  Production Flow (1:1 mapping: 109 jobs → 109 Tasks/ functions):
+                  Production Flow (1:1 mapping: {ARCH.TASKS_TOTAL} jobs → {ARCH.TASKS_TOTAL} Tasks/
+                  functions):
                 </div>
                 <div className="grid grid-cols-5 gap-2 items-center text-center text-sm">
                   <div className="bg-white rounded p-2 border border-indigo-200">
                     <div className="font-semibold text-indigo-700">Cron Job</div>
                     <div className="text-xs text-muted-foreground mt-1">
-                      {tasksLoading ? '...' : '109 active'}
+                      {tasksLoading ? '...' : `${ARCH.TASKS_TOTAL} active`}
                     </div>
                   </div>
                   <div className="text-2xl text-indigo-400">→</div>
@@ -661,7 +685,9 @@ export function LiveMigrationStatus() {
                     <div className="font-semibold" style={{ color: 'var(--status-success)' }}>
                       Tasks/
                     </div>
-                    <div className="text-xs text-muted-foreground mt-1">109 functions</div>
+                    <div className="text-xs text-muted-foreground mt-1">
+                      {ARCH.TASKS_TOTAL} functions
+                    </div>
                   </div>
                   <div className="text-2xl" style={{ color: 'var(--status-success)' }}>
                     →
@@ -676,7 +702,9 @@ export function LiveMigrationStatus() {
                     <div className="font-semibold" style={{ color: 'var(--status-warning)' }}>
                       Workers/
                     </div>
-                    <div className="text-xs text-muted-foreground mt-1">194 functions</div>
+                    <div className="text-xs text-muted-foreground mt-1">
+                      {ARCH.WORKERS_TOTAL} functions
+                    </div>
                   </div>
                 </div>
 
@@ -709,7 +737,9 @@ export function LiveMigrationStatus() {
                     <div className="font-semibold" style={{ color: 'var(--status-success)' }}>
                       Tasks/
                     </div>
-                    <div className="text-xs text-muted-foreground mt-1">109 functions</div>
+                    <div className="text-xs text-muted-foreground mt-1">
+                      {ARCH.TASKS_TOTAL} functions
+                    </div>
                   </div>
                   <div className="text-2xl" style={{ color: 'var(--status-success)' }}>
                     →
@@ -724,7 +754,9 @@ export function LiveMigrationStatus() {
                     <div className="font-semibold" style={{ color: 'var(--status-warning)' }}>
                       Workers/
                     </div>
-                    <div className="text-xs text-muted-foreground mt-1">194 functions</div>
+                    <div className="text-xs text-muted-foreground mt-1">
+                      {ARCH.WORKERS_TOTAL} functions
+                    </div>
                   </div>
                 </div>
               </div>
@@ -756,7 +788,7 @@ export function LiveMigrationStatus() {
                           <>
                             <div className="font-semibold">{tasksData?.total || 218}</div>
                             <div className="text-xs text-muted-foreground">
-                              (109 prod + 109 archive)
+                              ({ARCH.TASKS_TOTAL} prod + {ARCH.TASKS_TOTAL} archive)
                             </div>
                           </>
                         )}
@@ -769,7 +801,7 @@ export function LiveMigrationStatus() {
                       </td>
                       <td className="text-center p-3">
                         <Badge variant="outline">
-                          {tasksLoading ? 'Loading...' : '109 Active'}
+                          {tasksLoading ? 'Loading...' : `${ARCH.TASKS_TOTAL} Active`}
                         </Badge>
                       </td>
                     </tr>
@@ -782,21 +814,23 @@ export function LiveMigrationStatus() {
                           Called BY: Scheduled jobs • CALLS: Workers/
                         </div>
                       </td>
-                      <td className="text-center p-3 font-semibold">109</td>
+                      <td className="text-center p-3 font-semibold">{ARCH.TASKS_TOTAL}</td>
                       <td
                         className="text-center p-3 font-semibold"
                         style={{ color: 'var(--status-success)' }}
                       >
-                        109
+                        {ARCH.TASKS_TOTAL}
                       </td>
                       <td
                         className="text-center p-3 font-semibold"
                         style={{ color: 'var(--status-success)' }}
                       >
-                        102
+                        {ARCH.TASKS_PASSING}
                       </td>
                       <td className="text-center p-3">
-                        <Badge style={{ backgroundColor: 'var(--status-success)' }}>95%</Badge>
+                        <Badge style={{ backgroundColor: 'var(--status-success)' }}>
+                          {ARCH.TASKS_PASS_RATE}%
+                        </Badge>
                       </td>
                     </tr>
                     <tr style={{ backgroundColor: 'var(--status-warning-bg)' }}>
@@ -808,10 +842,10 @@ export function LiveMigrationStatus() {
                           Called BY: Tasks/ (via function.run) AND test endpoints
                         </div>
                       </td>
-                      <td className="text-center p-3 font-semibold">194</td>
+                      <td className="text-center p-3 font-semibold">{ARCH.WORKERS_TOTAL}</td>
                       <td className="text-center p-3">
                         <div className="font-semibold" style={{ color: 'var(--status-warning)' }}>
-                          ~187
+                          ~{ARCH.WORKERS_ENDPOINTS_UNMAPPED}
                         </div>
                         <div className="text-xs text-muted-foreground">Unmapped*</div>
                       </td>
@@ -836,7 +870,7 @@ export function LiveMigrationStatus() {
                           For programmatic testing/control
                         </div>
                       </td>
-                      <td className="text-center p-3 font-semibold">324</td>
+                      <td className="text-center p-3 font-semibold">{ARCH.TEST_ENDPOINTS_TOTAL}</td>
                       <td className="text-center p-3">
                         <span className="text-muted-foreground">Self</span>
                       </td>
@@ -844,10 +878,12 @@ export function LiveMigrationStatus() {
                         className="text-center p-3 font-semibold"
                         style={{ color: 'var(--status-info)' }}
                       >
-                        312
+                        {ARCH.TEST_ENDPOINTS_PASSING}
                       </td>
                       <td className="text-center p-3">
-                        <Badge style={{ backgroundColor: 'var(--status-info)' }}>96%</Badge>
+                        <Badge style={{ backgroundColor: 'var(--status-info)' }}>
+                          {ARCH.ENDPOINTS_PASS_RATE}%
+                        </Badge>
                       </td>
                     </tr>
                   </tbody>
@@ -867,14 +903,15 @@ export function LiveMigrationStatus() {
                 </div>
                 <div className="text-sm space-y-1" style={{ color: 'var(--status-warning)' }}>
                   <div>
-                    • <strong>324 WORKERS API endpoints exist</strong> (312 working, 96%)
+                    • <strong>{ARCH.TEST_ENDPOINTS_TOTAL} WORKERS API endpoints exist</strong> (
+                    {ARCH.TEST_ENDPOINTS_PASSING} working, {ARCH.ENDPOINTS_PASS_RATE}%)
                   </div>
                   <div>
                     • <strong>137 mapped to functions:</strong> 101 Tasks/ + 36 Utils/
                   </div>
                   <div>
-                    • <strong>187 unmapped:</strong> Endpoints exist but we don't know which
-                    Workers/ function they call
+                    • <strong>{ARCH.WORKERS_ENDPOINTS_UNMAPPED} unmapped:</strong> Endpoints exist
+                    but we don&apos;t know which Workers/ function they call
                   </div>
                   <div className="text-xs mt-2" style={{ color: 'var(--status-warning)' }}>
                     * Name-based heuristics failed for Workers/ - need to inspect each endpoint's
@@ -898,16 +935,18 @@ export function LiveMigrationStatus() {
                   className="text-sm space-y-1 font-mono"
                   style={{ color: 'var(--status-warning)' }}
                 >
-                  <div>Tasks/ passing: 102</div>
+                  <div>Tasks/ passing: {ARCH.TASKS_PASSING}</div>
                   <div>Workers/ passing: 0 (endpoints exist but unmapped)</div>
                   <div
                     className="pt-1 mt-1"
                     style={{ borderTop: '1px solid var(--status-warning-border)' }}
                   >
-                    Total active functions: 109 + 194 = 303
+                    Total active functions: {ARCH.TASKS_TOTAL} + {ARCH.WORKERS_TOTAL} ={' '}
+                    {ARCH.ACTIVE_TOTAL}
                   </div>
                   <div className="font-semibold" style={{ color: 'var(--status-warning)' }}>
-                    Pass rate: 102 ÷ 303 = {migration_score.functions}%
+                    Pass rate: {ARCH.TASKS_PASSING} ÷ {ARCH.ACTIVE_TOTAL} ={' '}
+                    {migration_score.functions}%
                   </div>
                   <div className="text-xs mt-2" style={{ color: 'var(--status-warning)' }}>
                     * This understates reality - many Workers/ likely have working endpoints, we
@@ -929,24 +968,27 @@ export function LiveMigrationStatus() {
                 </div>
                 <ul className="text-sm space-y-1" style={{ color: 'var(--status-success)' }}>
                   <li>
-                    • <strong>1:1 Mapping:</strong> 109 scheduled jobs → call → 109 Tasks/ functions
-                    (+ 109 archived jobs)
+                    • <strong>1:1 Mapping:</strong> {ARCH.TASKS_TOTAL} scheduled jobs → call →{' '}
+                    {ARCH.TASKS_TOTAL} Tasks/ functions (+ {ARCH.TASKS_TOTAL} archived jobs)
                   </li>
                   <li>
-                    • <strong>Tasks/:</strong> 109 functions exist → 102 test endpoints mapped &
-                    working (95%) ✅
+                    • <strong>Tasks/:</strong> {ARCH.TASKS_TOTAL} functions exist →{' '}
+                    {ARCH.TASKS_PASSING} test endpoints mapped & working ({ARCH.TASKS_PASS_RATE}%)
+                    ✅
                   </li>
                   <li>
-                    • <strong>Workers/:</strong> 194 functions exist → ~187 test endpoints exist
-                    (unmapped) + validated indirectly via Tasks ✅
+                    • <strong>Workers/:</strong> {ARCH.WORKERS_TOTAL} functions exist → ~
+                    {ARCH.WORKERS_ENDPOINTS_UNMAPPED} test endpoints exist (unmapped) + validated
+                    indirectly via Tasks ✅
                   </li>
                   <li>
-                    • <strong>WORKERS API:</strong> 324 total test endpoints → 312 working (96%) ✅
+                    • <strong>WORKERS API:</strong> {ARCH.TEST_ENDPOINTS_TOTAL} total test endpoints
+                    → {ARCH.TEST_ENDPOINTS_PASSING} working ({ARCH.ENDPOINTS_PASS_RATE}%) ✅
                   </li>
                   <li>
                     • <strong>Reality:</strong> Backend is healthy - {migration_score.functions}%
-                    understates reality because 187 Worker endpoints exist but aren't mapped to
-                    specific functions
+                    understates reality because {ARCH.WORKERS_ENDPOINTS_UNMAPPED} Worker endpoints
+                    exist but aren&apos;t mapped to specific functions
                   </li>
                 </ul>
                 <div
@@ -1151,7 +1193,7 @@ export function LiveMigrationStatus() {
                             ✅ HTTP 200
                           </Badge>
                           <Badge variant="outline" className="text-xs">
-                            96% pass rate
+                            {ARCH.ENDPOINTS_PASS_RATE}% pass rate
                           </Badge>
                         </div>
                       </div>
@@ -1162,7 +1204,8 @@ export function LiveMigrationStatus() {
                 {/* Known Mappings (101 Tasks/) */}
                 <Collapsible open={knownMappingsOpen} onOpenChange={setKnownMappingsOpen}>
                   <CollapsibleTrigger className="mt-6 flex items-center gap-2 text-sm font-semibold text-indigo-900 hover:text-indigo-700 cursor-pointer">
-                    Known Tasks/ &rarr; Endpoint Mappings (101/109 mapped)
+                    Known Tasks/ &rarr; Endpoint Mappings ({ARCH.TASKS_MAPPED}/{ARCH.TASKS_TOTAL}{' '}
+                    mapped)
                     <ChevronDown
                       className={`h-4 w-4 transition-transform ${knownMappingsOpen ? 'rotate-180' : ''}`}
                     />
@@ -1196,7 +1239,7 @@ export function LiveMigrationStatus() {
                         },
                         {
                           func: 'Tasks/reZEN - Onboarding Load Listings',
-                          endpoint: '/test-rezen-load-user-60',
+                          endpoint: '/test-rezen-load-user',
                         },
                         {
                           func: 'Tasks/reZEN - Team Roster Caps Splits',
@@ -1239,22 +1282,29 @@ export function LiveMigrationStatus() {
                     className="text-sm font-semibold mb-2"
                     style={{ color: 'var(--status-warning)' }}
                   >
-                    To Show Complete Flow Map for All 109 Background Tasks:
+                    To Show Complete Flow Map for All {ARCH.TASKS_TOTAL} Background Tasks:
                   </div>
                   <div className="text-sm space-y-1" style={{ color: 'var(--status-warning)' }}>
                     <div>
                       <strong>What We Have:</strong>
                     </div>
                     <div>* 218 background tasks (via /api/v2/background-tasks)</div>
-                    <div>* 109 Tasks/ functions (1:1 with active background tasks)</div>
-                    <div>* 101/109 Tasks/ to test endpoint mappings</div>
+                    <div>
+                      * {ARCH.TASKS_TOTAL} Tasks/ functions (1:1 with active background tasks)
+                    </div>
+                    <div>
+                      * {ARCH.TASKS_MAPPED}/{ARCH.TASKS_TOTAL} Tasks/ to test endpoint mappings
+                    </div>
                     <div className="mt-2">
                       <strong>What We Need:</strong>
                     </div>
                     <div>
                       * XanoScript inspection for each Tasks/ function to see Workers/ calls
                     </div>
-                    <div>* ~187 unmapped Workers/ to test endpoint mappings</div>
+                    <div>
+                      * ~{ARCH.WORKERS_ENDPOINTS_UNMAPPED} unmapped Workers/ to test endpoint
+                      mappings
+                    </div>
                     <div className="text-xs mt-2" style={{ color: 'var(--status-warning)' }}>
                       Once complete, this would show every chain: Background Task &rarr; Tasks/
                       &rarr; Workers/ &rarr; Test Endpoint
@@ -1266,7 +1316,7 @@ export function LiveMigrationStatus() {
                     className="mt-3"
                     onClick={() => {
                       alert(
-                        'Building complete flow map would:\n\n1. Fetch all 218 background tasks\n2. For each active task (109), get its Tasks/ function\n3. Use get_function to inspect XanoScript\n4. Parse function.run calls to find Workers/\n5. Map test endpoints to both Tasks/ and Workers/\n6. Build visual dependency graph\n\nThis is expensive (109 get_function calls) but would create the complete cognitive map you want.'
+                        `Building complete flow map would:\n\n1. Fetch all 218 background tasks\n2. For each active task (${ARCH.TASKS_TOTAL}), get its Tasks/ function\n3. Use get_function to inspect XanoScript\n4. Parse function.run calls to find Workers/\n5. Map test endpoints to both Tasks/ and Workers/\n6. Build visual dependency graph\n\nThis is expensive (${ARCH.TASKS_TOTAL} get_function calls) but would create the complete cognitive map you want.`
                       )
                     }}
                   >
@@ -1885,7 +1935,8 @@ export function LiveMigrationStatus() {
               <div className="text-sm text-muted-foreground">V2 Total Functions</div>
               <div className="text-2xl font-bold">{v2.functions.count}</div>
               <div className="text-xs text-muted-foreground mt-1">
-                303 active (109 Tasks/ + 194 Workers/)
+                {ARCH.ACTIVE_TOTAL} active ({ARCH.TASKS_TOTAL} Tasks/ + {ARCH.WORKERS_TOTAL}{' '}
+                Workers/)
               </div>
             </div>
             <div className="pt-2 border-t">
@@ -1893,7 +1944,9 @@ export function LiveMigrationStatus() {
               <div className="space-y-2">
                 <div className="flex items-center justify-between text-sm">
                   <span>Tasks/ Functions</span>
-                  <Badge style={{ backgroundColor: 'var(--status-success)' }}>102/109 (95%)</Badge>
+                  <Badge style={{ backgroundColor: 'var(--status-success)' }}>
+                    {ARCH.TASKS_PASSING}/{ARCH.TASKS_TOTAL} ({ARCH.TASKS_PASS_RATE}%)
+                  </Badge>
                 </div>
                 <div className="flex items-center justify-between text-sm">
                   <span>Workers/ Functions</span>
@@ -1909,7 +1962,10 @@ export function LiveMigrationStatus() {
                 </div>
                 <div className="flex items-center justify-between text-sm">
                   <span>Test Endpoints</span>
-                  <Badge style={{ backgroundColor: 'var(--status-info)' }}>312/324 (96%)</Badge>
+                  <Badge style={{ backgroundColor: 'var(--status-info)' }}>
+                    {ARCH.TEST_ENDPOINTS_PASSING}/{ARCH.TEST_ENDPOINTS_TOTAL} (
+                    {ARCH.ENDPOINTS_PASS_RATE}%)
+                  </Badge>
                 </div>
               </div>
             </div>
@@ -1946,11 +2002,11 @@ export function LiveMigrationStatus() {
               <div className="space-y-1 text-xs">
                 <div className="flex justify-between">
                   <span>WORKERS (test endpoints)</span>
-                  <span className="font-semibold">324</span>
+                  <span className="font-semibold">{ARCH.TEST_ENDPOINTS_TOTAL}</span>
                 </div>
                 <div className="flex justify-between">
                   <span>TASKS (background jobs)</span>
-                  <span className="font-semibold">109</span>
+                  <span className="font-semibold">{ARCH.TASKS_TOTAL}</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Frontend API v2</span>
@@ -1964,7 +2020,7 @@ export function LiveMigrationStatus() {
                 {migration_score.endpoints}%
               </div>
               <div className="text-xs" style={{ color: 'var(--status-success)' }}>
-                312/324 test endpoints passing
+                {ARCH.TEST_ENDPOINTS_PASSING}/{ARCH.TEST_ENDPOINTS_TOTAL} test endpoints passing
               </div>
             </div>
 
@@ -2085,7 +2141,9 @@ export function LiveMigrationStatus() {
             <div className="space-y-2">
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="h-4 w-4" style={{ color: 'var(--status-success)' }} />
-                <span className="font-semibold">Tasks/: 102/109 (95%)</span>
+                <span className="font-semibold">
+                  Tasks/: {ARCH.TASKS_PASSING}/{ARCH.TASKS_TOTAL} ({ARCH.TASKS_PASS_RATE}%)
+                </span>
               </div>
               <div className="text-sm text-muted-foreground ml-6">
                 Production cron jobs validated
@@ -2096,9 +2154,7 @@ export function LiveMigrationStatus() {
                 <Database className="h-4 w-4" style={{ color: 'var(--status-info)' }} />
                 <span className="font-semibold">Live Data</span>
               </div>
-              <div className="text-sm text-muted-foreground ml-6">
-                Real-time data via snappy CLI
-              </div>
+              <div className="text-sm text-muted-foreground ml-6">Real-time data from Xano API</div>
             </div>
             <div className="space-y-2">
               <div className="flex items-center gap-2">

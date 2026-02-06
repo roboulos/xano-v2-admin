@@ -50,10 +50,10 @@ export interface TestSummary {
 }
 
 /**
- * Test configuration for User 60 (David Keener)
+ * Test configuration for User 7 (David Keener)
  */
 export const TEST_USER: TestUser = {
-  id: 60,
+  id: 7,
   name: 'David Keener',
   email: 'david@test.agentdashboards.com',
   agent_id: 37208,
@@ -92,12 +92,10 @@ function generateCurlCommand(
 /**
  * Test a single endpoint
  */
-export async function testEndpoint(
-  endpoint: EndpointTest,
-  user: TestUser
-): Promise<TestResult> {
+export async function testEndpoint(endpoint: EndpointTest, user: TestUser): Promise<TestResult> {
   const startTime = Date.now()
-  const baseUrl = process.env.NEXT_PUBLIC_XANO_BASE_URL ||
+  const baseUrl =
+    process.env.NEXT_PUBLIC_XANO_BASE_URL ||
     'https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:pe1wjL5I'
 
   // Build test params with user context
@@ -198,10 +196,10 @@ export async function testAllEndpoints(
 
   const summary: TestSummary = {
     total: results.length,
-    passed: results.filter(r => r.status === 'pass').length,
-    failed: results.filter(r => r.status === 'fail').length,
-    skipped: results.filter(r => r.status === 'skip').length,
-    pending: results.filter(r => r.status === 'pending').length,
+    passed: results.filter((r) => r.status === 'pass').length,
+    failed: results.filter((r) => r.status === 'fail').length,
+    skipped: results.filter((r) => r.status === 'skip').length,
+    pending: results.filter((r) => r.status === 'pending').length,
     successRate: 0,
     totalTime,
     timestamp: new Date().toISOString(),
@@ -242,10 +240,10 @@ export function extractEndpointsFromOpenAPI(spec: any): EndpointTest[] {
  */
 export function groupResultsByStatus(results: TestResult[]) {
   return {
-    passed: results.filter(r => r.status === 'pass'),
-    failed: results.filter(r => r.status === 'fail'),
-    skipped: results.filter(r => r.status === 'skip'),
-    pending: results.filter(r => r.status === 'pending'),
+    passed: results.filter((r) => r.status === 'pass'),
+    failed: results.filter((r) => r.status === 'fail'),
+    skipped: results.filter((r) => r.status === 'skip'),
+    pending: results.filter((r) => r.status === 'pending'),
   }
 }
 
@@ -265,6 +263,6 @@ export function getHighPriorityFailures(results: TestResult[]): TestResult[] {
   ]
 
   return results
-    .filter(r => r.status === 'fail')
-    .filter(r => criticalEndpoints.some(path => r.endpoint.includes(path)))
+    .filter((r) => r.status === 'fail')
+    .filter((r) => criticalEndpoints.some((path) => r.endpoint.includes(path)))
 }

@@ -31,12 +31,12 @@ const V1_AUTH_URL = `${V1_BASE}/api:lkmcgxf_:v1.5/auth/login`
 const V2_AUTH_URL = `${V2_BASE}/api:i6a062_x/auth/test-login`
 
 // Test user credentials from environment variables
-// NOTE: user_id 60 is David Keener's V1 ID. For V2 comparisons, he is user 7.
-// This script compares V1 vs V2, so it uses V1 ID for V1 queries.
+// David Keener is V2 user_id 7. Both V1 and V2 comparison endpoints
+// are hosted on V2 and accept V2 user IDs.
 const TEST_USER = {
   email: process.env.TEST_USER_EMAIL || 'dave@premieregrp.com',
   password: process.env.TEST_USER_PASSWORD || '',
-  user_id: parseInt(process.env.TEST_USER_ID || '60', 10), // V1 user ID
+  user_id: parseInt(process.env.TEST_USER_ID || '7', 10), // V2 user ID
 }
 
 // Validate required environment variables

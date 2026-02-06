@@ -63,7 +63,8 @@ export interface ValidationConfig {
 
 export const validationConfig: ValidationConfig = {
   name: 'V2 Backend Validation',
-  description: 'Systematic validation of all V2 Xano workspace components before production migration',
+  description:
+    'Systematic validation of all V2 Xano workspace components before production migration',
   version: '1.0.0',
 
   stages: [
@@ -78,8 +79,10 @@ export const validationConfig: ValidationConfig = {
       estimatedDuration: 30,
       criticalPath: true,
 
-      businessValue: 'Ensures all tables successfully migrated from V1 (251 tables) to V2 (193 normalized tables). Validates schema integrity and data presence.',
-      successCriteria: '100% of 193 tables must pass validation with valid schemas and record counts',
+      businessValue:
+        'Ensures all tables successfully migrated from V1 (251 tables) to V2 (193 normalized tables). Validates schema integrity and data presence.',
+      successCriteria:
+        '100% of 193 tables must pass validation with valid schemas and record counts',
       dependencies: [],
       blockers: ['V2 database must be accessible', 'xano-mcp CLI must be installed'],
 
@@ -106,10 +109,12 @@ export const validationConfig: ValidationConfig = {
       estimatedDuration: 300,
       criticalPath: true,
 
-      businessValue: 'Validates business logic functions execute without errors. Tests WORKERS (background jobs), TASKS (orchestration), Frontend API handlers, SYSTEM operations, and SEEDING functions.',
-      successCriteria: '95%+ of 270 active functions must pass (256/270). Archived functions excluded from validation.',
+      businessValue:
+        'Validates business logic functions execute without errors. Tests WORKERS (background jobs), TASKS (orchestration), Frontend API handlers, SYSTEM operations, and SEEDING functions.',
+      successCriteria:
+        '95%+ of 270 active functions must pass (256/270). Archived functions excluded from validation.',
       dependencies: ['tables'],
-      blockers: ['API credentials required', 'Test user (User 60) must exist'],
+      blockers: ['API credentials required', 'Test user (User 7) must exist'],
 
       outputs: {
         report: 'validation-reports/function-validation-*.json',
@@ -135,8 +140,10 @@ export const validationConfig: ValidationConfig = {
       estimatedDuration: 600,
       criticalPath: true,
 
-      businessValue: 'Ensures all production API endpoints return 200 OK responses. Tests Frontend API v2 (200), WORKERS (374), TASKS (165), SYSTEM (38), SEEDING (24). Validates performance (< 2s response time).',
-      successCriteria: '96%+ endpoints must return 200 OK (770/801). No critical endpoints can fail.',
+      businessValue:
+        'Ensures all production API endpoints return 200 OK responses. Tests Frontend API v2 (200), WORKERS (374), TASKS (165), SYSTEM (38), SEEDING (24). Validates performance (< 2s response time).',
+      successCriteria:
+        '96%+ endpoints must return 200 OK (770/801). No critical endpoints can fail.',
       dependencies: ['functions'],
       blockers: ['Network access required', 'V2 workspace must be online'],
 
@@ -163,8 +170,10 @@ export const validationConfig: ValidationConfig = {
       estimatedDuration: 120,
       criticalPath: true,
 
-      businessValue: 'Validates referential integrity in normalized V2 schema. Prevents orphaned records, data corruption, and broken relationships. Critical for data quality.',
-      successCriteria: '100% of 156 foreign key relationships must be valid. Zero orphaned references allowed.',
+      businessValue:
+        'Validates referential integrity in normalized V2 schema. Prevents orphaned records, data corruption, and broken relationships. Critical for data quality.',
+      successCriteria:
+        '100% of 156 foreign key relationships must be valid. Zero orphaned references allowed.',
       dependencies: ['tables'],
       blockers: [],
 
@@ -187,7 +196,8 @@ export const validationConfig: ValidationConfig = {
   },
 
   businessContext: {
-    purpose: 'Validate V2 Xano backend is production-ready before migrating dashboards2.0 frontend from V1 to V2.',
+    purpose:
+      'Validate V2 Xano backend is production-ready before migrating dashboards2.0 frontend from V1 to V2.',
     stakeholders: [
       'Engineering Team',
       'Product Team',
@@ -204,12 +214,12 @@ export const validationConfig: ValidationConfig = {
 
 // Helper to get stage by ID
 export function getStage(stageId: string): ValidationStage | undefined {
-  return validationConfig.stages.find(s => s.id === stageId)
+  return validationConfig.stages.find((s) => s.id === stageId)
 }
 
 // Helper to get all stage IDs
 export function getStageIds(): string[] {
-  return validationConfig.stages.map(s => s.id)
+  return validationConfig.stages.map((s) => s.id)
 }
 
 // Helper to get stages in dependency order

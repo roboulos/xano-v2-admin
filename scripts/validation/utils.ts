@@ -53,7 +53,7 @@ export const V2_CONFIG = {
     system: { id: 535, path: 'api:LIdBL1AN', name: 'SYSTEM' },
     seeding: { id: 531, path: 'api:2kCRUYxG', name: 'SEEDING' },
   },
-  test_user: { id: 60, name: 'David Keener', agent_id: 37208, team_id: 1 },
+  test_user: { id: 7, name: 'David Keener', agent_id: 37208, team_id: 1 },
 }
 
 // Validation result types

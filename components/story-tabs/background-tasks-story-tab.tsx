@@ -24,7 +24,6 @@ import {
   Filter,
   Loader2,
   RefreshCw,
-  ServerCrash,
   Timer,
 } from 'lucide-react'
 
@@ -48,9 +47,6 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/component
 // ---------------------------------------------------------------------------
 
 const SYSTEM_BASE_URL = 'https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:LIdBL1AN'
-
-/** Maximum consecutive 404s before we stop auto-retrying (exponential backoff) */
-const MAX_CONSECUTIVE_FAILURES = 3
 
 type JobType = 'all' | 'fub_onboarding_jobs' | 'fub_sync_jobs' | 'rezen_sync_jobs' | 'job_status'
 
@@ -110,48 +106,7 @@ interface FetchState {
   data: JobQueueResponse | null
   isLoading: boolean
   error: string | null
-  is404: boolean
-  consecutiveFailures: number
 }
-
-// ---------------------------------------------------------------------------
-// Mock / Placeholder Data
-// ---------------------------------------------------------------------------
-
-/** Shown when the endpoint is unavailable (404) to illustrate UI layout */
-const PLACEHOLDER_QUEUES: QueueData[] = [
-  {
-    queue: 'fub_onboarding_jobs',
-    label: 'FUB Onboarding',
-    counts: { pending: 0, processing: 0, complete: 0, error: 0 },
-  },
-  {
-    queue: 'fub_sync_jobs',
-    label: 'FUB Sync',
-    counts: { pending: 0, processing: 0, complete: 0, error: 0 },
-  },
-  {
-    queue: 'rezen_sync_jobs',
-    label: 'reZEN Sync',
-    counts: { pending: 0, processing: 0, complete: 0, error: 0 },
-  },
-  {
-    queue: 'job_status',
-    label: 'General',
-    counts: { pending: 0, processing: 0, complete: 0, error: 0 },
-  },
-]
-
-const PLACEHOLDER_RECENT_JOBS: RecentJob[] = [
-  {
-    id: 'placeholder-1',
-    queue: 'fub_sync_jobs',
-    status: 'complete',
-    summary: 'FUB Sync - Placeholder',
-    detail: 'Real data will appear when the /job-queue-status endpoint is implemented.',
-    timestamp: new Date().toISOString(),
-  },
-]
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -246,8 +201,6 @@ function useJobQueueStatus(userId: number | null) {
     data: null,
     isLoading: false,
     error: null,
-    is404: false,
-    consecutiveFailures: 0,
   })
 
   const abortRef = useRef<AbortController | null>(null)
@@ -271,17 +224,6 @@ function useJobQueueStatus(userId: number | null) {
 
       const res = await fetch(url.toString(), { signal: controller.signal })
 
-      if (res.status === 404) {
-        setState((prev) => ({
-          ...prev,
-          isLoading: false,
-          is404: true,
-          error: null,
-          consecutiveFailures: prev.consecutiveFailures + 1,
-        }))
-        return
-      }
-
       if (!res.ok) {
         const text = await res.text().catch(() => 'Unknown error')
         throw new Error(`${res.status}: ${text}`)
@@ -292,8 +234,6 @@ function useJobQueueStatus(userId: number | null) {
         data: json,
         isLoading: false,
         error: null,
-        is404: false,
-        consecutiveFailures: 0,
       })
     } catch (err) {
       if (err instanceof DOMException && err.name === 'AbortError') return
@@ -301,7 +241,6 @@ function useJobQueueStatus(userId: number | null) {
         ...prev,
         isLoading: false,
         error: err instanceof Error ? err.message : 'Unknown error',
-        consecutiveFailures: prev.consecutiveFailures + 1,
       }))
     }
   }, [userId])
@@ -315,8 +254,6 @@ function useJobQueueStatus(userId: number | null) {
         data: null,
         isLoading: false,
         error: null,
-        is404: false,
-        consecutiveFailures: 0,
       })
     }
     return () => {
@@ -351,35 +288,6 @@ function NoUserSelected() {
   )
 }
 
-/** Warning banner shown when the endpoint returns 404 */
-function EndpointUnavailableBanner() {
-  return (
-    <div
-      className="flex items-start gap-3 rounded-lg border px-4 py-3"
-      style={{
-        backgroundColor: 'var(--status-warning-bg)',
-        borderColor: 'var(--status-warning-border)',
-      }}
-    >
-      <ServerCrash className="mt-0.5 h-5 w-5 shrink-0" style={{ color: 'var(--status-warning)' }} />
-      <div>
-        <p className="text-sm font-medium" style={{ color: 'var(--status-warning)' }}>
-          Endpoint Unavailable
-        </p>
-        <p className="mt-1 text-xs text-muted-foreground">
-          The{' '}
-          <code className="rounded bg-muted px-1 py-0.5 font-mono text-[11px]">
-            /job-queue-status
-          </code>{' '}
-          endpoint has not been implemented in Xano yet. The table below shows placeholder data.
-          Once the Xano function is created in the SYSTEM API group (api:LIdBL1AN), live queue
-          counts will appear automatically.
-        </p>
-      </div>
-    </div>
-  )
-}
-
 /** Loading skeleton for the queue summary */
 function QueueSummarySkeleton() {
   return (
@@ -406,15 +314,7 @@ function QueueSummarySkeleton() {
 }
 
 /** Queue Summary Table */
-function QueueSummaryTable({
-  queues,
-  filterType,
-  isPlaceholder,
-}: {
-  queues: QueueData[]
-  filterType: JobType
-  isPlaceholder: boolean
-}) {
+function QueueSummaryTable({ queues, filterType }: { queues: QueueData[]; filterType: JobType }) {
   const filtered = useMemo(() => {
     if (filterType === 'all') return queues
     return queues.filter((q) => q.queue === filterType)
@@ -433,13 +333,11 @@ function QueueSummaryTable({
   }, [filtered])
 
   return (
-    <Card className={isPlaceholder ? 'opacity-70' : undefined}>
+    <Card>
       <CardHeader>
         <CardTitle className="text-base">Job Queues</CardTitle>
         <CardDescription>
-          {isPlaceholder
-            ? 'Placeholder layout -- awaiting endpoint implementation'
-            : `${filtered.length} queue${filtered.length !== 1 ? 's' : ''} monitored`}
+          {`${filtered.length} queue${filtered.length !== 1 ? 's' : ''} monitored`}
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -578,15 +476,7 @@ function QueueSummaryTable({
 }
 
 /** Recent Jobs List with expandable details */
-function RecentJobsList({
-  jobs,
-  filterType,
-  isPlaceholder,
-}: {
-  jobs: RecentJob[]
-  filterType: JobType
-  isPlaceholder: boolean
-}) {
+function RecentJobsList({ jobs, filterType }: { jobs: RecentJob[]; filterType: JobType }) {
   const filtered = useMemo(() => {
     if (filterType === 'all') return jobs
     return jobs.filter((j) => j.queue === filterType)
@@ -594,14 +484,10 @@ function RecentJobsList({
 
   if (filtered.length === 0) {
     return (
-      <Card className={isPlaceholder ? 'opacity-70' : undefined}>
+      <Card>
         <CardHeader>
           <CardTitle className="text-base">Recent Jobs</CardTitle>
-          <CardDescription>
-            {isPlaceholder
-              ? 'Placeholder -- awaiting endpoint implementation'
-              : 'No recent jobs found for the selected filter'}
-          </CardDescription>
+          <CardDescription>{'No recent jobs found for the selected filter'}</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="flex flex-col items-center py-8 text-center">
@@ -616,13 +502,11 @@ function RecentJobsList({
   }
 
   return (
-    <Card className={isPlaceholder ? 'opacity-70' : undefined}>
+    <Card>
       <CardHeader>
         <CardTitle className="text-base">Recent Jobs</CardTitle>
         <CardDescription>
-          {isPlaceholder
-            ? 'Placeholder data shown'
-            : `${filtered.length} recent job${filtered.length !== 1 ? 's' : ''}`}
+          {`${filtered.length} recent job${filtered.length !== 1 ? 's' : ''}`}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-2">
@@ -686,30 +570,27 @@ function RecentJobRow({ job }: { job: RecentJob }) {
 
 export function BackgroundTasksStoryTab() {
   const { selectedUserId } = useSelectedUserId()
-  const { data, isLoading, error, is404, consecutiveFailures, refresh } =
-    useJobQueueStatus(selectedUserId)
+  const { data, isLoading, error, refresh } = useJobQueueStatus(selectedUserId)
   const [filterType, setFilterType] = useState<JobType>('all')
 
-  // Derive queue data from API response (or use placeholders on 404)
+  // Derive queue data from API response
   const queues: QueueData[] = useMemo(() => {
-    if (!data || is404 || !data.queues) return PLACEHOLDER_QUEUES
+    if (!data?.queues) return []
     return Object.entries(data.queues).map(([key, counts]) => ({
       queue: key as Exclude<JobType, 'all'>,
       label: JOB_TYPE_LABELS[key as Exclude<JobType, 'all'>] ?? key,
       counts,
     }))
-  }, [data, is404])
+  }, [data])
 
-  // Derive recent jobs (placeholder until endpoint exists)
+  // Derive recent jobs from API response
   const recentJobs: RecentJob[] = useMemo(() => {
-    if (!data || is404) return PLACEHOLDER_RECENT_JOBS
-    // When real data arrives, it should include a `recent_jobs` array.
-    // For now, map whatever is available or fall back to placeholder.
-    return PLACEHOLDER_RECENT_JOBS
-  }, [data, is404])
-
-  const isPlaceholder = is404 || (!data && !isLoading && !error)
-  const shouldShowStoppedPolling = consecutiveFailures >= MAX_CONSECUTIVE_FAILURES
+    if (!data) return []
+    // The API may include a recent_jobs array in the response
+    const raw = (data as any).recent_jobs
+    if (Array.isArray(raw)) return raw
+    return []
+  }, [data])
 
   // ---- No user selected ----
   if (selectedUserId === null) {
@@ -735,8 +616,8 @@ export function BackgroundTasksStoryTab() {
     )
   }
 
-  // ---- Error (non-404) ----
-  if (error && !is404) {
+  // ---- Error ----
+  if (error) {
     return (
       <Card>
         <CardContent className="py-12 text-center">
@@ -816,37 +697,11 @@ export function BackgroundTasksStoryTab() {
         </CardHeader>
       </Card>
 
-      {/* 404 Banner */}
-      {is404 && <EndpointUnavailableBanner />}
-
-      {/* Stopped polling notice */}
-      {shouldShowStoppedPolling && !is404 && (
-        <div
-          className="flex items-center gap-2 rounded-lg border px-4 py-2 text-xs"
-          style={{
-            backgroundColor: 'var(--status-pending-bg)',
-            borderColor: 'var(--status-pending-border)',
-            color: 'var(--status-pending)',
-          }}
-        >
-          <AlertCircle className="h-3.5 w-3.5 shrink-0" />
-          Auto-refresh paused after {MAX_CONSECUTIVE_FAILURES} consecutive failures.
-          <Button
-            variant="ghost"
-            size="sm"
-            className="ml-auto h-6 px-2 text-xs"
-            onClick={() => refresh()}
-          >
-            Retry
-          </Button>
-        </div>
-      )}
-
       {/* Queue Summary Table */}
-      <QueueSummaryTable queues={queues} filterType={filterType} isPlaceholder={isPlaceholder} />
+      <QueueSummaryTable queues={queues} filterType={filterType} />
 
       {/* Recent Jobs List */}
-      <RecentJobsList jobs={recentJobs} filterType={filterType} isPlaceholder={isPlaceholder} />
+      <RecentJobsList jobs={recentJobs} filterType={filterType} />
     </div>
   )
 }

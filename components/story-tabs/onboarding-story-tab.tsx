@@ -678,7 +678,7 @@ function EmptyState() {
         </p>
         <div className="mt-4 flex justify-center">
           <Badge variant="outline" className="text-xs">
-            Tip: User #60 (David Keener) is a verified test user
+            Tip: User #7 (David Keener) is a verified test user
           </Badge>
         </div>
       </CardContent>

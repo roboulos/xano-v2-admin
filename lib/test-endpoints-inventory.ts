@@ -35,33 +35,29 @@ export type TestEndpointCategory =
 export const TEST_API_BASE = 'https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:20LTQtIX'
 
 // Verified test user - see TRIGGER_ENDPOINTS_AUDIT.md and CLAUDE.md
-// NOTE: This is the V1 user ID. David Keener is user 60 in V1, user 7 in V2.
-// V2 endpoints may accept either V1 IDs (for migration testing) or V2 IDs (for native V2 operations).
+// David Keener is user_id 7 in both V1 and V2 workspaces.
+// The 'user 60' narrative was incorrect - he has always been user_id 7.
 export const VERIFIED_TEST_USER = {
-  v1_id: 60, // V1 workspace user ID
+  v1_id: 7, // V1 workspace user ID
   v2_id: 7, // V2 workspace user ID (after migration)
   name: 'David Keener',
   agentId: 37208,
   teamId: 1,
   notes:
-    'PRIMARY test user with extensive testing history. V1 ID 60 used for V2 endpoints that accept V1 IDs for migration testing.',
+    'PRIMARY test user with extensive testing history. User ID 7 in both V1 and V2 workspaces.',
 }
 
 // ============================================================================
 // COMPLETE TEST ENDPOINTS INVENTORY
 // Based on TRIGGER_ENDPOINTS_AUDIT.md and lib/mcp-endpoints.ts
 //
-// IMPORTANT: These endpoints are in V2 workspace (x2nu-xcjc-vhax) but many
-// accept V1 user IDs for migration/sync testing. David Keener is:
-// - V1 user_id = 60 (used in defaultInputs below for V1→V2 sync endpoints)
-// - V2 user_id = 7  (for native V2 operations)
-//
-// Most WORKERS endpoints here are V1→V2 sync operations, so they use V1 user_id 60.
+// IMPORTANT: These endpoints are in V2 workspace (x2nu-xcjc-vhax).
+// David Keener is V2 user_id = 7. All endpoints use V2 user IDs.
 // ============================================================================
 
 export const TEST_ENDPOINTS: TestEndpoint[] = [
   // ============================================================================
-  // FUB WORKERS (9 endpoints) - All PASS with V1 user_id 60
+  // FUB WORKERS (9 endpoints) - All PASS with V2 user_id 7
   // ============================================================================
   {
     id: 16680,
@@ -72,7 +68,7 @@ export const TEST_ENDPOINTS: TestEndpoint[] = [
     functionId: 7960,
     category: 'fub',
     requiresUserId: true,
-    defaultInputs: { user_id: 60, user_obj: { id: 60, team_id: 1 }, offset: '0', type: 'all' },
+    defaultInputs: { user_id: 7, user_obj: { id: 7, team_id: 1 }, offset: '0', type: 'all' },
     testResult: 'pass',
     testNote: 'Returns people_found, inserted, updated counts',
   },
@@ -85,7 +81,7 @@ export const TEST_ENDPOINTS: TestEndpoint[] = [
     functionId: 10022,
     category: 'fub',
     requiresUserId: true,
-    defaultInputs: { user_id: 60 },
+    defaultInputs: { user_id: 7 },
     testResult: 'pass',
   },
   {
@@ -97,7 +93,7 @@ export const TEST_ENDPOINTS: TestEndpoint[] = [
     functionId: 8065,
     category: 'fub',
     requiresUserId: true,
-    defaultInputs: { user_id: 60 },
+    defaultInputs: { user_id: 7 },
     testResult: 'pass',
   },
   {
@@ -109,7 +105,7 @@ export const TEST_ENDPOINTS: TestEndpoint[] = [
     functionId: null,
     category: 'fub',
     requiresUserId: true,
-    defaultInputs: { user_id: 60 },
+    defaultInputs: { user_id: 7 },
     testResult: 'pass',
   },
   {
@@ -121,7 +117,7 @@ export const TEST_ENDPOINTS: TestEndpoint[] = [
     functionId: null,
     category: 'fub',
     requiresUserId: true,
-    defaultInputs: { user_id: 60 },
+    defaultInputs: { user_id: 7 },
     testResult: 'pass',
   },
   {
@@ -133,7 +129,7 @@ export const TEST_ENDPOINTS: TestEndpoint[] = [
     functionId: null,
     category: 'fub',
     requiresUserId: true,
-    defaultInputs: { user_id: 60 },
+    defaultInputs: { user_id: 7 },
     testResult: 'pass',
   },
   {
@@ -145,7 +141,7 @@ export const TEST_ENDPOINTS: TestEndpoint[] = [
     functionId: 8067,
     category: 'fub',
     requiresUserId: true,
-    defaultInputs: { user_id: 60 },
+    defaultInputs: { user_id: 7 },
     testResult: 'pass',
   },
   {
@@ -157,7 +153,7 @@ export const TEST_ENDPOINTS: TestEndpoint[] = [
     functionId: null,
     category: 'fub',
     requiresUserId: true,
-    defaultInputs: { user_id: 60 },
+    defaultInputs: { user_id: 7 },
     testResult: 'pass',
   },
   {
@@ -169,7 +165,7 @@ export const TEST_ENDPOINTS: TestEndpoint[] = [
     functionId: null,
     category: 'fub',
     requiresUserId: true,
-    defaultInputs: { user_id: 60 },
+    defaultInputs: { user_id: 7 },
     testResult: 'pass',
   },
 
@@ -185,7 +181,7 @@ export const TEST_ENDPOINTS: TestEndpoint[] = [
     functionId: null,
     category: 'skyslope',
     requiresUserId: true,
-    defaultInputs: { user_id: 60 },
+    defaultInputs: { user_id: 7 },
     testResult: 'pass',
   },
   {
@@ -197,7 +193,7 @@ export const TEST_ENDPOINTS: TestEndpoint[] = [
     functionId: null,
     category: 'skyslope',
     requiresUserId: true,
-    defaultInputs: { user_id: 60 },
+    defaultInputs: { user_id: 7 },
     testResult: 'pass',
     testNote: 'Replaced broken trigger-skyslope-get-account-users',
   },
@@ -210,7 +206,7 @@ export const TEST_ENDPOINTS: TestEndpoint[] = [
     functionId: null,
     category: 'skyslope',
     requiresUserId: true,
-    defaultInputs: { user_id: 60 },
+    defaultInputs: { user_id: 7 },
     testResult: 'pass',
     testNote: 'Fixed version with proper job lookup',
   },
@@ -223,7 +219,7 @@ export const TEST_ENDPOINTS: TestEndpoint[] = [
     functionId: 7963,
     category: 'skyslope',
     requiresUserId: true,
-    defaultInputs: { user_id: 60 },
+    defaultInputs: { user_id: 7 },
     testResult: 'pass',
   },
   {
@@ -235,7 +231,7 @@ export const TEST_ENDPOINTS: TestEndpoint[] = [
     functionId: 8031,
     category: 'skyslope',
     requiresUserId: true,
-    defaultInputs: { user_id: 60 },
+    defaultInputs: { user_id: 7 },
     testResult: 'fail',
     testNote: 'Error: Missing param: key - needs investigation',
   },
@@ -252,7 +248,7 @@ export const TEST_ENDPOINTS: TestEndpoint[] = [
     functionId: 8051,
     category: 'rezen',
     requiresUserId: true,
-    defaultInputs: { user_id: 60 },
+    defaultInputs: { user_id: 7 },
     testResult: 'pass',
   },
   {
@@ -264,7 +260,7 @@ export const TEST_ENDPOINTS: TestEndpoint[] = [
     functionId: 8052,
     category: 'rezen',
     requiresUserId: true,
-    defaultInputs: { user_id: 60 },
+    defaultInputs: { user_id: 7 },
     testResult: 'pass',
   },
   {
@@ -276,7 +272,7 @@ export const TEST_ENDPOINTS: TestEndpoint[] = [
     functionId: 8053,
     category: 'rezen',
     requiresUserId: true,
-    defaultInputs: { user_id: 60 },
+    defaultInputs: { user_id: 7 },
     testResult: 'pass',
   },
   {
@@ -288,7 +284,7 @@ export const TEST_ENDPOINTS: TestEndpoint[] = [
     functionId: 8055,
     category: 'rezen',
     requiresUserId: true,
-    defaultInputs: { user_id: 60 },
+    defaultInputs: { user_id: 7 },
     testResult: 'pass',
   },
   {
@@ -300,7 +296,7 @@ export const TEST_ENDPOINTS: TestEndpoint[] = [
     functionId: 8056,
     category: 'rezen',
     requiresUserId: true,
-    defaultInputs: { user_id: 60 },
+    defaultInputs: { user_id: 7 },
     testResult: 'pass',
   },
   {
@@ -312,7 +308,7 @@ export const TEST_ENDPOINTS: TestEndpoint[] = [
     functionId: 8058,
     category: 'rezen',
     requiresUserId: true,
-    defaultInputs: { user_id: 60 },
+    defaultInputs: { user_id: 7 },
     testResult: 'pass',
   },
   {
@@ -324,7 +320,7 @@ export const TEST_ENDPOINTS: TestEndpoint[] = [
     functionId: 8059,
     category: 'rezen',
     requiresUserId: true,
-    defaultInputs: { user_id: 60 },
+    defaultInputs: { user_id: 7 },
     testResult: 'pass',
   },
   {
@@ -336,7 +332,7 @@ export const TEST_ENDPOINTS: TestEndpoint[] = [
     functionId: null,
     category: 'rezen',
     requiresUserId: true,
-    defaultInputs: { user_id: 60 },
+    defaultInputs: { user_id: 7 },
     testResult: 'pass',
   },
   {
@@ -348,7 +344,7 @@ export const TEST_ENDPOINTS: TestEndpoint[] = [
     functionId: null,
     category: 'rezen',
     requiresUserId: true,
-    defaultInputs: { user_id: 60 },
+    defaultInputs: { user_id: 7 },
     testResult: 'pass',
   },
   {
@@ -360,7 +356,7 @@ export const TEST_ENDPOINTS: TestEndpoint[] = [
     functionId: 8032,
     category: 'rezen',
     requiresUserId: true,
-    defaultInputs: { user_id: 60 },
+    defaultInputs: { user_id: 7 },
     testResult: 'pass',
     testNote: 'FIXED Jan 2026: Changed header array from inline to |push pattern',
   },
@@ -377,7 +373,7 @@ export const TEST_ENDPOINTS: TestEndpoint[] = [
     functionId: null,
     category: 'metrics',
     requiresUserId: true,
-    defaultInputs: { user_id: 60 },
+    defaultInputs: { user_id: 7 },
     testResult: 'pass',
     testNote: 'Fixed version with proper user object lookup',
   },
@@ -390,7 +386,7 @@ export const TEST_ENDPOINTS: TestEndpoint[] = [
     functionId: null,
     category: 'metrics',
     requiresUserId: true,
-    defaultInputs: { user_id: 60 },
+    defaultInputs: { user_id: 7 },
     testResult: 'pass',
   },
   {
@@ -402,7 +398,7 @@ export const TEST_ENDPOINTS: TestEndpoint[] = [
     functionId: null,
     category: 'metrics',
     requiresUserId: true,
-    defaultInputs: { user_id: 60 },
+    defaultInputs: { user_id: 7 },
     testResult: 'pass',
   },
   {
@@ -431,7 +427,7 @@ export const TEST_ENDPOINTS: TestEndpoint[] = [
     functionId: null,
     category: 'network',
     requiresUserId: true,
-    defaultInputs: { user_id: 60 },
+    defaultInputs: { user_id: 7 },
     testResult: 'pass',
   },
   {
@@ -443,7 +439,7 @@ export const TEST_ENDPOINTS: TestEndpoint[] = [
     functionId: null,
     category: 'network',
     requiresUserId: true,
-    defaultInputs: { user_id: 60 },
+    defaultInputs: { user_id: 7 },
     testResult: 'pass',
   },
   {
@@ -455,7 +451,7 @@ export const TEST_ENDPOINTS: TestEndpoint[] = [
     functionId: 8062,
     category: 'network',
     requiresUserId: true,
-    defaultInputs: { user_id: 60 },
+    defaultInputs: { user_id: 7 },
     testResult: 'pass',
   },
   {
@@ -467,7 +463,7 @@ export const TEST_ENDPOINTS: TestEndpoint[] = [
     functionId: 8074,
     category: 'network',
     requiresUserId: true,
-    defaultInputs: { user_id: 60 },
+    defaultInputs: { user_id: 7 },
     testResult: 'pass',
   },
 
@@ -532,7 +528,7 @@ export const TEST_ENDPOINTS: TestEndpoint[] = [
     functionId: 8066,
     category: 'rezen',
     requiresUserId: true,
-    defaultInputs: { user_id: 60 },
+    defaultInputs: { user_id: 7 },
     testResult: 'untested',
   },
   {
@@ -544,7 +540,7 @@ export const TEST_ENDPOINTS: TestEndpoint[] = [
     functionId: 8051,
     category: 'rezen',
     requiresUserId: true,
-    defaultInputs: { user_id: 60 },
+    defaultInputs: { user_id: 7 },
     testResult: 'untested',
   },
   {
@@ -556,7 +552,7 @@ export const TEST_ENDPOINTS: TestEndpoint[] = [
     functionId: 8052,
     category: 'rezen',
     requiresUserId: true,
-    defaultInputs: { user_id: 60 },
+    defaultInputs: { user_id: 7 },
     testResult: 'untested',
   },
   {
@@ -568,7 +564,7 @@ export const TEST_ENDPOINTS: TestEndpoint[] = [
     functionId: 8053,
     category: 'rezen',
     requiresUserId: true,
-    defaultInputs: { user_id: 60 },
+    defaultInputs: { user_id: 7 },
     testResult: 'untested',
   },
   {
@@ -580,7 +576,7 @@ export const TEST_ENDPOINTS: TestEndpoint[] = [
     functionId: 8054,
     category: 'rezen',
     requiresUserId: true,
-    defaultInputs: { user_id: 60 },
+    defaultInputs: { user_id: 7 },
     testResult: 'untested',
   },
   {
@@ -592,7 +588,7 @@ export const TEST_ENDPOINTS: TestEndpoint[] = [
     functionId: 8056,
     category: 'rezen',
     requiresUserId: true,
-    defaultInputs: { user_id: 60 },
+    defaultInputs: { user_id: 7 },
     testResult: 'untested',
   },
   {
@@ -604,7 +600,7 @@ export const TEST_ENDPOINTS: TestEndpoint[] = [
     functionId: 8060,
     category: 'rezen',
     requiresUserId: true,
-    defaultInputs: { user_id: 60 },
+    defaultInputs: { user_id: 7 },
     testResult: 'untested',
   },
   {
@@ -616,7 +612,7 @@ export const TEST_ENDPOINTS: TestEndpoint[] = [
     functionId: 8062,
     category: 'network',
     requiresUserId: true,
-    defaultInputs: { user_id: 60 },
+    defaultInputs: { user_id: 7 },
     testResult: 'untested',
   },
   {
@@ -628,7 +624,7 @@ export const TEST_ENDPOINTS: TestEndpoint[] = [
     functionId: 8070,
     category: 'network',
     requiresUserId: true,
-    defaultInputs: { user_id: 60 },
+    defaultInputs: { user_id: 7 },
     testResult: 'untested',
   },
 ]

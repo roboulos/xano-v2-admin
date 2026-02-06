@@ -9,7 +9,7 @@
  * 5. Contributions (process contributions)
  * 6. Network (downline sync)
  *
- * Uses test user 60 (David Keener) with known data in V2.
+ * Uses test user 7 (David Keener) with known data in V2.
  */
 
 import { exec } from 'child_process'
@@ -26,7 +26,7 @@ const V2_CONFIG = {
     workers: 'api:4UsTtl3m',
     system: 'api:LIdBL1AN',
   },
-  test_user: { id: 60, name: 'David Keener', agent_id: 37208, team_id: 1 },
+  test_user: { id: 7, name: 'David Keener', agent_id: 37208, team_id: 1 },
 }
 
 // Onboarding step definitions with CORRECT endpoint names

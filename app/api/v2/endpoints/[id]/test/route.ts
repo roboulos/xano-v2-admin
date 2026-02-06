@@ -27,34 +27,25 @@ interface SingleTestResponse {
   response_data?: unknown
 }
 
-export async function POST(
-  request: Request,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export async function POST(request: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { id } = await params
     const endpointId = parseInt(id)
 
     if (isNaN(endpointId)) {
-      return NextResponse.json(
-        { success: false, error: 'Invalid endpoint ID' },
-        { status: 400 }
-      )
+      return NextResponse.json({ success: false, error: 'Invalid endpoint ID' }, { status: 400 })
     }
 
     // Find endpoint in MCP_ENDPOINTS or FRONTEND_ENDPOINTS
-    let endpoint = MCP_ENDPOINTS.find(e => e.taskId === endpointId)
+    let endpoint = MCP_ENDPOINTS.find((e) => e.taskId === endpointId)
     let isMcpEndpoint = true
 
     if (!endpoint) {
       // Try frontend endpoints
-      const frontendEndpoint = ALL_FRONTEND_ENDPOINTS.find(e => e.id === endpointId)
+      const frontendEndpoint = ALL_FRONTEND_ENDPOINTS.find((e) => e.id === endpointId)
 
       if (!frontendEndpoint) {
-        return NextResponse.json(
-          { success: false, error: 'Endpoint not found' },
-          { status: 404 }
-        )
+        return NextResponse.json({ success: false, error: 'Endpoint not found' }, { status: 404 })
       }
 
       // Convert to MCP format for testing
@@ -74,7 +65,7 @@ export async function POST(
     }
 
     // Parse request body for custom params
-    const body = await request.json().catch(() => ({})) as SingleTestRequest
+    const body = (await request.json().catch(() => ({}))) as SingleTestRequest
 
     // Build URL
     const baseUrl = isMcpEndpoint
@@ -93,7 +84,7 @@ export async function POST(
 
       // Add user_id if required and not provided
       if (endpoint.requiresUserId && !('user_id' in requestBody)) {
-        requestBody.user_id = body.user_id || 60 // Default test user
+        requestBody.user_id = body.user_id || 7 // V2 David Keener
       }
 
       const response = await fetch(fullUrl, {
@@ -131,7 +122,10 @@ export async function POST(
     } catch (error) {
       const responseTime = Date.now() - startTime
 
-      console.error(`[Endpoint Test] Error:`, error instanceof Error ? error.message : 'Unknown error')
+      console.error(
+        `[Endpoint Test] Error:`,
+        error instanceof Error ? error.message : 'Unknown error'
+      )
 
       const result: SingleTestResponse = {
         success: false,

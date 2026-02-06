@@ -26,7 +26,7 @@ const AUTH_URL = process.env.V2_BASE_URL
 
 // Test user credentials from environment variables
 const TEST_USER = {
-  id: parseInt(process.env.TEST_USER_ID || '60', 10),
+  id: parseInt(process.env.TEST_USER_ID || '7', 10),
   email: process.env.TEST_USER_EMAIL || 'dave@premieregrp.com',
   password: process.env.TEST_USER_PASSWORD || '',
   agent_id: parseInt(process.env.TEST_AGENT_ID || '37208', 10),
@@ -161,7 +161,9 @@ async function main() {
 
   for (const { path, method } of endpoints) {
     current++
-    process.stdout.write(`\r[${current}/${endpoints.length}] Testing ${method} ${path}...`.padEnd(100))
+    process.stdout.write(
+      `\r[${current}/${endpoints.length}] Testing ${method} ${path}...`.padEnd(100)
+    )
 
     const result = await testEndpoint(path, method)
     results.push(result)
@@ -171,11 +173,15 @@ async function main() {
   console.log('📊 TEST RESULTS')
   console.log('='.repeat(80) + '\n')
 
-  const passed = results.filter(r => r.status === 'pass')
-  const failed = results.filter(r => r.status === 'fail')
+  const passed = results.filter((r) => r.status === 'pass')
+  const failed = results.filter((r) => r.status === 'fail')
 
-  console.log(`✅ Passed: ${passed.length}/${results.length} (${Math.round((passed.length / results.length) * 100)}%)`)
-  console.log(`❌ Failed: ${failed.length}/${results.length} (${Math.round((failed.length / results.length) * 100)}%)`)
+  console.log(
+    `✅ Passed: ${passed.length}/${results.length} (${Math.round((passed.length / results.length) * 100)}%)`
+  )
+  console.log(
+    `❌ Failed: ${failed.length}/${results.length} (${Math.round((failed.length / results.length) * 100)}%)`
+  )
 
   if (failed.length > 0) {
     console.log('\n' + '='.repeat(80))
@@ -186,7 +192,9 @@ async function main() {
       console.log(`${idx + 1}. ${result.method} ${result.endpoint}`)
       console.log(`   Status: ${result.statusCode || 'N/A'}`)
       console.log(`   Error: ${result.error}`)
-      console.log(`   curl -X ${result.method} "${BASE_URL}${result.endpoint}" -d '{"user_id":${TEST_USER.id}}'`)
+      console.log(
+        `   curl -X ${result.method} "${BASE_URL}${result.endpoint}" -d '{"user_id":${TEST_USER.id}}'`
+      )
       console.log('')
     })
   }

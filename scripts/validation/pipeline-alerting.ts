@@ -34,7 +34,7 @@ const V2_CONFIG = {
     system: 'api:LIdBL1AN',
     webhooks: 'api:XOwEm4wm',
   },
-  test_user: { id: 60, name: 'David Keener', agent_id: 37208, team_id: 1 },
+  test_user: { id: 7, name: 'David Keener', agent_id: 37208, team_id: 1 },
 }
 
 // Alert thresholds

@@ -1,9 +1,9 @@
-"use client"
+'use client'
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Progress } from "@/components/ui/progress"
-import Link from "next/link"
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+import { Progress } from '@/components/ui/progress'
+import Link from 'next/link'
 import {
   Database,
   Cog,
@@ -14,10 +14,10 @@ import {
   XCircle,
   Clock,
   Activity,
-} from "lucide-react"
-import { BACKGROUND_TASKS, getTaskStats, DOMAIN_INFO } from "@/lib/task-data"
-import { MCP_ENDPOINTS } from "@/lib/mcp-endpoints"
-import { TEST_ENDPOINTS, getTestStats } from "@/lib/test-endpoints-inventory"
+} from 'lucide-react'
+import { BACKGROUND_TASKS, getTaskStats, DOMAIN_INFO } from '@/lib/task-data'
+import { MCP_ENDPOINTS } from '@/lib/mcp-endpoints'
+import { TEST_ENDPOINTS, getTestStats } from '@/lib/test-endpoints-inventory'
 
 // Inventory categories with their routes and stats
 function getInventoryStats() {
@@ -25,41 +25,41 @@ function getInventoryStats() {
   const testStats = getTestStats()
 
   // Count Workers from MCP_ENDPOINTS (those in WORKERS group)
-  const workerEndpoints = MCP_ENDPOINTS.filter((e) => e.apiGroup === "WORKERS")
-  const taskEndpoints = MCP_ENDPOINTS.filter((e) => e.apiGroup === "TASKS")
+  const workerEndpoints = MCP_ENDPOINTS.filter((e) => e.apiGroup === 'WORKERS')
+  const taskEndpoints = MCP_ENDPOINTS.filter((e) => e.apiGroup === 'TASKS')
 
   return {
     workers: {
       total: workerEndpoints.length,
-      description: "WORKERS API endpoints that process data",
-      route: "/inventory/workers",
+      description: 'WORKERS API endpoints that process data',
+      route: '/inventory/workers',
       icon: Cog,
-      color: "bg-blue-100 text-blue-700",
+      color: 'bg-blue-100 text-blue-700',
       groups: {
-        reZEN: workerEndpoints.filter((e) => e.taskName.includes("reZEN")).length,
-        FUB: workerEndpoints.filter((e) => e.taskName.includes("FUB")).length,
+        reZEN: workerEndpoints.filter((e) => e.taskName.includes('reZEN')).length,
+        FUB: workerEndpoints.filter((e) => e.taskName.includes('FUB')).length,
         Other: workerEndpoints.filter(
-          (e) => !e.taskName.includes("reZEN") && !e.taskName.includes("FUB")
+          (e) => !e.taskName.includes('reZEN') && !e.taskName.includes('FUB')
         ).length,
       },
     },
     tasks: {
       total: taskEndpoints.length,
-      description: "TASKS API endpoints (orchestrators)",
-      route: "/inventory/tasks",
+      description: 'TASKS API endpoints (orchestrators)',
+      route: '/inventory/tasks',
       icon: Timer,
-      color: "bg-green-100 text-green-700",
-      scheduled: taskEndpoints.filter((e) => e.description.includes("process")).length,
+      color: 'bg-green-100 text-green-700',
+      scheduled: taskEndpoints.filter((e) => e.description.includes('process')).length,
     },
     backgroundTasks: {
       total: taskStats.total,
       active: taskStats.active,
       inactive: taskStats.inactive,
       scheduled: taskStats.scheduled,
-      description: "Background tasks with schedules",
-      route: "/inventory/background-tasks",
+      description: 'Background tasks with schedules',
+      route: '/inventory/background-tasks',
       icon: Clock,
-      color: "bg-purple-100 text-purple-700",
+      color: 'bg-purple-100 text-purple-700',
       byDomain: taskStats.byDomain,
     },
     testEndpoints: {
@@ -69,10 +69,10 @@ function getInventoryStats() {
       untested: testStats.untested,
       passRate: testStats.passRate,
       coverageRate: testStats.coverageRate,
-      description: "Machine 2.0 Tests API Group (ID: 659)",
-      route: "/inventory/test-endpoints",
+      description: 'Machine 2.0 Tests API Group (ID: 659)',
+      route: '/inventory/test-endpoints',
       icon: TestTube2,
-      color: "bg-orange-100 text-orange-700",
+      color: 'bg-orange-100 text-orange-700',
       byCategory: testStats.byCategory,
     },
   }
@@ -145,7 +145,8 @@ export default function InventoryPage() {
             <h1 className="text-3xl font-bold">V2 System Inventory</h1>
           </div>
           <p className="text-muted-foreground ml-12">
-            Complete inventory of Workers, Tasks, Background Tasks, and Test Endpoints in Workspace 5
+            Complete inventory of Workers, Tasks, Background Tasks, and Test Endpoints in Workspace
+            5
           </p>
         </div>
 
@@ -347,13 +348,11 @@ export default function InventoryPage() {
                 <h4 className="font-medium mb-2">Verified Test User</h4>
                 <div className="space-y-1 text-muted-foreground text-xs">
                   <p>
-                    <strong>User ID: 60</strong> (David Keener)
+                    <strong>User ID: 7</strong> (David Keener)
                   </p>
                   <p>Agent ID: 37208</p>
                   <p>Team ID: 1</p>
-                  <p className="text-green-600">
-                    Primary test user - 84% pass rate verified
-                  </p>
+                  <p className="text-green-600">Primary test user - 84% pass rate verified</p>
                 </div>
               </div>
             </div>
@@ -363,9 +362,7 @@ export default function InventoryPage() {
         {/* Footer */}
         <div className="mt-8 text-center text-sm text-muted-foreground">
           <p>V2 System Inventory - Machine 2.0 Admin Interface</p>
-          <p className="text-xs mt-1">
-            Workspace 5: x2nu-xcjc-vhax.agentdashboards.xano.io
-          </p>
+          <p className="text-xs mt-1">Workspace 5: x2nu-xcjc-vhax.agentdashboards.xano.io</p>
         </div>
       </div>
     </div>

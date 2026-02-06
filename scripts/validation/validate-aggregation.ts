@@ -10,7 +10,7 @@
  * Aggregation Pipeline Flow:
  *   Source Data (transaction, listing, FUB, network) -> Workers/Agg/* -> Aggregation Tables -> Dashboard
  *
- * Uses test user 60 (David Keener, agent_id: 37208) with known data in V2.
+ * Uses test user 7 (David Keener, agent_id: 37208) with known data in V2.
  */
 
 import { exec } from 'child_process'
@@ -29,7 +29,7 @@ const V2_CONFIG = {
     system: 'api:LIdBL1AN',
     frontend: 'api:pe1wjL5I',
   },
-  test_user: { id: 60, name: 'David Keener', agent_id: 37208, team_id: 1 },
+  test_user: { id: 7, name: 'David Keener', agent_id: 37208, team_id: 1 },
 }
 
 // Aggregation endpoint definition

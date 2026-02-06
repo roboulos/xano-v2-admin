@@ -2533,7 +2533,7 @@
     "function_name": "Tasks/reZEN - Onboarding Load Listings",
     "endpoints": [
       {
-        "path": "/test-rezen-load-user-60",
+        "path": "/test-rezen-load-user",
         "method": "POST",
         "api_group": "TASKS",
         "api_group_id": 532
@@ -2743,7 +2743,7 @@
     "function_name": "Tasks/reZEN - Onboarding Load Contributions",
     "endpoints": [
       {
-        "path": "/test-rezen-load-user-60",
+        "path": "/test-rezen-load-user",
         "method": "POST",
         "api_group": "TASKS",
         "api_group_id": 532
@@ -4813,7 +4813,7 @@
     "function_name": "Tasks/reZEN - Onboarding Load Network Downline",
     "endpoints": [
       {
-        "path": "/test-rezen-load-user-60",
+        "path": "/test-rezen-load-user",
         "method": "POST",
         "api_group": "TASKS",
         "api_group_id": 532
@@ -4933,7 +4933,7 @@
     "function_name": "Tasks/reZEN - Onboarding Load Transactions",
     "endpoints": [
       {
-        "path": "/test-rezen-load-user-60",
+        "path": "/test-rezen-load-user",
         "method": "POST",
         "api_group": "TASKS",
         "api_group_id": 532
@@ -5244,7 +5244,7 @@
     "function_name": "Tasks/reZEN - Daily Load Pending Contributions",
     "endpoints": [
       {
-        "path": "/test-rezen-load-user-60",
+        "path": "/test-rezen-load-user",
         "method": "POST",
         "api_group": "TASKS",
         "api_group_id": 532

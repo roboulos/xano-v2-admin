@@ -230,6 +230,7 @@ async function runV2WorkerTest(
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ user_id: userId, ...extraParams }),
+        signal: AbortSignal.timeout(15_000),
       }
     )
     const data = await res.json()
@@ -258,10 +259,12 @@ export async function GET() {
       fetch('https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:LIdBL1AN/table-counts', {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
+        signal: AbortSignal.timeout(15_000),
       }).catch(() => null),
       fetch('https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:LIdBL1AN/job-queue-status', {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
+        signal: AbortSignal.timeout(15_000),
       }).catch(() => null),
     ])
 

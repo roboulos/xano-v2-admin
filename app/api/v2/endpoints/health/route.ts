@@ -53,7 +53,8 @@ async function testEndpoint(endpoint: (typeof MCP_ENDPOINTS)[0]): Promise<Endpoi
     // For POST requests that require user_id, use V2 test user 7 (David Keener)
     let body: Record<string, unknown> = {}
     if (endpoint.method === 'POST' && endpoint.requiresUserId) {
-      body.user_id = 7
+      const paramName = endpoint.userIdParamName || 'user_id'
+      body[paramName] = 7
     }
     // Merge in any additional required params
     if (endpoint.additionalParams) {

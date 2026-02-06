@@ -68,7 +68,7 @@ interface ComparisonResult {
 }
 
 // Test user (verified with extensive data)
-const TEST_USER_ID = 60
+const TEST_USER_ID = 7
 const TEST_TEAM_ID = 1
 
 export function ParallelComparisonTab() {

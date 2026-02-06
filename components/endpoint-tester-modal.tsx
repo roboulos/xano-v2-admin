@@ -37,7 +37,7 @@ export function EndpointTesterModal({
   endpoint,
   baseUrl,
 }: EndpointTesterModalProps) {
-  const [userId, setUserId] = useState('60') // Default test user
+  const [userId, setUserId] = useState('7') // V2 user ID for David Keener
   const [customParams, setCustomParams] = useState('')
   const [isTesting, setIsTesting] = useState(false)
   const [testResult, setTestResult] = useState<TestResult | null>(null)
@@ -50,7 +50,7 @@ export function EndpointTesterModal({
 
     // Add user_id if required
     if (endpoint.requiresUserId) {
-      params.user_id = parseInt(userId) || 60
+      params.user_id = parseInt(userId) || 7
     }
 
     // Add custom params if provided
@@ -98,7 +98,7 @@ export function EndpointTesterModal({
 
       // Add user_id if required
       if (endpoint.requiresUserId) {
-        params.user_id = parseInt(userId) || 60
+        params.user_id = parseInt(userId) || 7
       }
 
       // Add custom params if provided
@@ -203,7 +203,7 @@ export function EndpointTesterModal({
                   type="number"
                   value={userId}
                   onChange={(e) => setUserId(e.target.value)}
-                  placeholder="60"
+                  placeholder="7"
                   className="mt-1"
                 />
               </div>
