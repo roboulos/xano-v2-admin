@@ -543,7 +543,7 @@ export async function GET(
       { section: 'transactions', v1Table: 'transaction' },
       { section: 'listings', v1Table: 'listing' },
       { section: 'network', v1Table: 'network', filterField: 'user_id' },
-      { section: 'contributions', v1Table: 'contribution', filterField: 'user_id' },
+      { section: 'contributions', v1Table: 'contributions', filterField: 'user_id' },
     ]
 
     for (const { section, v1Table, filterField } of arraySections) {
