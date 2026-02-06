@@ -942,7 +942,7 @@ curl -s -X POST "https://xmpx-swi5-tlvy.n7c.xano.io/api:4UsTtl3m/ENDPOINT" \
 
 ### Main Entry Point
 
-- `app/page.tsx` - Main dashboard with tabs
+- `app/page.tsx` - Main dashboard with 25 tabs
 
 ### Interactive Proof System
 
@@ -968,6 +968,14 @@ curl -s -X POST "https://xmpx-swi5-tlvy.n7c.xano.io/api:4UsTtl3m/ENDPOINT" \
 - `components/machine-2/schema-tab.tsx` - V1 vs V2 field comparison
 - `components/machine-2/backend-validation-tab.tsx` - Backend validation checks
 
+### Ecosystem Command Center
+
+- `components/ecosystem/ecosystem-hub-tab.tsx` - Cross-project dashboard with GitHub status
+- `components/ecosystem/record-census-tab.tsx` - V1 25.4M record visualization + migration scope
+- `components/ecosystem/test-users-tab.tsx` - Unified test user matrix across all projects
+- `app/api/ecosystem/github-status/route.ts` - GitHub REST API proxy for 3 repos
+- `app/api/v1/record-counts/route.ts` - V1 record counts (24 tables, 25.4M records)
+
 ### Data Configuration
 
 - `lib/mcp-endpoints.ts` - **All endpoint mappings and base URLs**
@@ -979,9 +987,13 @@ curl -s -X POST "https://xmpx-swi5-tlvy.n7c.xano.io/api:4UsTtl3m/ENDPOINT" \
 
 ## Related Projects (Agent Dashboards Ecosystem)
 
-- **xano-v2-admin**: V1→V2 Migration tracking, validation, schema comparison (this repo)
-- **v0-demo-sync-admin-interface**: Demo data generation, storytelling cards, live→demo sync
-- **dashboards2.0**: Production frontend BI platform, 22+ dashboard pages
+| Project                | GitHub                                                                                            | Purpose                                                  |
+| ---------------------- | ------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
+| **xano-v2-admin**      | [roboulos/xano-v2-admin](https://github.com/roboulos/xano-v2-admin)                               | V1→V2 Migration admin, 25 tabs, proof system (this repo) |
+| **v0-demo-sync-admin** | [roboulos/v0-demo-sync-admin-interface](https://github.com/roboulos/v0-demo-sync-admin-interface) | Demo data management, 7 tabs, 188+ endpoints tested      |
+| **dashboards2.0**      | [scottman1078/dashboards2.0](https://github.com/scottman1078/dashboards2.0)                       | Production BI frontend, 22+ dashboard pages              |
+
+All three projects share the same Xano backends (V1: 251 tables, V2: 193 tables). The Ecosystem tab group in this project provides cross-project visibility.
 
 <!-- BEGIN FLOW-NEXT -->
 
