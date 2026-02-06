@@ -175,7 +175,7 @@ export default function Home() {
                 return (
                   <div key={item.separator} className="flex items-center">
                     {i > 0 && <div className="w-px h-6 bg-border mx-1.5" />}
-                    <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground/60 px-2 select-none">
+                    <span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground px-2 select-none">
                       {item.separator}
                     </span>
                   </div>

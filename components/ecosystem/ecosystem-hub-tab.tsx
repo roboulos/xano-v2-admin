@@ -120,14 +120,16 @@ export function EcosystemHubTab() {
   }, [])
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <Building2 className="h-6 w-6 text-primary" />
+        <div className="flex items-center gap-4">
+          <div className="p-3 rounded-xl bg-primary/10">
+            <Building2 className="h-7 w-7 text-primary" />
+          </div>
           <div>
-            <h2 className="text-xl font-semibold">Ecosystem Command Center</h2>
-            <p className="text-sm text-muted-foreground">
+            <h2 className="text-2xl font-bold">Ecosystem Command Center</h2>
+            <p className="text-sm text-muted-foreground mt-0.5">
               Three projects, two Xano workspaces, one unified view
             </p>
           </div>
@@ -136,6 +138,26 @@ export function EcosystemHubTab() {
           <RefreshCw className={`h-4 w-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
           Refresh
         </Button>
+      </div>
+
+      {/* Quick Stats */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="rounded-lg border bg-card p-4 space-y-1">
+          <p className="text-xs font-medium text-muted-foreground">Frontend Projects</p>
+          <p className="text-2xl font-bold">3</p>
+        </div>
+        <div className="rounded-lg border bg-card p-4 space-y-1">
+          <p className="text-xs font-medium text-muted-foreground">Xano Workspaces</p>
+          <p className="text-2xl font-bold">2</p>
+        </div>
+        <div className="rounded-lg border bg-card p-4 space-y-1">
+          <p className="text-xs font-medium text-muted-foreground">V1 Tables</p>
+          <p className="text-2xl font-bold">251</p>
+        </div>
+        <div className="rounded-lg border bg-card p-4 space-y-1">
+          <p className="text-xs font-medium text-muted-foreground">Total Records</p>
+          <p className="text-2xl font-bold">25.4M</p>
+        </div>
       </div>
 
       {/* Error state */}
@@ -151,136 +173,186 @@ export function EcosystemHubTab() {
       )}
 
       {/* Project Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {PROJECTS.map((project) => {
-          const repo = data?.repos[project.key]
-          return (
-            <Card key={project.key} className="flex flex-col">
-              <CardHeader className="pb-3">
-                <div className="flex items-center justify-between">
-                  <CardTitle className="text-base">{project.name}</CardTitle>
-                  {repo?.html_url && (
-                    <a
-                      href={repo.html_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-muted-foreground hover:text-foreground transition-colors"
-                    >
-                      <ExternalLink className="h-4 w-4" />
-                    </a>
-                  )}
-                </div>
-                <CardDescription className="text-xs">{project.description}</CardDescription>
-              </CardHeader>
-              <CardContent className="flex-1 space-y-3">
-                {/* Tech badges */}
-                <div className="flex flex-wrap gap-1">
-                  {project.tech.map((t) => (
-                    <Badge key={t} variant="outline" className={`text-[10px] ${project.color}`}>
-                      {t}
-                    </Badge>
-                  ))}
-                </div>
-
-                {/* Last commit */}
-                {isLoading ? (
-                  <div className="space-y-2">
-                    <Skeleton className="h-4 w-full" />
-                    <Skeleton className="h-3 w-2/3" />
-                  </div>
-                ) : repo?.last_commit ? (
-                  <div className="space-y-1">
-                    <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                      <GitCommit className="h-3 w-3" />
-                      <span className="font-mono">{repo.last_commit.sha}</span>
-                      <span>&middot;</span>
-                      <span>{relativeTime(repo.last_commit.date)}</span>
-                    </div>
-                    <p className="text-xs truncate" title={repo.last_commit.message}>
-                      {repo.last_commit.message}
-                    </p>
-                    <p className="text-[10px] text-muted-foreground">
-                      by {repo.last_commit.author}
-                    </p>
-                  </div>
-                ) : repo?.error ? (
-                  <p className="text-xs text-destructive">{repo.error}</p>
-                ) : (
-                  <p className="text-xs text-muted-foreground">No commit data</p>
-                )}
-
-                {/* Branches */}
-                {!isLoading && repo?.branches && repo.branches.length > 0 && (
-                  <div className="flex items-center gap-1.5 flex-wrap">
-                    <GitBranch className="h-3 w-3 text-muted-foreground shrink-0" />
-                    {repo.branches.slice(0, 4).map((b) => (
-                      <Badge
-                        key={b}
-                        variant={b === repo.default_branch ? 'default' : 'secondary'}
-                        className="text-[10px]"
+      <div>
+        <div className="flex items-center gap-2 mb-4">
+          <div className="h-px flex-1 bg-border" />
+          <h3 className="text-sm font-semibold text-muted-foreground">Frontend Projects</h3>
+          <div className="h-px flex-1 bg-border" />
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {PROJECTS.map((project) => {
+            const repo = data?.repos[project.key]
+            return (
+              <Card key={project.key} className="flex flex-col hover:shadow-lg transition-shadow">
+                <CardHeader className="pb-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <CardTitle className="text-lg font-bold">{project.name}</CardTitle>
+                    {repo?.html_url && !repo?.error && (
+                      <a
+                        href={repo.html_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-muted-foreground hover:text-foreground transition-colors"
                       >
-                        {b}
-                      </Badge>
-                    ))}
-                    {repo.branches.length > 4 && (
-                      <span className="text-[10px] text-muted-foreground">
-                        +{repo.branches.length - 4} more
-                      </span>
+                        <ExternalLink className="h-4 w-4" />
+                      </a>
                     )}
                   </div>
-                )}
-              </CardContent>
-            </Card>
-          )
-        })}
+                  <CardDescription className="text-sm leading-relaxed">
+                    {project.description}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="flex-1 space-y-4">
+                  {/* Tech badges */}
+                  <div className="flex flex-wrap gap-1.5">
+                    {project.tech.map((t) => (
+                      <Badge key={t} variant="outline" className={`text-[11px] ${project.color}`}>
+                        {t}
+                      </Badge>
+                    ))}
+                  </div>
+
+                  {/* Last commit */}
+                  <div className="rounded-lg bg-muted/50 p-3 space-y-2">
+                    {isLoading ? (
+                      <>
+                        <Skeleton className="h-4 w-full" />
+                        <Skeleton className="h-3 w-2/3" />
+                      </>
+                    ) : repo?.last_commit ? (
+                      <>
+                        <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                          <GitCommit className="h-3.5 w-3.5 shrink-0" />
+                          <span className="font-mono font-semibold">{repo.last_commit.sha}</span>
+                          <span>&middot;</span>
+                          <span>{relativeTime(repo.last_commit.date)}</span>
+                        </div>
+                        <p
+                          className="text-sm font-medium line-clamp-2"
+                          title={repo.last_commit.message}
+                        >
+                          {repo.last_commit.message}
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          by {repo.last_commit.author}
+                        </p>
+                      </>
+                    ) : repo?.error ? (
+                      <div className="flex items-center gap-2">
+                        <ServerCrash className="h-4 w-4 text-muted-foreground shrink-0" />
+                        <p className="text-xs text-muted-foreground">
+                          GitHub data unavailable (repo may be private)
+                        </p>
+                      </div>
+                    ) : (
+                      <p className="text-xs text-muted-foreground">No commit data</p>
+                    )}
+                  </div>
+
+                  {/* Branches */}
+                  {!isLoading && repo?.branches && repo.branches.length > 0 && (
+                    <div className="flex items-center gap-1.5 flex-wrap">
+                      <GitBranch className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
+                      {repo.branches.slice(0, 4).map((b) => (
+                        <Badge
+                          key={b}
+                          variant={b === repo.default_branch ? 'default' : 'secondary'}
+                          className="text-[10px]"
+                        >
+                          {b}
+                        </Badge>
+                      ))}
+                      {repo.branches.length > 4 && (
+                        <span className="text-[10px] text-muted-foreground">
+                          +{repo.branches.length - 4} more
+                        </span>
+                      )}
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            )
+          })}
+        </div>
       </div>
 
       {/* Shared Backend */}
-      <Card>
-        <CardHeader className="pb-3">
-          <div className="flex items-center gap-2">
-            <Database className="h-5 w-5 text-primary" />
-            <CardTitle className="text-base">Shared Xano Backend</CardTitle>
-          </div>
-          <CardDescription className="text-xs">
-            All three projects connect to the same V1 and V2 Xano workspaces
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="rounded-lg border p-4 space-y-1">
-              <div className="flex items-center justify-between">
-                <span className="text-sm font-medium">V1 Workspace (Production)</span>
-                <Badge variant="outline" className="text-[10px]">
-                  Workspace 1
-                </Badge>
+      <div>
+        <div className="flex items-center gap-2 mb-4">
+          <div className="h-px flex-1 bg-border" />
+          <h3 className="text-sm font-semibold text-muted-foreground">Shared Xano Backend</h3>
+          <div className="h-px flex-1 bg-border" />
+        </div>
+        <Card className="border-2">
+          <CardHeader className="pb-4">
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-lg bg-primary/10">
+                <Database className="h-5 w-5 text-primary" />
               </div>
-              <p className="text-xs text-muted-foreground font-mono">xmpx-swi5-tlvy.n7c.xano.io</p>
-              <div className="flex gap-3 text-xs text-muted-foreground">
-                <span>251 tables</span>
-                <span>&middot;</span>
-                <span>25.4M+ records</span>
+              <div>
+                <CardTitle className="text-lg">Unified Data Layer</CardTitle>
+                <CardDescription className="text-sm">
+                  All three projects connect to the same V1 and V2 Xano workspaces
+                </CardDescription>
               </div>
             </div>
-            <div className="rounded-lg border p-4 space-y-1">
-              <div className="flex items-center justify-between">
-                <span className="text-sm font-medium">V2 Workspace (Normalized)</span>
-                <Badge variant="outline" className="text-[10px]">
-                  Workspace 5
-                </Badge>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="rounded-xl border-2 border-blue-500/20 bg-blue-500/5 p-5 space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-base font-bold">V1 Workspace</span>
+                  <Badge variant="outline" className="text-xs bg-background">
+                    Production
+                  </Badge>
+                </div>
+                <p className="text-xs text-muted-foreground font-mono break-all">
+                  xmpx-swi5-tlvy.n7c.xano.io
+                </p>
+                <div className="pt-2 space-y-2">
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-muted-foreground">Tables</span>
+                    <span className="font-bold">251</span>
+                  </div>
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-muted-foreground">Records</span>
+                    <span className="font-bold">25.4M+</span>
+                  </div>
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-muted-foreground">Workspace ID</span>
+                    <span className="font-mono text-xs">1</span>
+                  </div>
+                </div>
               </div>
-              <p className="text-xs text-muted-foreground font-mono">
-                x2nu-xcjc-vhax.agentdashboards.xano.io
-              </p>
-              <div className="flex gap-3 text-xs text-muted-foreground">
-                <span>193 tables</span>
-                <span>&middot;</span>
-                <span>V1→V2 sync: 5 entities, ~887K records</span>
+              <div className="rounded-xl border-2 border-purple-500/20 bg-purple-500/5 p-5 space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-base font-bold">V2 Workspace</span>
+                  <Badge variant="outline" className="text-xs bg-background">
+                    Normalized
+                  </Badge>
+                </div>
+                <p className="text-xs text-muted-foreground font-mono break-all">
+                  x2nu-xcjc-vhax.agentdashboards.xano.io
+                </p>
+                <div className="pt-2 space-y-2">
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-muted-foreground">Tables</span>
+                    <span className="font-bold">193</span>
+                  </div>
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-muted-foreground">V1→V2 Sync</span>
+                    <span className="font-bold">~887K</span>
+                  </div>
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-muted-foreground">Workspace ID</span>
+                    <span className="font-mono text-xs">5</span>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      </div>
 
       {/* Timestamp */}
       {data?.timestamp && (

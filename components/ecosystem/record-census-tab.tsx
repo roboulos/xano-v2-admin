@@ -33,11 +33,10 @@ interface CategoryData {
 }
 
 interface RecordCountsResponse {
+  // V1
   grand_total: number
   tables_counted: number
   total_v1_tables: number
-  sync_entities: SyncEntity[]
-  sync_total_v1: number
   categories: {
     core: CategoryData
     fub: CategoryData
@@ -47,6 +46,15 @@ interface RecordCountsResponse {
   raw_counts: Record<string, number> | null
   uncounted_tables: number
   note: string
+  // V2
+  v2_grand_total: number
+  v2_tables_counted: number
+  total_v2_tables: number
+  v2_raw_counts: Record<string, number> | null
+  // Sync
+  sync_entities: SyncEntity[]
+  sync_total_v1: number
+  sync_total_v2: number
   timestamp: string
 }
 
@@ -192,9 +200,9 @@ export function RecordCensusTab() {
         <div className="flex items-center gap-3">
           <BarChart3 className="h-6 w-6 text-primary" />
           <div>
-            <h2 className="text-xl font-semibold">V1 Record Census</h2>
+            <h2 className="text-xl font-semibold">Record Census</h2>
             <p className="text-sm text-muted-foreground">
-              25.4M+ records across 251 tables in the V1 production workspace
+              V1 production vs V2 normalized — the full picture
             </p>
           </div>
         </div>
@@ -216,26 +224,54 @@ export function RecordCensusTab() {
         </Card>
       )}
 
-      {/* Grand Total Hero */}
+      {/* V1 vs V2 Hero */}
       {isLoading ? (
-        <Card>
-          <CardContent className="pt-6 text-center">
-            <Skeleton className="h-12 w-48 mx-auto mb-2" />
-            <Skeleton className="h-4 w-32 mx-auto" />
-          </CardContent>
-        </Card>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <Card>
+            <CardContent className="pt-6 text-center">
+              <Skeleton className="h-12 w-48 mx-auto mb-2" />
+              <Skeleton className="h-4 w-32 mx-auto" />
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent className="pt-6 text-center">
+              <Skeleton className="h-12 w-48 mx-auto mb-2" />
+              <Skeleton className="h-4 w-32 mx-auto" />
+            </CardContent>
+          </Card>
+        </div>
       ) : data ? (
-        <Card className="bg-gradient-to-r from-primary/5 to-primary/10">
-          <CardContent className="pt-6 text-center">
-            <p className="text-4xl font-bold tabular-nums">{fmt(data.grand_total)}</p>
-            <p className="text-sm text-muted-foreground mt-1">
-              records counted across {data.tables_counted} of {data.total_v1_tables} tables
-            </p>
-            {data.uncounted_tables > 0 && (
-              <p className="text-xs text-muted-foreground mt-1">{data.note}</p>
-            )}
-          </CardContent>
-        </Card>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <Card className="border-2 border-blue-500/20 bg-blue-500/5">
+            <CardContent className="pt-6 text-center">
+              <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1">
+                V1 Production
+              </p>
+              <p className="text-4xl font-bold tabular-nums">{fmt(data.grand_total)}</p>
+              <p className="text-sm text-muted-foreground mt-1">
+                across {data.tables_counted} of {data.total_v1_tables} tables
+              </p>
+              {data.uncounted_tables > 0 && (
+                <p className="text-xs text-muted-foreground mt-1">{data.note}</p>
+              )}
+            </CardContent>
+          </Card>
+          <Card className="border-2 border-purple-500/20 bg-purple-500/5">
+            <CardContent className="pt-6 text-center">
+              <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1">
+                V2 Normalized
+              </p>
+              <p className="text-4xl font-bold tabular-nums">
+                {data.v2_grand_total > 0 ? fmt(data.v2_grand_total) : fmt(data.sync_total_v2)}
+              </p>
+              <p className="text-sm text-muted-foreground mt-1">
+                {data.v2_grand_total > 0
+                  ? `across ${data.v2_tables_counted} of ${data.total_v2_tables} tables`
+                  : `${data.sync_entities.length} synced entities (table counts unavailable)`}
+              </p>
+            </CardContent>
+          </Card>
+        </div>
       ) : null}
 
       {/* Category Breakdown */}
