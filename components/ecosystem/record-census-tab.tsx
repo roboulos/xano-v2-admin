@@ -3,59 +3,52 @@
 import { useEffect, useState } from 'react'
 import {
   BarChart3,
+  CheckCircle2,
   ChevronDown,
   ChevronRight,
-  Database,
-  Loader2,
+  AlertCircle,
   RefreshCw,
   ServerCrash,
 } from 'lucide-react'
 
+import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
 
 // ---------------------------------------------------------------------------
 // Types
 // ---------------------------------------------------------------------------
 
-interface SyncEntity {
+interface EntityRow {
   entity: string
-  v1: number
-  v2: number
+  category: string
+  v1_tid: number
+  v2_tid: number
+  v1_count: number
+  v2_count: number
 }
 
-interface CategoryData {
-  tables: number
-  records: number
-  breakdown: Record<string, number>
+interface CategoryGroup {
+  entities: EntityRow[]
+  v1_total: number
+  v2_total: number
 }
 
 interface RecordCountsResponse {
-  // V1
-  grand_total: number
-  tables_counted: number
-  total_v1_tables: number
-  categories: {
-    core: CategoryData
-    fub: CategoryData
-    logs: CategoryData
-    lambda: CategoryData
-  } | null
-  raw_counts: Record<string, number> | null
-  uncounted_tables: number
-  note: string
-  // V2
-  v2_grand_total: number
-  v2_tables_counted: number
-  total_v2_tables: number
-  v2_raw_counts: Record<string, number> | null
-  // Sync
-  sync_entities: SyncEntity[]
-  sync_total_v1: number
-  sync_total_v2: number
+  comparable_v1_total: number
+  comparable_v2_total: number
+  comparable_tables: number
+  comparable_gap: number
+  comparable_pct: number
+  v1_all_total: number
+  v2_all_total: number
+  total_entities: number
+  categories: Record<string, CategoryGroup>
+  entities: EntityRow[]
   timestamp: string
+  note: string
 }
 
 // ---------------------------------------------------------------------------
@@ -64,48 +57,25 @@ interface RecordCountsResponse {
 
 const fmt = (n: number) => new Intl.NumberFormat('en-US').format(n)
 
-const CATEGORY_META: Record<string, { label: string; color: string; migrationClass: string }> = {
-  core: {
-    label: 'Core Business',
-    color: 'bg-blue-500',
-    migrationClass: 'Agents, Users, Transactions, Listings, Network',
-  },
-  fub: {
-    label: 'Follow Up Boss (FUB)',
-    color: 'bg-emerald-500',
-    migrationClass: 'CRM — People, Calls, Events, Deals',
-  },
-  logs: {
-    label: 'Logs & Audit',
-    color: 'bg-amber-500',
-    migrationClass: 'Audit Trails, System Events',
-  },
-  lambda: {
-    label: 'Lambda Jobs',
-    color: 'bg-purple-500',
-    migrationClass: 'Background Jobs, Worker Logs',
-  },
+const CATEGORY_META: Record<string, { label: string; color: string }> = {
+  core: { label: 'Core Business', color: 'bg-blue-500' },
+  financial: { label: 'Financial', color: 'bg-green-500' },
+  network: { label: 'Network', color: 'bg-indigo-500' },
+  team_hierarchy: { label: 'Team Hierarchy', color: 'bg-cyan-500' },
+  fub: { label: 'Follow Up Boss', color: 'bg-emerald-500' },
+  logs: { label: 'Logs & Audit', color: 'bg-amber-500' },
+  config: { label: 'Config & Reference', color: 'bg-purple-500' },
 }
 
 // ---------------------------------------------------------------------------
-// Sub-components
+// CategorySection
 // ---------------------------------------------------------------------------
 
-function CategoryCard({
-  catKey,
-  data,
-  grandTotal,
-}: {
-  catKey: string
-  data: CategoryData
-  grandTotal: number
-}) {
+function CategorySection({ catKey, group }: { catKey: string; group: CategoryGroup }) {
   const [expanded, setExpanded] = useState(false)
-  const meta = CATEGORY_META[catKey]
-  const pct = grandTotal > 0 ? ((data.records / grandTotal) * 100).toFixed(1) : '0'
-
-  // Sort breakdown by count descending
-  const sorted = Object.entries(data.breakdown).sort(([, a], [, b]) => b - a)
+  const meta = CATEGORY_META[catKey] ?? { label: catKey, color: 'bg-gray-500' }
+  const gap = group.v1_total - group.v2_total
+  const pct = group.v1_total > 0 ? (group.v2_total / group.v1_total) * 100 : 100
 
   return (
     <Card>
@@ -117,11 +87,19 @@ function CategoryCard({
           <div className="flex items-center gap-2">
             <div className={`w-3 h-3 rounded-sm ${meta.color}`} />
             <CardTitle className="text-sm">{meta.label}</CardTitle>
-          </div>
-          <div className="flex items-center gap-2">
             <Badge variant="secondary" className="text-[10px]">
-              {data.tables} tables
+              {group.entities.length} tables
             </Badge>
+          </div>
+          <div className="flex items-center gap-3">
+            <span
+              className={cn(
+                'text-sm font-bold tabular-nums',
+                pct >= 99.5 ? 'text-green-600' : 'text-amber-600'
+              )}
+            >
+              {pct.toFixed(1)}%
+            </span>
             {expanded ? (
               <ChevronDown className="h-4 w-4 text-muted-foreground" />
             ) : (
@@ -131,33 +109,96 @@ function CategoryCard({
         </button>
       </CardHeader>
       <CardContent className="space-y-2">
-        <div className="flex items-baseline justify-between">
-          <span className="text-2xl font-bold tabular-nums">{fmt(data.records)}</span>
-          <span className="text-xs text-muted-foreground">{pct}% of total</span>
+        {/* Summary row */}
+        <div className="flex items-center justify-between text-xs text-muted-foreground">
+          <span>V1: {fmt(group.v1_total)}</span>
+          <span>V2: {fmt(group.v2_total)}</span>
+          <span className={gap === 0 ? 'text-green-600' : 'text-amber-600'}>Gap: {fmt(gap)}</span>
         </div>
 
-        {/* Proportional bar */}
+        {/* Progress bar */}
         <div className="h-2 rounded-full bg-muted overflow-hidden">
           <div
-            className={`h-full rounded-full ${meta.color}`}
-            style={{ width: `${Math.min(parseFloat(pct), 100)}%` }}
+            className={cn(
+              'h-full rounded-full transition-all',
+              pct >= 99.5 ? 'bg-green-500' : meta.color
+            )}
+            style={{ width: `${Math.min(pct, 100)}%` }}
           />
         </div>
 
-        {/* Migration class badge */}
-        <Badge variant="outline" className="text-[10px]">
-          {meta.migrationClass}
-        </Badge>
-
-        {/* Expanded breakdown */}
+        {/* Expanded: per-table breakdown */}
         {expanded && (
-          <div className="mt-2 space-y-1 border-t pt-2">
-            {sorted.map(([table, count]) => (
-              <div key={table} className="flex items-center justify-between text-xs">
-                <span className="font-mono text-muted-foreground">{table}</span>
-                <span className="tabular-nums">{fmt(count)}</span>
-              </div>
-            ))}
+          <div className="mt-2 border-t pt-2">
+            <table className="w-full text-xs">
+              <thead>
+                <tr className="text-muted-foreground border-b">
+                  <th className="text-left py-1 pr-2">Table</th>
+                  <th className="text-right py-1 px-2">V1</th>
+                  <th className="text-right py-1 px-2">V2</th>
+                  <th className="text-right py-1 px-2">Delta</th>
+                  <th className="text-center py-1 pl-2">Match</th>
+                </tr>
+              </thead>
+              <tbody>
+                {group.entities
+                  .sort((a, b) => b.v1_count - a.v1_count)
+                  .map((e) => {
+                    const delta = e.v2_count - e.v1_count
+                    const isV2Only = e.v1_tid < 0
+                    const isV1Only = e.v2_tid < 0
+                    const match =
+                      !isV1Only &&
+                      !isV2Only &&
+                      e.v1_count > 0 &&
+                      Math.abs(delta) <= Math.max(e.v1_count * 0.001, 5)
+                    return (
+                      <tr key={e.entity} className="border-b last:border-0">
+                        <td className="py-1 pr-2 font-mono">
+                          {e.entity}
+                          {isV2Only && (
+                            <Badge variant="outline" className="ml-1 text-[8px]">
+                              V2 only
+                            </Badge>
+                          )}
+                          {isV1Only && (
+                            <Badge variant="outline" className="ml-1 text-[8px]">
+                              V1 only
+                            </Badge>
+                          )}
+                        </td>
+                        <td className="py-1 px-2 text-right tabular-nums">
+                          {e.v1_tid > 0 ? fmt(e.v1_count) : '-'}
+                        </td>
+                        <td className="py-1 px-2 text-right tabular-nums">
+                          {e.v2_tid > 0 ? fmt(e.v2_count) : '-'}
+                        </td>
+                        <td
+                          className={cn(
+                            'py-1 px-2 text-right tabular-nums',
+                            delta === 0
+                              ? 'text-green-600'
+                              : delta > 0
+                                ? 'text-blue-600'
+                                : 'text-amber-600'
+                          )}
+                        >
+                          {isV1Only || isV2Only ? '-' : `${delta > 0 ? '+' : ''}${fmt(delta)}`}
+                        </td>
+                        <td className="py-1 pl-2 text-center">
+                          {isV1Only || isV2Only ? (
+                            <span className="text-muted-foreground">-</span>
+                          ) : match ? (
+                            <CheckCircle2 className="h-3.5 w-3.5 text-green-600 inline" />
+                          ) : (
+                            <AlertCircle className="h-3.5 w-3.5 text-amber-500 inline" />
+                          )}
+                        </td>
+                      </tr>
+                    )
+                  })}
+              </tbody>
+            </table>
           </div>
         )}
       </CardContent>
@@ -202,7 +243,7 @@ export function RecordCensusTab() {
           <div>
             <h2 className="text-xl font-semibold">Record Census</h2>
             <p className="text-sm text-muted-foreground">
-              V1 production vs V2 normalized — the full picture
+              Like-for-like V1 vs V2 comparison via cross-workspace SQL
             </p>
           </div>
         </div>
@@ -224,7 +265,7 @@ export function RecordCensusTab() {
         </Card>
       )}
 
-      {/* V1 vs V2 Hero */}
+      {/* Loading */}
       {isLoading ? (
         <Card>
           <CardContent className="pt-6">
@@ -237,15 +278,16 @@ export function RecordCensusTab() {
         </Card>
       ) : data ? (
         <>
+          {/* Hero cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <Card className="border-2 border-blue-500/20 bg-blue-500/5">
               <CardContent className="pt-6 text-center">
                 <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1">
                   V1 Production
                 </p>
-                <p className="text-3xl font-bold tabular-nums">{fmt(data.grand_total)}</p>
+                <p className="text-3xl font-bold tabular-nums">{fmt(data.comparable_v1_total)}</p>
                 <p className="text-xs text-muted-foreground mt-1">
-                  {data.tables_counted} of {data.total_v1_tables} tables counted
+                  {data.comparable_tables} comparable tables
                 </p>
               </CardContent>
             </Card>
@@ -254,131 +296,81 @@ export function RecordCensusTab() {
                 <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1">
                   V2 Normalized
                 </p>
-                <p className="text-3xl font-bold tabular-nums">
-                  {data.v2_grand_total > 0 ? fmt(data.v2_grand_total) : fmt(data.sync_total_v2)}
-                </p>
+                <p className="text-3xl font-bold tabular-nums">{fmt(data.comparable_v2_total)}</p>
                 <p className="text-xs text-muted-foreground mt-1">
-                  {data.v2_grand_total > 0
-                    ? `${data.v2_tables_counted} of ${data.total_v2_tables} tables counted`
-                    : `${data.sync_entities.length} entities via sync pipeline`}
+                  {data.comparable_tables} comparable tables
                 </p>
               </CardContent>
             </Card>
-            <Card className="border-2 border-amber-500/20 bg-amber-500/5">
+            <Card
+              className={cn(
+                'border-2',
+                data.comparable_pct >= 99.5
+                  ? 'border-green-500/20 bg-green-500/5'
+                  : 'border-amber-500/20 bg-amber-500/5'
+              )}
+            >
               <CardContent className="pt-6 text-center">
                 <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1">
-                  Gap
+                  Coverage
                 </p>
-                <p className="text-3xl font-bold tabular-nums text-amber-600">
-                  {fmt(
-                    data.grand_total -
-                      (data.v2_grand_total > 0 ? data.v2_grand_total : data.sync_total_v2)
+                <p
+                  className={cn(
+                    'text-3xl font-bold tabular-nums',
+                    data.comparable_pct >= 99.5 ? 'text-green-600' : 'text-amber-600'
                   )}
+                >
+                  {data.comparable_pct.toFixed(2)}%
                 </p>
-                <p className="text-xs text-muted-foreground mt-1">records not yet in V2</p>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Gap: {fmt(data.comparable_gap)} records
+                </p>
               </CardContent>
             </Card>
           </div>
 
           {/* Overall progress bar */}
-          {(() => {
-            const v2Total = data.v2_grand_total > 0 ? data.v2_grand_total : data.sync_total_v2
-            const pct = data.grand_total > 0 ? (v2Total / data.grand_total) * 100 : 0
-            return (
-              <Card>
-                <CardContent className="pt-5 pb-5">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-medium">Overall V2 Coverage</span>
-                    <span className="text-sm font-bold tabular-nums">{pct.toFixed(1)}%</span>
-                  </div>
-                  <div className="h-3 rounded-full bg-muted overflow-hidden">
-                    <div
-                      className="h-full rounded-full bg-purple-500 transition-all"
-                      style={{ width: `${Math.min(pct, 100)}%` }}
-                    />
-                  </div>
-                  <p className="text-xs text-muted-foreground mt-2">
-                    {fmt(v2Total)} of {fmt(data.grand_total)} V1 records have corresponding V2 data.
-                    V2 needs all historical data for a seamless transition.
-                  </p>
-                </CardContent>
-              </Card>
-            )
-          })()}
+          <Card>
+            <CardContent className="pt-5 pb-5">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-sm font-medium">V2 Coverage (like-for-like)</span>
+                <span className="text-sm font-bold tabular-nums">
+                  {data.comparable_pct.toFixed(2)}%
+                </span>
+              </div>
+              <div className="h-3 rounded-full bg-muted overflow-hidden">
+                <div
+                  className={cn(
+                    'h-full rounded-full transition-all',
+                    data.comparable_pct >= 99.5 ? 'bg-green-500' : 'bg-purple-500'
+                  )}
+                  style={{ width: `${Math.min(data.comparable_pct, 100)}%` }}
+                />
+              </div>
+              <p className="text-xs text-muted-foreground mt-2">
+                {fmt(data.comparable_v2_total)} of {fmt(data.comparable_v1_total)} V1 records exist
+                in V2. Counting {data.total_entities} entities across 7 categories via
+                cross-workspace SQL.
+              </p>
+            </CardContent>
+          </Card>
+
+          {/* Category breakdown */}
+          <div>
+            <h3 className="text-sm font-medium mb-3">By Category</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {Object.entries(data.categories).map(([key, group]) => (
+                <CategorySection key={key} catKey={key} group={group} />
+              ))}
+            </div>
+          </div>
         </>
       ) : null}
-
-      {/* V1 Data Breakdown — what's in V1 that needs to come over */}
-      {!isLoading && data?.categories && (
-        <div>
-          <h3 className="text-sm font-medium mb-3">V1 Data Breakdown</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {Object.entries(data.categories).map(([key, catData]) => (
-              <CategoryCard key={key} catKey={key} data={catData} grandTotal={data.grand_total} />
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* V1→V2 Sync Progress */}
-      {!isLoading && data?.sync_entities && data.sync_entities.length > 0 && (
-        <Card>
-          <CardHeader className="pb-3">
-            <div className="flex items-center gap-2">
-              <Database className="h-4 w-4 text-primary" />
-              <CardTitle className="text-base">V1→V2 Sync Progress</CardTitle>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b text-xs text-muted-foreground">
-                    <th className="text-left py-2 pr-4">Entity</th>
-                    <th className="text-right py-2 px-4">V1 Count</th>
-                    <th className="text-right py-2 px-4">V2 Count</th>
-                    <th className="text-right py-2 px-4">Delta</th>
-                    <th className="text-right py-2 pl-4">Sync %</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {data.sync_entities.map((e) => {
-                    const delta = e.v2 - e.v1
-                    const pct = e.v1 > 0 ? ((e.v2 / e.v1) * 100).toFixed(1) : '—'
-                    return (
-                      <tr key={e.entity} className="border-b last:border-0">
-                        <td className="py-2 pr-4 font-medium capitalize">{e.entity}</td>
-                        <td className="py-2 px-4 text-right tabular-nums">{fmt(e.v1)}</td>
-                        <td className="py-2 px-4 text-right tabular-nums">{fmt(e.v2)}</td>
-                        <td
-                          className={`py-2 px-4 text-right tabular-nums ${
-                            delta === 0
-                              ? 'text-green-600'
-                              : delta > 0
-                                ? 'text-blue-600'
-                                : 'text-amber-600'
-                          }`}
-                        >
-                          {delta > 0 ? '+' : ''}
-                          {fmt(delta)}
-                        </td>
-                        <td className="py-2 pl-4 text-right tabular-nums">
-                          {pct === '—' ? pct : `${pct}%`}
-                        </td>
-                      </tr>
-                    )
-                  })}
-                </tbody>
-              </table>
-            </div>
-          </CardContent>
-        </Card>
-      )}
 
       {/* Timestamp */}
       {data?.timestamp && (
         <p className="text-[10px] text-muted-foreground text-right">
-          Data as of: {new Date(data.timestamp).toLocaleTimeString()}
+          Data as of: {new Date(data.timestamp).toLocaleString()}
         </p>
       )}
     </div>
