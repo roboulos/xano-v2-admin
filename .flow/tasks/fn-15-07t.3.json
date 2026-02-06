@@ -1,0 +1,14 @@
+{
+  "assignee": null,
+  "claim_note": "",
+  "claimed_at": null,
+  "created_at": "2026-02-06T04:28:46.401814Z",
+  "depends_on": [],
+  "epic": "fn-15-07t",
+  "id": "fn-15-07t.3",
+  "priority": 3,
+  "spec_path": ".flow/tasks/fn-15-07t.3.md",
+  "status": "todo",
+  "title": "Record Census Tab - V1 25.4M record visualization with migration scope",
+  "updated_at": "2026-02-06T04:28:46.401976Z"
+}

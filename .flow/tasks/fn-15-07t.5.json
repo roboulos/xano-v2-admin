@@ -1,0 +1,14 @@
+{
+  "assignee": null,
+  "claim_note": "",
+  "claimed_at": null,
+  "created_at": "2026-02-06T04:28:54.830751Z",
+  "depends_on": ["fn-15-07t.2", "fn-15-07t.3", "fn-15-07t.4"],
+  "epic": "fn-15-07t",
+  "id": "fn-15-07t.5",
+  "priority": 5,
+  "spec_path": ".flow/tasks/fn-15-07t.5.md",
+  "status": "todo",
+  "title": "Wire 3 Ecosystem tabs into page.tsx navigation",
+  "updated_at": "2026-02-06T04:28:54.831910Z"
+}
