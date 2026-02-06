@@ -90,37 +90,66 @@ type ViewMode =
   | 'record-census'
   | 'test-users'
 
-export default function Home() {
-  const [viewMode, setViewMode] = useState<ViewMode>('transformation')
+interface TabEntry {
+  id: ViewMode
+  label: string
+  icon: React.ComponentType<{ className?: string }>
+}
 
-  const viewModes = [
-    { id: 'transformation' as ViewMode, label: 'Transformation Story', icon: Sparkles },
-    { id: 'v1-v2-compare' as ViewMode, label: 'V1 vs V2', icon: Shield },
-    { id: 'proof-system' as ViewMode, label: 'Proof System', icon: FlaskConical },
-    { id: 'onboarding-story' as ViewMode, label: 'Onboarding Steps', icon: ListChecks },
-    { id: 'bg-tasks-story' as ViewMode, label: 'Job Queues', icon: Timer },
-    { id: 'sync-pipelines-story' as ViewMode, label: 'Sync Pipelines', icon: RefreshCw },
-    { id: 'schema-mapping-story' as ViewMode, label: 'Schema Map', icon: Map },
-    { id: 'webhooks-story' as ViewMode, label: 'Webhooks', icon: Webhook },
-    { id: 'functions-story' as ViewMode, label: 'Function Health', icon: HeartPulse },
-    { id: 'ecosystem-hub' as ViewMode, label: 'Ecosystem', icon: Building2 },
-    { id: 'record-census' as ViewMode, label: 'Record Census', icon: BarChart3 },
-    { id: 'test-users' as ViewMode, label: 'Test Users', icon: Users },
-    { id: 'migration-status' as ViewMode, label: 'Phase Tracker', icon: TrendingUp },
-    { id: 'gaps' as ViewMode, label: 'Gaps & Issues', icon: AlertCircle },
-    { id: 'checklist' as ViewMode, label: 'Checklists', icon: CheckCircle2 },
-    { id: 'blockers' as ViewMode, label: 'Blockers', icon: AlertTriangle },
-    { id: 'architecture' as ViewMode, label: 'Architecture', icon: BookOpen },
-    { id: 'endpoints' as ViewMode, label: 'Endpoints', icon: Globe },
-    { id: 'data-model' as ViewMode, label: 'Data Model', icon: Database },
-    { id: 'integrations' as ViewMode, label: 'Integrations', icon: Plug },
-    { id: 'live' as ViewMode, label: 'Live Status', icon: Activity },
-    { id: 'parallel' as ViewMode, label: 'Parallel Compare', icon: Columns },
-    { id: 'functions' as ViewMode, label: 'Functions Deep Dive', icon: Code },
-    { id: 'tasks' as ViewMode, label: 'Background Tasks', icon: Zap },
-    { id: 'schema' as ViewMode, label: 'Schema Changes', icon: GitCompare },
-    { id: 'validation' as ViewMode, label: 'Validation Status', icon: Layers },
-  ]
+type NavItem = TabEntry | { separator: string }
+
+const NAV_ITEMS: NavItem[] = [
+  // ── Big Picture ──
+  { separator: 'Ecosystem' },
+  { id: 'ecosystem-hub', label: 'Overview', icon: Building2 },
+  { id: 'record-census', label: 'Record Census', icon: BarChart3 },
+  { id: 'test-users', label: 'Test Users', icon: Users },
+
+  // ── The Story ──
+  { separator: 'Story' },
+  { id: 'transformation', label: 'Transformation', icon: Sparkles },
+  { id: 'v1-v2-compare', label: 'V1 vs V2', icon: Shield },
+
+  // ── Live Proof ──
+  { separator: 'Proof' },
+  { id: 'proof-system', label: 'Proof System', icon: FlaskConical },
+  { id: 'onboarding-story', label: 'Onboarding', icon: ListChecks },
+  { id: 'schema-mapping-story', label: 'Schema Map', icon: Map },
+
+  // ── Operations ──
+  { separator: 'Operations' },
+  { id: 'sync-pipelines-story', label: 'Sync Pipelines', icon: RefreshCw },
+  { id: 'bg-tasks-story', label: 'Job Queues', icon: Timer },
+  { id: 'webhooks-story', label: 'Webhooks', icon: Webhook },
+  { id: 'functions-story', label: 'Functions', icon: HeartPulse },
+
+  // ── Migration Management ──
+  { separator: 'Migration' },
+  { id: 'migration-status', label: 'Phase Tracker', icon: TrendingUp },
+  { id: 'gaps', label: 'Gaps', icon: AlertCircle },
+  { id: 'checklist', label: 'Checklists', icon: CheckCircle2 },
+  { id: 'blockers', label: 'Blockers', icon: AlertTriangle },
+
+  // ── Deep Dives ──
+  { separator: 'Reference' },
+  { id: 'architecture', label: 'Architecture', icon: BookOpen },
+  { id: 'data-model', label: 'Data Model', icon: Database },
+  { id: 'endpoints', label: 'Endpoints', icon: Globe },
+  { id: 'integrations', label: 'Integrations', icon: Plug },
+  { id: 'live', label: 'Live Status', icon: Activity },
+  { id: 'parallel', label: 'Parallel Compare', icon: Columns },
+  { id: 'functions', label: 'Functions Deep Dive', icon: Code },
+  { id: 'tasks', label: 'Background Tasks', icon: Zap },
+  { id: 'schema', label: 'Schema Changes', icon: GitCompare },
+  { id: 'validation', label: 'Validation', icon: Layers },
+]
+
+function isSeparator(item: NavItem): item is { separator: string } {
+  return 'separator' in item
+}
+
+export default function Home() {
+  const [viewMode, setViewMode] = useState<ViewMode>('ecosystem-hub')
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5">
@@ -128,9 +157,9 @@ export default function Home() {
         {/* Header */}
         <div className="mb-8 flex items-start justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold mb-2">Xano V2 Admin System</h1>
+            <h1 className="text-3xl font-bold mb-2">Agent Dashboards Command Center</h1>
             <p className="text-muted-foreground">
-              System documentation, migration tracking, and live verification tools
+              3 projects &middot; 2 Xano workspaces &middot; 25.4M records &middot; V1→V2 migration
             </p>
           </div>
           <div className="shrink-0 pt-1">
@@ -138,28 +167,49 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Tab Navigation */}
+        {/* Tab Navigation — grouped with separators */}
         <div className="overflow-x-auto overflow-y-hidden -mx-4 px-4 mb-6">
-          <div className="flex items-center gap-2 p-1 bg-muted/50 rounded-lg w-fit">
-            {viewModes.map((mode) => (
-              <button
-                key={mode.id}
-                onClick={() => setViewMode(mode.id)}
-                className={`flex items-center gap-2 px-6 py-3 rounded-md text-sm font-medium transition-all ${
-                  viewMode === mode.id
-                    ? 'bg-background shadow-sm text-foreground'
-                    : 'text-muted-foreground hover:text-foreground hover:bg-background/50'
-                }`}
-              >
-                <mode.icon className="h-4 w-4" />
-                {mode.label}
-              </button>
-            ))}
+          <div className="flex items-center gap-1 p-1 bg-muted/50 rounded-lg w-fit">
+            {NAV_ITEMS.map((item, i) => {
+              if (isSeparator(item)) {
+                return (
+                  <div key={item.separator} className="flex items-center">
+                    {i > 0 && <div className="w-px h-6 bg-border mx-1.5" />}
+                    <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground/60 px-2 select-none">
+                      {item.separator}
+                    </span>
+                  </div>
+                )
+              }
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => setViewMode(item.id)}
+                  className={`flex items-center gap-1.5 px-3 py-2 rounded-md text-xs font-medium transition-all whitespace-nowrap ${
+                    viewMode === item.id
+                      ? 'bg-background shadow-sm text-foreground'
+                      : 'text-muted-foreground hover:text-foreground hover:bg-background/50'
+                  }`}
+                >
+                  <item.icon className="h-3.5 w-3.5" />
+                  {item.label}
+                </button>
+              )
+            })}
           </div>
         </div>
 
         {/* Content */}
         <div className="mt-6">
+          <ErrorBoundary title="Ecosystem Overview">
+            {viewMode === 'ecosystem-hub' && <EcosystemHubTab />}
+          </ErrorBoundary>
+          <ErrorBoundary title="Record Census">
+            {viewMode === 'record-census' && <RecordCensusTab />}
+          </ErrorBoundary>
+          <ErrorBoundary title="Test Users">
+            {viewMode === 'test-users' && <TestUsersTab />}
+          </ErrorBoundary>
           <ErrorBoundary title="Transformation Story">
             {viewMode === 'transformation' && <TransformationStoryTab />}
           </ErrorBoundary>
@@ -172,29 +222,20 @@ export default function Home() {
           <ErrorBoundary title="Onboarding Steps">
             {viewMode === 'onboarding-story' && <OnboardingStoryTab />}
           </ErrorBoundary>
-          <ErrorBoundary title="Job Queues">
-            {viewMode === 'bg-tasks-story' && <BackgroundTasksStoryTab />}
+          <ErrorBoundary title="Schema Map">
+            {viewMode === 'schema-mapping-story' && <SchemaMappingStoryTab />}
           </ErrorBoundary>
           <ErrorBoundary title="Sync Pipelines">
             {viewMode === 'sync-pipelines-story' && <SyncPipelinesStoryTab />}
           </ErrorBoundary>
-          <ErrorBoundary title="Schema Map">
-            {viewMode === 'schema-mapping-story' && <SchemaMappingStoryTab />}
+          <ErrorBoundary title="Job Queues">
+            {viewMode === 'bg-tasks-story' && <BackgroundTasksStoryTab />}
           </ErrorBoundary>
           <ErrorBoundary title="Webhooks">
             {viewMode === 'webhooks-story' && <WebhooksStoryTab />}
           </ErrorBoundary>
           <ErrorBoundary title="Function Health">
             {viewMode === 'functions-story' && <FunctionsStoryTab />}
-          </ErrorBoundary>
-          <ErrorBoundary title="Ecosystem Hub">
-            {viewMode === 'ecosystem-hub' && <EcosystemHubTab />}
-          </ErrorBoundary>
-          <ErrorBoundary title="Record Census">
-            {viewMode === 'record-census' && <RecordCensusTab />}
-          </ErrorBoundary>
-          <ErrorBoundary title="Test Users">
-            {viewMode === 'test-users' && <TestUsersTab />}
           </ErrorBoundary>
           <ErrorBoundary title="Migration Status">
             {viewMode === 'migration-status' && <StatusDashboardTab />}
@@ -209,11 +250,11 @@ export default function Home() {
           <ErrorBoundary title="Architecture">
             {viewMode === 'architecture' && <ArchitectureTab />}
           </ErrorBoundary>
-          <ErrorBoundary title="Endpoint Catalog">
-            {viewMode === 'endpoints' && <EndpointCatalogTab />}
-          </ErrorBoundary>
           <ErrorBoundary title="Data Model">
             {viewMode === 'data-model' && <DataModelTab />}
+          </ErrorBoundary>
+          <ErrorBoundary title="Endpoint Catalog">
+            {viewMode === 'endpoints' && <EndpointCatalogTab />}
           </ErrorBoundary>
           <ErrorBoundary title="Integration Guide">
             {viewMode === 'integrations' && <IntegrationGuideTab />}
