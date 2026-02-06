@@ -58,8 +58,8 @@ interface UsersListResponse {
 const RECENT_USERS_KEY = 'xano-v2-admin-recent-users'
 const MAX_RECENT_USERS = 5
 
-/** Known verified test users. User 60 (David Keener) is the primary. */
-const VERIFIED_USER_IDS = new Set([60])
+/** Known verified test users. User 7 (David Keener) is the primary. */
+const VERIFIED_USER_IDS = new Set([7])
 
 // ---------------------------------------------------------------------------
 // Helpers
