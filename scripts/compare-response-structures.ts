@@ -31,10 +31,12 @@ const V1_AUTH_URL = `${V1_BASE}/api:lkmcgxf_:v1.5/auth/login`
 const V2_AUTH_URL = `${V2_BASE}/api:i6a062_x/auth/test-login`
 
 // Test user credentials from environment variables
+// NOTE: user_id 60 is David Keener's V1 ID. For V2 comparisons, he is user 7.
+// This script compares V1 vs V2, so it uses V1 ID for V1 queries.
 const TEST_USER = {
   email: process.env.TEST_USER_EMAIL || 'dave@premieregrp.com',
   password: process.env.TEST_USER_PASSWORD || '',
-  user_id: parseInt(process.env.TEST_USER_ID || '60', 10),
+  user_id: parseInt(process.env.TEST_USER_ID || '60', 10), // V1 user ID
 }
 
 // Validate required environment variables
@@ -130,14 +132,14 @@ function compareStructures(v1Data: any, v2Data: any): { differences: string[]; m
   const differences: string[] = []
 
   // Fields in V1 but not V2
-  v1Structure.forEach(field => {
+  v1Structure.forEach((field) => {
     if (!v2Set.has(field)) {
       differences.push(`V1 has: ${field}`)
     }
   })
 
   // Fields in V2 but not V1
-  v2Structure.forEach(field => {
+  v2Structure.forEach((field) => {
     if (!v1Set.has(field)) {
       differences.push(`V2 has: ${field}`)
     }
@@ -214,7 +216,7 @@ const ENDPOINTS_TO_TEST = [
 ]
 
 async function compareEndpoint(
-  endpoint: typeof ENDPOINTS_TO_TEST[0],
+  endpoint: (typeof ENDPOINTS_TO_TEST)[0],
   v1Token: string,
   v2Token: string
 ): Promise<ComparisonResult> {
@@ -308,8 +310,8 @@ async function main() {
   console.log('📊 COMPARISON REPORT')
   console.log('='.repeat(80) + '\n')
 
-  const matches = results.filter(r => r.match).length
-  const mismatches = results.filter(r => !r.match).length
+  const matches = results.filter((r) => r.match).length
+  const mismatches = results.filter((r) => !r.match).length
 
   console.log(`✅ Matches: ${matches}/${results.length}`)
   console.log(`❌ Mismatches: ${mismatches}/${results.length}`)
@@ -320,16 +322,18 @@ async function main() {
     console.log('❌ MISMATCHES DETAILS')
     console.log('='.repeat(80) + '\n')
 
-    results.filter(r => !r.match).forEach(result => {
-      console.log(`\n🔴 ${result.endpoint}`)
-      console.log(`   Differences (${result.differences.length}):`)
-      result.differences.slice(0, 20).forEach(diff => {
-        console.log(`   - ${diff}`)
+    results
+      .filter((r) => !r.match)
+      .forEach((result) => {
+        console.log(`\n🔴 ${result.endpoint}`)
+        console.log(`   Differences (${result.differences.length}):`)
+        result.differences.slice(0, 20).forEach((diff) => {
+          console.log(`   - ${diff}`)
+        })
+        if (result.differences.length > 20) {
+          console.log(`   ... and ${result.differences.length - 20} more`)
+        }
       })
-      if (result.differences.length > 20) {
-        console.log(`   ... and ${result.differences.length - 20} more`)
-      }
-    })
   }
 
   // Save detailed results

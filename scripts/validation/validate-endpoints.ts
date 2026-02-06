@@ -68,6 +68,9 @@ const XANO_BACKEND_ISSUES = new Set([
 /**
  * Required test parameters for specific endpoints
  * Maps endpoint path to required params
+ *
+ * NOTE: /admin/resync-user uses user_id 60 (V1 ID) intentionally - it's a migration endpoint
+ * that resyncs V1 user data to V2. Other V2 native endpoints should use user_id 7 (David Keener in V2).
  */
 const ENDPOINT_TEST_PARAMS: Record<string, Record<string, unknown>> = {
   '/leaderboard/computed': {
@@ -76,7 +79,7 @@ const ENDPOINT_TEST_PARAMS: Record<string, Record<string, unknown>> = {
     metric: 'volume',
     team_id: 1,
   },
-  '/admin/resync-user': { user_id: 60 },
+  '/admin/resync-user': { user_id: 60 }, // V1 user ID for migration testing
   '/reset-transaction-errors': { batch_size: 10 },
   '/clear/all': { confirm: true },
 }

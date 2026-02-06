@@ -903,19 +903,29 @@ curl -s -X POST "https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:20LTQtIX/syn
 
 ## Quick Reference: Verified Test User
 
-**IMPORTANT:** User 60 (David Keener) is the VERIFIED test user with extensive testing history.
+**CRITICAL: David Keener User ID Mapping**
 
-| User         | ID  | Agent ID | Team ID | Notes                                              |
-| ------------ | --- | -------- | ------- | -------------------------------------------------- |
-| David Keener | 60  | 37208    | 1       | PRIMARY test user - see TRIGGER_ENDPOINTS_AUDIT.md |
+David Keener is the PRIMARY test user with extensive testing history. **Different user IDs in each workspace:**
 
-**For Demo Users (v0-demo-sync-admin-interface):**
+| Workspace | Instance       | User ID | Agent ID | Team ID | Notes                              |
+| --------- | -------------- | ------- | -------- | ------- | ---------------------------------- |
+| **V1**    | xmpx-swi5-tlvy | **60**  | 37208    | 1       | Production - V1 endpoints use this |
+| **V2**    | x2nu-xcjc-vhax | **7**   | 37208    | 1       | Refactored - V2 endpoints use this |
 
-| User            | ID  | Email                            | Type               |
-| --------------- | --- | -------------------------------- | ------------------ |
-| Michael Johnson | 7   | michael@demo.agentdashboards.com | Team Owner (Admin) |
-| Sarah Williams  | 256 | sarah@demo.agentdashboards.com   | Team Member        |
-| James Anderson  | 133 | james@demo.agentdashboards.com   | Network Builder    |
+**Which ID to Use:**
+
+- **V1 endpoints** (xmpx-swi5-tlvy.n7c.xano.io): Always use `user_id: 60`
+- **V2 native endpoints** (x2nu-xcjc-vhax.agentdashboards.xano.io): Use `user_id: 7`
+- **V2 migration/sync endpoints**: May accept V1 `user_id: 60` for V1→V2 data sync testing
+- **Frontend User Picker**: Shows V2 IDs - select user **7** for David Keener
+
+**For Demo Users (v0-demo-sync-admin-interface - V2 workspace only):**
+
+| User            | V2 ID | Email                            | Type               |
+| --------------- | ----- | -------------------------------- | ------------------ |
+| Michael Johnson | 7     | michael@demo.agentdashboards.com | Team Owner (Admin) |
+| Sarah Williams  | 256   | sarah@demo.agentdashboards.com   | Team Member        |
+| James Anderson  | 133   | james@demo.agentdashboards.com   | Network Builder    |
 
 **Password:** `AgentDashboards143!`
 
@@ -924,16 +934,21 @@ curl -s -X POST "https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:20LTQtIX/syn
 Full testing documentation is in the agent_dashboards_2 project:
 
 - **File:** `/Users/sboulos/Desktop/ai_projects/agent_dashboards_2/TRIGGER_ENDPOINTS_AUDIT.md`
-- **Pass Rate:** 32/38 endpoints (84%) with user 60
+- **Pass Rate:** 32/38 endpoints (84%) with V1 user 60
 - **Working Groups:** FUB (9/9), Metrics (5/5), Network (4/4), Utility (3/3)
 
-### curl Test Template
+### curl Test Templates
 
 ```bash
-# Test any WORKERS endpoint with verified user 60
+# Test V1 WORKERS endpoint with David Keener (V1 user_id 60)
 curl -s -X POST "https://xmpx-swi5-tlvy.n7c.xano.io/api:4UsTtl3m/ENDPOINT" \
   -H "Content-Type: application/json" \
   -d '{"user_id": 60}'
+
+# Test V2 endpoint with David Keener (V2 user_id 7)
+curl -s -X POST "https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:4UsTtl3m/ENDPOINT" \
+  -H "Content-Type: application/json" \
+  -d '{"user_id": 7}'
 ```
 
 ---

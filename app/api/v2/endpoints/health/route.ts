@@ -43,17 +43,17 @@ async function testEndpoint(endpoint: (typeof MCP_ENDPOINTS)[0]): Promise<Endpoi
   // For GET requests with user_id, add query param
   let fullUrl = `${baseUrl}${endpoint.endpoint}`
   if (endpoint.method === 'GET' && endpoint.requiresUserId) {
-    const params = new URLSearchParams({ user_id: '60' })
+    const params = new URLSearchParams({ user_id: '7' }) // V2 user (David Keener)
     fullUrl = `${fullUrl}?${params.toString()}`
   }
 
   const startTime = Date.now()
 
   try {
-    // For POST requests that require user_id, use test user 60 (David Keener)
+    // For POST requests that require user_id, use V2 test user 7 (David Keener)
     let body: Record<string, unknown> = {}
     if (endpoint.method === 'POST' && endpoint.requiresUserId) {
-      body.user_id = 60
+      body.user_id = 7
     }
     // Merge in any additional required params
     if (endpoint.additionalParams) {

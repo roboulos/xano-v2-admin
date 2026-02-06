@@ -1,11 +1,11 @@
-"use client"
+'use client'
 
-import { useState, useCallback } from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import { useState, useCallback } from 'react'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 import {
   Table,
   TableBody,
@@ -13,12 +13,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible"
+} from '@/components/ui/table'
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import {
   Play,
   CheckCircle2,
@@ -31,8 +27,8 @@ import {
   ArrowLeft,
   Search,
   Filter,
-} from "lucide-react"
-import Link from "next/link"
+} from 'lucide-react'
+import Link from 'next/link'
 import {
   TEST_ENDPOINTS,
   TEST_API_BASE,
@@ -43,22 +39,22 @@ import {
   generateCurlCommand,
   type TestEndpoint,
   type TestEndpointCategory,
-} from "@/lib/test-endpoints-inventory"
+} from '@/lib/test-endpoints-inventory'
 
 const CATEGORY_LABELS: Record<TestEndpointCategory, { label: string; color: string }> = {
-  fub: { label: "FUB", color: "bg-purple-100 text-purple-700" },
-  rezen: { label: "reZEN", color: "bg-blue-100 text-blue-700" },
-  skyslope: { label: "SkySlope", color: "bg-green-100 text-green-700" },
-  metrics: { label: "Metrics", color: "bg-orange-100 text-orange-700" },
-  network: { label: "Network", color: "bg-cyan-100 text-cyan-700" },
-  utility: { label: "Utility", color: "bg-gray-100 text-gray-700" },
-  aggregation: { label: "Aggregation", color: "bg-yellow-100 text-yellow-700" },
-  system: { label: "System", color: "bg-red-100 text-red-700" },
-  seeding: { label: "Seeding", color: "bg-pink-100 text-pink-700" },
+  fub: { label: 'FUB', color: 'bg-purple-100 text-purple-700' },
+  rezen: { label: 'reZEN', color: 'bg-blue-100 text-blue-700' },
+  skyslope: { label: 'SkySlope', color: 'bg-green-100 text-green-700' },
+  metrics: { label: 'Metrics', color: 'bg-orange-100 text-orange-700' },
+  network: { label: 'Network', color: 'bg-cyan-100 text-cyan-700' },
+  utility: { label: 'Utility', color: 'bg-gray-100 text-gray-700' },
+  aggregation: { label: 'Aggregation', color: 'bg-yellow-100 text-yellow-700' },
+  system: { label: 'System', color: 'bg-red-100 text-red-700' },
+  seeding: { label: 'Seeding', color: 'bg-pink-100 text-pink-700' },
 }
 
-function StatusBadge({ result }: { result?: "pass" | "fail" | "untested" }) {
-  if (result === "pass") {
+function StatusBadge({ result }: { result?: 'pass' | 'fail' | 'untested' }) {
+  if (result === 'pass') {
     return (
       <Badge className="bg-green-100 text-green-700">
         <CheckCircle2 className="h-3 w-3 mr-1" />
@@ -66,7 +62,7 @@ function StatusBadge({ result }: { result?: "pass" | "fail" | "untested" }) {
       </Badge>
     )
   }
-  if (result === "fail") {
+  if (result === 'fail') {
     return (
       <Badge className="bg-red-100 text-red-700">
         <XCircle className="h-3 w-3 mr-1" />
@@ -95,7 +91,7 @@ function EndpointRow({
 }) {
   const [isOpen, setIsOpen] = useState(false)
   const [copied, setCopied] = useState(false)
-  const [localResult, setLocalResult] = useState<"pass" | "fail" | "untested" | undefined>(
+  const [localResult, setLocalResult] = useState<'pass' | 'fail' | 'untested' | undefined>(
     endpoint.testResult
   )
   const [testOutput, setTestOutput] = useState<string | null>(null)
@@ -116,21 +112,21 @@ function EndpointRow({
 
       const response = await fetch(url, {
         method: endpoint.method,
-        headers: { "Content-Type": "application/json" },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(inputs),
       })
       const data = await response.json()
 
-      if (response.ok && (data.success !== false)) {
-        setLocalResult("pass")
+      if (response.ok && data.success !== false) {
+        setLocalResult('pass')
         setTestOutput(JSON.stringify(data, null, 2).slice(0, 1000))
       } else {
-        setLocalResult("fail")
+        setLocalResult('fail')
         setTestOutput(JSON.stringify(data, null, 2).slice(0, 1000))
       }
     } catch (err) {
-      setLocalResult("fail")
-      setTestOutput(err instanceof Error ? err.message : "Network error")
+      setLocalResult('fail')
+      setTestOutput(err instanceof Error ? err.message : 'Network error')
     }
   }
 
@@ -214,9 +210,7 @@ function EndpointRow({
               )}
               <div>
                 <span className="text-sm font-medium">Requires User ID:</span>
-                <span className="ml-2 text-sm">
-                  {endpoint.requiresUserId ? "Yes" : "No"}
-                </span>
+                <span className="ml-2 text-sm">{endpoint.requiresUserId ? 'Yes' : 'No'}</span>
               </div>
               <div>
                 <span className="text-sm font-medium">Default Inputs:</span>
@@ -253,9 +247,9 @@ function EndpointRow({
 }
 
 export default function TestEndpointsPage() {
-  const [userId, setUserId] = useState<number>(VERIFIED_TEST_USER.id)
-  const [searchQuery, setSearchQuery] = useState("")
-  const [categoryFilter, setCategoryFilter] = useState<TestEndpointCategory | "all">("all")
+  const [userId, setUserId] = useState<number>(VERIFIED_TEST_USER.v1_id) // Default to V1 ID for migration endpoints
+  const [searchQuery, setSearchQuery] = useState('')
+  const [categoryFilter, setCategoryFilter] = useState<TestEndpointCategory | 'all'>('all')
   const [isRunningAll, setIsRunningAll] = useState(false)
 
   const stats = getTestStats()
@@ -263,13 +257,12 @@ export default function TestEndpointsPage() {
   // Filter endpoints based on search and category
   const filteredEndpoints = TEST_ENDPOINTS.filter((endpoint) => {
     const matchesSearch =
-      searchQuery === "" ||
+      searchQuery === '' ||
       endpoint.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       endpoint.path.toLowerCase().includes(searchQuery.toLowerCase()) ||
       endpoint.description.toLowerCase().includes(searchQuery.toLowerCase())
 
-    const matchesCategory =
-      categoryFilter === "all" || endpoint.category === categoryFilter
+    const matchesCategory = categoryFilter === 'all' || endpoint.category === categoryFilter
 
     return matchesSearch && matchesCategory
   })
@@ -347,16 +340,19 @@ export default function TestEndpointsPage() {
             <div className="flex flex-wrap items-center gap-4">
               {/* User ID Input */}
               <div className="flex items-center gap-2">
-                <Label htmlFor="userId" className="text-sm">Test User ID:</Label>
+                <Label htmlFor="userId" className="text-sm">
+                  Test User ID:
+                </Label>
                 <Input
                   id="userId"
                   type="number"
                   value={userId}
-                  onChange={(e) => setUserId(parseInt(e.target.value) || VERIFIED_TEST_USER.id)}
+                  onChange={(e) => setUserId(parseInt(e.target.value) || VERIFIED_TEST_USER.v1_id)}
                   className="w-24"
                 />
                 <span className="text-xs text-muted-foreground">
-                  Verified: {VERIFIED_TEST_USER.name} (ID: {VERIFIED_TEST_USER.id})
+                  Verified: {VERIFIED_TEST_USER.name} (V1 ID: {VERIFIED_TEST_USER.v1_id} | V2 ID:{' '}
+                  {VERIFIED_TEST_USER.v2_id})
                 </span>
               </div>
 
@@ -378,7 +374,9 @@ export default function TestEndpointsPage() {
                 <Filter className="h-4 w-4 text-muted-foreground" />
                 <select
                   value={categoryFilter}
-                  onChange={(e) => setCategoryFilter(e.target.value as TestEndpointCategory | "all")}
+                  onChange={(e) =>
+                    setCategoryFilter(e.target.value as TestEndpointCategory | 'all')
+                  }
                   className="border rounded px-2 py-1 text-sm"
                 >
                   <option value="all">All Categories</option>
@@ -413,9 +411,7 @@ export default function TestEndpointsPage() {
         <Card>
           <CardHeader className="pb-4">
             <div className="flex items-center justify-between">
-              <CardTitle className="text-lg">
-                Endpoints ({filteredEndpoints.length})
-              </CardTitle>
+              <CardTitle className="text-lg">Endpoints ({filteredEndpoints.length})</CardTitle>
               <Badge variant="outline" className="font-mono text-xs">
                 {TEST_API_BASE}
               </Badge>
@@ -456,7 +452,8 @@ export default function TestEndpointsPage() {
         <div className="mt-8 text-center text-sm text-muted-foreground">
           <p>Test Endpoints Inventory - Machine 2.0 Tests API Group</p>
           <p className="text-xs mt-1">
-            Based on TRIGGER_ENDPOINTS_AUDIT.md - {stats.passing}/{stats.testedCount} tests passing ({stats.passRate}%)
+            Based on TRIGGER_ENDPOINTS_AUDIT.md - {stats.passing}/{stats.testedCount} tests passing
+            ({stats.passRate}%)
           </p>
         </div>
       </div>

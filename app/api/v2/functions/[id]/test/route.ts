@@ -18,17 +18,14 @@ interface TestParams {
   [key: string]: unknown
 }
 
-export async function POST(
-  request: Request,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export async function POST(request: Request, { params }: { params: Promise<{ id: string }> }) {
   const startTime = Date.now()
 
   try {
     const resolvedParams = await params
     const functionId = parseInt(resolvedParams.id)
-    const body = await request.json() as { testParams?: TestParams }
-    const testParams = body.testParams || { user_id: 60 } // Default to test user 60
+    const body = (await request.json()) as { testParams?: TestParams }
+    const testParams = body.testParams || { user_id: 7 } // Default to V2 test user (David Keener = user 7 in V2)
 
     // Get function details to understand inputs
     const snappyPath = '/Users/sboulos/Desktop/ai_projects/snappy-cli/bin/snappy'
@@ -36,11 +33,11 @@ export async function POST(
       instance: 'x2nu-xcjc-vhax.agentdashboards.xano.io',
       workspace: 5,
       branch: 'live',
-      function_id: functionId
+      function_id: functionId,
     })}' --json`
 
     const { stdout: getFuncStdout } = await execAsync(getFunctionCmd, {
-      maxBuffer: 10 * 1024 * 1024
+      maxBuffer: 10 * 1024 * 1024,
     })
 
     const jsonMatch = getFuncStdout.match(/\{[\s\S]*\}/)
@@ -101,18 +98,21 @@ response = {
       tested_at: new Date().toISOString(),
       status: 'simulated', // 'passed' | 'failed' | 'simulated'
       message: 'Function validation successful (endpoint creation simulated)',
-      function_type: functionData.type || 'Unknown'
+      function_type: functionData.type || 'Unknown',
     })
   } catch (error: unknown) {
     const executionTime = Date.now() - startTime
     console.error('[Function Test API] Error:', error)
 
-    return NextResponse.json({
-      success: false,
-      error: error instanceof Error ? error.message : 'Unknown error',
-      execution_time_ms: executionTime,
-      tested_at: new Date().toISOString(),
-      status: 'failed'
-    }, { status: 500 })
+    return NextResponse.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error',
+        execution_time_ms: executionTime,
+        tested_at: new Date().toISOString(),
+        status: 'failed',
+      },
+      { status: 500 }
+    )
   }
 }

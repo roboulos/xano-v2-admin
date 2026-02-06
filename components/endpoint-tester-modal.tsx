@@ -65,10 +65,13 @@ export function EndpointTesterModal({
 
     if (endpoint.method === 'GET') {
       const queryString = new URLSearchParams(
-        Object.entries(params).reduce((acc, [key, value]) => {
-          acc[key] = String(value)
-          return acc
-        }, {} as Record<string, string>)
+        Object.entries(params).reduce(
+          (acc, [key, value]) => {
+            acc[key] = String(value)
+            return acc
+          },
+          {} as Record<string, string>
+        )
       ).toString()
       return `curl -X GET "${fullUrl}${queryString ? `?${queryString}` : ''}" \\
   -H "Content-Type: application/json"`
@@ -122,7 +125,7 @@ export function EndpointTesterModal({
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          user_id: endpoint.requiresUserId ? parseInt(userId) || 60 : undefined,
+          user_id: endpoint.requiresUserId ? parseInt(userId) || 7 : undefined, // V2 default user
           params,
         }),
       })
@@ -222,12 +225,7 @@ export function EndpointTesterModal({
           <div className="space-y-2">
             <div className="flex items-center justify-between">
               <Label>cURL Command</Label>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={handleCopyCurl}
-                className="h-8 text-xs"
-              >
+              <Button variant="ghost" size="sm" onClick={handleCopyCurl} className="h-8 text-xs">
                 {copiedCurl ? (
                   <>
                     <CheckCircle2 className="h-3 w-3 mr-1" />

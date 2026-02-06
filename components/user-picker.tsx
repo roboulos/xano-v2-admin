@@ -6,7 +6,7 @@
  * Features:
  * - Type-ahead search filtering by name, email, or user ID
  * - Recently selected users shown at top (max 5, persisted to localStorage)
- * - Verified test users highlighted (user 60 = David Keener)
+ * - Verified test users highlighted (user 7 = David Keener in V2)
  * - Loading skeleton while fetching
  * - Keyboard navigation (arrow keys, enter, escape)
  * - Updates UserContext on selection change

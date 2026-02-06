@@ -2,7 +2,7 @@
 // GET: Returns all test endpoints from inventory
 // POST: Runs a test endpoint with specified parameters
 
-import { NextRequest, NextResponse } from "next/server"
+import { NextRequest, NextResponse } from 'next/server'
 import {
   TEST_ENDPOINTS,
   TEST_API_BASE,
@@ -10,29 +10,29 @@ import {
   getTestStats,
   buildTestUrl,
   type TestEndpoint,
-} from "@/lib/test-endpoints-inventory"
+} from '@/lib/test-endpoints-inventory'
 
 // GET /api/test-endpoints - Returns all test endpoints with stats
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url)
-  const category = searchParams.get("category")
-  const status = searchParams.get("status")
+  const category = searchParams.get('category')
+  const status = searchParams.get('status')
 
   let endpoints = [...TEST_ENDPOINTS]
 
   // Filter by category if specified
-  if (category && category !== "all") {
+  if (category && category !== 'all') {
     endpoints = endpoints.filter((e) => e.category === category)
   }
 
   // Filter by status if specified
   if (status) {
-    if (status === "pass") {
-      endpoints = endpoints.filter((e) => e.testResult === "pass")
-    } else if (status === "fail") {
-      endpoints = endpoints.filter((e) => e.testResult === "fail")
-    } else if (status === "untested") {
-      endpoints = endpoints.filter((e) => e.testResult === "untested" || !e.testResult)
+    if (status === 'pass') {
+      endpoints = endpoints.filter((e) => e.testResult === 'pass')
+    } else if (status === 'fail') {
+      endpoints = endpoints.filter((e) => e.testResult === 'fail')
+    } else if (status === 'untested') {
+      endpoints = endpoints.filter((e) => e.testResult === 'untested' || !e.testResult)
     }
   }
 
@@ -44,7 +44,7 @@ export async function GET(request: NextRequest) {
     stats,
     metadata: {
       apiGroup: 659,
-      canonical: "20LTQtIX",
+      canonical: '20LTQtIX',
       baseUrl: TEST_API_BASE,
       verifiedTestUser: VERIFIED_TEST_USER,
     },
@@ -55,7 +55,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { endpointId, userId = VERIFIED_TEST_USER.id } = body
+    const { endpointId, userId = VERIFIED_TEST_USER.v1_id } = body // Default to V1 ID for migration endpoints
 
     // Find the endpoint
     const endpoint = TEST_ENDPOINTS.find((e) => e.id === endpointId)
@@ -81,7 +81,7 @@ export async function POST(request: NextRequest) {
     const response = await fetch(url, {
       method: endpoint.method,
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(inputs),
     })
@@ -97,7 +97,7 @@ export async function POST(request: NextRequest) {
       data = await response.json()
       // Check for success - endpoint might return { success: true/false } or just be a successful response
       if (response.ok) {
-        if (typeof data === "object" && data !== null && "success" in data) {
+        if (typeof data === 'object' && data !== null && 'success' in data) {
           isSuccess = (data as { success: boolean }).success !== false
         } else {
           isSuccess = true
@@ -105,13 +105,13 @@ export async function POST(request: NextRequest) {
       } else {
         isSuccess = false
         errorMessage =
-          typeof data === "object" && data !== null && "message" in data
+          typeof data === 'object' && data !== null && 'message' in data
             ? String((data as { message: string }).message)
             : `HTTP ${response.status}`
       }
     } catch (parseError) {
       isSuccess = response.ok
-      errorMessage = parseError instanceof Error ? parseError.message : "Failed to parse response"
+      errorMessage = parseError instanceof Error ? parseError.message : 'Failed to parse response'
     }
 
     return NextResponse.json({
@@ -119,7 +119,7 @@ export async function POST(request: NextRequest) {
       result: {
         endpointId: endpoint.id,
         endpointPath: endpoint.path,
-        testResult: isSuccess ? "pass" : "fail",
+        testResult: isSuccess ? 'pass' : 'fail',
         httpStatus: response.status,
         duration,
         data,
@@ -132,7 +132,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       {
         success: false,
-        error: error instanceof Error ? error.message : "Unknown error occurred",
+        error: error instanceof Error ? error.message : 'Unknown error occurred',
       },
       { status: 500 }
     )

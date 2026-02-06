@@ -26,13 +26,16 @@ export async function POST(request: Request) {
   try {
     const body = await request.json()
     const functionIds: number[] = body.functionIds || []
-    const testParams = body.testParams || { user_id: 60 }
+    const testParams = body.testParams || { user_id: 7 } // V2 test user (David Keener = user 7 in V2)
 
     if (functionIds.length === 0) {
-      return NextResponse.json({
-        success: false,
-        error: 'No function IDs provided'
-      }, { status: 400 })
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'No function IDs provided',
+        },
+        { status: 400 }
+      )
     }
 
     // Test each function
@@ -48,7 +51,7 @@ export async function POST(request: Request) {
           {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ testParams })
+            body: JSON.stringify({ testParams }),
           }
         )
 
@@ -62,7 +65,7 @@ export async function POST(request: Request) {
           tested_at: testResult.tested_at,
           status: testResult.status || (testResult.success ? 'passed' : 'failed'),
           error: testResult.error,
-          message: testResult.message
+          message: testResult.message,
         })
 
         if (testResult.success) {
@@ -78,7 +81,7 @@ export async function POST(request: Request) {
           execution_time_ms: 0,
           tested_at: new Date().toISOString(),
           status: 'failed',
-          error: error instanceof Error ? error.message : 'Unknown error'
+          error: error instanceof Error ? error.message : 'Unknown error',
         })
         failed++
       }
@@ -97,14 +100,17 @@ export async function POST(request: Request) {
         pass_rate: Math.round((passed / results.length) * 100),
         avg_execution_time_ms: Math.round(
           results.reduce((sum, r) => sum + r.execution_time_ms, 0) / results.length
-        )
-      }
+        ),
+      },
     })
   } catch (error: unknown) {
     console.error('[Batch Function Test API] Error:', error)
-    return NextResponse.json({
-      success: false,
-      error: error instanceof Error ? error.message : 'Unknown error'
-    }, { status: 500 })
+    return NextResponse.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      },
+      { status: 500 }
+    )
   }
 }

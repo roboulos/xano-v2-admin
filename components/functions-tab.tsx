@@ -123,7 +123,7 @@ export function FunctionsTab() {
       const response = await fetch(`/api/v2/functions/${functionId}/test`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ testParams: { user_id: 60 } }),
+        body: JSON.stringify({ testParams: { user_id: 7 } }), // V2 user (David Keener)
       })
       const result = await response.json()
       saveTestResult(result)
@@ -144,7 +144,7 @@ export function FunctionsTab() {
       const response = await fetch('/api/v2/functions/test-all', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ functionIds, testParams: { user_id: 60 } }),
+        body: JSON.stringify({ functionIds, testParams: { user_id: 7 } }), // V2 user (David Keener)
       })
       const result = await response.json()
       if (result.success && result.results) {
