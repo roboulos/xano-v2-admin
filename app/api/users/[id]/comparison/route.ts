@@ -14,10 +14,56 @@
  */
 
 import { NextResponse } from 'next/server'
-import { v1Client, v2Client } from '@/lib/snappy-client'
+import { v1Client } from '@/lib/snappy-client'
 import { TABLE_MAPPINGS } from '@/lib/table-mappings'
 
 export const dynamic = 'force-dynamic'
+
+// ---------------------------------------------------------------------------
+// V2 Xano API endpoints (bypass auth-enabled table restrictions)
+// ---------------------------------------------------------------------------
+
+const V2_COMPARISON_URL =
+  'https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:g79A_W7O/user-comparison-data'
+
+interface V2ComparisonData {
+  user: Record<string, unknown> | null
+  agent: Record<string, unknown> | null
+  counts: {
+    transactions: number
+    listings: number
+    network: number
+    contributions: number
+  }
+}
+
+/** Fetch V2 user + agent + counts from the Xano comparison endpoint */
+async function fetchV2UserData(userId: number): Promise<V2ComparisonData> {
+  const empty: V2ComparisonData = {
+    user: null,
+    agent: null,
+    counts: { transactions: 0, listings: 0, network: 0, contributions: 0 },
+  }
+  try {
+    const res = await fetch(`${V2_COMPARISON_URL}?user_id=${userId}`, {
+      signal: AbortSignal.timeout(30_000),
+    })
+    if (!res.ok) return empty
+    const data = await res.json()
+    return {
+      user: data.user && !data.user.code ? data.user : null,
+      agent: data.agent && !data.agent.code ? data.agent : null,
+      counts: {
+        transactions: data.counts?.transactions ?? 0,
+        listings: data.counts?.listings ?? 0,
+        network: data.counts?.network ?? 0,
+        contributions: data.counts?.contributions ?? 0,
+      },
+    }
+  } catch {
+    return empty
+  }
+}
 
 // ---------------------------------------------------------------------------
 // Types
@@ -288,18 +334,29 @@ function getV2TableName(v1Entity: string): string {
 // Data fetchers per section
 // ---------------------------------------------------------------------------
 
+// Cache the V2 comparison data per request to avoid redundant fetches
+let _v2Cache: V2ComparisonData | null = null
+let _v2CacheUserId: number | null = null
+
+async function getV2Data(userId: number): Promise<V2ComparisonData> {
+  if (_v2CacheUserId === userId && _v2Cache) return _v2Cache
+  _v2Cache = await fetchV2UserData(userId)
+  _v2CacheUserId = userId
+  return _v2Cache
+}
+
 async function fetchUserSection(userId: number): Promise<{
   v1: Record<string, unknown> | null
   v2: Record<string, unknown> | null
 }> {
-  const [v1Res, v2Res] = await Promise.allSettled([
+  const [v1Res, v2Data] = await Promise.allSettled([
     v1Client.queryTable('user', { filters: { id: userId }, limit: 1 }),
-    v2Client.queryTable('user', { filters: { id: userId }, limit: 1 }),
+    getV2Data(userId),
   ])
 
   return {
     v1: v1Res.status === 'fulfilled' ? extractSingleRecord(v1Res.value) : null,
-    v2: v2Res.status === 'fulfilled' ? extractSingleRecord(v2Res.value) : null,
+    v2: v2Data.status === 'fulfilled' ? v2Data.value.user : null,
   }
 }
 
@@ -307,15 +364,14 @@ async function fetchAgentSection(userId: number): Promise<{
   v1: Record<string, unknown> | null
   v2: Record<string, unknown> | null
 }> {
-  const v2TableName = getV2TableName('agent')
-  const [v1Res, v2Res] = await Promise.allSettled([
+  const [v1Res, v2Data] = await Promise.allSettled([
     v1Client.queryTable('agent', { filters: { user_id: userId }, limit: 1 }),
-    v2Client.queryTable(v2TableName, { filters: { user_id: userId }, limit: 1 }),
+    getV2Data(userId),
   ])
 
   return {
     v1: v1Res.status === 'fulfilled' ? extractSingleRecord(v1Res.value) : null,
-    v2: v2Res.status === 'fulfilled' ? extractSingleRecord(v2Res.value) : null,
+    v2: v2Data.status === 'fulfilled' ? v2Data.value.agent : null,
   }
 }
 
@@ -323,16 +379,22 @@ async function fetchTeamSection(userId: number): Promise<{
   v1: Record<string, unknown> | null
   v2: Record<string, unknown> | null
 }> {
-  // First find team membership via agent or team_members, then get team
-  const v2TableName = getV2TableName('team')
-  const [v1Res, v2Res] = await Promise.allSettled([
+  // V2 team data: extract team_id from V2 user record and note it
+  const [v1Res, v2Data] = await Promise.allSettled([
     v1Client.queryTable('team', { filters: { user_id: userId }, limit: 1 }),
-    v2Client.queryTable(v2TableName, { filters: { user_id: userId }, limit: 1 }),
+    getV2Data(userId),
   ])
+
+  // For V2 team, use the team_id from the user record as a reference
+  const v2User = v2Data.status === 'fulfilled' ? v2Data.value.user : null
+  const v2Team =
+    v2User && v2User.team_id
+      ? ({ id: v2User.team_id, user_id: userId, source: 'user.team_id' } as Record<string, unknown>)
+      : null
 
   return {
     v1: v1Res.status === 'fulfilled' ? extractSingleRecord(v1Res.value) : null,
-    v2: v2Res.status === 'fulfilled' ? extractSingleRecord(v2Res.value) : null,
+    v2: v2Team,
   }
 }
 
@@ -340,31 +402,36 @@ async function fetchArraySection(
   v1Table: string,
   userId: number,
   limit: number,
-  offset: number,
+  _offset: number,
   filterField: string = 'user_id'
 ): Promise<{
   v1Records: Record<string, unknown>[]
-  v2Records: Record<string, unknown>[]
+  v2Count: number
   v1Error: string | null
   v2Error: string | null
 }> {
-  const v2TableName = getV2TableName(v1Table)
-  const [v1Res, v2Res] = await Promise.allSettled([
-    v1Client.queryTable(v1Table, {
-      filters: { [filterField]: userId },
-      limit,
-    }),
-    v2Client.queryTable(v2TableName, {
-      filters: { [filterField]: userId },
-      limit,
-    }),
-  ])
+  // V1: use snappy CLI (non-auth tables)
+  const v1Res = await v1Client
+    .queryTable(v1Table, { filters: { [filterField]: userId }, limit })
+    .then((data) => ({ ok: true as const, data }))
+    .catch((err) => ({ ok: false as const, error: String(err) }))
+
+  // V2: use counts from the Xano comparison endpoint
+  const v2Data = await getV2Data(userId)
+  const sectionMap: Record<string, keyof V2ComparisonData['counts']> = {
+    transaction: 'transactions',
+    listing: 'listings',
+    network: 'network',
+    contribution: 'contributions',
+  }
+  const countKey = sectionMap[v1Table]
+  const v2Count = countKey ? v2Data.counts[countKey] : 0
 
   return {
-    v1Records: v1Res.status === 'fulfilled' ? extractRecords(v1Res.value) : [],
-    v2Records: v2Res.status === 'fulfilled' ? extractRecords(v2Res.value) : [],
-    v1Error: v1Res.status === 'rejected' ? String(v1Res.reason) : null,
-    v2Error: v2Res.status === 'rejected' ? String(v2Res.reason) : null,
+    v1Records: v1Res.ok ? extractRecords(v1Res.data) : [],
+    v2Count,
+    v1Error: v1Res.ok ? null : v1Res.error,
+    v2Error: null,
   }
 }
 
@@ -377,6 +444,10 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ): Promise<NextResponse<UserComparisonResponse | { success: false; error: string }>> {
   try {
+    // Reset V2 cache per request
+    _v2Cache = null
+    _v2CacheUserId = null
+
     const { id: idStr } = await params
     const userId = parseInt(idStr, 10)
 
@@ -490,11 +561,11 @@ export async function GET(
 
           // Store records in v1/v2 response
           ;(v1 as Record<string, unknown>)[section] = result.v1Records
-          ;(v2 as Record<string, unknown>)[section] = result.v2Records
+          ;(v2 as Record<string, unknown>)[section] = [] // V2 records come from Xano endpoint as counts only
 
           // Count-based comparison
           const v1Count = result.v1Records.length
-          const v2Count = result.v2Records.length
+          const v2Count = result.v2Count
           ;(comparison as Record<string, unknown>)[section] = {
             v1Count,
             v2Count,
