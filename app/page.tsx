@@ -25,6 +25,9 @@ import {
   Map,
   Webhook,
   HeartPulse,
+  Building2,
+  BarChart3,
+  Users,
 } from 'lucide-react'
 
 // UI Components
@@ -55,6 +58,9 @@ import { SyncPipelinesStoryTab } from '@/components/story-tabs/sync-pipelines-st
 import { SchemaMappingStoryTab } from '@/components/story-tabs/schema-mapping-story-tab'
 import { WebhooksStoryTab } from '@/components/story-tabs/webhooks-story-tab'
 import { FunctionsStoryTab } from '@/components/story-tabs/functions-story-tab'
+import { EcosystemHubTab } from '@/components/ecosystem/ecosystem-hub-tab'
+import { RecordCensusTab } from '@/components/ecosystem/record-census-tab'
+import { TestUsersTab } from '@/components/ecosystem/test-users-tab'
 
 type ViewMode =
   | 'schema'
@@ -80,6 +86,9 @@ type ViewMode =
   | 'schema-mapping-story'
   | 'webhooks-story'
   | 'functions-story'
+  | 'ecosystem-hub'
+  | 'record-census'
+  | 'test-users'
 
 export default function Home() {
   const [viewMode, setViewMode] = useState<ViewMode>('transformation')
@@ -94,6 +103,9 @@ export default function Home() {
     { id: 'schema-mapping-story' as ViewMode, label: 'Schema Map', icon: Map },
     { id: 'webhooks-story' as ViewMode, label: 'Webhooks', icon: Webhook },
     { id: 'functions-story' as ViewMode, label: 'Function Health', icon: HeartPulse },
+    { id: 'ecosystem-hub' as ViewMode, label: 'Ecosystem', icon: Building2 },
+    { id: 'record-census' as ViewMode, label: 'Record Census', icon: BarChart3 },
+    { id: 'test-users' as ViewMode, label: 'Test Users', icon: Users },
     { id: 'migration-status' as ViewMode, label: 'Phase Tracker', icon: TrendingUp },
     { id: 'gaps' as ViewMode, label: 'Gaps & Issues', icon: AlertCircle },
     { id: 'checklist' as ViewMode, label: 'Checklists', icon: CheckCircle2 },
@@ -174,6 +186,15 @@ export default function Home() {
           </ErrorBoundary>
           <ErrorBoundary title="Function Health">
             {viewMode === 'functions-story' && <FunctionsStoryTab />}
+          </ErrorBoundary>
+          <ErrorBoundary title="Ecosystem Hub">
+            {viewMode === 'ecosystem-hub' && <EcosystemHubTab />}
+          </ErrorBoundary>
+          <ErrorBoundary title="Record Census">
+            {viewMode === 'record-census' && <RecordCensusTab />}
+          </ErrorBoundary>
+          <ErrorBoundary title="Test Users">
+            {viewMode === 'test-users' && <TestUsersTab />}
           </ErrorBoundary>
           <ErrorBoundary title="Migration Status">
             {viewMode === 'migration-status' && <StatusDashboardTab />}
