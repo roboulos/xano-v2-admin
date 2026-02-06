@@ -9,9 +9,9 @@
  *   - rezen_sync_jobs: reZEN API sync
  *   - job_status: General job tracking
  *
- * IMPORTANT: The /job-queue-status SYSTEM endpoint returns 404
- * (Xano function not yet created). The component handles this
- * gracefully with a fallback message and placeholder state.
+ * The /job-queue-status SYSTEM endpoint queries 4 job tables
+ * (job_status, fub_onboarding_jobs, fub_sync_jobs, rezen_sync_jobs)
+ * and returns counts by status. Supports optional user_id filter.
  */
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
