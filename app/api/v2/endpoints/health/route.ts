@@ -37,15 +37,28 @@ interface HealthCheckResponse {
 /**
  * Test a single endpoint
  */
-async function testEndpoint(endpoint: typeof MCP_ENDPOINTS[0]): Promise<EndpointTestResult> {
+async function testEndpoint(endpoint: (typeof MCP_ENDPOINTS)[0]): Promise<EndpointTestResult> {
   const baseUrl = MCP_BASES[endpoint.apiGroup]
-  const fullUrl = `${baseUrl}${endpoint.endpoint}`
+
+  // For GET requests with user_id, add query param
+  let fullUrl = `${baseUrl}${endpoint.endpoint}`
+  if (endpoint.method === 'GET' && endpoint.requiresUserId) {
+    const params = new URLSearchParams({ user_id: '60' })
+    fullUrl = `${fullUrl}?${params.toString()}`
+  }
 
   const startTime = Date.now()
 
   try {
-    // For endpoints that require user_id, use test user 60 (David Keener)
-    const body = endpoint.requiresUserId ? { user_id: 60 } : {}
+    // For POST requests that require user_id, use test user 60 (David Keener)
+    let body: Record<string, unknown> = {}
+    if (endpoint.method === 'POST' && endpoint.requiresUserId) {
+      body.user_id = 60
+    }
+    // Merge in any additional required params
+    if (endpoint.additionalParams) {
+      body = { ...body, ...endpoint.additionalParams }
+    }
 
     const response = await fetch(fullUrl, {
       method: endpoint.method,
@@ -93,7 +106,7 @@ function selectCriticalEndpoints(): typeof MCP_ENDPOINTS {
   const groups = ['TASKS', 'WORKERS', 'SYSTEM', 'SEEDING'] as const
 
   for (const group of groups) {
-    const groupEndpoints = MCP_ENDPOINTS.filter(e => e.apiGroup === group)
+    const groupEndpoints = MCP_ENDPOINTS.filter((e) => e.apiGroup === group)
 
     if (group === 'WORKERS') {
       // Test more WORKERS endpoints (most critical for frontend)
@@ -121,19 +134,20 @@ export async function GET() {
     console.log(`[Endpoint Health] Testing ${criticalEndpoints.length} critical endpoints...`)
 
     // Test all endpoints in parallel (with timeout protection)
-    const results = await Promise.all(
-      criticalEndpoints.map(endpoint => testEndpoint(endpoint))
-    )
+    const results = await Promise.all(criticalEndpoints.map((endpoint) => testEndpoint(endpoint)))
 
     // Calculate summary statistics
-    const passed = results.filter(r => r.success).length
-    const failed = results.filter(r => !r.success).length
+    const passed = results.filter((r) => r.success).length
+    const failed = results.filter((r) => !r.success).length
     const avgResponseTime = Math.round(
       results.reduce((sum, r) => sum + r.response_time_ms, 0) / results.length
     )
 
     // Group by API group
-    const byGroup: Record<string, { tested: number; passed: number; failed: number; avg_time: number }> = {}
+    const byGroup: Record<
+      string,
+      { tested: number; passed: number; failed: number; avg_time: number }
+    > = {}
 
     for (const result of results) {
       if (!byGroup[result.apiGroup]) {
@@ -150,13 +164,15 @@ export async function GET() {
 
     // Calculate average time per group
     for (const group in byGroup) {
-      const groupResults = results.filter(r => r.apiGroup === group)
+      const groupResults = results.filter((r) => r.apiGroup === group)
       byGroup[group].avg_time = Math.round(
         groupResults.reduce((sum, r) => sum + r.response_time_ms, 0) / groupResults.length
       )
     }
 
-    console.log(`[Endpoint Health] Complete - ${passed}/${results.length} passed, avg ${avgResponseTime}ms`)
+    console.log(
+      `[Endpoint Health] Complete - ${passed}/${results.length} passed, avg ${avgResponseTime}ms`
+    )
 
     const response: HealthCheckResponse = {
       success: true,

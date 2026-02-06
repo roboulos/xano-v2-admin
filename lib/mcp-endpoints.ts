@@ -471,6 +471,7 @@ export const MCP_ENDPOINTS: MCPEndpoint[] = [
     apiGroup: 'SYSTEM',
     method: 'POST',
     requiresUserId: true,
+    additionalParams: { batch_size: 100 },
     description: 'Reset transaction error flags',
   },
   {
