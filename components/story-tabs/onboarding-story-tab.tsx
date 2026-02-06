@@ -26,6 +26,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import { Progress } from '@/components/ui/progress'
+import { getV2ApiBase } from '@/lib/workspace-config'
 
 // ---------------------------------------------------------------------------
 // Types
@@ -37,6 +38,8 @@ interface OnboardingStep {
   id: number
   name: string
   endpoint: string
+  /** Human-readable name for the backend service */
+  backendLabel: string
   tables: string[]
   /** Keys into V1UserData / V2UserData to derive counts */
   dataKeys: DataKey[]
@@ -51,62 +54,68 @@ type DataKey = 'transactions' | 'listings' | 'network' | 'contributions'
 // Constants
 // ---------------------------------------------------------------------------
 
-const WORKERS_BASE = 'https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:4UsTtl3m'
+const WORKERS_BASE = getV2ApiBase('workers')
 
 const ONBOARDING_STEPS: OnboardingStep[] = [
   {
     id: 1,
     name: 'Team Data',
     endpoint: '/test-function-8066-team-roster',
+    backendLabel: 'Team Roster Import (Function #8066)',
     tables: ['team', 'team_roster', 'team_owners'],
     dataKeys: [],
     icon: Users,
-    description: 'Sync team roster data from reZEN API. Processes team memberships and roles.',
+    description: 'Import team roster from reZEN. Processes team memberships and roles.',
   },
   {
     id: 2,
     name: 'Agent Data',
     endpoint: '/test-function-8051-agent-data',
+    backendLabel: 'Agent Data Import (Function #8051)',
     tables: ['agent', 'user'],
     dataKeys: [],
     icon: UserCheck,
-    description: 'Fetch agent profile data from reZEN. Includes credentials and agent hierarchy.',
+    description: 'Import agent profile from reZEN. Includes credentials and reporting structure.',
   },
   {
     id: 3,
     name: 'Transactions',
     endpoint: '/test-function-8052-txn-sync',
+    backendLabel: 'Transaction Import (Function #8052)',
     tables: ['transaction', 'participant'],
     dataKeys: ['transactions'],
     icon: ArrowLeftRight,
-    description: 'Sync transactions from reZEN API. Includes participants and financial data.',
+    description: 'Import transactions from reZEN. Includes participants and financial data.',
   },
   {
     id: 4,
     name: 'Listings',
     endpoint: '/test-function-8053-listings-sync',
+    backendLabel: 'Listings Import (Function #8053)',
     tables: ['listing'],
     dataKeys: ['listings'],
     icon: Home,
-    description: 'Sync property listings. Includes listing history and status tracking.',
+    description: 'Import property listings. Includes listing history and status tracking.',
   },
   {
     id: 5,
     name: 'Contributions',
     endpoint: '/test-function-8056-contributions',
+    backendLabel: 'Contributions Import (Function #8056)',
     tables: ['contribution', 'income', 'revshare_totals'],
     dataKeys: ['contributions'],
     icon: HandCoins,
-    description: 'Sync contribution records and revenue share data.',
+    description: 'Import contribution records and revenue share data.',
   },
   {
     id: 6,
     name: 'Network',
     endpoint: '/test-function-8062-network-downline',
+    backendLabel: 'Network Downline Import (Function #8062)',
     tables: ['network', 'connections'],
     dataKeys: ['network'],
     icon: Network,
-    description: 'Sync network downline. Processes 100 records per call. May need multiple runs.',
+    description: 'Import network downline. Processes 100 records per call. May need multiple runs.',
   },
 ]
 
@@ -289,7 +298,7 @@ export function OnboardingStoryTab() {
     async (step: OnboardingStep) => {
       if (!selectedUserId) return
 
-      setStepTriggerState(step.id, { status: 'processing', message: 'Triggering sync...' })
+      setStepTriggerState(step.id, { status: 'processing', message: 'Running import...' })
 
       try {
         const body: Record<string, unknown> = { user_id: selectedUserId }
@@ -546,10 +555,8 @@ function StepCard({ step, status, triggerState, v1Data, v2Data, onTriggerSync }:
 
             {/* Endpoint */}
             <div>
-              <h4 className="text-xs font-medium text-muted-foreground mb-1.5">Worker Endpoint</h4>
-              <code className="text-xs bg-muted px-2 py-1 rounded font-mono">
-                POST {step.endpoint}
-              </code>
+              <h4 className="text-xs font-medium text-muted-foreground mb-1.5">Backend Service</h4>
+              <span className="text-xs bg-muted px-2 py-1 rounded">{step.backendLabel}</span>
             </div>
 
             {/* V1/V2 Record Counts */}
@@ -644,7 +651,7 @@ function StepCard({ step, status, triggerState, v1Data, v2Data, onTriggerSync }:
                 ) : (
                   <Play className="h-3.5 w-3.5" />
                 )}
-                {triggerState.status === 'processing' ? 'Syncing...' : 'Trigger Sync'}
+                {triggerState.status === 'processing' ? 'Importing...' : 'Run Import'}
               </Button>
               {step.id === 6 && (
                 <span className="text-[10px] text-muted-foreground">

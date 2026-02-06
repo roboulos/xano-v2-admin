@@ -41,28 +41,29 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
+import { getV2ApiBase } from '@/lib/workspace-config'
 
 // ---------------------------------------------------------------------------
 // Constants
 // ---------------------------------------------------------------------------
 
-const SYSTEM_BASE_URL = 'https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:LIdBL1AN'
+const SYSTEM_BASE_URL = getV2ApiBase('system')
 
 type JobType = 'all' | 'fub_onboarding_jobs' | 'fub_sync_jobs' | 'rezen_sync_jobs' | 'job_status'
 
 const JOB_TYPE_LABELS: Record<Exclude<JobType, 'all'>, string> = {
-  fub_onboarding_jobs: 'FUB Onboarding',
-  fub_sync_jobs: 'FUB Sync',
-  rezen_sync_jobs: 'reZEN Sync',
-  job_status: 'General',
+  fub_onboarding_jobs: 'Follow Up Boss — Initial Import',
+  fub_sync_jobs: 'Follow Up Boss — Ongoing Sync',
+  rezen_sync_jobs: 'reZEN — Data Sync',
+  job_status: 'General Jobs',
 }
 
 const JOB_TYPE_OPTIONS: { value: JobType; label: string }[] = [
   { value: 'all', label: 'All Queues' },
-  { value: 'fub_onboarding_jobs', label: 'FUB Onboarding' },
-  { value: 'fub_sync_jobs', label: 'FUB Sync' },
+  { value: 'fub_onboarding_jobs', label: 'FUB Initial Import' },
+  { value: 'fub_sync_jobs', label: 'FUB Ongoing Sync' },
   { value: 'rezen_sync_jobs', label: 'reZEN Sync' },
-  { value: 'job_status', label: 'General' },
+  { value: 'job_status', label: 'General Jobs' },
 ]
 
 type JobStatus = 'pending' | 'processing' | 'complete' | 'error'

@@ -24,6 +24,7 @@ import { AlertBanner } from '@/components/ui/alert-banner'
 import { LoadingState } from '@/components/ui/loading-state'
 import { getV1Stats } from '@/lib/v1-data'
 import { TABLES_DATA } from '@/lib/v2-data'
+import { getV2ApiBase } from '@/lib/workspace-config'
 
 // Transformation examples for deep dives
 const TRANSFORMATION_EXAMPLES = [
@@ -32,8 +33,8 @@ const TRANSFORMATION_EXAMPLES = [
     title: 'User Identity',
     v1: {
       table: 'user',
-      columns: '111 JSONB fields in xdo',
-      example: 'email, password, stripe_id, settings, roles all mixed',
+      columns: '111 fields crammed into a single data column',
+      example: 'email, password, stripe_id, settings, roles all mixed in one column',
     },
     v2: [
       { table: 'user', purpose: 'Core identity (id, email, name)', columns: 8 },
@@ -50,8 +51,8 @@ const TRANSFORMATION_EXAMPLES = [
     title: 'Agent Profile',
     v1: {
       table: 'agent',
-      columns: '132 JSONB fields in xdo',
-      example: 'profile, caps, commissions, hierarchy, metrics jumbled',
+      columns: '132 fields crammed into a single data column',
+      example: 'profile, caps, commissions, hierarchy, metrics all jumbled together',
     },
     v2: [
       { table: 'agent', purpose: 'Core profile (id, name, status)', columns: 15 },
@@ -68,8 +69,8 @@ const TRANSFORMATION_EXAMPLES = [
     title: 'Transaction Records',
     v1: {
       table: 'transaction',
-      columns: '119 JSONB fields in xdo',
-      example: 'deal info, financials, parties, history, tags in one blob',
+      columns: '119 fields crammed into a single data column',
+      example: 'deal info, financials, parties, history, tags all in one column',
     },
     v2: [
       { table: 'transaction', purpose: 'Core deal record', columns: 20 },
@@ -88,17 +89,17 @@ const NORMALIZATION_BENEFITS = [
   {
     icon: Zap,
     title: 'Query Performance',
-    description: 'Load 5 user columns instead of extracting from 111-field JSON blob',
+    description: 'Load only the 5 user fields you need instead of pulling all 111 every time',
   },
   {
     icon: Shield,
     title: 'Data Integrity',
-    description: 'Foreign keys enforce relationships. No orphaned records.',
+    description: 'Relationships enforced at the database level. No orphaned records.',
   },
   {
     icon: TrendingUp,
     title: 'Analytics Ready',
-    description: 'JOIN tables for reports. No JSON parsing in SQL.',
+    description: 'Combine tables for reports directly. No data extraction needed.',
   },
   {
     icon: Layers,
@@ -115,13 +116,10 @@ interface SyncStatus {
 
 // SWR fetcher for sync data
 const syncFetcher = async () => {
-  const res = await fetch(
-    'https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:20LTQtIX/sync-v1-to-v2-direct',
-    {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-    }
-  )
+  const res = await fetch(`${getV2ApiBase('sync')}/sync-v1-to-v2-direct`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+  })
   return res.json()
 }
 
@@ -188,7 +186,8 @@ export function TransformationStoryTab() {
             V1 to V2 Transformation Story
           </h2>
           <p className="text-sm text-muted-foreground mt-1">
-            How 251 JSONB tables became 193 normalized, typed tables
+            How {v1Stats.total} single-column tables became {v2TableCount} properly structured
+            tables
           </p>
         </div>
         <div className="flex gap-2">
@@ -231,7 +230,7 @@ export function TransformationStoryTab() {
             </div>
             <div className="text-lg text-muted-foreground">Tables</div>
             <div className="mt-3 text-xs" style={{ color: 'var(--status-warning)' }}>
-              JSONB xdo columns
+              All data in one column per table
             </div>
           </div>
         </Card>
@@ -260,7 +259,7 @@ export function TransformationStoryTab() {
             </div>
             <div className="text-lg text-muted-foreground">Tables</div>
             <div className="mt-3 text-xs" style={{ color: 'var(--status-success)' }}>
-              Typed columns
+              Properly structured columns
             </div>
           </div>
         </Card>
@@ -361,7 +360,7 @@ export function TransformationStoryTab() {
           <h3 className="text-lg font-semibold">Transformation Examples</h3>
         </div>
         <p className="text-sm text-muted-foreground mb-6">
-          See how V1&apos;s monolithic JSONB tables became V2&apos;s normalized structure
+          See how V1&apos;s all-in-one tables were decomposed into V2&apos;s structured design
         </p>
 
         <div className="space-y-4">
@@ -470,15 +469,12 @@ export function TransformationStoryTab() {
             </h4>
             <ul className="text-sm space-y-1 text-muted-foreground">
               <li>
-                • 251 tables with JSONB <code className="bg-muted px-1 rounded">xdo</code> columns
+                • {v1Stats.total} tables, each storing all data in a single unstructured column
               </li>
-              <li>
-                • 2 PostgreSQL columns per table: <code className="bg-muted px-1 rounded">id</code>{' '}
-                + <code className="bg-muted px-1 rounded">xdo</code>
-              </li>
-              <li>• All business data in untyped JSON blobs</li>
-              <li>• No foreign key enforcement</li>
-              <li>• Full blob load for any query</li>
+              <li>• Only 2 columns per table: an ID and one giant data blob</li>
+              <li>• All business data stored without defined types</li>
+              <li>• No enforced relationships between tables</li>
+              <li>• Must load the entire record for any query, even if you only need one field</li>
             </ul>
           </div>
           <div>
@@ -487,10 +483,10 @@ export function TransformationStoryTab() {
             </h4>
             <ul className="text-sm space-y-1 text-muted-foreground">
               <li>• {v2TableCount} tables with typed columns</li>
-              <li>• Proper data types: int, text, boolean, timestamp</li>
-              <li>• Foreign key relationships enforced</li>
-              <li>• Split tables for different concerns</li>
-              <li>• Query only what you need</li>
+              <li>• Every field has a proper data type (number, text, true/false, date)</li>
+              <li>• Relationships between tables enforced automatically</li>
+              <li>• Separate tables for separate concerns (e.g. user profile vs. billing)</li>
+              <li>• Load only the data you actually need</li>
             </ul>
           </div>
         </div>

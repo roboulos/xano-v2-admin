@@ -32,6 +32,12 @@ import {
   CheckCircle2,
   AlertCircle,
 } from 'lucide-react'
+import { V1_TABLE_COUNT, V2_TABLE_COUNT } from '@/lib/dashboard-constants'
+import { validationConfig } from '@/validation.config'
+import { API_GROUPS_DATA } from '@/lib/v2-data'
+
+const V2_ACTIVE_FUNCTIONS = validationConfig.stages.find((s) => s.id === 'functions')!.metrics
+  .tested!
 
 interface CollapsibleSectionProps {
   title: string
@@ -79,24 +85,24 @@ function CollapsibleSection({
 const V1_VS_V2_COMPARISON = [
   {
     aspect: 'Tables',
-    v1: '251 tables',
-    v2: '193 tables',
+    v1: `${V1_TABLE_COUNT} tables`,
+    v2: `${V2_TABLE_COUNT} tables`,
     change: 'Normalized',
     status: 'improved',
     notes: 'Removed redundancy, proper 3NF normalization',
   },
   {
-    aspect: 'API Groups',
-    v1: '8 groups',
-    v2: '12 groups',
+    aspect: 'Service Groups',
+    v1: 'Multiple groups',
+    v2: `${API_GROUPS_DATA.length} groups`,
     change: 'Reorganized',
     status: 'improved',
     notes: 'Better separation of concerns, clearer boundaries',
   },
   {
     aspect: 'Functions',
-    v1: '~200 functions',
-    v2: '270+ functions',
+    v1: 'V1 functions (not tracked)',
+    v2: `${V2_ACTIVE_FUNCTIONS}+ active functions`,
     change: 'Expanded',
     status: 'improved',
     notes: 'Better modularity, reusable components',
@@ -163,28 +169,28 @@ export function ArchitectureTab() {
         <div>
           <h2 className="text-2xl font-bold mb-1">System Architecture</h2>
           <p className="text-muted-foreground">
-            Comprehensive overview of V2 system architecture, API groups, data flows, and technology
-            stack
+            Comprehensive overview of V2 system architecture, service groups, data flows, and
+            technology stack
           </p>
         </div>
 
         {/* Summary Metrics */}
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
           <MetricCard
-            title="API Groups"
+            title="Service Groups"
             value={XANO_API_GROUPS.length}
             subtitle={`${XANO_API_GROUPS.reduce((sum, g) => sum + g.endpoints_count, 0)} endpoints`}
             icon={<Server className="h-4 w-4" />}
           />
           <MetricCard
             title="V2 Tables"
-            value="193"
+            value={V2_TABLE_COUNT}
             subtitle="Normalized schema"
             icon={<Database className="h-4 w-4" />}
           />
           <MetricCard
             title="Functions"
-            value="270+"
+            value={`${V2_ACTIVE_FUNCTIONS}+`}
             subtitle="XanoScript modules"
             icon={<Code2 className="h-4 w-4" />}
           />
@@ -208,7 +214,7 @@ export function ArchitectureTab() {
         <TabsList className="grid w-full grid-cols-5">
           <TabsTrigger value="overview">Overview</TabsTrigger>
           <TabsTrigger value="v1-v2">V1 → V2</TabsTrigger>
-          <TabsTrigger value="api-groups">API Groups</TabsTrigger>
+          <TabsTrigger value="api-groups">Service Groups</TabsTrigger>
           <TabsTrigger value="data-flows">Data Flows</TabsTrigger>
           <TabsTrigger value="tech-stack">Tech Stack</TabsTrigger>
         </TabsList>
@@ -288,7 +294,7 @@ export function ArchitectureTab() {
                         2. API Layer
                       </h4>
                       <p className="text-sm mt-1 text-muted-foreground">
-                        {XANO_API_GROUPS.length} API groups exposing{' '}
+                        {XANO_API_GROUPS.length} service groups exposing{' '}
                         {XANO_API_GROUPS.reduce((sum, g) => sum + g.endpoints_count, 0)} REST
                         endpoints. JWT authentication with role-based access control.
                       </p>
@@ -319,9 +325,9 @@ export function ArchitectureTab() {
                         3. Backend Services
                       </h4>
                       <p className="text-sm mt-1 text-muted-foreground">
-                        270+ XanoScript functions handling business logic, background jobs,
-                        webhooks, and scheduled tasks. Includes sync pipelines for external data
-                        sources.
+                        {V2_ACTIVE_FUNCTIONS}+ active XanoScript functions handling business logic,
+                        background jobs, webhooks, and scheduled tasks. Includes sync pipelines for
+                        external data sources.
                       </p>
                       <div className="flex flex-wrap gap-2 mt-2">
                         <Badge variant="secondary">XanoScript</Badge>
@@ -350,11 +356,12 @@ export function ArchitectureTab() {
                         4. Data Layer
                       </h4>
                       <p className="text-sm mt-1 text-muted-foreground">
-                        193 normalized tables in PostgreSQL-compatible database. Includes proper
-                        foreign keys, indexes, and audit trails. Cache layer for performance.
+                        {V2_TABLE_COUNT} normalized tables in PostgreSQL-compatible database.
+                        Includes proper enforced relationships, fast lookups, and change history.
+                        Cache layer for performance.
                       </p>
                       <div className="flex flex-wrap gap-2 mt-2">
-                        <Badge variant="secondary">193 Tables</Badge>
+                        <Badge variant="secondary">{V2_TABLE_COUNT} Tables</Badge>
                         <Badge variant="secondary">PostgreSQL</Badge>
                         <Badge variant="secondary">Cache</Badge>
                       </div>
@@ -500,8 +507,8 @@ export function ArchitectureTab() {
                         Data Normalization
                       </h4>
                       <p className="text-sm mt-1">
-                        Reduced from 251 to 193 tables through proper 3NF normalization. Eliminates
-                        data redundancy and improves consistency.
+                        Reduced from {V1_TABLE_COUNT} to {V2_TABLE_COUNT} tables through proper 3NF
+                        normalization. Eliminates data redundancy and improves consistency.
                       </p>
                     </div>
                   </div>
@@ -584,18 +591,12 @@ export function ArchitectureTab() {
               </CardHeader>
               <CardContent className="space-y-2 text-sm">
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Instance:</span>
-                  <code className="text-xs bg-muted px-2 py-0.5 rounded">
-                    xmpx-swi5-tlvy.n7c.xano.io
-                  </code>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Workspace ID:</span>
-                  <span className="font-mono">1</span>
+                  <span className="text-muted-foreground">Version:</span>
+                  <span className="font-mono">V1 (Legacy)</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Tables:</span>
-                  <span className="font-semibold">251</span>
+                  <span className="font-semibold">{V1_TABLE_COUNT}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Status:</span>
@@ -613,18 +614,12 @@ export function ArchitectureTab() {
               </CardHeader>
               <CardContent className="space-y-2 text-sm">
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Instance:</span>
-                  <code className="text-xs bg-muted px-2 py-0.5 rounded">
-                    x2nu-xcjc-vhax.agentdashboards.xano.io
-                  </code>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Workspace ID:</span>
-                  <span className="font-mono">5</span>
+                  <span className="text-muted-foreground">Version:</span>
+                  <span className="font-mono">V2 (Normalized)</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Tables:</span>
-                  <span className="font-semibold">193</span>
+                  <span className="font-semibold">{V2_TABLE_COUNT}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Status:</span>
@@ -642,11 +637,11 @@ export function ArchitectureTab() {
           </div>
         </TabsContent>
 
-        {/* API Groups Tab */}
+        {/* Service Groups Tab */}
         <TabsContent value="api-groups" className="space-y-4 mt-6">
           <Card className="mb-4">
             <CardHeader className="pb-3">
-              <CardTitle className="text-base">API Groups Summary</CardTitle>
+              <CardTitle className="text-base">Service Groups Summary</CardTitle>
               <CardDescription>
                 {XANO_API_GROUPS.length} groups •{' '}
                 {XANO_API_GROUPS.reduce((sum, g) => sum + g.endpoints_count, 0)} total endpoints

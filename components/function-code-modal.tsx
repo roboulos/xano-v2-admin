@@ -12,6 +12,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Loader2, Copy, ExternalLink, Code2, GitCompareArrows } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
+import { getAdminUrl } from '@/lib/workspace-config'
 
 interface FunctionCodeModalProps {
   functionId: number
@@ -182,18 +183,11 @@ export function FunctionCodeModal({
                     variant="outline"
                     size="sm"
                     onClick={() => {
-                      const baseUrl =
-                        workspace === '1'
-                          ? 'https://xmpx-swi5-tlvy.n7c.xano.io'
-                          : 'https://x2nu-xcjc-vhax.agentdashboards.xano.io'
-                      window.open(
-                        `${baseUrl}/admin/#/${workspace}/function/${functionId}`,
-                        '_blank'
-                      )
+                      window.open(getAdminUrl(workspace, `function/${functionId}`), '_blank')
                     }}
                   >
                     <ExternalLink className="h-4 w-4 mr-2" />
-                    Open in Xano to View Code
+                    View Code
                   </Button>
                 </div>
 
@@ -205,10 +199,8 @@ export function FunctionCodeModal({
                         XanoScript Code Retrieval Currently Limited
                       </p>
                       <p className="text-amber-700 mb-2">
-                        The snappy CLI's{' '}
-                        <code className="bg-amber-100 px-1 rounded">get_function</code> tool has a
-                        parameter issue that prevents retrieving full function code
-                        programmatically.
+                        The code retrieval service has a parameter issue that prevents viewing full
+                        function source code directly in this interface.
                       </p>
                       <p className="text-amber-700">
                         Click "Open in Xano" above to view the complete XanoScript code in the Xano

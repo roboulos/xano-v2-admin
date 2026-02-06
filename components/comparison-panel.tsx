@@ -21,6 +21,7 @@ import {
 import { DiffHighlight, DiffStatusBadge } from '@/components/diff-highlight'
 import { compareFields, summarizeDiffs, formatValue } from '@/lib/diff-utils'
 import { RefreshIndicator } from '@/components/refresh-indicator'
+import { WORKSPACE_CONFIG } from '@/lib/workspace-config'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -46,8 +47,8 @@ type SectionKey = 'user' | 'agent' | 'transactions' | 'listings' | 'network' | '
 // Constants
 // ---------------------------------------------------------------------------
 
-const V1_INSTANCE = 'xmpx-swi5-tlvy.n7c.xano.io'
-const V2_INSTANCE = 'x2nu-xcjc-vhax.xano.io'
+const V1_INSTANCE = WORKSPACE_CONFIG.v1.instance
+const V2_INSTANCE = WORKSPACE_CONFIG.v2.instance
 
 const SECTIONS: SectionDef[] = [
   { key: 'user', label: 'User', kind: 'scalar' },

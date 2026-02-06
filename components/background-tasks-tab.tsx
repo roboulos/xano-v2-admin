@@ -22,6 +22,7 @@ import { EmptyState } from '@/components/ui/empty-state'
 import { LoadingState } from '@/components/ui/loading-state'
 import { MetricCard } from '@/components/ui/metric-card'
 import { formatRelativeTime } from '@/lib/utils'
+import { getAdminUrl } from '@/lib/workspace-config'
 
 const fetcher = (url: string) => fetch(url).then((r) => r.json())
 
@@ -251,12 +252,11 @@ export function BackgroundTasksTab() {
                         variant="outline"
                         size="sm"
                         onClick={() => {
-                          const baseUrl = 'https://x2nu-xcjc-vhax.agentdashboards.xano.io'
-                          window.open(`${baseUrl}/admin/#/5/task/${task.id}`, '_blank')
+                          window.open(getAdminUrl('5', `task/${task.id}`), '_blank')
                         }}
                       >
                         <ExternalLink className="h-4 w-4 mr-2" />
-                        Open in Xano
+                        View Details
                       </Button>
                     </div>
                   </CardContent>
