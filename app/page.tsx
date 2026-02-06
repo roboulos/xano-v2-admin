@@ -28,6 +28,7 @@ import {
   Building2,
   BarChart3,
   Users,
+  Package,
 } from 'lucide-react'
 
 // UI Components
@@ -49,6 +50,7 @@ import { StatusDashboardTab } from '@/components/migration-tabs/status-dashboard
 import { GapsTab } from '@/components/migration-tabs/gaps-tab'
 import { ChecklistTab } from '@/components/migration-tabs/checklist-tab'
 import { BlockersTab } from '@/components/migration-tabs/blockers-tab'
+import { BulkMigrationTab } from '@/components/migration-tabs/bulk-migration-tab'
 import { TransformationStoryTab } from '@/components/transformation-story-tab'
 import { ArchitectureComparisonTab } from '@/components/architecture-comparison-tab'
 import { ComparisonPanel } from '@/components/comparison-panel'
@@ -89,6 +91,7 @@ type ViewMode =
   | 'ecosystem-hub'
   | 'record-census'
   | 'test-users'
+  | 'bulk-migration'
 
 interface TabEntry {
   id: ViewMode
@@ -129,6 +132,7 @@ const NAV_ITEMS: NavItem[] = [
   { id: 'gaps', label: 'Gaps', icon: AlertCircle },
   { id: 'checklist', label: 'Checklists', icon: CheckCircle2 },
   { id: 'blockers', label: 'Blockers', icon: AlertTriangle },
+  { id: 'bulk-migration', label: 'Bulk Copy', icon: Package },
 
   // ── Deep Dives ──
   { separator: 'Reference' },
@@ -246,6 +250,9 @@ export default function Home() {
           </ErrorBoundary>
           <ErrorBoundary title="Blockers">
             {viewMode === 'blockers' && <BlockersTab />}
+          </ErrorBoundary>
+          <ErrorBoundary title="Bulk Migration">
+            {viewMode === 'bulk-migration' && <BulkMigrationTab />}
           </ErrorBoundary>
           <ErrorBoundary title="Architecture">
             {viewMode === 'architecture' && <ArchitectureTab />}
