@@ -19,18 +19,41 @@ Systematic testing of the xano-v2-admin application - a V1→V2 Migration Admin 
 - **Verification:** `curl http://localhost:3001/api/users/7/comparison` now returns no errors
 - **Commit:** `ce030bc`
 
+### ✅ FIXED: Endpoint Health Check - GET Query Params
+
+**Issue:** Health check sending GET requests with body instead of query params
+
+- **Symptom:** 400 errors on `/staging-status`, `/onboarding-status`, `/staging-unprocessed`
+- **Root Cause:** Health check code was passing `user_id` in body for GET requests, but Xano expects query params
+- **Fix:** Updated `testEndpoint()` to build query string for GET requests
+- **Verification:** Health check now passes 26/28 tests (was 22/28)
+- **Commit:** `6b538e4`
+
+### ✅ FIXED: Reset Transaction Errors - Missing Param
+
+**Issue:** `/reset-transaction-errors` endpoint returning 400
+
+- **Symptom:** HTTP 400 error during health check
+- **Root Cause:** Endpoint requires `batch_size` parameter in addition to `user_id`
+- **Fix:** Added `additionalParams: { batch_size: 100 }` to mcp-endpoints config, updated health check to merge additional params
+- **Verification:** Endpoint now passes health check
+- **Commit:** `6b538e4`
+
 ## API Route Status
 
 ### ✅ Working Endpoints
 
-| Endpoint                         | Status  | Notes                         |
-| -------------------------------- | ------- | ----------------------------- |
-| `GET /api/users/list`            | ✅ PASS | User search working correctly |
-| `GET /api/users/[id]/comparison` | ✅ PASS | V1/V2 comparison (after fix)  |
-| `GET /api/staging/status`        | ✅ PASS | Staging table counts          |
-| `GET /api/v1/tables`             | ✅ PASS | V1 table listing              |
-| `GET /api/v2/tables`             | ✅ PASS | V2 table listing              |
-| `GET /api/v2/functions`          | ✅ PASS | V2 functions listing          |
+| Endpoint                         | Status  | Notes                                           |
+| -------------------------------- | ------- | ----------------------------------------------- |
+| `GET /api/users/list`            | ✅ PASS | User search working correctly                   |
+| `GET /api/users/[id]/comparison` | ✅ PASS | V1/V2 comparison (after fix)                    |
+| `GET /api/staging/status`        | ✅ PASS | Staging table counts                            |
+| `GET /api/v1/tables`             | ✅ PASS | V1 table listing                                |
+| `GET /api/v2/tables`             | ✅ PASS | V2 table listing                                |
+| `GET /api/v2/functions`          | ✅ PASS | V2 functions listing                            |
+| `GET /api/v2/endpoints/health`   | ✅ PASS | Endpoint health check (26/28 passing after fix) |
+| `GET /api/v2/background-tasks`   | ✅ PASS | Background tasks listing                        |
+| `GET /api/staging/unprocessed`   | ✅ PASS | Unprocessed staging records (after fix)         |
 
 ### ⚠️ Known Limitations
 
@@ -110,4 +133,12 @@ From `app/page.tsx` ViewMode types:
 - ⚠️ One table name bug fixed
 - ⚠️ V1 user data access needs work
 
-**Overall Status:** Backend solid. UI testing blocked by browser daemon instability.
+**Overall Status:** Backend solid with 3 bugs fixed. UI testing blocked by browser daemon instability.
+
+## Summary of Fixes
+
+1. **Contributions table name** - Fixed V1 table query
+2. **GET query params** - Fixed health check to use query strings for GET requests (fixed 3 endpoints)
+3. **Additional params** - Added support for endpoints requiring extra parameters beyond user_id (fixed 1 endpoint)
+
+**Impact:** Improved endpoint health from 78.6% (22/28) to 92.9% (26/28) passing.
