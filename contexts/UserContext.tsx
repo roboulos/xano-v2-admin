@@ -121,7 +121,68 @@ function persistUserId(id: number | null): void {
 }
 
 /**
+ * Transform a raw API section value into the expected { count, records? } shape.
+ * The API returns raw arrays for array sections; the context expects { count: number }.
+ */
+function normalizeArraySection(raw: unknown): {
+  count: number
+  records?: Record<string, unknown>[]
+} {
+  if (Array.isArray(raw)) {
+    return { count: raw.length, records: raw as Record<string, unknown>[] }
+  }
+  if (raw && typeof raw === 'object' && 'count' in raw) {
+    return raw as { count: number; records?: Record<string, unknown>[] }
+  }
+  return { count: 0 }
+}
+
+/**
+ * Build totals array from the comparison response.
+ */
+function buildTotals(
+  v1: V1UserData,
+  v2: V2UserData,
+  comparison: Record<string, unknown>
+): UserComparisonData['totals'] {
+  const entities = [
+    'user',
+    'agent',
+    'transactions',
+    'listings',
+    'network',
+    'contributions',
+  ] as const
+  return entities.map((entity) => {
+    let v1Count: number
+    let v2Count: number
+
+    if (entity === 'user' || entity === 'agent') {
+      v1Count = v1[entity] ? 1 : 0
+      v2Count = v2[entity] ? 1 : 0
+    } else {
+      v1Count = v1[entity]?.count ?? 0
+      v2Count = v2[entity]?.count ?? 0
+    }
+
+    // Use comparison data if available (may have real V2 counts from Xano endpoint)
+    const comp = comparison[entity] as Record<string, unknown> | undefined
+    if (comp && 'v1Count' in comp && 'v2Count' in comp) {
+      v1Count = (comp.v1Count as number) ?? v1Count
+      v2Count = (comp.v2Count as number) ?? v2Count
+    }
+
+    const delta = v2Count - v1Count
+    const status: 'synced' | 'partial' | 'missing' =
+      v1Count === v2Count ? 'synced' : v2Count > 0 ? 'partial' : 'missing'
+
+    return { entity, v1_count: v1Count, v2_count: v2Count, delta, status }
+  })
+}
+
+/**
  * Fetch user comparison data from the API with AbortController support.
+ * Transforms the raw API response to match the expected UserComparisonData shape.
  */
 async function fetchUserComparison(
   userId: number,
@@ -132,7 +193,35 @@ async function fetchUserComparison(
     const text = await res.text().catch(() => 'Unknown error')
     throw new Error(`Failed to fetch comparison data: ${res.status} - ${text}`)
   }
-  return res.json()
+  const raw = await res.json()
+
+  // Transform v1/v2 sections to expected shape
+  const v1: V1UserData = {
+    user: raw.v1?.user ?? null,
+    agent: raw.v1?.agent ?? null,
+    transactions: normalizeArraySection(raw.v1?.transactions),
+    listings: normalizeArraySection(raw.v1?.listings),
+    network: normalizeArraySection(raw.v1?.network),
+    contributions: normalizeArraySection(raw.v1?.contributions),
+  }
+
+  const v2: V2UserData = {
+    user: raw.v2?.user ?? null,
+    agent: raw.v2?.agent ?? null,
+    transactions: normalizeArraySection(raw.v2?.transactions),
+    listings: normalizeArraySection(raw.v2?.listings),
+    network: normalizeArraySection(raw.v2?.network),
+    contributions: normalizeArraySection(raw.v2?.contributions),
+  }
+
+  const totals = buildTotals(v1, v2, raw.comparison ?? {})
+
+  return {
+    v1,
+    v2,
+    totals,
+    timestamp: raw.timestamp ?? new Date().toISOString(),
+  }
 }
 
 // ---------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useState } from 'react'
 import {
   ChevronDown,
   ChevronRight,
@@ -18,8 +18,8 @@ import {
   type V1UserData,
   type V2UserData,
 } from '@/contexts/UserContext'
-import { DiffHighlight, DiffStatusBadge, DiffSummaryBar } from '@/components/diff-highlight'
-import { compareFields, summarizeDiffs, formatValue, type FieldDiff } from '@/lib/diff-utils'
+import { DiffHighlight, DiffStatusBadge } from '@/components/diff-highlight'
+import { compareFields, summarizeDiffs, formatValue } from '@/lib/diff-utils'
 import { RefreshIndicator } from '@/components/refresh-indicator'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -474,6 +474,41 @@ function ScalarDrilldown({ sectionKey, v1Data, v2Data }: ScalarDrilldownProps) {
       <p className="text-sm text-muted-foreground py-4 text-center">
         No data available in either V1 or V2.
       </p>
+    )
+  }
+
+  if (!v1Record && v2Record) {
+    // V1 auth-enabled tables can't be queried — show V2 data with explanation
+    const fields = Object.entries(v2Record).filter(([, v]) => v !== null && v !== undefined)
+    return (
+      <div className="space-y-3">
+        <div
+          className="flex items-center gap-2 rounded-lg border px-3 py-2 text-xs"
+          style={{
+            backgroundColor: 'var(--status-pending-bg)',
+            borderColor: 'var(--status-pending-border)',
+            color: 'var(--status-pending)',
+          }}
+        >
+          <Database className="h-3.5 w-3.5 shrink-0" />
+          V1 data unavailable (auth-enabled table). Showing V2 record only.
+        </div>
+        <div className="rounded-lg border bg-muted/20 px-3 py-2">
+          <div className="flex items-center gap-2 text-xs text-muted-foreground mb-2">
+            <Database className="h-3 w-3" />
+            <span className="font-medium">V2</span>
+            <span className="text-[10px] opacity-70">{V2_INSTANCE}</span>
+          </div>
+          <div className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 text-xs">
+            {fields.map(([key, val]) => (
+              <div key={key} className="contents">
+                <span className="font-medium text-muted-foreground">{key}</span>
+                <span className="font-mono truncate">{formatValue(val)}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
     )
   }
 
