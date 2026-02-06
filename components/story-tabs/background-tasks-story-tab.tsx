@@ -55,15 +55,15 @@ const JOB_TYPE_LABELS: Record<Exclude<JobType, 'all'>, string> = {
   fub_onboarding_jobs: 'Follow Up Boss — Initial Import',
   fub_sync_jobs: 'Follow Up Boss — Ongoing Sync',
   rezen_sync_jobs: 'reZEN — Data Sync',
-  job_status: 'General Jobs',
+  job_status: 'General Queue',
 }
 
 const JOB_TYPE_OPTIONS: { value: JobType; label: string }[] = [
   { value: 'all', label: 'All Queues' },
-  { value: 'fub_onboarding_jobs', label: 'FUB Initial Import' },
-  { value: 'fub_sync_jobs', label: 'FUB Ongoing Sync' },
+  { value: 'fub_onboarding_jobs', label: 'Follow Up Boss Initial Import' },
+  { value: 'fub_sync_jobs', label: 'Follow Up Boss Ongoing Sync' },
   { value: 'rezen_sync_jobs', label: 'reZEN Sync' },
-  { value: 'job_status', label: 'General Jobs' },
+  { value: 'job_status', label: 'General Queue' },
 ]
 
 type JobStatus = 'pending' | 'processing' | 'complete' | 'error'
@@ -282,7 +282,7 @@ function NoUserSelected() {
         <h3 className="mb-2 text-lg font-semibold">No User Selected</h3>
         <p className="mx-auto max-w-md text-sm text-muted-foreground">
           Select a user from the picker above to view their background task queue status, including
-          FUB sync, reZEN sync, and general processing jobs.
+          Follow Up Boss sync, reZEN sync, and general processing jobs.
         </p>
       </CardContent>
     </Card>
@@ -336,7 +336,7 @@ function QueueSummaryTable({ queues, filterType }: { queues: QueueData[]; filter
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-base">Job Queues</CardTitle>
+        <CardTitle className="text-base">Processing Queues</CardTitle>
         <CardDescription>
           {`${filtered.length} queue${filtered.length !== 1 ? 's' : ''} monitored`}
         </CardDescription>
@@ -487,15 +487,15 @@ function RecentJobsList({ jobs, filterType }: { jobs: RecentJob[]; filterType: J
     return (
       <Card>
         <CardHeader>
-          <CardTitle className="text-base">Recent Jobs</CardTitle>
-          <CardDescription>{'No recent jobs found for the selected filter'}</CardDescription>
+          <CardTitle className="text-base">Recent Tasks</CardTitle>
+          <CardDescription>{'No recent tasks found for the selected filter'}</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="flex flex-col items-center py-8 text-center">
             <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-muted">
               <CheckCircle2 className="h-6 w-6 text-muted-foreground" />
             </div>
-            <p className="text-sm text-muted-foreground">No jobs to display</p>
+            <p className="text-sm text-muted-foreground">No tasks to display</p>
           </div>
         </CardContent>
       </Card>
@@ -505,9 +505,9 @@ function RecentJobsList({ jobs, filterType }: { jobs: RecentJob[]; filterType: J
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-base">Recent Jobs</CardTitle>
+        <CardTitle className="text-base">Recent Tasks</CardTitle>
         <CardDescription>
-          {`${filtered.length} recent job${filtered.length !== 1 ? 's' : ''}`}
+          {`${filtered.length} recent task${filtered.length !== 1 ? 's' : ''}`}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-2">
@@ -551,7 +551,7 @@ function RecentJobRow({ job }: { job: RecentJob }) {
             <div className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5 text-xs">
               <span className="font-medium text-foreground">Queue:</span>
               <span>{JOB_TYPE_LABELS[job.queue]}</span>
-              <span className="font-medium text-foreground">Job ID:</span>
+              <span className="font-medium text-foreground">Task ID:</span>
               <span className="font-mono">{job.id}</span>
               <span className="font-medium text-foreground">Detail:</span>
               <span>{job.detail}</span>
@@ -628,7 +628,7 @@ export function BackgroundTasksStoryTab() {
           >
             <AlertCircle className="h-6 w-6" style={{ color: 'var(--status-error)' }} />
           </div>
-          <h3 className="mb-2 text-lg font-semibold">Failed to Load Job Queue Status</h3>
+          <h3 className="mb-2 text-lg font-semibold">Failed to Load Queue Status</h3>
           <p className="mb-4 text-sm text-muted-foreground">{error}</p>
           <Button variant="outline" size="sm" onClick={() => refresh()}>
             <RefreshCw className="h-4 w-4" />

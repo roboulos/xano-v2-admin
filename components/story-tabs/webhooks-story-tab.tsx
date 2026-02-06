@@ -46,6 +46,8 @@ interface WebhookConfig {
   source: string
   description: string
   endpoint: string
+  /** Human-readable name for the backend service */
+  backendLabel: string
   targetTables: string[]
   status: 'active' | 'inactive' | 'unknown'
 }
@@ -80,6 +82,7 @@ const WEBHOOK_CONFIGS: WebhookConfig[] = [
     description:
       'Receives transaction create/update/close events from reZEN. Triggers staging and processing pipeline for transaction, participant, and financial data.',
     endpoint: '/test-function-8052-txn-sync',
+    backendLabel: 'Transaction Sync Service',
     targetTables: ['transaction', 'participant', 'paid_participant'],
     status: 'active',
   },
@@ -90,6 +93,7 @@ const WEBHOOK_CONFIGS: WebhookConfig[] = [
     description:
       'Receives agent profile updates including credentials, hierarchy changes, and cap data updates.',
     endpoint: '/test-function-8051-agent-data',
+    backendLabel: 'Agent Profile Service',
     targetTables: ['agent', 'credentials', 'agent_cap_data'],
     status: 'active',
   },
@@ -100,6 +104,7 @@ const WEBHOOK_CONFIGS: WebhookConfig[] = [
     description:
       'Receives network downline changes, sponsor tree updates, and frontline modifications. Processes 100 records per batch.',
     endpoint: '/test-function-8062-network-downline',
+    backendLabel: 'Network Import Service',
     targetTables: ['network_member', 'sponsor_tree'],
     status: 'active',
   },
@@ -110,6 +115,7 @@ const WEBHOOK_CONFIGS: WebhookConfig[] = [
     description:
       'Receives listing create/update events. Handles listing status transitions and property data.',
     endpoint: '/test-function-8053-listings-sync',
+    backendLabel: 'Listings Service',
     targetTables: ['listing'],
     status: 'active',
   },
@@ -120,6 +126,7 @@ const WEBHOOK_CONFIGS: WebhookConfig[] = [
     description:
       'Receives contribution and revenue share data. Processes income records and revshare totals.',
     endpoint: '/test-function-8056-contributions',
+    backendLabel: 'Contributions Service',
     targetTables: ['contribution', 'income', 'revshare_totals'],
     status: 'active',
   },
@@ -130,26 +137,29 @@ const WEBHOOK_CONFIGS: WebhookConfig[] = [
     description:
       'Receives team membership changes. Syncs team roster, owners, and admin permissions.',
     endpoint: '/test-function-8066-team-roster',
+    backendLabel: 'Team Roster Service',
     targetTables: ['team', 'team_roster', 'team_owners'],
     status: 'active',
   },
   {
     id: 'fub-people',
-    name: 'FUB People Sync',
+    name: 'Follow Up Boss People Sync',
     source: 'Follow Up Boss',
     description:
-      'Receives people/contact updates from Follow Up Boss CRM. Syncs via lambda coordinator.',
+      'Receives people/contact updates from Follow Up Boss CRM. Processes through background job coordinator.',
     endpoint: '/test-function-8118-lambda-coordinator',
+    backendLabel: 'Contact Sync Service',
     targetTables: ['fub_people', 'fub_users'],
     status: 'active',
   },
   {
     id: 'fub-calls',
-    name: 'FUB Calls Sync',
+    name: 'Follow Up Boss Calls Sync',
     source: 'Follow Up Boss',
     description:
       'Receives call activity data from FUB. Tracks call direction, duration, and outcomes.',
     endpoint: '/test-function-8065-fub-calls',
+    backendLabel: 'Call Activity Service',
     targetTables: ['fub_calls'],
     status: 'active',
   },
@@ -391,21 +401,21 @@ function WebhookConfigCard({ webhook }: { webhook: WebhookConfig }) {
             </div>
 
             <div>
-              <h4 className="text-xs font-medium text-muted-foreground mb-1.5">Worker Endpoint</h4>
-              <code className="text-xs bg-muted px-2 py-1 rounded font-mono">
-                POST {webhook.endpoint}
-              </code>
+              <h4 className="text-xs font-medium text-muted-foreground mb-1.5">Data Service</h4>
+              <span className="text-xs bg-muted px-2 py-1 rounded">{webhook.backendLabel}</span>
             </div>
 
             {endpointMatch && (
               <div>
-                <h4 className="text-xs font-medium text-muted-foreground mb-1.5">MCP Details</h4>
+                <h4 className="text-xs font-medium text-muted-foreground mb-1.5">
+                  Service Details
+                </h4>
                 <div className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 text-xs">
                   <span className="font-medium">Task Name:</span>
                   <span>{endpointMatch.taskName}</span>
-                  <span className="font-medium">API Group:</span>
+                  <span className="font-medium">Service Group:</span>
                   <span className="font-mono">{endpointMatch.apiGroup}</span>
-                  <span className="font-medium">Requires User:</span>
+                  <span className="font-medium">User-Specific:</span>
                   <span>{endpointMatch.requiresUserId ? 'Yes' : 'No'}</span>
                 </div>
               </div>
@@ -422,9 +432,9 @@ function ArchitectureDiagram() {
   const steps = [
     { label: 'External API', sublabel: 'reZEN / FUB', color: 'var(--status-info)' },
     { label: 'Webhook', sublabel: 'HTTP POST', color: 'var(--status-warning)' },
-    { label: 'V2 Staging', sublabel: 'Tables', color: 'var(--status-pending)' },
-    { label: 'Processing', sublabel: 'Workers', color: 'var(--status-info)' },
-    { label: 'V2 Core', sublabel: 'Tables', color: 'var(--status-success)' },
+    { label: 'V2 Staging', sublabel: 'Holding Area', color: 'var(--status-pending)' },
+    { label: 'Processing', sublabel: 'Transform & Validate', color: 'var(--status-info)' },
+    { label: 'V2 Final', sublabel: 'Production Tables', color: 'var(--status-success)' },
   ]
 
   return (
@@ -510,12 +520,8 @@ function StagingActivityFeed({
                 Staging Status Unavailable
               </p>
               <p className="mt-1 text-xs text-muted-foreground">
-                The{' '}
-                <code className="rounded bg-muted px-1 py-0.5 font-mono text-[11px]">
-                  /staging-status
-                </code>{' '}
-                endpoint returned 404. Once implemented, recent webhook delivery events will appear
-                here.
+                The staging status service is not yet available. Once implemented, recent webhook
+                delivery events will appear here.
               </p>
             </div>
           </div>
@@ -733,7 +739,7 @@ export function WebhooksStoryTab() {
         <CardHeader>
           <CardTitle className="text-base">Configured Webhooks</CardTitle>
           <CardDescription>
-            Rezen and FUB webhook integrations feeding the V2 staging pipeline
+            reZEN and Follow Up Boss integrations that feed incoming data into V2
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-2">

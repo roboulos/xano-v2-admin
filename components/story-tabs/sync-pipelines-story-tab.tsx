@@ -80,7 +80,7 @@ interface UnprocessedData {
 const PIPELINES: PipelineDef[] = [
   {
     id: 'fub',
-    name: 'FUB (Follow Up Boss)',
+    name: 'Follow Up Boss',
     description: 'CRM contacts, deals, events, calls, and text messages',
     stagingTables: [
       'fub_people_staging',
@@ -370,7 +370,7 @@ export function SyncPipelinesStoryTab() {
         <Card className="border-[var(--status-warning-border)]">
           <CardContent className="py-3">
             <p className="text-sm text-[var(--status-warning)]">
-              Staging endpoints returned partial or no data. Pipeline status may be incomplete.
+              Some pipeline data could not be loaded. Status shown below may be incomplete.
             </p>
             <p className="text-xs text-muted-foreground mt-1">{stagingError}</p>
           </CardContent>
@@ -497,10 +497,10 @@ function PipelineHeader({
 
 function FlowLegend() {
   const stages = [
-    { label: 'V1 Source', icon: <Server className="h-3.5 w-3.5" /> },
-    { label: 'Staging', icon: <Inbox className="h-3.5 w-3.5" /> },
+    { label: 'Source', icon: <Server className="h-3.5 w-3.5" /> },
+    { label: 'Intake', icon: <Inbox className="h-3.5 w-3.5" /> },
     { label: 'Processing', icon: <Zap className="h-3.5 w-3.5" /> },
-    { label: 'V2 Target', icon: <Database className="h-3.5 w-3.5" /> },
+    { label: 'Production', icon: <Database className="h-3.5 w-3.5" /> },
   ]
 
   return (
@@ -582,12 +582,12 @@ function PipelineCard({ pipeline, stagingData, unprocessedData, totals }: Pipeli
   // Build the 4-stage flow
   const stages: PipelineStage[] = [
     {
-      label: 'V1 Source',
+      label: 'Source',
       count: v1Count,
       icon: <Server className="h-4 w-4" />,
     },
     {
-      label: 'Staging',
+      label: 'Intake',
       count: stagingCount > 0 ? stagingCount : null,
       icon: <Inbox className="h-4 w-4" />,
     },
@@ -597,7 +597,7 @@ function PipelineCard({ pipeline, stagingData, unprocessedData, totals }: Pipeli
       icon: <Zap className="h-4 w-4" />,
     },
     {
-      label: 'V2 Target',
+      label: 'Production',
       count: v2Count,
       icon: <Database className="h-4 w-4" />,
     },
@@ -660,7 +660,7 @@ function PipelineCard({ pipeline, stagingData, unprocessedData, totals }: Pipeli
             <Loader2 className="h-3.5 w-3.5 text-[var(--status-warning)] animate-spin" />
             <span className="text-xs text-[var(--status-warning)] font-medium">
               {unprocessedCount.toLocaleString()} unprocessed record
-              {unprocessedCount !== 1 ? 's' : ''} in staging
+              {unprocessedCount !== 1 ? 's' : ''} pending
             </span>
           </div>
         )}
@@ -735,7 +735,7 @@ function StagingTableBreakdown({ pipeline, stagingData }: StagingTableBreakdownP
         onClick={() => setExpanded(!expanded)}
         className="text-xs text-muted-foreground hover:text-foreground transition-colors"
       >
-        {expanded ? 'Hide' : 'Show'} staging table details ({tablesWithData.length} table
+        {expanded ? 'Hide' : 'Show'} intake table details ({tablesWithData.length} table
         {tablesWithData.length !== 1 ? 's' : ''})
       </button>
       {expanded && (
@@ -787,7 +787,7 @@ function EmptyState() {
         <h3 className="mb-2 text-lg font-semibold">No User Selected</h3>
         <p className="mx-auto max-w-md text-sm text-muted-foreground">
           Select a user from the picker above to view their sync pipeline status. Each pipeline
-          shows the flow of data from V1 through staging tables to the V2 target.
+          shows the flow of data from the source system through intake and processing to production.
         </p>
         <div className="mt-4 flex justify-center">
           <Badge variant="outline" className="text-xs">

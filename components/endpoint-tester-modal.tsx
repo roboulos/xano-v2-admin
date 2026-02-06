@@ -164,7 +164,7 @@ export function EndpointTesterModal({
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Terminal className="h-5 w-5" />
-            Test Endpoint: {endpoint.taskName}
+            Test Service: {endpoint.taskName}
           </DialogTitle>
           <DialogDescription>{endpoint.description}</DialogDescription>
         </DialogHeader>
@@ -180,11 +180,11 @@ export function EndpointTesterModal({
                 </Badge>
               </div>
               <div>
-                <span className="font-semibold">API Group:</span>{' '}
+                <span className="font-semibold">Service Group:</span>{' '}
                 <Badge variant="outline">{endpoint.apiGroup}</Badge>
               </div>
               <div className="col-span-2">
-                <span className="font-semibold">Endpoint:</span>{' '}
+                <span className="font-semibold">Service URL:</span>{' '}
                 <code className="text-xs bg-background px-2 py-1 rounded">
                   {baseUrl}
                   {endpoint.endpoint}

@@ -61,7 +61,7 @@ const ONBOARDING_STEPS: OnboardingStep[] = [
     id: 1,
     name: 'Team Data',
     endpoint: '/test-function-8066-team-roster',
-    backendLabel: 'Team Roster Import (Function #8066)',
+    backendLabel: 'Team Roster Service',
     tables: ['team', 'team_roster', 'team_owners'],
     dataKeys: [],
     icon: Users,
@@ -71,7 +71,7 @@ const ONBOARDING_STEPS: OnboardingStep[] = [
     id: 2,
     name: 'Agent Data',
     endpoint: '/test-function-8051-agent-data',
-    backendLabel: 'Agent Data Import (Function #8051)',
+    backendLabel: 'Agent Profile Service',
     tables: ['agent', 'user'],
     dataKeys: [],
     icon: UserCheck,
@@ -81,7 +81,7 @@ const ONBOARDING_STEPS: OnboardingStep[] = [
     id: 3,
     name: 'Transactions',
     endpoint: '/test-function-8052-txn-sync',
-    backendLabel: 'Transaction Import (Function #8052)',
+    backendLabel: 'Transaction Sync Service',
     tables: ['transaction', 'participant'],
     dataKeys: ['transactions'],
     icon: ArrowLeftRight,
@@ -91,7 +91,7 @@ const ONBOARDING_STEPS: OnboardingStep[] = [
     id: 4,
     name: 'Listings',
     endpoint: '/test-function-8053-listings-sync',
-    backendLabel: 'Listings Import (Function #8053)',
+    backendLabel: 'Listings Service',
     tables: ['listing'],
     dataKeys: ['listings'],
     icon: Home,
@@ -101,7 +101,7 @@ const ONBOARDING_STEPS: OnboardingStep[] = [
     id: 5,
     name: 'Contributions',
     endpoint: '/test-function-8056-contributions',
-    backendLabel: 'Contributions Import (Function #8056)',
+    backendLabel: 'Contributions Service',
     tables: ['contribution', 'income', 'revshare_totals'],
     dataKeys: ['contributions'],
     icon: HandCoins,
@@ -111,7 +111,7 @@ const ONBOARDING_STEPS: OnboardingStep[] = [
     id: 6,
     name: 'Network',
     endpoint: '/test-function-8062-network-downline',
-    backendLabel: 'Network Downline Import (Function #8062)',
+    backendLabel: 'Network Import Service',
     tables: ['network', 'connections'],
     dataKeys: ['network'],
     icon: Network,
@@ -555,7 +555,7 @@ function StepCard({ step, status, triggerState, v1Data, v2Data, onTriggerSync }:
 
             {/* Endpoint */}
             <div>
-              <h4 className="text-xs font-medium text-muted-foreground mb-1.5">Backend Service</h4>
+              <h4 className="text-xs font-medium text-muted-foreground mb-1.5">Data Service</h4>
               <span className="text-xs bg-muted px-2 py-1 rounded">{step.backendLabel}</span>
             </div>
 
