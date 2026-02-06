@@ -195,23 +195,59 @@ async function fetchUserComparison(
   }
   const raw = await res.json()
 
-  // Transform v1/v2 sections to expected shape
+  // Transform v1/v2 sections to expected shape.
+  // Array sections: prefer authoritative counts from comparison data over raw arrays
+  // (which may be empty placeholders when only counts were fetched from Xano).
+  const comp = raw.comparison ?? {}
+
   const v1: V1UserData = {
     user: raw.v1?.user ?? null,
     agent: raw.v1?.agent ?? null,
-    transactions: normalizeArraySection(raw.v1?.transactions),
-    listings: normalizeArraySection(raw.v1?.listings),
-    network: normalizeArraySection(raw.v1?.network),
-    contributions: normalizeArraySection(raw.v1?.contributions),
+    transactions: {
+      count:
+        ((comp.transactions as Record<string, unknown>)?.v1Count as number) ??
+        normalizeArraySection(raw.v1?.transactions).count,
+    },
+    listings: {
+      count:
+        ((comp.listings as Record<string, unknown>)?.v1Count as number) ??
+        normalizeArraySection(raw.v1?.listings).count,
+    },
+    network: {
+      count:
+        ((comp.network as Record<string, unknown>)?.v1Count as number) ??
+        normalizeArraySection(raw.v1?.network).count,
+    },
+    contributions: {
+      count:
+        ((comp.contributions as Record<string, unknown>)?.v1Count as number) ??
+        normalizeArraySection(raw.v1?.contributions).count,
+    },
   }
 
   const v2: V2UserData = {
     user: raw.v2?.user ?? null,
     agent: raw.v2?.agent ?? null,
-    transactions: normalizeArraySection(raw.v2?.transactions),
-    listings: normalizeArraySection(raw.v2?.listings),
-    network: normalizeArraySection(raw.v2?.network),
-    contributions: normalizeArraySection(raw.v2?.contributions),
+    transactions: {
+      count:
+        ((comp.transactions as Record<string, unknown>)?.v2Count as number) ??
+        normalizeArraySection(raw.v2?.transactions).count,
+    },
+    listings: {
+      count:
+        ((comp.listings as Record<string, unknown>)?.v2Count as number) ??
+        normalizeArraySection(raw.v2?.listings).count,
+    },
+    network: {
+      count:
+        ((comp.network as Record<string, unknown>)?.v2Count as number) ??
+        normalizeArraySection(raw.v2?.network).count,
+    },
+    contributions: {
+      count:
+        ((comp.contributions as Record<string, unknown>)?.v2Count as number) ??
+        normalizeArraySection(raw.v2?.contributions).count,
+    },
   }
 
   const totals = buildTotals(v1, v2, raw.comparison ?? {})
