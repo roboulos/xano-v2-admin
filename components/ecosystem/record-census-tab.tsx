@@ -45,9 +45,13 @@ interface RecordCountsResponse {
   v1_all_total: number
   v2_all_total: number
   total_entities: number
+  excluded_tables: number
+  total_v1_tables: number
+  tables_covered: number
   categories: Record<string, CategoryGroup>
   entities: EntityRow[]
   timestamp: string
+  excluded_note: string
   note: string
 }
 
@@ -59,12 +63,26 @@ const fmt = (n: number) => new Intl.NumberFormat('en-US').format(n)
 
 const CATEGORY_META: Record<string, { label: string; color: string }> = {
   core: { label: 'Core Business', color: 'bg-blue-500' },
+  core_extended: { label: 'Core Extended', color: 'bg-blue-400' },
   financial: { label: 'Financial', color: 'bg-green-500' },
   network: { label: 'Network', color: 'bg-indigo-500' },
   team_hierarchy: { label: 'Team Hierarchy', color: 'bg-cyan-500' },
   fub: { label: 'Follow Up Boss', color: 'bg-emerald-500' },
+  rezen: { label: 'Rezen Integration', color: 'bg-teal-500' },
+  integrations: { label: 'Integrations (SkySlope/DotLoop/Lofty)', color: 'bg-sky-500' },
+  agg1: { label: 'Aggregations 1', color: 'bg-orange-500' },
+  agg2: { label: 'Aggregations 2', color: 'bg-orange-400' },
+  agg3: { label: 'Aggregations 3', color: 'bg-orange-300' },
+  stripe: { label: 'Stripe & Billing', color: 'bg-violet-500' },
+  pagebuilder: { label: 'Page Builder', color: 'bg-pink-500' },
+  charts: { label: 'Charts & Viz', color: 'bg-rose-500' },
+  ai_nora: { label: 'AI / NORA', color: 'bg-fuchsia-500' },
+  lambda: { label: 'Lambda Jobs', color: 'bg-slate-500' },
   logs: { label: 'Logs & Audit', color: 'bg-amber-500' },
   config: { label: 'Config & Reference', color: 'bg-purple-500' },
+  staging: { label: 'Staging & Import', color: 'bg-yellow-500' },
+  equity_title: { label: 'Equity & Title', color: 'bg-lime-500' },
+  other: { label: 'Other / Misc', color: 'bg-gray-500' },
 }
 
 // ---------------------------------------------------------------------------
@@ -243,7 +261,7 @@ export function RecordCensusTab() {
           <div>
             <h2 className="text-xl font-semibold">Record Census</h2>
             <p className="text-sm text-muted-foreground">
-              Like-for-like V1 vs V2 comparison via cross-workspace SQL
+              Every record in V1 production, compared against V2 normalized — table by table
             </p>
           </div>
         </div>
@@ -279,26 +297,27 @@ export function RecordCensusTab() {
       ) : data ? (
         <>
           {/* Hero cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <Card className="border-2 border-blue-500/20 bg-blue-500/5">
               <CardContent className="pt-6 text-center">
                 <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1">
-                  V1 Production
+                  Current System
                 </p>
-                <p className="text-3xl font-bold tabular-nums">{fmt(data.comparable_v1_total)}</p>
+                <p className="text-3xl font-bold tabular-nums">{fmt(data.v1_all_total)}</p>
                 <p className="text-xs text-muted-foreground mt-1">
-                  {data.comparable_tables} comparable tables
+                  {data.tables_covered} of {data.total_v1_tables} tables counted
                 </p>
               </CardContent>
             </Card>
             <Card className="border-2 border-purple-500/20 bg-purple-500/5">
               <CardContent className="pt-6 text-center">
                 <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1">
-                  V2 Normalized
+                  Upgraded System
                 </p>
-                <p className="text-3xl font-bold tabular-nums">{fmt(data.comparable_v2_total)}</p>
+                <p className="text-3xl font-bold tabular-nums">{fmt(data.v2_all_total)}</p>
                 <p className="text-xs text-muted-foreground mt-1">
-                  {data.comparable_tables} comparable tables
+                  {data.total_entities} entities across {Object.keys(data.categories).length}{' '}
+                  categories
                 </p>
               </CardContent>
             </Card>
@@ -312,7 +331,7 @@ export function RecordCensusTab() {
             >
               <CardContent className="pt-6 text-center">
                 <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1">
-                  Coverage
+                  Like-for-Like Coverage
                 </p>
                 <p
                   className={cn(
@@ -320,10 +339,24 @@ export function RecordCensusTab() {
                     data.comparable_pct >= 99.5 ? 'text-green-600' : 'text-amber-600'
                   )}
                 >
-                  {data.comparable_pct.toFixed(2)}%
+                  {data.comparable_pct.toFixed(1)}%
                 </p>
                 <p className="text-xs text-muted-foreground mt-1">
-                  Gap: {fmt(data.comparable_gap)} records
+                  {fmt(data.comparable_v2_total)} of {fmt(data.comparable_v1_total)} (
+                  {data.comparable_tables} tables)
+                </p>
+              </CardContent>
+            </Card>
+            <Card className="border-2 border-slate-500/20 bg-slate-500/5">
+              <CardContent className="pt-6 text-center">
+                <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1">
+                  Migration Gap
+                </p>
+                <p className="text-3xl font-bold tabular-nums text-amber-600">
+                  {fmt(data.v1_all_total - data.v2_all_total)}
+                </p>
+                <p className="text-xs text-muted-foreground mt-1">
+                  {data.excluded_tables} tables not yet accessible for remote counting
                 </p>
               </CardContent>
             </Card>
@@ -333,24 +366,38 @@ export function RecordCensusTab() {
           <Card>
             <CardContent className="pt-5 pb-5">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-sm font-medium">V2 Coverage (like-for-like)</span>
+                <span className="text-sm font-medium">V2 Migration Progress (all records)</span>
                 <span className="text-sm font-bold tabular-nums">
-                  {data.comparable_pct.toFixed(2)}%
+                  {data.v1_all_total > 0
+                    ? ((data.v2_all_total / data.v1_all_total) * 100).toFixed(1)
+                    : '0'}
+                  %
                 </span>
               </div>
               <div className="h-3 rounded-full bg-muted overflow-hidden">
                 <div
                   className={cn(
                     'h-full rounded-full transition-all',
-                    data.comparable_pct >= 99.5 ? 'bg-green-500' : 'bg-purple-500'
+                    data.v2_all_total / data.v1_all_total >= 0.995
+                      ? 'bg-green-500'
+                      : 'bg-purple-500'
                   )}
-                  style={{ width: `${Math.min(data.comparable_pct, 100)}%` }}
+                  style={{
+                    width: `${Math.min((data.v2_all_total / data.v1_all_total) * 100, 100)}%`,
+                  }}
                 />
               </div>
               <p className="text-xs text-muted-foreground mt-2">
-                {fmt(data.comparable_v2_total)} of {fmt(data.comparable_v1_total)} V1 records exist
-                in V2. Counting {data.total_entities} entities across 7 categories via
-                cross-workspace SQL.
+                {fmt(data.v2_all_total)} of {fmt(data.v1_all_total)} V1 records accounted for in V2
+                across {data.total_entities} tables in {Object.keys(data.categories).length}{' '}
+                categories.
+                {data.excluded_tables > 0 && (
+                  <>
+                    {' '}
+                    {data.excluded_tables} of {data.total_v1_tables} V1 tables are not yet
+                    accessible for remote counting and are not included in these totals.
+                  </>
+                )}
               </p>
             </CardContent>
           </Card>

@@ -29,26 +29,45 @@ import { formatRelativeTime } from '@/lib/utils'
 import { useState } from 'react'
 import { EndpointTesterModal } from './endpoint-tester-modal'
 import { MCP_BASES, MCPEndpoint } from '@/lib/mcp-endpoints'
+import {
+  V1_TABLE_COUNT,
+  V2_TABLE_COUNT,
+  V2_TASKS_TOTAL,
+  V2_TASKS_PASSING,
+  V2_WORKERS_TOTAL,
+  V2_WORKERS_UNMAPPED,
+  V2_ACTIVE_FUNCTIONS,
+} from '@/lib/dashboard-constants'
+import { validationConfig } from '@/validation.config'
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json())
 
-// Architecture counts — update these when Xano workspace changes
+// Sync status thresholds for V1/V2 record comparison
+const SYNC_THRESHOLD_PERFECT = 100 // 100% match
+const SYNC_THRESHOLD_EXCELLENT = 99 // ≥99% sync
+const SYNC_THRESHOLD_WARNING = 95 // 95-99% sync (warning)
+// Below SYNC_THRESHOLD_WARNING = critical
+
+// Derive architecture counts from validation.config.ts (single source of truth)
+const fnStage = validationConfig.stages.find((s) => s.id === 'functions')!
+const epStage = validationConfig.stages.find((s) => s.id === 'endpoints')!
+
 const ARCH = {
-  TASKS_TOTAL: 109,
-  TASKS_PASSING: 102,
-  WORKERS_TOTAL: 194,
-  WORKERS_ENDPOINTS_UNMAPPED: 187,
-  TEST_ENDPOINTS_TOTAL: 324,
-  TEST_ENDPOINTS_PASSING: 312,
-  ACTIVE_TOTAL: 109 + 194, // Tasks + Workers
+  TASKS_TOTAL: V2_TASKS_TOTAL, // From dashboard-constants.ts
+  TASKS_PASSING: V2_TASKS_PASSING, // From dashboard-constants.ts
+  WORKERS_TOTAL: V2_WORKERS_TOTAL, // From dashboard-constants.ts
+  WORKERS_ENDPOINTS_UNMAPPED: V2_WORKERS_UNMAPPED, // From dashboard-constants.ts
+  TEST_ENDPOINTS_TOTAL: epStage.metrics.total, // 801 from validation.config.ts
+  TEST_ENDPOINTS_PASSING: epStage.metrics.target, // 769 (96% threshold)
+  ACTIVE_TOTAL: V2_ACTIVE_FUNCTIONS, // From dashboard-constants.ts
   get TASKS_PASS_RATE() {
-    return Math.round((this.TASKS_PASSING / this.TASKS_TOTAL) * 100)
+    return Math.round((V2_TASKS_PASSING / V2_TASKS_TOTAL) * 100)
   },
   get ENDPOINTS_PASS_RATE() {
     return Math.round((this.TEST_ENDPOINTS_PASSING / this.TEST_ENDPOINTS_TOTAL) * 100)
   },
   get TASKS_MAPPED() {
-    return this.TASKS_TOTAL - 8
+    return V2_TASKS_TOTAL - 8
   }, // 8 unmapped
 } as const
 
@@ -90,15 +109,12 @@ export function LiveMigrationStatus() {
     revalidateOnFocus: true,
   })
 
-  // Fetch entity-by-entity sync status from the sync endpoint
+  // Fetch entity-by-entity sync status from internal API proxy
   const syncFetcher = async () => {
-    const res = await fetch(
-      'https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:20LTQtIX/sync-v1-to-v2-direct',
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-      }
-    )
+    const res = await fetch('/api/v2/sync-status', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+    })
     const data = await res.json()
     setSyncLastUpdated(new Date())
     return data
@@ -250,7 +266,7 @@ export function LiveMigrationStatus() {
                   {
                     title: 'V2 Tables',
                     content: [
-                      `Total: ${v2.tables.count} tables (normalized from V1's 251 tables)`,
+                      `Total: ${v2.tables.count} tables (normalized from V1's ${V1_TABLE_COUNT} tables)`,
                       `V1 Records: ${countsData?.success ? countsData.v1.total_records.toLocaleString() : 'Loading...'}`,
                       `V2 Records: ${countsData?.success ? countsData.v2.total_records.toLocaleString() : 'Loading...'}`,
                       `Note: Different schemas - direct comparison not meaningful`,
@@ -269,7 +285,7 @@ export function LiveMigrationStatus() {
 
                 if (integrityData?.success) {
                   sections.push({
-                    title: 'Foreign Key Integrity',
+                    title: 'Data Relationship Integrity',
                     content: [
                       `Total References: ${integrityData.data.totalReferences}`,
                       `Validated: ${integrityData.data.validated}`,
@@ -907,7 +923,8 @@ export function LiveMigrationStatus() {
                     {ARCH.TEST_ENDPOINTS_PASSING} working, {ARCH.ENDPOINTS_PASS_RATE}%)
                   </div>
                   <div>
-                    • <strong>137 mapped to functions:</strong> 101 Tasks/ + 36 Utils/
+                    • <strong>{ARCH.TASKS_MAPPED} mapped to functions</strong> (out of{' '}
+                    {ARCH.TASKS_TOTAL} Tasks/)
                   </div>
                   <div>
                     • <strong>{ARCH.WORKERS_ENDPOINTS_UNMAPPED} unmapped:</strong> Endpoints exist
@@ -1288,7 +1305,10 @@ export function LiveMigrationStatus() {
                     <div>
                       <strong>What We Have:</strong>
                     </div>
-                    <div>* 218 background tasks (via /api/v2/background-tasks)</div>
+                    <div>
+                      * {ARCH.ACTIVE_TOTAL} active functions ({ARCH.TASKS_TOTAL} Tasks/ +{' '}
+                      {ARCH.WORKERS_TOTAL} Workers/)
+                    </div>
                     <div>
                       * {ARCH.TASKS_TOTAL} Tasks/ functions (1:1 with active background tasks)
                     </div>
@@ -1337,8 +1357,8 @@ export function LiveMigrationStatus() {
             Raw Database Counts
           </CardTitle>
           <CardDescription>
-            Total records across all tables (V1: {countsData?.v1?.table_count || 251} tables, V2:{' '}
-            {countsData?.v2?.table_count || 193} tables)
+            Total records across all tables (V1: {countsData?.v1?.table_count || V1_TABLE_COUNT}{' '}
+            tables, V2: {countsData?.v2?.table_count || V2_TABLE_COUNT} tables)
           </CardDescription>
         </CardHeader>
         <CardContent className="p-6 pt-0">
@@ -1397,10 +1417,10 @@ export function LiveMigrationStatus() {
                 </div>
               </div>
               <div className="text-xs text-muted-foreground bg-muted/50 p-3 rounded-lg">
-                <strong>Note:</strong> V1 and V2 have different schemas (251 vs 193 tables). V2 is
-                normalized - many V1 tables were merged, deprecated, or restructured. Direct record
-                count comparison is not meaningful. See Entity Sync below for actual migration
-                status.
+                <strong>Note:</strong> V1 and V2 have different schemas ({V1_TABLE_COUNT} vs{' '}
+                {V2_TABLE_COUNT} tables). V2 is normalized - many V1 tables were merged, deprecated,
+                or restructured. Direct record count comparison is not meaningful. See Entity Sync
+                below for actual migration status.
               </div>
             </>
           )}
@@ -1497,28 +1517,30 @@ export function LiveMigrationStatus() {
                     className="w-3 h-3 rounded-full"
                     style={{ backgroundColor: 'var(--status-success)' }}
                   />
-                  <span>100% Match</span>
+                  <span>{SYNC_THRESHOLD_PERFECT}% Match</span>
                 </div>
                 <div className="flex items-center gap-1">
                   <div
                     className="w-3 h-3 rounded-full"
                     style={{ backgroundColor: 'var(--status-success)' }}
                   />
-                  <span>≥99%</span>
+                  <span>≥{SYNC_THRESHOLD_EXCELLENT}%</span>
                 </div>
                 <div className="flex items-center gap-1">
                   <div
                     className="w-3 h-3 rounded-full"
                     style={{ backgroundColor: 'var(--status-warning)' }}
                   />
-                  <span>95-99%</span>
+                  <span>
+                    {SYNC_THRESHOLD_WARNING}-{SYNC_THRESHOLD_EXCELLENT}%
+                  </span>
                 </div>
                 <div className="flex items-center gap-1">
                   <div
                     className="w-3 h-3 rounded-full"
                     style={{ backgroundColor: 'var(--status-error)' }}
                   />
-                  <span>&lt;95% (Critical)</span>
+                  <span>&lt;{SYNC_THRESHOLD_WARNING}% (Critical)</span>
                 </div>
               </div>
 
@@ -1539,21 +1561,21 @@ export function LiveMigrationStatus() {
                     }
                     let textStyles: React.CSSProperties = { color: 'var(--status-success)' }
 
-                    if (ratio >= 100) {
+                    if (ratio >= SYNC_THRESHOLD_PERFECT) {
                       statusBg = 'var(--status-success)'
                       bgStyles = {
                         backgroundColor: 'var(--status-success-bg)',
                         borderColor: 'var(--status-success-border)',
                       }
                       textStyles = { color: 'var(--status-success)' }
-                    } else if (ratio >= 99) {
+                    } else if (ratio >= SYNC_THRESHOLD_EXCELLENT) {
                       statusBg = 'var(--status-success)'
                       bgStyles = {
                         backgroundColor: 'var(--status-success-bg)',
                         borderColor: 'var(--status-success-border)',
                       }
                       textStyles = { color: 'var(--status-success)' }
-                    } else if (ratio >= 95) {
+                    } else if (ratio >= SYNC_THRESHOLD_WARNING) {
                       statusBg = 'var(--status-warning)'
                       bgStyles = {
                         backgroundColor: 'var(--status-warning-bg)',
@@ -1570,7 +1592,7 @@ export function LiveMigrationStatus() {
                     }
 
                     // Critical gap alert
-                    const isCritical = ratio < 95
+                    const isCritical = ratio < SYNC_THRESHOLD_WARNING
 
                     return (
                       <div
@@ -1730,13 +1752,13 @@ export function LiveMigrationStatus() {
               <div className="text-sm space-y-1">
                 <div className="flex items-center gap-2">
                   <span className="text-muted-foreground">V1:</span>
-                  <span className="font-semibold">251 tables</span>
+                  <span className="font-semibold">{V1_TABLE_COUNT} tables</span>
                   <span className="text-xs text-muted-foreground">(with redundancy)</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-muted-foreground">V2:</span>
                   <span className="font-semibold" style={{ color: 'var(--status-success)' }}>
-                    193 tables
+                    {V2_TABLE_COUNT} tables
                   </span>
                   <span className="text-xs" style={{ color: 'var(--status-success)' }}>
                     (normalized)
@@ -1774,9 +1796,9 @@ export function LiveMigrationStatus() {
               </div>
             </div>
 
-            {/* Foreign Key Integrity Section */}
+            {/* Data Relationship Integrity Section */}
             <div className="pt-2 border-t">
-              <div className="text-xs text-muted-foreground mb-2">Foreign Key Integrity</div>
+              <div className="text-xs text-muted-foreground mb-2">Data Relationship Integrity</div>
               <Button
                 variant="outline"
                 size="sm"
@@ -1795,7 +1817,7 @@ export function LiveMigrationStatus() {
                 <div className="mt-3 space-y-2">
                   {integrityLoading ? (
                     <div className="py-4">
-                      <LoadingState size="sm" message="Validating foreign keys..." />
+                      <LoadingState size="sm" message="Checking data relationships..." />
                     </div>
                   ) : integrityError || !integrityData?.success ? (
                     <div className="text-sm text-destructive">
@@ -1814,7 +1836,7 @@ export function LiveMigrationStatus() {
                           <div className="font-semibold" style={{ color: 'var(--status-info)' }}>
                             {integrityData.data.totalReferences}
                           </div>
-                          <div style={{ color: 'var(--status-info)' }}>Total Foreign Keys</div>
+                          <div style={{ color: 'var(--status-info)' }}>Total Relationships</div>
                         </div>
                         <div
                           className="p-2 rounded border"
@@ -1995,10 +2017,12 @@ export function LiveMigrationStatus() {
               <div className="text-2xl font-bold" style={{ color: 'var(--status-success)' }}>
                 {v2.endpoints.count}
               </div>
-              <div className="text-xs text-muted-foreground">{v2.api_groups.count} API groups</div>
+              <div className="text-xs text-muted-foreground">
+                {v2.api_groups.count} service groups
+              </div>
             </div>
             <div className="pt-2 border-t">
-              <div className="text-xs text-muted-foreground mb-2">Key API Groups</div>
+              <div className="text-xs text-muted-foreground mb-2">Key Service Groups</div>
               <div className="space-y-1 text-xs">
                 <div className="flex justify-between">
                   <span>WORKERS (test endpoints)</span>

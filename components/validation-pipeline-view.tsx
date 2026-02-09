@@ -230,12 +230,21 @@ export function ValidationPipelineView() {
         // Map reports to stage results
         Object.entries(data.reports).forEach(([type, report]: [string, any]) => {
           if (report) {
+            // Derive per-stage threshold from config instead of hardcoding 95%
+            const stageConfig = config?.stages.find((s) => s.id === type)
+            const stageThreshold = stageConfig
+              ? Math.round(
+                  (stageConfig.metrics.target /
+                    (stageConfig.metrics.tested ?? stageConfig.metrics.total)) *
+                    100
+                )
+              : 95
             newResults[type] = {
               stageId: type,
-              success: report.summary.passRate >= 95,
+              success: report.summary.passRate >= stageThreshold,
               startTime: new Date(report.timestamp),
               report,
-              meetsSuccessCriteria: report.summary.passRate >= 95,
+              meetsSuccessCriteria: report.summary.passRate >= stageThreshold,
             }
           }
         })

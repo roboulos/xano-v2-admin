@@ -63,6 +63,12 @@ import { FunctionsStoryTab } from '@/components/story-tabs/functions-story-tab'
 import { EcosystemHubTab } from '@/components/ecosystem/ecosystem-hub-tab'
 import { RecordCensusTab } from '@/components/ecosystem/record-census-tab'
 import { TestUsersTab } from '@/components/ecosystem/test-users-tab'
+import {
+  V1_TABLE_COUNT,
+  V2_TABLE_COUNT,
+  PROJECT_COUNT,
+  WORKSPACE_COUNT,
+} from '@/lib/dashboard-constants'
 
 type ViewMode =
   | 'schema'
@@ -163,7 +169,8 @@ export default function Home() {
           <div>
             <h1 className="text-3xl font-bold mb-2">Agent Dashboards Command Center</h1>
             <p className="text-muted-foreground">
-              3 projects &middot; 2 Xano workspaces &middot; 25.4M records &middot; V1→V2 migration
+              {PROJECT_COUNT} projects &middot; {WORKSPACE_COUNT} workspaces &middot;{' '}
+              {V1_TABLE_COUNT} V1 tables → {V2_TABLE_COUNT} V2 tables
             </p>
           </div>
           <div className="shrink-0 pt-1">

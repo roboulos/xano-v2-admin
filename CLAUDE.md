@@ -462,18 +462,18 @@ MCP_BASES = {
 **Clear User Data - Usage:**
 
 ```bash
-# Clear all data for user 60 (requires confirm: true for safety)
+# Clear all data for user 7 (requires confirm: true for safety)
 curl -s -X POST "https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:2kCRUYxG/clear-user-data" \
   -H "Content-Type: application/json" \
   -d '{
-    "user_id": 60,
+    "user_id": 7,
     "confirm": true
   }'
 
 # Expected response:
 # {
 #   "success": true,
-#   "user_id": 60,
+#   "user_id": 7,
 #   "deleted": {
 #     "rezen_sync_jobs": 1,
 #     "fub_sync_jobs": 2,
@@ -521,7 +521,7 @@ curl -s -X POST "https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:2kCRUYxG/cle
 curl -s "https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:LIdBL1AN/job-queue-status"
 
 # Filter to specific user
-curl -s "https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:LIdBL1AN/job-queue-status?user_id=60"
+curl -s "https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:LIdBL1AN/job-queue-status?user_id=7"
 ```
 
 **Implementation TODO:** Create Xano function in SYSTEM API group (api:LIdBL1AN) that:
@@ -544,10 +544,10 @@ curl -s "https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:LIdBL1AN/job-queue-s
 **Team Roster Endpoint (Function 8066) - FIXED Feb 2026:**
 
 ```bash
-# Test with user 60
+# Test with user 7 (David Keener)
 curl -s -X POST "https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:4UsTtl3m/test-function-8066-team-roster" \
   -H "Content-Type: application/json" \
-  -d '{"user_id": 60}'
+  -d '{"user_id": 7}'
 
 # Returns:
 # {
@@ -584,13 +584,13 @@ curl -s -X POST "https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:4UsTtl3m/tes
 curl -s -X POST "https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:4UsTtl3m/test-function-8062-network-downline" \
   -H "Content-Type: application/json" \
   -d '{
-    "user_id": 60,
+    "user_id": 7,
     "skip_job_check": true
   }'
 
 # Returns:
 # {
-#   "input_user_id": 60,
+#   "input_user_id": 7,
 #   "skip_job_check": true,
 #   "function_result": {
 #     "success": true,
@@ -623,7 +623,7 @@ A searchable combobox (`components/user-picker.tsx`) that queries `/api/users/li
 
 - **Type-ahead search** with debounced API calls
 - **Recently selected users** shown at top (max 5, persisted to localStorage)
-- **Verified test users highlighted** (user 60 = David Keener shown with badge)
+- **Verified test users highlighted** (user 7 = David Keener shown with badge)
 - **Keyboard navigation** (arrow keys, enter, escape)
 - Selection updates `UserContext`, which triggers data loading for all tabs
 
@@ -696,14 +696,14 @@ curl -s "http://localhost:3000/api/users/list?limit=50&offset=100" | jq '.total,
 **`GET /api/users/[id]/comparison`** -- V1/V2 side-by-side comparison for a specific user.
 
 ```bash
-# Full comparison for user 60
-curl -s "http://localhost:3000/api/users/60/comparison" | jq '.comparison'
+# Full comparison for user 7 (David Keener)
+curl -s "http://localhost:3000/api/users/7/comparison" | jq '.comparison'
 
 # Specific sections only (faster)
-curl -s "http://localhost:3000/api/users/60/comparison?sections=user,agent" | jq
+curl -s "http://localhost:3000/api/users/7/comparison?sections=user,agent" | jq
 
 # Paginate array sections
-curl -s "http://localhost:3000/api/users/60/comparison?sections=transactions&limit=20&offset=0" | jq
+curl -s "http://localhost:3000/api/users/7/comparison?sections=transactions&limit=20&offset=0" | jq
 ```
 
 | Param      | Type   | Default | Description                                                                        |
@@ -715,13 +715,13 @@ curl -s "http://localhost:3000/api/users/60/comparison?sections=transactions&lim
 **`GET /api/staging/status`** -- Staging table counts for a user (proxies V2 SYSTEM endpoint).
 
 ```bash
-curl -s "http://localhost:3000/api/staging/status?user_id=60" | jq
+curl -s "http://localhost:3000/api/staging/status?user_id=7" | jq
 ```
 
 **`GET /api/staging/unprocessed`** -- Unprocessed staging records for a user.
 
 ```bash
-curl -s "http://localhost:3000/api/staging/unprocessed?user_id=60" | jq
+curl -s "http://localhost:3000/api/staging/unprocessed?user_id=7" | jq
 ```
 
 ---
@@ -905,19 +905,20 @@ curl -s -X POST "https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:20LTQtIX/syn
 
 **CRITICAL: David Keener User ID Mapping**
 
-David Keener is the PRIMARY test user with extensive testing history. **Different user IDs in each workspace:**
+David Keener is the PRIMARY test user with extensive testing history. **user_id=7 in BOTH workspaces:**
 
-| Workspace | Instance       | User ID | Agent ID | Team ID | Notes                              |
-| --------- | -------------- | ------- | -------- | ------- | ---------------------------------- |
-| **V1**    | xmpx-swi5-tlvy | **60**  | 37208    | 1       | Production - V1 endpoints use this |
-| **V2**    | x2nu-xcjc-vhax | **7**   | 37208    | 1       | Refactored - V2 endpoints use this |
+| Workspace | Instance       | User ID | Agent ID | Team ID | Notes      |
+| --------- | -------------- | ------- | -------- | ------- | ---------- |
+| **V1**    | xmpx-swi5-tlvy | **7**   | 37208    | 1       | Production |
+| **V2**    | x2nu-xcjc-vhax | **7**   | 37208    | 1       | Refactored |
 
 **Which ID to Use:**
 
-- **V1 endpoints** (xmpx-swi5-tlvy.n7c.xano.io): Always use `user_id: 60`
+- **V1 endpoints** (xmpx-swi5-tlvy.n7c.xano.io): Always use `user_id: 7`
 - **V2 native endpoints** (x2nu-xcjc-vhax.agentdashboards.xano.io): Use `user_id: 7`
-- **V2 migration/sync endpoints**: May accept V1 `user_id: 60` for V1→V2 data sync testing
-- **Frontend User Picker**: Shows V2 IDs - select user **7** for David Keener
+- **Frontend User Picker**: Select user **7** for David Keener
+
+> **NOTE:** Earlier documentation incorrectly stated V1 user_id=60. This was wrong. David Keener has always been user_id=7 in both V1 and V2.
 
 **For Demo Users (v0-demo-sync-admin-interface - V2 workspace only):**
 
@@ -934,18 +935,18 @@ David Keener is the PRIMARY test user with extensive testing history. **Differen
 Full testing documentation is in the agent_dashboards_2 project:
 
 - **File:** `/Users/sboulos/Desktop/ai_projects/agent_dashboards_2/TRIGGER_ENDPOINTS_AUDIT.md`
-- **Pass Rate:** 32/38 endpoints (84%) with V1 user 60
+- **Pass Rate:** 32/38 endpoints (84%) with user 7 (David Keener)
 - **Working Groups:** FUB (9/9), Metrics (5/5), Network (4/4), Utility (3/3)
 
 ### curl Test Templates
 
 ```bash
-# Test V1 WORKERS endpoint with David Keener (V1 user_id 60)
+# Test V1 WORKERS endpoint with David Keener (user_id 7)
 curl -s -X POST "https://xmpx-swi5-tlvy.n7c.xano.io/api:4UsTtl3m/ENDPOINT" \
   -H "Content-Type: application/json" \
-  -d '{"user_id": 60}'
+  -d '{"user_id": 7}'
 
-# Test V2 endpoint with David Keener (V2 user_id 7)
+# Test V2 endpoint with David Keener (user_id 7)
 curl -s -X POST "https://x2nu-xcjc-vhax.agentdashboards.xano.io/api:4UsTtl3m/ENDPOINT" \
   -H "Content-Type: application/json" \
   -d '{"user_id": 7}'

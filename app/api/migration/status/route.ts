@@ -14,6 +14,7 @@ import {
   KNOWN_TOTALS,
   type MigrationScoreData,
 } from '@/lib/migration-score'
+import { V2_TASKS_TOTAL, V2_WORKERS_TOTAL, V2_ACTIVE_FUNCTIONS } from '@/lib/dashboard-constants'
 
 export const dynamic = 'force-dynamic'
 
@@ -164,77 +165,57 @@ export async function GET() {
     const totalV2 = liveEntityCounts.reduce((sum, e) => sum + e.v2, 0)
     const overallSyncPercent = totalV1 > 0 ? Math.round((totalV2 / totalV1) * 100 * 10) / 10 : 0
 
+    // V2 function breakdown from dashboard-constants.ts
+    const archiveCount = KNOWN_TOTALS.V2_FUNCTIONS - V2_ACTIVE_FUNCTIONS // ~668
+
     return NextResponse.json({
       success: true,
       timestamp: new Date().toISOString(),
       v1: {
         workspace: 'V1 (Production)',
-        instance: 'xmpx-swi5-tlvy.n7c.xano.io',
-        workspace_id: 1,
         tables: {
           count: KNOWN_TOTALS.V1_TABLES,
-          total_records: '~500K', // Estimated from production
         },
+        // V1 functions/endpoints not tracked by validation - only V2 is validated
         functions: {
-          count: KNOWN_TOTALS.V1_FUNCTIONS,
+          count: null, // Not tracked
         },
         api_groups: {
-          count: 15, // Estimated
+          count: null, // Not tracked
         },
         endpoints: {
-          count: KNOWN_TOTALS.V1_ENDPOINTS,
+          count: null, // Not tracked
         },
       },
       v2: {
         workspace: 'V2 (Normalized)',
-        instance: 'x2nu-xcjc-vhax.agentdashboards.xano.io',
-        workspace_id: 5,
         tables: {
           count: KNOWN_TOTALS.V2_TABLES,
-          total_records: '~500K', // Synced from V1
-          validated: KNOWN_TOTALS.V2_TABLES_VALIDATED, // From validation scripts
+          validated: KNOWN_TOTALS.V2_TABLES_VALIDATED,
         },
         functions: {
           count: KNOWN_TOTALS.V2_FUNCTIONS,
+          active: V2_ACTIVE_FUNCTIONS,
           breakdown: {
-            archive: 700,
-            workers: 100,
-            tasks: 50,
-            endpoints: 121,
+            archive: archiveCount,
+            workers: V2_WORKERS_TOTAL,
+            tasks: V2_TASKS_TOTAL,
           },
         },
         api_groups: {
-          count: 27, // 27 API groups identified
-          major: 5, // Frontend API v2, WORKERS, TASKS, SYSTEM, SEEDING
+          count: 25, // From API_GROUPS_DATA in v2-data.ts
         },
         endpoints: {
           count: KNOWN_TOTALS.V2_ENDPOINTS,
-          breakdown: {
-            frontend_api_v2: 200,
-            workers: 374,
-            tasks: 165,
-            system: 38,
-            seeding: 24,
-          },
         },
       },
       comparison: {
         tables: {
           gap: KNOWN_TOTALS.V1_TABLES - KNOWN_TOTALS.V2_TABLES,
           v1_to_v2_ratio: KNOWN_TOTALS.V2_TABLES / KNOWN_TOTALS.V1_TABLES,
-          description: 'V1 had 251 tables with redundancy, V2 normalized to 193 tables',
+          description: `V1 had ${KNOWN_TOTALS.V1_TABLES} tables with redundancy, V2 normalized to ${KNOWN_TOTALS.V2_TABLES} tables`,
           explanation:
             '58 fewer tables through normalization - split tables (user → 5, agent → 5, transaction → 4) replaced redundant aggregation tables',
-        },
-        functions: {
-          gap: 0,
-          v1_to_v2_ratio: 1,
-          description: 'Same function count, reorganized by domain (Archive/*, Workers/, Tasks/)',
-        },
-        endpoints: {
-          gap: KNOWN_TOTALS.V2_ENDPOINTS - KNOWN_TOTALS.V1_ENDPOINTS,
-          v1_to_v2_ratio: KNOWN_TOTALS.V2_ENDPOINTS / KNOWN_TOTALS.V1_ENDPOINTS,
-          description: 'V2 has +1 endpoint - refactored API groups with clearer separation',
         },
       },
       migration_score: {
@@ -278,7 +259,6 @@ export async function GET() {
           status:
             overallSyncPercent >= 99 ? 'synced' : overallSyncPercent >= 90 ? 'partial' : 'pending',
         },
-        source: 'api:20LTQtIX/sync-v1-to-v2-direct',
       },
     })
   } catch (error: any) {

@@ -191,7 +191,7 @@ export function ArchitectureTab() {
           <MetricCard
             title="Functions"
             value={`${V2_ACTIVE_FUNCTIONS}+`}
-            subtitle="XanoScript modules"
+            subtitle="Backend modules"
             icon={<Code2 className="h-4 w-4" />}
           />
           <MetricCard
@@ -325,12 +325,12 @@ export function ArchitectureTab() {
                         3. Backend Services
                       </h4>
                       <p className="text-sm mt-1 text-muted-foreground">
-                        {V2_ACTIVE_FUNCTIONS}+ active XanoScript functions handling business logic,
+                        {V2_ACTIVE_FUNCTIONS}+ active backend functions handling business logic,
                         background jobs, webhooks, and scheduled tasks. Includes sync pipelines for
                         external data sources.
                       </p>
                       <div className="flex flex-wrap gap-2 mt-2">
-                        <Badge variant="secondary">XanoScript</Badge>
+                        <Badge variant="secondary">Backend Code</Badge>
                         <Badge variant="secondary">Background Jobs</Badge>
                         <Badge variant="secondary">Webhooks</Badge>
                       </div>

@@ -16,6 +16,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
+import { V1_TABLE_COUNT, V2_TABLE_COUNT, NAV_TAB_COUNT } from '@/lib/dashboard-constants'
 
 // ---------------------------------------------------------------------------
 // Types
@@ -56,21 +57,21 @@ const PROJECTS = [
     key: 'dashboards',
     name: 'dashboards2.0',
     description: 'Production BI frontend, 22+ dashboard pages',
-    tech: ['Next.js 16', 'React 19', 'SWR', 'Vercel'],
+    tech: ['Next.js 16', 'React 19', 'Real-time Data', 'Vercel'],
     color: 'bg-blue-500/10 text-blue-600 border-blue-500/20',
   },
   {
     key: 'demo-sync',
     name: 'v0-demo-sync-admin',
     description: 'Demo data management, 7 tabs, 188+ endpoints tested',
-    tech: ['Next.js 16', 'React 19', 'Vitest'],
+    tech: ['Next.js 16', 'React 19', 'Automated Tests'],
     color: 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20',
   },
   {
     key: 'migration-admin',
     name: 'xano-v2-admin',
-    description: 'V1→V2 migration admin, 23 tabs, proof system',
-    tech: ['Next.js 16', 'React 19', 'React Query'],
+    description: `V1→V2 migration admin, ${NAV_TAB_COUNT} tabs, proof system`,
+    tech: ['Next.js 16', 'React 19', 'Data Caching'],
     color: 'bg-purple-500/10 text-purple-600 border-purple-500/20',
   },
 ] as const
@@ -147,16 +148,16 @@ export function EcosystemHubTab() {
           <p className="text-2xl font-bold">3</p>
         </div>
         <div className="rounded-lg border bg-card p-4 space-y-1">
-          <p className="text-xs font-medium text-muted-foreground">Xano Workspaces</p>
+          <p className="text-xs font-medium text-muted-foreground">Backend Systems</p>
           <p className="text-2xl font-bold">2</p>
         </div>
         <div className="rounded-lg border bg-card p-4 space-y-1">
           <p className="text-xs font-medium text-muted-foreground">V1 Tables</p>
-          <p className="text-2xl font-bold">251</p>
+          <p className="text-2xl font-bold">{V1_TABLE_COUNT}</p>
         </div>
         <div className="rounded-lg border bg-card p-4 space-y-1">
-          <p className="text-xs font-medium text-muted-foreground">Total Records</p>
-          <p className="text-2xl font-bold">25.4M</p>
+          <p className="text-xs font-medium text-muted-foreground">V2 Tables</p>
+          <p className="text-2xl font-bold">{V2_TABLE_COUNT}</p>
         </div>
       </div>
 
@@ -166,7 +167,7 @@ export function EcosystemHubTab() {
           <CardContent className="pt-6">
             <div className="flex items-center gap-2 text-destructive">
               <ServerCrash className="h-5 w-5" />
-              <span>GitHub API error: {error}</span>
+              <span>Could not load project status</span>
             </div>
           </CardContent>
         </Card>
@@ -241,7 +242,7 @@ export function EcosystemHubTab() {
                       <div className="flex items-center gap-2">
                         <ServerCrash className="h-4 w-4 text-muted-foreground shrink-0" />
                         <p className="text-xs text-muted-foreground">
-                          GitHub data unavailable (repo may be private)
+                          Project status temporarily unavailable
                         </p>
                       </div>
                     ) : (
@@ -280,7 +281,7 @@ export function EcosystemHubTab() {
       <div>
         <div className="flex items-center gap-2 mb-4">
           <div className="h-px flex-1 bg-border" />
-          <h3 className="text-sm font-semibold text-muted-foreground">Shared Xano Backend</h3>
+          <h3 className="text-sm font-semibold text-muted-foreground">Shared Backend</h3>
           <div className="h-px flex-1 bg-border" />
         </div>
         <Card className="border-2">
@@ -292,7 +293,7 @@ export function EcosystemHubTab() {
               <div>
                 <CardTitle className="text-lg">Unified Data Layer</CardTitle>
                 <CardDescription className="text-sm">
-                  All three projects connect to the same V1 and V2 Xano workspaces
+                  All three projects connect to the same V1 and V2 backend systems
                 </CardDescription>
               </div>
             </div>
@@ -301,51 +302,47 @@ export function EcosystemHubTab() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="rounded-xl border-2 border-blue-500/20 bg-blue-500/5 p-5 space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-base font-bold">V1 Workspace</span>
+                  <span className="text-base font-bold">V1 System</span>
                   <Badge variant="outline" className="text-xs bg-background">
                     Production
                   </Badge>
                 </div>
-                <p className="text-xs text-muted-foreground font-mono break-all">
-                  xmpx-swi5-tlvy.n7c.xano.io
-                </p>
+                <p className="text-xs text-muted-foreground">Current production environment</p>
                 <div className="pt-2 space-y-2">
                   <div className="flex items-center justify-between text-sm">
                     <span className="text-muted-foreground">Tables</span>
-                    <span className="font-bold">251</span>
+                    <span className="font-bold">{V1_TABLE_COUNT}</span>
                   </div>
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-muted-foreground">Records</span>
-                    <span className="font-bold">25.4M+</span>
+                    <span className="text-muted-foreground">Status</span>
+                    <span className="font-bold">Active</span>
                   </div>
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-muted-foreground">Workspace ID</span>
-                    <span className="font-mono text-xs">1</span>
+                    <span className="text-muted-foreground">Environment</span>
+                    <span className="text-xs">Production</span>
                   </div>
                 </div>
               </div>
               <div className="rounded-xl border-2 border-purple-500/20 bg-purple-500/5 p-5 space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-base font-bold">V2 Workspace</span>
+                  <span className="text-base font-bold">V2 System</span>
                   <Badge variant="outline" className="text-xs bg-background">
-                    Normalized
+                    Upgraded
                   </Badge>
                 </div>
-                <p className="text-xs text-muted-foreground font-mono break-all">
-                  x2nu-xcjc-vhax.agentdashboards.xano.io
-                </p>
+                <p className="text-xs text-muted-foreground">Upgraded production system</p>
                 <div className="pt-2 space-y-2">
                   <div className="flex items-center justify-between text-sm">
                     <span className="text-muted-foreground">Tables</span>
-                    <span className="font-bold">193</span>
+                    <span className="font-bold">{V2_TABLE_COUNT}</span>
                   </div>
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-muted-foreground">V1→V2 Sync</span>
-                    <span className="font-bold">~887K</span>
+                    <span className="text-muted-foreground">Status</span>
+                    <span className="font-bold">Migration Target</span>
                   </div>
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-muted-foreground">Workspace ID</span>
-                    <span className="font-mono text-xs">5</span>
+                    <span className="text-muted-foreground">Environment</span>
+                    <span className="text-xs">V2 Normalized</span>
                   </div>
                 </div>
               </div>
@@ -358,8 +355,6 @@ export function EcosystemHubTab() {
       {data?.timestamp && (
         <p className="text-[10px] text-muted-foreground text-right">
           Last fetched: {new Date(data.timestamp).toLocaleTimeString()}
-          {data.rate_limit.remaining >= 0 &&
-            ` · GitHub rate limit: ${data.rate_limit.remaining} remaining`}
         </p>
       )}
     </div>

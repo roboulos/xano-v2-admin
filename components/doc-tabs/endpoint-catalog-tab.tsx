@@ -168,21 +168,10 @@ function EndpointDetailView({ endpoint, isOpen, onToggle }: EndpointDetailProps)
             </div>
           )}
 
-          {/* cURL Example */}
-          <div>
-            <p className="text-xs font-semibold text-muted-foreground mb-2">cURL EXAMPLE</p>
-            <div className="relative">
-              <CodeBlock code={curlCommand} language="bash" />
-              <div className="absolute top-2 right-2">
-                <CopyButton text={curlCommand} />
-              </div>
-            </div>
-          </div>
-
           {/* Tags */}
           {endpoint.tags && endpoint.tags.length > 0 && (
             <div>
-              <p className="text-xs font-semibold text-muted-foreground mb-2">TAGS</p>
+              <p className="text-xs font-semibold text-muted-foreground mb-2">CATEGORIES</p>
               <div className="flex flex-wrap gap-2">
                 {endpoint.tags.map((tag) => (
                   <Badge key={tag} variant="secondary" className="text-xs">
@@ -256,21 +245,21 @@ export function EndpointCatalogTab() {
       {/* Search and Filters */}
       <Card>
         <CardHeader>
-          <CardTitle>Endpoint Search & Filters</CardTitle>
-          <CardDescription>Find endpoints by path, name, method, or tag</CardDescription>
+          <CardTitle>Service Search</CardTitle>
+          <CardDescription>Find services by path, name, method, or category</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <Input
-            placeholder="Search endpoints..."
+            placeholder="Search services..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full"
           />
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {/* API Groups Filter */}
+            {/* Service Groups Filter */}
             <div>
-              <p className="text-xs font-semibold text-muted-foreground mb-2">API GROUPS</p>
+              <p className="text-xs font-semibold text-muted-foreground mb-2">SERVICE AREAS</p>
               <div className="flex flex-wrap gap-2">
                 <button
                   onClick={() => setSelectedGroup(null)}
@@ -330,7 +319,7 @@ export function EndpointCatalogTab() {
 
             {/* Tags Filter */}
             <div>
-              <p className="text-xs font-semibold text-muted-foreground mb-2">TAGS</p>
+              <p className="text-xs font-semibold text-muted-foreground mb-2">CATEGORIES</p>
               <div className="flex flex-wrap gap-2 max-h-10 overflow-y-auto">
                 <button
                   onClick={() => setSelectedTag(null)}
@@ -360,7 +349,7 @@ export function EndpointCatalogTab() {
           </div>
 
           <p className="text-sm text-muted-foreground">
-            Found {filteredEndpoints.length} endpoint{filteredEndpoints.length !== 1 ? 's' : ''}
+            Found {filteredEndpoints.length} service{filteredEndpoints.length !== 1 ? 's' : ''}
           </p>
         </CardContent>
       </Card>
@@ -407,20 +396,20 @@ export function EndpointCatalogTab() {
       {/* Summary */}
       <Card>
         <CardHeader>
-          <CardTitle>Endpoint Statistics</CardTitle>
+          <CardTitle>Service Statistics</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="p-3 border rounded">
-              <p className="text-xs font-semibold text-muted-foreground">Total Endpoints</p>
+              <p className="text-xs font-semibold text-muted-foreground">Total Services</p>
               <p className="text-lg font-bold mt-1">{ENDPOINT_CATALOG.length}</p>
             </div>
             <div className="p-3 border rounded">
-              <p className="text-xs font-semibold text-muted-foreground">API Groups</p>
+              <p className="text-xs font-semibold text-muted-foreground">Service Areas</p>
               <p className="text-lg font-bold mt-1">{allGroups.length}</p>
             </div>
             <div className="p-3 border rounded">
-              <p className="text-xs font-semibold text-muted-foreground">Tags</p>
+              <p className="text-xs font-semibold text-muted-foreground">Categories</p>
               <p className="text-lg font-bold mt-1">{allTags.length}</p>
             </div>
             <div className="p-3 border rounded">

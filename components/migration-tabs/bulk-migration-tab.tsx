@@ -323,7 +323,8 @@ export function BulkMigrationTab() {
           <div>
             <h2 className="text-xl font-semibold">Bulk Migration</h2>
             <p className="text-sm text-muted-foreground">
-              12 batch endpoints &mdash; copy remaining V1 tables to V2 via cross-workspace SQL
+              {MIGRATION_BATCHES.length} batch endpoints &mdash; copy remaining V1 tables to V2 via
+              cross-workspace SQL
             </p>
           </div>
         </div>
@@ -341,7 +342,7 @@ export function BulkMigrationTab() {
           </AlertDialogTrigger>
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>Run All 12 Batch Copies?</AlertDialogTitle>
+              <AlertDialogTitle>Run All {MIGRATION_BATCHES.length} Batch Copies?</AlertDialogTitle>
               <AlertDialogDescription>
                 This will DELETE then INSERT {fmt(TOTAL_EXPECTED_RECORDS)} records across{' '}
                 {TOTAL_BATCH_TABLES} tables from V1 to V2. Existing V2 data in these tables will be
@@ -367,7 +368,9 @@ export function BulkMigrationTab() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold tabular-nums">{TOTAL_BATCH_TABLES}</div>
-            <p className="text-xs text-muted-foreground mt-1">across 12 batch endpoints</p>
+            <p className="text-xs text-muted-foreground mt-1">
+              across {MIGRATION_BATCHES.length} batch endpoints
+            </p>
           </CardContent>
         </Card>
 

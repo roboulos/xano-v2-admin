@@ -51,35 +51,36 @@ interface BlockerSummary {
 const BLOCKERS: Blocker[] = [
   {
     id: 'b-1',
-    title: 'Snappy CLI ignores V1 workspace parameters',
+    title: 'V1 data tool was connecting to wrong workspace',
     description:
-      'The snappy CLI binary always connects to V2 regardless of instance/workspace params passed. Routes using v1Client return V2 data labeled as V1.',
+      'The command-line tool for accessing V1 data was always connecting to V2 instead. This caused V2 data to be displayed as if it were V1 production data.',
     severity: 'high',
     category: 'technical',
     status: 'resolved',
     owner: 'Claude',
-    rootCause: 'CLI binary hardcodes workspace connection, ignores configuration parameters',
+    rootCause: 'The data tool was hardcoded to one workspace and ignored configuration settings',
     proposedSolution:
-      'Bypass snappy CLI entirely; use direct Xano API calls via full-count-comparison endpoint',
+      'Bypass the broken tool entirely; use direct API calls for V1/V2 comparison data',
     affectedComponents: ['/api/v2/tables/counts', '/api/v1/tables', '/api/v1/functions'],
     impactedPhases: ['phase-3'],
     createdAt: new Date('2026-02-04'),
     resolution:
-      'Rewired /api/v2/tables/counts to use full-count-comparison endpoint. Other v1 routes deprioritized.',
+      'Built a new direct comparison route that bypasses the broken tool. V1 data now comes directly from the V1 workspace.',
     resolvedAt: new Date('2026-02-06'),
   },
   {
     id: 'b-2',
-    title: 'Hardcoded user_id 60 throughout codebase',
+    title: 'Hardcoded incorrect user_id throughout codebase',
     description:
-      'David Keener is user_id 7 in both V1 and V2. Hardcoded references to 60 throughout the codebase caused incorrect API calls.',
+      'David Keener is user_id=7 in both V1 and V2 workspaces. Hardcoded references to incorrect user_id=60 throughout the codebase caused incorrect API calls.',
     severity: 'high',
     category: 'data',
     status: 'resolved',
     owner: 'Claude',
     rootCause:
-      'Initial documentation incorrectly stated David Keener was user_id 60 in V1; references propagated to many files',
-    proposedSolution: 'Audit all files and replace hardcoded 60 with 7',
+      'Initial documentation incorrectly stated user_id=60 for V1. David Keener is user_id=7 in both workspaces. This error was copied into many files.',
+    proposedSolution:
+      'Audit all files and use the correct user_id=7 for David Keener in both workspaces',
     affectedComponents: [
       'endpoint-tester-modal',
       'parallel-comparison-tab',
@@ -88,7 +89,7 @@ const BLOCKERS: Blocker[] = [
     ],
     impactedPhases: ['phase-3'],
     createdAt: new Date('2026-02-05'),
-    resolution: 'Fixed across 11+ files. All endpoints now use user_id=7.',
+    resolution: 'Fixed across 11+ files. All endpoints now use user_id=7 for David Keener.',
     resolvedAt: new Date('2026-02-06'),
   },
   {
@@ -112,13 +113,13 @@ const BLOCKERS: Blocker[] = [
     id: 'b-4',
     title: 'Aggregation tables not yet populated in V2',
     description:
-      'V2 aggregation tables (agg_transactions_by_month, etc.) are empty. Need to run backfill jobs.',
+      'V2 pre-computed summary tables (e.g. monthly transaction totals) are still empty. Need to run the data population jobs.',
     severity: 'medium',
     category: 'data',
     status: 'in-progress',
     owner: 'Migration Team',
-    rootCause: 'Aggregation jobs depend on core data being fully migrated first',
-    proposedSolution: 'Run backfill workers sequentially after core data migration confirmed',
+    rootCause: 'Summary tables can only be populated after core data migration is complete',
+    proposedSolution: 'Run data population jobs sequentially once core data migration is confirmed',
     affectedComponents: ['aggregation-jobs', 'dashboard-metrics'],
     impactedPhases: ['phase-3'],
     createdAt: new Date('2026-01-28'),

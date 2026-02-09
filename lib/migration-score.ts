@@ -42,17 +42,19 @@ export interface MigrationScore {
 }
 
 /**
- * Known total counts from migration plan
+ * Known total counts — MUST match validation.config.ts
+ *
+ * V1 function/endpoint counts are not tracked by validation scripts.
+ * We only validate V2. V1 counts are for display context only.
  */
 export const KNOWN_TOTALS = {
   V1_TABLES: 251,
   V2_TABLES: 193, // Normalized schema
-  V2_TABLES_VALIDATED: 223, // Total unique tables that can be validated
-  V1_FUNCTIONS: 971,
-  V2_FUNCTIONS: 971,
-  V1_ENDPOINTS: 800,
-  V2_ENDPOINTS: 801,
-  V2_REFERENCES: 33, // Foreign key relationships to validate
+  V2_TABLES_VALIDATED: 193, // From validation.config.ts stages[0].metrics.total
+  V2_FUNCTIONS: 971, // From validation.config.ts stages[1].metrics.total
+  V2_FUNCTIONS_ACTIVE: 270, // From validation.config.ts stages[1].metrics.tested
+  V2_ENDPOINTS: 801, // From validation.config.ts stages[2].metrics.total
+  V2_REFERENCES: 156, // From validation.config.ts stages[3].metrics.total
 }
 
 /**

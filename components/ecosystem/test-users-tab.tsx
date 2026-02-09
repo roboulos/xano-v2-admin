@@ -33,7 +33,8 @@ const TEST_USERS: TestUser[] = [
     email: null,
     password: null,
     projects: ['xano-v2-admin'],
-    notes: 'PRIMARY test user for V1→V2 migration. Same user_id (7) in both workspaces.',
+    notes:
+      'PRIMARY test user for V1→V2 migration. user_id=7 in both workspaces. Same agent_id (37208) in both.',
   },
   {
     name: 'Michael Johnson',

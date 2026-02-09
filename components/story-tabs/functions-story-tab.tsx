@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react'
 import {
   Activity,
   AlertCircle,
+  ArrowRight,
   CheckCircle2,
   ChevronDown,
   ChevronRight,
@@ -11,6 +12,8 @@ import {
   HelpCircle,
   Server,
   Shield,
+  Wrench,
+  Layers,
 } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
@@ -21,7 +24,14 @@ import {
   type MCPEndpoint,
 } from '@/lib/mcp-endpoints'
 import { API_GROUPS_DATA } from '@/lib/v2-data'
-import { V1_TABLES } from '@/lib/v1-data'
+import { ALL_FRONTEND_ENDPOINTS } from '@/lib/frontend-api-v2-endpoints'
+import { validationConfig } from '@/validation.config'
+import {
+  V2_TASKS_TOTAL,
+  V2_TASKS_PASSING,
+  V2_WORKERS_TOTAL,
+  V2_ACTIVE_FUNCTIONS,
+} from '@/lib/dashboard-constants'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
@@ -35,9 +45,28 @@ type HealthStatus = 'working' | 'broken' | 'unknown'
 interface APIGroupInfo {
   key: keyof typeof MCP_BASES
   label: string
-  baseUrl: string
   description: string
   endpoints: MCPEndpoint[]
+}
+
+// Derive function/endpoint counts from validation.config.ts (single source of truth)
+const fnStage = validationConfig.stages.find((s) => s.id === 'functions')!
+const epStage = validationConfig.stages.find((s) => s.id === 'endpoints')!
+
+const V2_FN = {
+  TOTAL_ALL: fnStage.metrics.total, // From validation.config.ts
+  ACTIVE: fnStage.metrics.tested!, // Active functions tested (from validation.config.ts)
+  TASKS_TOTAL: V2_TASKS_TOTAL, // From dashboard-constants.ts
+  TASKS_PASSING: V2_TASKS_PASSING, // From dashboard-constants.ts
+  WORKERS_TOTAL: V2_WORKERS_TOTAL, // From dashboard-constants.ts
+  TOTAL_ENDPOINTS: epStage.metrics.total, // From validation.config.ts
+  CRITICAL_FIXES: 3, // From known fixes documentation
+  get ACTIVE_TOTAL() {
+    return V2_ACTIVE_FUNCTIONS
+  },
+  get TASKS_PASS_RATE() {
+    return Math.round((V2_TASKS_PASSING / V2_TASKS_TOTAL) * 100)
+  },
 }
 
 /** Endpoints known to be broken from CLAUDE.md / mcp-endpoints.ts gap notes */
@@ -135,19 +164,36 @@ const HEALTH_CONFIG: Record<
   },
 }
 
-// V1 function categories for the comparison section
-const V1_FUNCTION_CATEGORIES = [
-  { name: 'Sync Workers', count: 28, description: 'Data sync from external APIs' },
-  { name: 'Aggregation', count: 48, description: 'Pre-computed dashboard rollups' },
-  { name: 'Auth & Security', count: 12, description: 'Authentication and 2FA' },
-  { name: 'Utility / Helpers', count: 35, description: 'Shared helper functions' },
-  { name: 'Webhooks', count: 8, description: 'Inbound webhook handlers' },
-  { name: 'Page Builder', count: 22, description: 'Dynamic page/widget system' },
-  { name: 'Charts / Analytics', count: 18, description: 'Chart data endpoints' },
-  { name: 'Lambda / Jobs', count: 15, description: 'Background job orchestration' },
-  { name: 'Other', count: 84, description: 'Misc business logic' },
+const BUG_FIX_STORIES = [
+  {
+    title: 'Team Roster Sync',
+    function: '#8066',
+    date: 'February 2026',
+    rootCause:
+      'V2 function was querying a table named "user_credentials" that had been renamed to "credentials" during normalization. Additionally, it was reading agent_id from the user record (always 1) instead of the credentials record (37208).',
+    fix: 'Updated table reference to "credentials", corrected agent_id lookup path, and added safe property access for lambda error results.',
+    result: 'Successfully returns team roster with teams_processed count. Tested with User #7.',
+  },
+  {
+    title: 'Network Downline Import',
+    function: '#8062',
+    date: 'February 2026',
+    rootCause:
+      'The Worker function (#5530) was using V1 table names ("network") that don\'t exist in V2, and the JOIN syntax had an empty table reference causing "missing bind parameter" errors.',
+    fix: 'Created new Worker function #11253 using V2 schema (network_member table). Added skip_job_check parameter for standalone testing. Processes in batches of 100 records.',
+    result:
+      'Can now import full network downlines by calling repeatedly. Handles networks of 1,000+ members.',
+  },
+  {
+    title: 'FUB Lambda Coordinator',
+    function: '#8118',
+    date: 'January 2026',
+    rootCause:
+      'Endpoint required "ad_user_id" parameter (Agent Dashboards user ID) instead of the standard "user_id", plus an "endpoint_type" parameter that wasn\'t documented.',
+    fix: 'Discovered correct parameter names through testing. Endpoint now accepts ad_user_id + endpoint_type (people, events, calls, appointments, deals, textMessages).',
+    result: 'All 6 FUB data types can now be synced through the lambda coordinator.',
+  },
 ]
-const V1_TOTAL_FUNCTIONS = V1_FUNCTION_CATEGORIES.reduce((s, c) => s + c.count, 0)
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -164,25 +210,24 @@ function buildGroupInfoList(): APIGroupInfo[] {
     (key) => {
       const endpoints = getEndpointsByGroup(key)
       const friendlyNames: Record<string, string> = {
-        TASKS: 'MCP: Tasks',
-        WORKERS: 'MCP: Workers',
-        SYSTEM: 'MCP: System',
-        SEEDING: 'MCP: Seeding',
-        AUTH: 'Auth',
+        TASKS: 'Background Tasks',
+        WORKERS: 'Data Sync Workers',
+        SYSTEM: 'System & Diagnostics',
+        SEEDING: 'Test Data & Cleanup',
+        AUTH: 'Authentication',
         FRONTEND: 'Frontend API v2',
       }
       const descriptions: Record<string, string> = {
-        TASKS: 'Orchestrators that poll for and process background jobs',
-        WORKERS: 'Individual per-user data sync processors',
-        SYSTEM: 'System status, admin, and diagnostic endpoints',
-        SEEDING: 'Test data seeding and cleanup utilities',
-        AUTH: 'Authentication, token management, user session',
+        TASKS: 'Manage and process background jobs (imports, syncs, aggregations)',
+        WORKERS: 'Per-user data synchronization from external sources (reZEN, FUB)',
+        SYSTEM: 'System health, admin tools, and diagnostic endpoints',
+        SEEDING: 'Set up test data and clean up for fresh testing',
+        AUTH: 'User login, sessions, and token management',
         FRONTEND: 'Production frontend data endpoints (800+ routes)',
       }
       return {
         key,
         label: friendlyNames[key] ?? key,
-        baseUrl: MCP_BASES[key],
         description: descriptions[key] ?? '',
         endpoints,
       }
@@ -236,6 +281,173 @@ function SummaryCard({
         </div>
       </CardContent>
     </Card>
+  )
+}
+
+function ArchitectureSplitCard() {
+  return (
+    <Card>
+      <CardHeader className="pb-3">
+        <CardTitle className="text-base flex items-center gap-2">
+          <Layers className="h-4 w-4" />
+          Tasks/ vs Workers/ — The Architecture Split
+        </CardTitle>
+        <CardDescription>
+          The key structural improvement in V2: separating orchestration from execution
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {/* V1 Pattern */}
+          <div className="rounded-lg border border-amber-500/20 bg-amber-500/5 p-4 space-y-3">
+            <div className="flex items-center gap-2">
+              <Badge
+                variant="outline"
+                className="bg-amber-500/10 text-amber-600 border-amber-500/20 text-xs"
+              >
+                V1 Pattern
+              </Badge>
+              <span className="text-sm font-medium text-amber-600 dark:text-amber-400">
+                Problem
+              </span>
+            </div>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              <li className="flex items-start gap-2">
+                <AlertCircle className="h-3.5 w-3.5 mt-0.5 text-amber-500 shrink-0" />
+                <span>Everything in one pile — sync, transform, orchestrate mixed together</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <AlertCircle className="h-3.5 w-3.5 mt-0.5 text-amber-500 shrink-0" />
+                <span>Cron jobs directly call complex functions</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <AlertCircle className="h-3.5 w-3.5 mt-0.5 text-amber-500 shrink-0" />
+                <span>When one breaks, hard to isolate which layer failed</span>
+              </li>
+            </ul>
+          </div>
+
+          {/* V2 Pattern */}
+          <div className="rounded-lg border border-emerald-500/20 bg-emerald-500/5 p-4 space-y-3">
+            <div className="flex items-center gap-2">
+              <Badge
+                variant="outline"
+                className="bg-emerald-500/10 text-emerald-600 border-emerald-500/20 text-xs"
+              >
+                V2 Pattern
+              </Badge>
+              <span className="text-sm font-medium text-emerald-600 dark:text-emerald-400">
+                Solution
+              </span>
+            </div>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              <li className="flex items-start gap-2">
+                <CheckCircle2 className="h-3.5 w-3.5 mt-0.5 text-emerald-500 shrink-0" />
+                <span>
+                  <strong>{V2_FN.TASKS_TOTAL} Tasks/</strong> — lightweight orchestrators (validate,
+                  dispatch)
+                </span>
+              </li>
+              <li className="flex items-start gap-2">
+                <CheckCircle2 className="h-3.5 w-3.5 mt-0.5 text-emerald-500 shrink-0" />
+                <span>
+                  <strong>{V2_FN.WORKERS_TOTAL} Workers/</strong> — pure business logic (transform,
+                  write)
+                </span>
+              </li>
+              <li className="flex items-start gap-2">
+                <CheckCircle2 className="h-3.5 w-3.5 mt-0.5 text-emerald-500 shrink-0" />
+                <span>Clear 1:1 mapping: each cron job calls 1 Task, which calls 1+ Workers</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Flow Diagram */}
+        <div className="rounded-lg border bg-muted/30 p-4">
+          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-3">
+            Execution Flow
+          </p>
+          <div className="flex items-center justify-center gap-2 text-sm flex-wrap">
+            <span className="rounded-md border bg-card px-3 py-1.5 font-medium">Scheduled Job</span>
+            <ArrowRight className="h-4 w-4 text-muted-foreground shrink-0" />
+            <span className="rounded-md border border-blue-500/30 bg-blue-500/10 px-3 py-1.5 font-medium text-blue-600 dark:text-blue-400">
+              Task/ (orchestrate)
+            </span>
+            <ArrowRight className="h-4 w-4 text-muted-foreground shrink-0" />
+            <span className="rounded-md border border-violet-500/30 bg-violet-500/10 px-3 py-1.5 font-medium text-violet-600 dark:text-violet-400">
+              Worker/ (execute)
+            </span>
+            <ArrowRight className="h-4 w-4 text-muted-foreground shrink-0" />
+            <span className="rounded-md border bg-card px-3 py-1.5 font-medium">Database</span>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  )
+}
+
+function BugFixCard({ story }: { story: (typeof BUG_FIX_STORIES)[number] }) {
+  const [isOpen, setIsOpen] = useState(false)
+
+  return (
+    <Collapsible open={isOpen} onOpenChange={setIsOpen}>
+      <Card>
+        <CollapsibleTrigger asChild>
+          <button className="w-full text-left cursor-pointer">
+            <CardHeader className="pb-3">
+              <div className="flex items-start justify-between gap-2">
+                <div className="flex items-center gap-2">
+                  {isOpen ? (
+                    <ChevronDown className="h-4 w-4 shrink-0 text-muted-foreground" />
+                  ) : (
+                    <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground" />
+                  )}
+                  <div>
+                    <CardTitle className="text-base">
+                      {story.title}{' '}
+                      <span className="text-muted-foreground font-normal text-sm">
+                        (Function {story.function})
+                      </span>
+                    </CardTitle>
+                    <CardDescription className="text-xs mt-0.5">{story.date}</CardDescription>
+                  </div>
+                </div>
+                <Badge
+                  variant="outline"
+                  className="text-xs bg-emerald-500/10 text-emerald-600 border-emerald-500/20 shrink-0"
+                >
+                  <CheckCircle2 className="h-3 w-3 mr-1" />
+                  Fixed
+                </Badge>
+              </div>
+            </CardHeader>
+          </button>
+        </CollapsibleTrigger>
+        <CollapsibleContent>
+          <CardContent className="pt-0 space-y-3">
+            <div>
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-1">
+                Root Cause
+              </p>
+              <p className="text-sm text-muted-foreground">{story.rootCause}</p>
+            </div>
+            <div>
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-1">
+                Fix Applied
+              </p>
+              <p className="text-sm text-muted-foreground">{story.fix}</p>
+            </div>
+            <div>
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-1">
+                Result
+              </p>
+              <p className="text-sm text-emerald-600 dark:text-emerald-400">{story.result}</p>
+            </div>
+          </CardContent>
+        </CollapsibleContent>
+      </Card>
+    </Collapsible>
   )
 }
 
@@ -299,9 +511,7 @@ function APIGroupCard({ group }: { group: APIGroupInfo }) {
         </CollapsibleTrigger>
         <CollapsibleContent>
           <CardContent className="pt-0">
-            {/* Base URL */}
-            <p className="text-xs text-muted-foreground font-mono mb-3 truncate">{group.baseUrl}</p>
-            {/* Endpoint list */}
+            {/* Endpoint list — no base URL exposed */}
             <div className="space-y-1.5">
               {group.endpoints.map((ep) => {
                 const health = getEndpointHealth(ep)
@@ -343,7 +553,7 @@ function APIGroupCard({ group }: { group: APIGroupInfo }) {
 export function FunctionsStoryTab() {
   const groups = useMemo(() => buildGroupInfoList(), [])
 
-  // Aggregate health stats across all tracked endpoints
+  // Aggregate health stats across all tracked MCP endpoints
   const healthStats = useMemo(() => {
     const counts: Record<HealthStatus, number> = { working: 0, broken: 0, unknown: 0 }
     for (const ep of MCP_ENDPOINTS) {
@@ -354,13 +564,11 @@ export function FunctionsStoryTab() {
 
   const totalTracked = MCP_ENDPOINTS.length
   const healthRate = totalTracked > 0 ? Math.round((healthStats.working / totalTracked) * 100) : 0
+  const frontendEndpointCount = ALL_FRONTEND_ENDPOINTS.length
+  const testableTotal = frontendEndpointCount + totalTracked
 
   // V2 API groups from workspace data
   const v2ApiGroupCount = API_GROUPS_DATA.length
-  const v2TableCount = 193
-
-  // V1 stats
-  const v1TableCount = V1_TABLES.length
 
   return (
     <div className="space-y-6">
@@ -368,49 +576,72 @@ export function FunctionsStoryTab() {
       <div>
         <h2 className="text-lg font-semibold">Function Health</h2>
         <p className="text-sm text-muted-foreground">
-          V2 function inventory grouped by API group with endpoint health status
+          V2 backend functions, architecture patterns, and endpoint health — sourced from
+          validation.config.ts
         </p>
       </div>
 
-      {/* Summary Cards */}
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+      {/* Section 1: Hero Cards — The Scale */}
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
         <SummaryCard
-          label="Tracked Endpoints"
-          value={totalTracked}
-          sub={`across ${groups.length} API groups`}
-          icon={Server}
+          label="Total Functions"
+          value={V2_FN.TOTAL_ALL}
+          sub="V2 workspace (active + archived)"
+          icon={Code}
           accent="bg-blue-500/10 text-blue-600 dark:text-blue-400"
         />
         <SummaryCard
-          label="Health Rate"
-          value={`${healthRate}%`}
-          sub={`${healthStats.working} working`}
+          label="Active Functions"
+          value={V2_FN.ACTIVE_TOTAL}
+          sub={`${V2_FN.TASKS_TOTAL} Tasks/ + ${V2_FN.WORKERS_TOTAL} Workers/`}
+          icon={Layers}
+          accent="bg-violet-500/10 text-violet-600 dark:text-violet-400"
+        />
+        <SummaryCard
+          label="API Endpoints"
+          value={V2_FN.TOTAL_ENDPOINTS}
+          sub={`${testableTotal} testable (${frontendEndpointCount} Frontend + ${totalTracked} Admin)`}
+          icon={Server}
+          accent="bg-cyan-500/10 text-cyan-600 dark:text-cyan-400"
+        />
+        <SummaryCard
+          label="Admin Health"
+          value={`${healthStats.working}/${totalTracked}`}
+          sub={`${healthRate}% verified working`}
           icon={Activity}
           accent="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
         />
         <SummaryCard
-          label="Broken / Timeout"
-          value={healthStats.broken}
-          sub="known issues"
-          icon={AlertCircle}
-          accent="bg-red-500/10 text-red-600 dark:text-red-400"
-        />
-        <SummaryCard
-          label="V2 API Groups"
-          value={v2ApiGroupCount}
-          sub={`${v2TableCount} tables`}
-          icon={Code}
-          accent="bg-violet-500/10 text-violet-600 dark:text-violet-400"
+          label="Bug Fixes Shipped"
+          value={V2_FN.CRITICAL_FIXES}
+          sub="Jan-Feb 2026 production fixes"
+          icon={Wrench}
+          accent="bg-amber-500/10 text-amber-600 dark:text-amber-400"
         />
       </div>
 
-      {/* Health Overview Bar */}
+      {/* Section 2: Architecture Split */}
+      <ArchitectureSplitCard />
+
+      {/* Section 3: Bug Fix Stories */}
+      <div>
+        <h3 className="text-sm font-semibold text-foreground/80 mb-3">
+          Production Bug Fixes — The Proof
+        </h3>
+        <div className="space-y-3">
+          {BUG_FIX_STORIES.map((story) => (
+            <BugFixCard key={story.function} story={story} />
+          ))}
+        </div>
+      </div>
+
+      {/* Section 4: Endpoint Health Overview */}
       <Card>
         <CardHeader className="pb-3">
           <CardTitle className="text-base">Endpoint Health Overview</CardTitle>
           <CardDescription>
             {healthStats.working} verified working, {healthStats.broken} broken/timeout,{' '}
-            {healthStats.unknown} untested of {totalTracked} tracked endpoints
+            {healthStats.unknown} untested of {totalTracked} admin endpoints
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -453,9 +684,9 @@ export function FunctionsStoryTab() {
         </CardContent>
       </Card>
 
-      {/* API Group Cards */}
+      {/* Section 5: Service Group Cards */}
       <div>
-        <h3 className="text-sm font-semibold text-foreground/80 mb-3">API Groups</h3>
+        <h3 className="text-sm font-semibold text-foreground/80 mb-3">Service Groups</h3>
         <div className="space-y-3">
           {groups.map((group) => (
             <APIGroupCard key={group.key} group={group} />
@@ -463,84 +694,13 @@ export function FunctionsStoryTab() {
         </div>
       </div>
 
-      {/* V1 vs V2 Function Comparison */}
+      {/* Section 6: V2 Service Group Inventory */}
       <Card>
         <CardHeader className="pb-3">
-          <CardTitle className="text-base">V1 vs V2 Function Comparison</CardTitle>
+          <CardTitle className="text-base">V2 Service Group Inventory</CardTitle>
           <CardDescription>
-            High-level migration coverage across function categories
+            All {v2ApiGroupCount} service groups in the V2 workspace
           </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          {/* Top-level stats */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            <div className="rounded-lg border p-3 text-center">
-              <p className="text-xs text-muted-foreground uppercase tracking-wide">V1 Tables</p>
-              <p className="text-xl font-bold tabular-nums">{v1TableCount}</p>
-            </div>
-            <div className="rounded-lg border p-3 text-center">
-              <p className="text-xs text-muted-foreground uppercase tracking-wide">V2 Tables</p>
-              <p className="text-xl font-bold tabular-nums">{v2TableCount}</p>
-            </div>
-            <div className="rounded-lg border p-3 text-center">
-              <p className="text-xs text-muted-foreground uppercase tracking-wide">
-                V1 Functions (est.)
-              </p>
-              <p className="text-xl font-bold tabular-nums">{V1_TOTAL_FUNCTIONS}</p>
-            </div>
-            <div className="rounded-lg border p-3 text-center">
-              <p className="text-xs text-muted-foreground uppercase tracking-wide">V2 Functions</p>
-              <p className="text-xl font-bold tabular-nums">270</p>
-              <p className="text-[10px] text-muted-foreground">active</p>
-            </div>
-          </div>
-
-          {/* Coverage bar */}
-          <div>
-            <div className="flex items-center justify-between text-xs text-muted-foreground mb-1">
-              <span>Migration Coverage</span>
-              <span className="font-medium tabular-nums">
-                {Math.round((270 / V1_TOTAL_FUNCTIONS) * 100)}%
-              </span>
-            </div>
-            <div className="h-2.5 w-full rounded-full bg-zinc-200 dark:bg-zinc-700">
-              <div
-                className="h-full rounded-full bg-blue-500 transition-all"
-                style={{ width: `${Math.round((270 / V1_TOTAL_FUNCTIONS) * 100)}%` }}
-              />
-            </div>
-          </div>
-
-          {/* V1 function categories */}
-          <div>
-            <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">
-              V1 Function Categories
-            </h4>
-            <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
-              {V1_FUNCTION_CATEGORIES.map((cat) => (
-                <div
-                  key={cat.name}
-                  className="flex items-center justify-between gap-2 rounded-lg border px-3 py-2"
-                >
-                  <div>
-                    <p className="text-sm font-medium">{cat.name}</p>
-                    <p className="text-xs text-muted-foreground">{cat.description}</p>
-                  </div>
-                  <Badge variant="secondary" className="tabular-nums text-xs shrink-0">
-                    {cat.count}
-                  </Badge>
-                </div>
-              ))}
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* V2 API Group Reference */}
-      <Card>
-        <CardHeader className="pb-3">
-          <CardTitle className="text-base">V2 API Group Inventory</CardTitle>
-          <CardDescription>All {v2ApiGroupCount} API groups from the V2 workspace</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="space-y-1.5">

@@ -25,6 +25,12 @@ import { LoadingState } from '@/components/ui/loading-state'
 import { getV1Stats } from '@/lib/v1-data'
 import { TABLES_DATA } from '@/lib/v2-data'
 import { getV2ApiBase } from '@/lib/workspace-config'
+import {
+  SPLIT_ENTITIES_COUNT,
+  NORMALIZED_SPLIT_TARGETS,
+  MAPPED_FIELDS_COUNT,
+  SYNCED_DOMAINS_COUNT,
+} from '@/lib/dashboard-constants'
 
 // Transformation examples for deep dives
 const TRANSFORMATION_EXAMPLES = [
@@ -147,9 +153,9 @@ export function TransformationStoryTab() {
   const v1Stats = getV1Stats()
   const v2TableCount = TABLES_DATA.length
 
-  // Calculate transformation stats
-  const splitCount = 5 // user, agent, team, network, transaction
-  const normalizedTables = 14 // All the split target tables
+  // Calculate transformation stats (from dashboard-constants.ts)
+  const splitCount = SPLIT_ENTITIES_COUNT
+  const normalizedTables = NORMALIZED_SPLIT_TARGETS
 
   // Check for sync warnings (entities not at 100%)
   const syncWarnings = syncData.filter((entity) => {
@@ -276,11 +282,11 @@ export function TransformationStoryTab() {
           <div className="text-sm text-muted-foreground">Normalized Tables</div>
         </Card>
         <Card className="p-4 text-center">
-          <div className="text-3xl font-bold text-primary">449</div>
+          <div className="text-3xl font-bold text-primary">{MAPPED_FIELDS_COUNT}</div>
           <div className="text-sm text-muted-foreground">Fields Mapped</div>
         </Card>
         <Card className="p-4 text-center">
-          <div className="text-3xl font-bold text-primary">5</div>
+          <div className="text-3xl font-bold text-primary">{SYNCED_DOMAINS_COUNT}</div>
           <div className="text-sm text-muted-foreground">Domains Synced</div>
         </Card>
       </div>

@@ -191,7 +191,7 @@ export function ArchitectureComparisonTab() {
               className="mt-3 pt-3 border-t"
               style={{ borderColor: 'var(--status-success-border)' }}
             >
-              <Progress value={88} className="h-1.5" />
+              <Progress value={parseInt(data.aggregateTables.reduction) || 0} className="h-1.5" />
             </div>
           </CardContent>
         </Card>
@@ -283,14 +283,14 @@ export function ArchitectureComparisonTab() {
               >
                 <Sparkles className="h-4 w-4" style={{ color: 'var(--status-info)' }} />
               </div>
-              Defensive Patterns
+              Safety Patterns
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-bold" style={{ color: 'var(--status-info)' }}>
               {data.defensivePatterns.length}
             </div>
-            <p className="text-xs text-muted-foreground mt-1">New V2 code patterns</p>
+            <p className="text-xs text-muted-foreground mt-1">New V2 error-prevention techniques</p>
             <div className="mt-3 flex gap-1">
               {data.defensivePatterns.map((_, idx) => (
                 <div
@@ -474,10 +474,10 @@ export function ArchitectureComparisonTab() {
             </div>
             <div>
               <CardTitle className="flex items-center gap-2">
-                V2 Defensive Coding Patterns
+                V2 Error Prevention Techniques
               </CardTitle>
               <CardDescription>
-                New patterns in V2 that prevent the V1 failures from occurring
+                New safeguards in V2 that prevent the V1 failures from happening again
               </CardDescription>
             </div>
           </div>
@@ -530,12 +530,12 @@ export function ArchitectureComparisonTab() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Play className="h-5 w-5" style={{ color: 'var(--status-info)' }} />
-              Live V2 Worker Tests
+              Live V2 Endpoint Tests
             </CardTitle>
             <CardDescription>
-              Real-time tests against V2 onboarding endpoints (User ID: {data.liveTests.testUserId})
-              {' - '}
-              {data.liveTests.defensivePatternsWorking}/{data.liveTests.totalTests} return
+              Real-time tests against V2 onboarding endpoints (User #{data.liveTests.testUserId})
+              {' — '}
+              {data.liveTests.defensivePatternsWorking}/{data.liveTests.totalTests} return clean,
               structured responses
             </CardDescription>
           </CardHeader>
@@ -719,7 +719,7 @@ export function ArchitectureComparisonTab() {
                 style={{ color: 'var(--status-success)' }}
               />
               <div className="text-4xl font-bold mb-1" style={{ color: 'var(--status-success)' }}>
-                88%
+                {data.aggregateTables.reduction}
               </div>
               <div className="text-sm font-medium text-muted-foreground">
                 Fewer aggregate tables
@@ -734,7 +734,7 @@ export function ArchitectureComparisonTab() {
                 style={{ color: 'var(--status-success)' }}
               />
               <div className="text-4xl font-bold mb-1" style={{ color: 'var(--status-success)' }}>
-                100%
+                {fixedPercentage}%
               </div>
               <div className="text-sm font-medium text-muted-foreground">V1 failures fixed</div>
             </div>
@@ -744,9 +744,9 @@ export function ArchitectureComparisonTab() {
             >
               <Shield className="h-6 w-6 mx-auto mb-2" style={{ color: 'var(--status-success)' }} />
               <div className="text-4xl font-bold mb-1" style={{ color: 'var(--status-success)' }}>
-                5
+                {data.defensivePatterns.length}
               </div>
-              <div className="text-sm font-medium text-muted-foreground">Defensive patterns</div>
+              <div className="text-sm font-medium text-muted-foreground">Safety patterns</div>
             </div>
             <div
               className="text-center p-5 bg-white/50 dark:bg-black/20 rounded-lg border"
@@ -757,7 +757,7 @@ export function ArchitectureComparisonTab() {
                 style={{ color: 'var(--status-success)' }}
               />
               <div className="text-4xl font-bold mb-1" style={{ color: 'var(--status-success)' }}>
-                16
+                {Object.keys(data.liveStatus.tableCounts?.staging_tables || {}).length || '—'}
               </div>
               <div className="text-sm font-medium text-muted-foreground">Staging tables</div>
             </div>

@@ -10,8 +10,9 @@ import { Diagram } from '@/components/ui/diagram'
 import { MetricCard } from '@/components/ui/metric-card'
 import { EmptyState } from '@/components/ui/empty-state'
 import { ChevronDown, ChevronUp, Database, Table, Link2, Search } from 'lucide-react'
+import { V2_TABLE_COUNT } from '@/lib/dashboard-constants'
 
-// Sample core tables (representing the 193 total tables)
+// Sample core tables (representing the total V2 tables)
 const CORE_TABLES = [
   {
     id: 1,
@@ -130,7 +131,7 @@ const CORE_TABLES = [
     id: 4,
     name: 'transactions',
     description: 'Financial transaction records',
-    record_count: '5,000,000+',
+    record_count: '55,000+',
     fields: [
       {
         name: 'id',
@@ -308,7 +309,7 @@ function TableDetailView({ table, isOpen, onToggle }: any) {
           {/* Tags */}
           {table.tags.length > 0 && (
             <div>
-              <p className="text-xs font-semibold text-muted-foreground mb-2">TAGS</p>
+              <p className="text-xs font-semibold text-muted-foreground mb-2">CATEGORIES</p>
               <div className="flex flex-wrap gap-2">
                 {table.tags.map((tag: string) => (
                   <Badge key={tag} variant="secondary" className="text-xs">
@@ -406,7 +407,7 @@ export function DataModelTab() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <MetricCard
             title="Total Tables"
-            value="193"
+            value={V2_TABLE_COUNT}
             subtitle="V2 normalized schema"
             icon={<Database className="h-4 w-4" />}
           />
@@ -420,7 +421,7 @@ export function DataModelTab() {
           <MetricCard
             title="Relationships"
             value={totalRelationships}
-            subtitle="Foreign key references"
+            subtitle="Cross-table references"
             icon={<Link2 className="h-4 w-4" />}
           />
         </div>
@@ -443,7 +444,8 @@ export function DataModelTab() {
             className="w-full"
           />
           <p className="text-sm text-muted-foreground mt-3">
-            Found {filteredTables.length} table{filteredTables.length !== 1 ? 's' : ''} (Total: 193
+            Found {filteredTables.length} table{filteredTables.length !== 1 ? 's' : ''} (Total:{' '}
+            {V2_TABLE_COUNT}
             tables in V2)
           </p>
         </CardContent>
@@ -454,7 +456,7 @@ export function DataModelTab() {
         <CardHeader>
           <CardTitle>Entity Relationship Diagram</CardTitle>
           <CardDescription>
-            Shows core table relationships (sample of 193 total tables)
+            Shows core table relationships (sample of {V2_TABLE_COUNT} total tables)
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -514,7 +516,7 @@ export function DataModelTab() {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <MetricCard
                   title="Total Tables"
-                  value="193"
+                  value={V2_TABLE_COUNT}
                   subtitle="V2 normalized schema"
                   icon={<Database className="h-4 w-4" />}
                 />
@@ -524,11 +526,15 @@ export function DataModelTab() {
                   subtitle="Primary business entities"
                   icon={<Table className="h-4 w-4" />}
                 />
-                <MetricCard title="Total Records" value="5M+" subtitle="Across all tables" />
+                <MetricCard
+                  title="Sample Tables"
+                  value={CORE_TABLES.length}
+                  subtitle={`${CORE_TABLES.length} example tables shown`}
+                />
                 <MetricCard
                   title="Relationships"
-                  value="400+"
-                  subtitle="Foreign key constraints"
+                  value={totalRelationships}
+                  subtitle="In these sample tables"
                   icon={<Link2 className="h-4 w-4" />}
                 />
               </div>
@@ -537,8 +543,10 @@ export function DataModelTab() {
                 <CardContent className="pt-6">
                   <p className="font-semibold text-sm mb-3 text-blue-900">About V2 Data Model</p>
                   <ul className="text-sm space-y-2 text-blue-800 list-disc list-inside">
-                    <li>193 fully normalized tables with proper normalization (3NF)</li>
-                    <li>Complex relationship structure with proper foreign keys</li>
+                    <li>
+                      {V2_TABLE_COUNT} fully normalized tables with proper normalization (3NF)
+                    </li>
+                    <li>Complex relationships properly enforced between tables</li>
                     <li>Comprehensive indexes for optimized query performance</li>
                     <li>Audit trails and timestamps on all core tables</li>
                     <li>V1 data fully migrated with validation checks</li>
